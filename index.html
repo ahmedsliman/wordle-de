@@ -37,6 +37,7 @@
       --color-p1:               #3b82f6;
       --color-p2:               #ef4444;
       --cell-size:              120px;
+      --cw-cell:                36px;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -156,18 +157,6 @@
       color: var(--color-tab-active-text);
       border-color: var(--color-tab-active-bg);
     }
-
-    /* ─── Type filter row ───────────────────────────── */
-    .type-tabs-row {
-      width: 100%;
-      max-width: 600px;
-      display: flex;
-      gap: 6px;
-      padding: 10px 16px;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    .type-tabs-row::-webkit-scrollbar { display: none; }
 
     /* ─── Hint bar ──────────────────────────────────── */
     .hint-bar {
@@ -336,6 +325,9 @@
 
     .grid-row.row-owner-p1 { border-left-color: var(--color-p1); }
     .grid-row.row-owner-p2 { border-left-color: var(--color-p2); }
+    .grid-row.active-row .tile:not(.correct):not(.present):not(.absent):not(.skipped) {
+      border-color: var(--color-text-muted);
+    }
 
     .tile.skipped {
       color: var(--color-text-muted);
@@ -436,25 +428,6 @@
 
     #message.win  { color: var(--color-correct); }
     #message.lose { color: #ef4444; }
-
-    /* ─── New word button ────────────────────────────── */
-    #new-word-btn {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.9rem;
-      font-weight: 500;
-      padding: 10px 28px;
-      border: none;
-      border-radius: 999px;
-      background: var(--color-correct);
-      color: #fff;
-      cursor: pointer;
-      margin: 6px 0;
-      transition: opacity 0.2s, transform 0.1s;
-    }
-
-    #new-word-btn:hover  { opacity: 0.88; }
-    #new-word-btn:active { transform: scale(0.97); }
-    #new-word-btn.hidden { display: none; }
 
     /* ─── Keyboard ───────────────────────────────────── */
     #keyboard {
@@ -820,6 +793,113 @@
       .key.wide { min-width: 44px; max-width: 54px; font-size: 0.62rem; }
       .cell-hint-text { font-size: 0.72rem; }
     }
+
+    /* ─── Crossword ──────────────────────────────────── */
+    #crossword-area {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      max-width: 900px;
+      width: 100%;
+      padding: 12px 16px;
+      margin: 0 auto;
+    }
+
+    #crossword-grid-container { overflow: auto; flex-shrink: 0; }
+
+    #crossword-grid { display: grid; gap: 2px; }
+
+    .cw-cell {
+      width: var(--cw-cell); height: var(--cw-cell);
+      position: relative;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; user-select: none;
+    }
+
+    .cw-cell.black { background: #2a2a2a; border-color: #2a2a2a; cursor: default; }
+    .cw-cell.word-hl { background: var(--color-surface); }
+    .cw-cell.cell-hl { background: #bde0ff; }
+    .cw-cell.correct { background: var(--color-correct); }
+    .cw-cell.wrong   { background: var(--color-present); }
+    .cw-cell.revealed { opacity: 0.7; }
+
+    .cw-number {
+      position: absolute; top: 1px; left: 2px;
+      font-size: calc(var(--cw-cell) * 0.28);
+      font-family: 'DM Mono', monospace;
+      color: var(--color-text-muted);
+      line-height: 1; pointer-events: none;
+    }
+
+    .cw-letter {
+      font-size: calc(var(--cw-cell) * 0.55);
+      font-weight: 500; font-family: 'DM Mono', monospace;
+      color: var(--color-text); text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    .cw-cell.correct .cw-letter,
+    .cw-cell.correct .cw-number { color: #fff; }
+
+    /* Clues panel */
+    #clues-panel {
+      flex: 1; min-width: 180px; max-width: 260px;
+      max-height: 60vh; overflow-y: auto;
+    }
+
+    .clues-heading {
+      font-size: 0.8rem; font-weight: 600;
+      text-transform: uppercase; color: var(--color-text-muted);
+      margin: 8px 0 4px;
+    }
+
+    .clue-item {
+      font-size: 0.82rem; padding: 5px 8px;
+      border-radius: 6px; cursor: pointer;
+      display: flex; gap: 6px; line-height: 1.4;
+    }
+
+    .clue-item:hover  { background: var(--color-surface); }
+    .clue-item.active { background: var(--color-tab-active-bg); color: var(--color-tab-active-text); }
+    .clue-item.solved { color: var(--color-text-muted); text-decoration: line-through; }
+    .clue-num { font-weight: 600; min-width: 22px; }
+    .clue-text { flex: 1; }
+
+    /* CW action buttons */
+    #cw-actions {
+      display: flex; gap: 8px; justify-content: center;
+      flex-wrap: wrap; margin: 4px 0 8px;
+      width: 100%; max-width: 900px; padding: 0 16px;
+    }
+
+    #check-btn, #reveal-btn, #new-puzzle-btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.9rem; font-weight: 500;
+      padding: 10px 22px; border: none; border-radius: 999px;
+      color: #fff; cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+
+    #check-btn     { background: var(--color-tab-active-bg); color: var(--color-tab-active-text); }
+    #reveal-btn    { background: var(--color-present); }
+    #new-puzzle-btn { background: var(--color-correct); }
+
+    #check-btn:hover, #reveal-btn:hover, #new-puzzle-btn:hover   { opacity: 0.88; }
+    #check-btn:active, #reveal-btn:active, #new-puzzle-btn:active { transform: scale(0.97); }
+
+    #cw-clue-bar .cw-clue-num { font-size: 0.85rem; font-weight: 600; color: var(--color-text-muted); }
+
+    @media (max-width: 680px) {
+      #crossword-area { flex-direction: column; }
+      #clues-panel { max-width: 100%; max-height: 35vh; display: flex; gap: 16px; }
+      .clues-section { flex: 1; }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .cw-cell.cell-hl { background: #1e3a5f; }
+    }
   </style>
 </head>
 <body>
@@ -840,21 +920,38 @@
     </div>
   </header>
 
-  <!-- Type filter row (1P only) -->
-  <div class="type-tabs-row" id="type-tabs">
-    <button class="type-tab active" data-type="all">All</button>
-    <button class="type-tab"        data-type="noun">Nouns</button>
-    <button class="type-tab"        data-type="verb">Verbs</button>
-    <button class="type-tab"        data-type="adjective">Adjectives</button>
+  <!-- Crossword clue bar (1P) -->
+  <div class="hint-bar hidden" id="cw-clue-bar">
+    <span class="cw-clue-num" id="cw-clue-num"></span>
+    <span class="hint-sep">·</span>
+    <span class="hint-en" id="cw-clue-en"></span>
+    <span class="hint-sep">·</span>
+    <span class="hint-ar" id="cw-clue-ar"></span>
+    <span class="type-badge" id="cw-type-badge"></span>
   </div>
 
-  <!-- Hint bar (1P) -->
-  <div class="hint-bar" id="hint-bar-1p">
-    <span class="hint-en" id="hint-en"></span>
-    <span class="hint-sep">·</span>
-    <span class="hint-ar" id="hint-ar"></span>
-    <span class="type-badge" id="type-badge"></span>
-    <span class="hint-sentence" id="hint-sentence"></span>
+  <!-- Crossword area (1P) -->
+  <div id="crossword-area" class="hidden">
+    <div id="crossword-grid-container">
+      <div id="crossword-grid"></div>
+    </div>
+    <div id="clues-panel">
+      <div class="clues-section">
+        <h3 class="clues-heading">Across</h3>
+        <ul id="across-clues"></ul>
+      </div>
+      <div class="clues-section">
+        <h3 class="clues-heading">Down</h3>
+        <ul id="down-clues"></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Crossword actions (1P) -->
+  <div id="cw-actions" class="hidden">
+    <button id="check-btn">Check</button>
+    <button id="reveal-btn">Reveal Word</button>
+    <button id="new-puzzle-btn" class="hidden">New Puzzle</button>
   </div>
 
   <!-- 2P Board -->
@@ -890,7 +987,6 @@
       <div id="grid"></div>
     </div>
     <div id="message"></div>
-    <button id="new-word-btn" class="hidden">New Word ↺</button>
     <div id="keyboard"></div>
   </div>
 
@@ -934,15 +1030,22 @@
 <script>
 // ─── State ────────────────────────────────────────────
 let words        = {};
-let currentWord  = null;
 let currentLevel = 'A1';
-let currentType  = 'all';
-let currentRow   = 0;
-let board        = [];
 let gameOver     = false;
-let keyColors    = {};
 let streak       = { current: 0, best: 0 };
 let animating    = false;
+
+// ─── 1P Crossword state ───────────────────────────────
+let currentPuzzle = null;   // { grid, words, bbox }
+let selectedCell  = null;   // { r, c }
+let selectedDir   = 'across';
+let usedReveal    = false;
+
+// ─── 2P Wordle state (kept for 2P mode) ───────────────
+let currentWord  = null;
+let currentRow   = 0;
+let board        = [];
+let keyColors    = {};
 
 // ─── 2P State ─────────────────────────────────────────
 const WIN_SCORE_2P = 3;
@@ -1010,6 +1113,166 @@ function pickWord(level, type) {
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
+// ─── Crossword generator ──────────────────────────────
+const CW_GRID  = 15;
+const CW_MIN   = 4;
+const CW_MAX   = 10;
+const CW_COUNT = 12;
+
+function cwShuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function cwMakeGrid() {
+  return Array.from({ length: CW_GRID }, () => Array(CW_GRID).fill(null));
+}
+
+function cwCanPlace(grid, wordStr, r, c, dir) {
+  const len = wordStr.length;
+  const dr = dir === 'down' ? 1 : 0;
+  const dc = dir === 'across' ? 1 : 0;
+
+  // pre-cell must be empty
+  const pr = r - dr, pc = c - dc;
+  if (pr >= 0 && pc >= 0 && grid[pr][pc] !== null) return false;
+  // post-cell must be empty
+  const er = r + dr * len, ec = c + dc * len;
+  if (er < CW_GRID && ec < CW_GRID && grid[er][ec] !== null) return false;
+
+  let hasIntersect = false;
+  for (let i = 0; i < len; i++) {
+    const rr = r + dr * i, cc = c + dc * i;
+    if (rr < 0 || rr >= CW_GRID || cc < 0 || cc >= CW_GRID) return false;
+
+    const cell = grid[rr][cc];
+    if (cell !== null) {
+      // Must match existing letter
+      if (cell.letter !== wordStr[i]) return false;
+      hasIntersect = true;
+    } else {
+      // Adjacent parallel cells must be empty (no side-by-side words)
+      const s1r = rr - dc, s1c = cc - dr;
+      const s2r = rr + dc, s2c = cc + dr;
+      if (s1r >= 0 && s1r < CW_GRID && s1c >= 0 && s1c < CW_GRID && grid[s1r][s1c] !== null) return false;
+      if (s2r >= 0 && s2r < CW_GRID && s2c >= 0 && s2c < CW_GRID && grid[s2r][s2c] !== null) return false;
+    }
+  }
+  return hasIntersect;
+}
+
+function cwPlace(grid, wordStr, r, c, dir) {
+  const dr = dir === 'down' ? 1 : 0;
+  const dc = dir === 'across' ? 1 : 0;
+  for (let i = 0; i < wordStr.length; i++) {
+    const rr = r + dr * i, cc = c + dc * i;
+    if (grid[rr][cc] === null) {
+      grid[rr][cc] = { letter: wordStr[i], filled: '', acrossId: null, downId: null, number: null };
+    }
+  }
+}
+
+function cwBbox(grid) {
+  let minR = CW_GRID, maxR = -1, minC = CW_GRID, maxC = -1;
+  for (let r = 0; r < CW_GRID; r++)
+    for (let c = 0; c < CW_GRID; c++)
+      if (grid[r][c] !== null) {
+        minR = Math.min(minR, r); maxR = Math.max(maxR, r);
+        minC = Math.min(minC, c); maxC = Math.max(maxC, c);
+      }
+  return { minR, maxR, minC, maxC };
+}
+
+function generateCrossword(pool) {
+  const eligible = pool.filter(e => e.w.length >= CW_MIN && e.w.length <= CW_MAX);
+  if (eligible.length < 5) return null;
+
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const shuffled = cwShuffle(eligible);
+    const grid     = cwMakeGrid();
+    const placed   = [];
+
+    // Place first word horizontally at center
+    const first = shuffled[0];
+    const startC = Math.floor((CW_GRID - first.w.length) / 2);
+    const startR = Math.floor(CW_GRID / 2);
+    cwPlace(grid, first.w, startR, startC, 'across');
+    placed.push({ entry: first, dir: 'across', row: startR, col: startC, number: null, solved: false });
+
+    // Try to add remaining words
+    for (let wi = 1; wi < shuffled.length && placed.length < CW_COUNT; wi++) {
+      const entry  = shuffled[wi];
+      const word   = entry.w;
+      const oppDir = placed.length % 2 === 0 ? 'across' : 'down';
+      let found    = false;
+
+      outer:
+      for (let i = 0; i < word.length && !found; i++) {
+        for (let r = 0; r < CW_GRID && !found; r++) {
+          for (let c = 0; c < CW_GRID && !found; c++) {
+            if (grid[r][c] === null || grid[r][c].letter !== word[i]) continue;
+            // Try perpendicular placement through this cell
+            for (const dir of [oppDir, oppDir === 'across' ? 'down' : 'across']) {
+              const dr = dir === 'down' ? 1 : 0;
+              const dc = dir === 'across' ? 1 : 0;
+              const pr = r - dr * i, pc = c - dc * i;
+              if (pr < 0 || pc < 0) continue;
+              if (cwCanPlace(grid, word, pr, pc, dir)) {
+                cwPlace(grid, word, pr, pc, dir);
+                placed.push({ entry, dir, row: pr, col: pc, number: null, solved: false });
+                found = true;
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    if (placed.length < 5) continue;
+
+    // Number cells in reading order
+    // First assign word starts then number them
+    const bbox = cwBbox(grid);
+    // Renumber based on bbox-adjusted reading order
+    let num = 1;
+    for (let r = 0; r < CW_GRID; r++) {
+      for (let c = 0; c < CW_GRID; c++) {
+        if (grid[r][c] === null) continue;
+        const startsAcross = (c === 0 || grid[r][c-1] === null) &&
+                              c + 1 < CW_GRID && grid[r][c+1] !== null;
+        const startsDown   = (r === 0 || grid[r-1][c] === null) &&
+                              r + 1 < CW_GRID && grid[r+1][c] !== null;
+        if (startsAcross || startsDown) {
+          grid[r][c].number = num;
+          placed
+            .filter(pw => pw.row === r && pw.col === c)
+            .forEach(pw => { pw.number = num; });
+          num++;
+        }
+      }
+    }
+
+    // Tag each cell with its word IDs
+    for (const pw of placed) {
+      const dr = pw.dir === 'down' ? 1 : 0;
+      const dc = pw.dir === 'across' ? 1 : 0;
+      for (let i = 0; i < pw.entry.w.length; i++) {
+        const rr = pw.row + dr * i, cc = pw.col + dc * i;
+        if (pw.dir === 'across') grid[rr][cc].acrossId = pw.number;
+        else                      grid[rr][cc].downId   = pw.number;
+      }
+    }
+
+    return { grid, words: placed, bbox };
+  }
+  return null;
+}
+
 // ─── Render hint bar ──────────────────────────────────
 function renderHint(entry, usePanel) {
   const p = usePanel ? 'panel-' : '';
@@ -1039,6 +1302,12 @@ function buildGrid(wordLen) {
     }
     grid.appendChild(rowEl);
   }
+}
+
+function markActiveRow(row) {
+  document.querySelectorAll('.grid-row').forEach((el, i) => {
+    el.classList.toggle('active-row', i === row);
+  });
 }
 
 // ─── Build keyboard ───────────────────────────────────
@@ -1172,17 +1441,406 @@ function showMessage(text, type) {
   el.className   = type || '';
 }
 
+// ─── Crossword UI ─────────────────────────────────────
+function computeCwCellSize(cols) {
+  const vw   = Math.min(window.innerWidth, 600);
+  const pad  = 32;
+  const avail = (vw - pad) * (window.innerWidth <= 680 ? 1 : 0.62);
+  return Math.max(24, Math.min(40, Math.floor(avail / cols)));
+}
+
+function buildCrosswordGrid(puzzle) {
+  const { grid, bbox } = puzzle;
+  const rows = bbox.maxR - bbox.minR + 1;
+  const cols = bbox.maxC - bbox.minC + 1;
+  const cellSz = computeCwCellSize(cols);
+  document.documentElement.style.setProperty('--cw-cell', cellSz + 'px');
+
+  const container = document.getElementById('crossword-grid');
+  container.innerHTML = '';
+  container.style.gridTemplateColumns = `repeat(${cols}, var(--cw-cell))`;
+  container.style.gridTemplateRows    = `repeat(${rows}, var(--cw-cell))`;
+
+  for (let r = bbox.minR; r <= bbox.maxR; r++) {
+    for (let c = bbox.minC; c <= bbox.maxC; c++) {
+      const div = document.createElement('div');
+      const cell = grid[r][c];
+      if (cell === null) {
+        div.className = 'cw-cell black';
+      } else {
+        div.className = 'cw-cell';
+        div.dataset.r = r;
+        div.dataset.c = c;
+        if (cell.number !== null) {
+          const num = document.createElement('span');
+          num.className   = 'cw-number';
+          num.textContent = cell.number;
+          div.appendChild(num);
+        }
+        const letter = document.createElement('span');
+        letter.className = 'cw-letter';
+        letter.id        = `cwl-${r}-${c}`;
+        div.appendChild(letter);
+        div.addEventListener('click', () => selectCell(r, c));
+      }
+      container.appendChild(div);
+    }
+  }
+}
+
+function renderClues(puzzle) {
+  const acrossList = document.getElementById('across-clues');
+  const downList   = document.getElementById('down-clues');
+  acrossList.innerHTML = '';
+  downList.innerHTML   = '';
+
+  puzzle.words
+    .slice()
+    .sort((a, b) => a.number - b.number)
+    .forEach(pw => {
+      const li  = document.createElement('li');
+      li.className = 'clue-item';
+      li.dataset.num = pw.number;
+      li.dataset.dir = pw.dir;
+      li.innerHTML = `<span class="clue-num">${pw.number}${pw.dir === 'across' ? 'A' : 'D'}</span>`
+                   + `<span class="clue-text">${pw.entry.en} · ${pw.entry.ar}</span>`;
+      li.addEventListener('click', () => {
+        selectCell(pw.row, pw.col, pw.dir);
+      });
+      (pw.dir === 'across' ? acrossList : downList).appendChild(li);
+    });
+}
+
+function selectCell(r, c, forceDir) {
+  const { grid } = currentPuzzle;
+  if (grid[r][c] === null) return;
+
+  const cell = grid[r][c];
+  // Toggle direction if same cell clicked
+  if (!forceDir && selectedCell && selectedCell.r === r && selectedCell.c === c) {
+    selectedDir = selectedDir === 'across' ? 'down' : 'across';
+  } else if (forceDir) {
+    selectedDir = forceDir;
+  } else {
+    // Prefer direction that has a word
+    if (cell.acrossId && !cell.downId) selectedDir = 'across';
+    else if (cell.downId && !cell.acrossId) selectedDir = 'down';
+    else selectedDir = selectedDir; // keep current
+  }
+  // If chosen dir has no word here, switch
+  if (selectedDir === 'across' && !cell.acrossId && cell.downId) selectedDir = 'down';
+  if (selectedDir === 'down'   && !cell.downId   && cell.acrossId) selectedDir = 'across';
+
+  selectedCell = { r, c };
+  highlightWord();
+  updateClueBar();
+}
+
+function highlightWord() {
+  if (!selectedCell || !currentPuzzle) return;
+  const { grid, bbox } = currentPuzzle;
+  // Remove all highlights
+  document.querySelectorAll('.cw-cell.word-hl, .cw-cell.cell-hl').forEach(el => {
+    el.classList.remove('word-hl', 'cell-hl');
+  });
+  // Find word bounds
+  const wordNum = selectedDir === 'across'
+    ? grid[selectedCell.r][selectedCell.c].acrossId
+    : grid[selectedCell.r][selectedCell.c].downId;
+  if (!wordNum) return;
+
+  const dr = selectedDir === 'down' ? 1 : 0;
+  const dc = selectedDir === 'across' ? 1 : 0;
+  // Find word start
+  const pw = currentPuzzle.words.find(w => w.number === wordNum && w.dir === selectedDir);
+  if (!pw) return;
+
+  for (let i = 0; i < pw.entry.w.length; i++) {
+    const rr = pw.row + dr * i, cc = pw.col + dc * i;
+    const el = cwCellEl(rr, cc, bbox);
+    if (el) el.classList.add('word-hl');
+  }
+  // Selected cell
+  const selEl = cwCellEl(selectedCell.r, selectedCell.c, bbox);
+  if (selEl) { selEl.classList.remove('word-hl'); selEl.classList.add('cell-hl'); }
+
+  // Update active clue in list
+  document.querySelectorAll('.clue-item').forEach(li => li.classList.remove('active'));
+  const activeLi = document.querySelector(`.clue-item[data-num="${wordNum}"][data-dir="${selectedDir}"]`);
+  if (activeLi) {
+    activeLi.classList.add('active');
+    activeLi.scrollIntoView({ block: 'nearest' });
+  }
+}
+
+function cwCellEl(r, c, bbox) {
+  const cols = bbox.maxC - bbox.minC + 1;
+  const idx  = (r - bbox.minR) * cols + (c - bbox.minC);
+  const cells = document.querySelectorAll('#crossword-grid .cw-cell');
+  return cells[idx] || null;
+}
+
+function updateClueBar() {
+  if (!selectedCell || !currentPuzzle) return;
+  const { grid } = currentPuzzle;
+  const cell     = grid[selectedCell.r][selectedCell.c];
+  const wordNum  = selectedDir === 'across' ? cell.acrossId : cell.downId;
+  if (!wordNum) return;
+  const pw = currentPuzzle.words.find(w => w.number === wordNum && w.dir === selectedDir);
+  if (!pw) return;
+
+  document.getElementById('cw-clue-num').textContent = wordNum + (selectedDir === 'across' ? 'A' : 'D');
+  document.getElementById('cw-clue-en').textContent  = pw.entry.en;
+  document.getElementById('cw-clue-ar').textContent  = pw.entry.ar;
+  const badge = document.getElementById('cw-type-badge');
+  badge.textContent = pw.entry.type;
+  badge.className   = 'type-badge ' + pw.entry.type;
+}
+
+function getSelectedWord() {
+  if (!selectedCell || !currentPuzzle) return null;
+  const { grid } = currentPuzzle;
+  const cell     = grid[selectedCell.r][selectedCell.c];
+  const wordNum  = selectedDir === 'across' ? cell.acrossId : cell.downId;
+  if (!wordNum) return null;
+  return currentPuzzle.words.find(w => w.number === wordNum && w.dir === selectedDir) || null;
+}
+
+function fillCrosswordLetter(letter) {
+  if (!selectedCell || !currentPuzzle) return;
+  const { grid } = currentPuzzle;
+  grid[selectedCell.r][selectedCell.c].filled = letter;
+  const letterEl = document.getElementById(`cwl-${selectedCell.r}-${selectedCell.c}`);
+  if (letterEl) letterEl.textContent = letter;
+  advanceCursor();
+  checkWordComplete();
+}
+
+function advanceCursor() {
+  const pw = getSelectedWord();
+  if (!pw) return;
+  const dr = selectedDir === 'down' ? 1 : 0;
+  const dc = selectedDir === 'across' ? 1 : 0;
+  const { grid } = currentPuzzle;
+
+  // Try to find next unfilled cell in word
+  const wordLen = pw.entry.w.length;
+  const curOffset = selectedDir === 'down' ? selectedCell.r - pw.row : selectedCell.c - pw.col;
+
+  for (let i = curOffset + 1; i < wordLen; i++) {
+    const rr = pw.row + dr * i, cc = pw.col + dc * i;
+    if (!grid[rr][cc].filled) {
+      selectedCell = { r: rr, c: cc };
+      highlightWord();
+      updateClueBar();
+      return;
+    }
+  }
+  // If no empty cells ahead, just move forward anyway (overwrites)
+  if (curOffset + 1 < wordLen) {
+    selectedCell = { r: pw.row + dr * (curOffset + 1), c: pw.col + dc * (curOffset + 1) };
+    highlightWord();
+    updateClueBar();
+  } else {
+    // At end of word — jump to next unsolved word
+    jumpToNextWord();
+  }
+}
+
+function jumpToNextWord() {
+  if (!currentPuzzle) return;
+  const unsolved = currentPuzzle.words
+    .filter(w => !w.solved)
+    .sort((a, b) => a.number - b.number || (a.dir === 'across' ? -1 : 1));
+  if (!unsolved.length) return;
+  const cur = getSelectedWord();
+  const after = cur
+    ? unsolved.find(w => w.number > cur.number || (w.number === cur.number && w.dir !== cur.dir && w.dir === 'down'))
+    : null;
+  const target = after || unsolved[0];
+  // Jump to first unfilled cell in that word
+  const dr = target.dir === 'down' ? 1 : 0;
+  const dc = target.dir === 'across' ? 1 : 0;
+  const { grid } = currentPuzzle;
+  for (let i = 0; i < target.entry.w.length; i++) {
+    const rr = target.row + dr * i, cc = target.col + dc * i;
+    if (!grid[rr][cc].filled) {
+      selectCell(rr, cc, target.dir);
+      return;
+    }
+  }
+  selectCell(target.row, target.col, target.dir);
+}
+
+function backspaceCrossword() {
+  if (!selectedCell || !currentPuzzle) return;
+  const { grid } = currentPuzzle;
+  const cell = grid[selectedCell.r][selectedCell.c];
+
+  if (cell.filled) {
+    cell.filled = '';
+    const letterEl = document.getElementById(`cwl-${selectedCell.r}-${selectedCell.c}`);
+    if (letterEl) letterEl.textContent = '';
+  } else {
+    // Retreat cursor
+    const pw = getSelectedWord();
+    if (!pw) return;
+    const dr = selectedDir === 'down' ? 1 : 0;
+    const dc = selectedDir === 'across' ? 1 : 0;
+    const curOffset = selectedDir === 'down' ? selectedCell.r - pw.row : selectedCell.c - pw.col;
+    if (curOffset > 0) {
+      const rr = pw.row + dr * (curOffset - 1), cc = pw.col + dc * (curOffset - 1);
+      grid[rr][cc].filled = '';
+      const letterEl = document.getElementById(`cwl-${rr}-${cc}`);
+      if (letterEl) letterEl.textContent = '';
+      selectedCell = { r: rr, c: cc };
+      highlightWord();
+      updateClueBar();
+    }
+  }
+}
+
+function moveCursor(dr, dc) {
+  if (!selectedCell || !currentPuzzle) return;
+  const { grid, bbox } = currentPuzzle;
+  const nr = selectedCell.r + dr, nc = selectedCell.c + dc;
+  if (nr < bbox.minR || nr > bbox.maxR || nc < bbox.minC || nc > bbox.maxC) return;
+  if (grid[nr][nc] !== null) {
+    selectedCell = { r: nr, c: nc };
+    highlightWord();
+    updateClueBar();
+  }
+}
+
+function checkWordComplete() {
+  const pw = getSelectedWord();
+  if (!pw || pw.solved) return;
+  const { grid } = currentPuzzle;
+  const dr = selectedDir === 'down' ? 1 : 0;
+  const dc = selectedDir === 'across' ? 1 : 0;
+  const wordStr = pw.entry.w;
+  const allCorrect = wordStr.split('').every((ch, i) => {
+    const rr = pw.row + dr * i, cc = pw.col + dc * i;
+    return grid[rr][cc].filled === ch;
+  });
+  if (allCorrect) {
+    pw.solved = true;
+    // Mark cells green
+    wordStr.split('').forEach((_, i) => {
+      const rr = pw.row + dr * i, cc = pw.col + dc * i;
+      const el = cwCellEl(rr, cc, currentPuzzle.bbox);
+      if (el) { el.classList.remove('word-hl', 'cell-hl', 'wrong'); el.classList.add('correct'); }
+    });
+    // Strikethrough clue
+    const li = document.querySelector(`.clue-item[data-num="${pw.number}"][data-dir="${selectedDir}"]`);
+    if (li) li.classList.add('solved');
+    // Check if all solved
+    if (currentPuzzle.words.every(w => w.solved)) endCrossword(true);
+  }
+}
+
+function checkAllWords() {
+  if (!currentPuzzle) return;
+  const { grid, words, bbox } = currentPuzzle;
+  words.forEach(pw => {
+    if (pw.solved) return;
+    const dr = pw.dir === 'down' ? 1 : 0;
+    const dc = pw.dir === 'across' ? 1 : 0;
+    pw.entry.w.split('').forEach((ch, i) => {
+      const rr = pw.row + dr * i, cc = pw.col + dc * i;
+      const cell = grid[rr][cc];
+      if (!cell.filled) return;
+      const el = cwCellEl(rr, cc, bbox);
+      if (!el || el.classList.contains('correct')) return;
+      if (cell.filled !== ch) {
+        el.classList.add('wrong');
+        setTimeout(() => el.classList.remove('wrong'), 1500);
+      }
+    });
+  });
+}
+
+function revealWord() {
+  const pw = getSelectedWord();
+  if (!pw) return;
+  const { grid, bbox } = currentPuzzle;
+  const dr = pw.dir === 'down' ? 1 : 0;
+  const dc = pw.dir === 'across' ? 1 : 0;
+  pw.entry.w.split('').forEach((ch, i) => {
+    const rr = pw.row + dr * i, cc = pw.col + dc * i;
+    grid[rr][cc].filled = ch;
+    const letterEl = document.getElementById(`cwl-${rr}-${cc}`);
+    if (letterEl) letterEl.textContent = ch;
+    const el = cwCellEl(rr, cc, bbox);
+    if (el) el.classList.add('revealed');
+  });
+  usedReveal = true;
+  pw.solved = true;
+  pw.entry.w.split('').forEach((_, i) => {
+    const rr = pw.row + dr * i, cc = pw.col + dc * i;
+    const el = cwCellEl(rr, cc, bbox);
+    if (el) { el.classList.add('correct'); el.classList.add('revealed'); }
+  });
+  const li = document.querySelector(`.clue-item[data-num="${pw.number}"][data-dir="${pw.dir}"]`);
+  if (li) li.classList.add('solved');
+  if (currentPuzzle.words.every(w => w.solved)) endCrossword(true);
+}
+
+function endCrossword(won) {
+  gameOver = true;
+  if (won) {
+    showMessage('Ausgezeichnet! 🎉', 'win');
+    if (!usedReveal) {
+      streak.current++;
+      if (streak.current > streak.best) streak.best = streak.current;
+      saveStreak();
+      renderStreak();
+    }
+  }
+  document.getElementById('new-puzzle-btn').classList.remove('hidden');
+}
+
+function startCrossword() {
+  if (gameMode === '2P') return;
+  const pool = words[currentLevel] || [];
+  let puzzle = null;
+  for (let i = 0; i < 3 && !puzzle; i++) puzzle = generateCrossword(pool);
+  if (!puzzle) { showMessage('Could not generate puzzle.', 'lose'); return; }
+
+  currentPuzzle = puzzle;
+  gameOver      = false;
+  usedReveal    = false;
+  animating     = false;
+
+  buildCrosswordGrid(puzzle);
+  renderClues(puzzle);
+  showMessage('', '');
+  document.getElementById('new-puzzle-btn').classList.add('hidden');
+
+  // Select first across word's first cell
+  const firstAcross = puzzle.words.find(w => w.dir === 'across');
+  if (firstAcross) selectCell(firstAcross.row, firstAcross.col, 'across');
+}
+
 // ─── Key handling ─────────────────────────────────────
 function handleKey(key) {
-  if (gameOver || animating) return;
-
-  if (key === '⌫' || key === 'Backspace') {
-    deleteLetter();
-  } else if (key === 'ENTER' || key === 'Enter') {
-    submitGuess();
-  } else if (/^[A-ZÄÖÜa-zäöüß]$/.test(key)) {
-    addLetter(norm(key));
+  if (gameMode === '2P') {
+    // 2P path
+    if (gameOver || animating || !currentWord) return;
+    if (key === '⌫' || key === 'Backspace') { deleteLetter(); }
+    else if (key === 'ENTER' || key === 'Enter') { submitGuess(); }
+    else if (/^[A-ZÄÖÜa-zäöüß]$/.test(key)) { addLetter(norm(key)); }
+    return;
   }
+  // 1P crossword path
+  if (gameOver || !currentPuzzle) return;
+  if (key === '⌫' || key === 'Backspace') { backspaceCrossword(); }
+  else if (key === 'ENTER' || key === 'Enter') { jumpToNextWord(); }
+  else if (key === 'ArrowRight') { moveCursor(0, 1); }
+  else if (key === 'ArrowLeft')  { moveCursor(0, -1); }
+  else if (key === 'ArrowDown')  { moveCursor(1, 0); }
+  else if (key === 'ArrowUp')    { moveCursor(-1, 0); }
+  else if (/^[A-ZÄÖÜa-zäöüß]$/.test(key)) { fillCrosswordLetter(norm(key)); }
 }
 
 function addLetter(letter) {
@@ -1236,93 +1894,44 @@ function submitGuess() {
     const won  = results.every(r => r === 'correct');
     const last = currentRow === 5;
 
-    if (gameMode === '1P') {
-      if (won) {
-        animateBounce(currentRow);
-        showMessage('Sehr gut! 🎉', 'win');
-        streak.current++;
-        if (streak.current > streak.best) streak.best = streak.current;
-        saveStreak();
-        endGame1P();
-      } else if (last) {
-        showMessage('The word was: ' + answer, 'lose');
-        streak.current = 0;
-        saveStreak();
-        endGame1P();
+    if (won) {
+      animateBounce(currentRow);
+      gameOver = true;
+      players[activePlayer].score++;
+      updateScoreStrip();
+      showMessage(players[activePlayer].name + ' scores! 🎉', 'win');
+      if (players[activePlayer].score >= WIN_SCORE_2P) {
+        setTimeout(() => end2PGame(activePlayer), 1200);
       } else {
-        currentRow++;
+        roundStartPlayer = 1 - activePlayer;
+        setTimeout(startRound2P, 1600);
       }
+    } else if (last) {
+      gameOver = true;
+      showMessage('The word was: ' + answer, 'lose');
+      roundStartPlayer = 1 - roundStartPlayer;
+      setTimeout(startRound2P, 1800);
     } else {
-      if (won) {
-        animateBounce(currentRow);
-        gameOver = true;
-        players[activePlayer].score++;
-        updateScoreStrip();
-        showMessage(players[activePlayer].name + ' scores! 🎉', 'win');
-        if (players[activePlayer].score >= WIN_SCORE_2P) {
-          setTimeout(() => end2PGame(activePlayer), 1200);
-        } else {
-          roundStartPlayer = 1 - activePlayer;
-          setTimeout(startRound2P, 1600);
-        }
-      } else if (last) {
-        gameOver = true;
-        showMessage('The word was: ' + answer, 'lose');
-        roundStartPlayer = 1 - roundStartPlayer;
-        setTimeout(startRound2P, 1800);
-      } else {
-        currentRow++;
-        activePlayer = 1 - activePlayer;
-        updateTurnBanner();
-        updateRowOwnerVisuals();
-      }
+      currentRow++;
+      activePlayer = 1 - activePlayer;
+      updateTurnBanner();
+      updateRowOwnerVisuals();
     }
   });
-}
-
-function endGame1P() {
-  gameOver = true;
-  document.getElementById('new-word-btn').classList.remove('hidden');
-}
-
-// ─── Start game (1P) ──────────────────────────────────
-function startGame() {
-  if (gameMode === '2P') return;
-
-  const entry = pickWord(currentLevel, currentType);
-  if (!entry) {
-    showMessage('No words for this filter.', 'lose');
-    return;
-  }
-
-  currentWord = entry;
-  currentRow  = 0;
-  board       = Array.from({ length: 6 }, () => []);
-  gameOver    = false;
-  animating   = false;
-  keyColors   = {};
-
-  const wordLen = entry.w.length;
-  setTileSize(wordLen);
-  buildGrid(wordLen);
-  buildKeyboard();
-  renderHint(entry, false);
-  showMessage('', '');
-  document.getElementById('new-word-btn').classList.add('hidden');
 }
 
 // ─── Mode switching ───────────────────────────────────
 function setMode(mode) {
   gameMode = mode;
 
-  const panel      = document.getElementById('wordle-panel');
-  const typeTabs   = document.getElementById('type-tabs');
-  const hintBar1P  = document.getElementById('hint-bar-1p');
-  const streakBar  = document.getElementById('streak-bar');
-  const board2p    = document.getElementById('board-2p');
-  const newWordBtn = document.getElementById('new-word-btn');
-  const panelHdr   = document.getElementById('panel-header');
-  const panelHint  = document.getElementById('hint-bar-panel');
+  const panel       = document.getElementById('wordle-panel');
+  const cwClueBar   = document.getElementById('cw-clue-bar');
+  const cwArea      = document.getElementById('crossword-area');
+  const cwActions   = document.getElementById('cw-actions');
+  const streakBar   = document.getElementById('streak-bar');
+  const board2p     = document.getElementById('board-2p');
+  const panelHdr    = document.getElementById('panel-header');
+  const panelHint   = document.getElementById('hint-bar-panel');
 
   document.querySelectorAll('.mode-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.mode === mode);
@@ -1332,23 +1941,27 @@ function setMode(mode) {
     panel.classList.add('inline-mode');
     panel.classList.remove('visible');
     document.getElementById('panel-backdrop').classList.remove('visible');
-    typeTabs.classList.remove('hidden');
-    hintBar1P.classList.remove('hidden');
+    cwClueBar.classList.remove('hidden');
+    cwArea.classList.remove('hidden');
+    cwActions.classList.remove('hidden');
     streakBar.classList.remove('hidden');
     board2p.classList.add('hidden');
     panelHdr.classList.add('hidden');
     panelHint.classList.add('hidden');
-    newWordBtn.classList.add('hidden');
-    startGame();
+    // Hide the Wordle grid — only keyboard is needed
+    document.querySelector('.grid-wrap').classList.add('hidden');
+    startCrossword();
   } else {
     panel.classList.add('inline-mode');
-    typeTabs.classList.add('hidden');
-    hintBar1P.classList.remove('hidden');
+    cwClueBar.classList.add('hidden');
+    cwArea.classList.add('hidden');
+    cwActions.classList.add('hidden');
     streakBar.classList.add('hidden');
-    newWordBtn.classList.add('hidden');
     board2p.classList.remove('hidden');
-    panelHdr.classList.add('hidden');
-    panelHint.classList.add('hidden');
+    panelHdr.classList.remove('hidden');
+    panelHint.classList.remove('hidden');
+    document.getElementById('panel-close-btn').classList.add('hidden');
+    document.querySelector('.grid-wrap').classList.remove('hidden');
     showSetupOverlay();
   }
 }
@@ -1395,7 +2008,7 @@ function startRound2P() {
   setTileSize(entry.w.length);
   buildGrid(entry.w.length);
   buildKeyboard();
-  renderHint(entry, false);
+  renderHint(entry, true);
   showMessage('', '');
 
   updateTurnBanner();
@@ -1404,9 +2017,13 @@ function startRound2P() {
 
 function updateTurnBanner() {
   const banner = document.getElementById('turn-banner');
+  const badge  = document.getElementById('panel-player-badge');
   const p      = players[activePlayer];
+  const cls    = activePlayer === 0 ? 'p1' : 'p2';
   banner.textContent = p.name + "'s turn";
-  banner.className   = 'turn-banner ' + (activePlayer === 0 ? 'p1' : 'p2');
+  banner.className   = 'turn-banner ' + cls;
+  badge.textContent  = p.name;
+  badge.style.background = p.color;
 }
 
 function updateScoreStrip() {
@@ -1474,19 +2091,12 @@ document.getElementById('level-tabs').addEventListener('click', e => {
   document.querySelectorAll('#level-tabs .tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
   currentLevel = btn.dataset.level;
-  if (gameMode === '1P') startGame();
+  if (gameMode === '1P') startCrossword();
 });
 
-document.getElementById('type-tabs').addEventListener('click', e => {
-  const btn = e.target.closest('[data-type]');
-  if (!btn) return;
-  document.querySelectorAll('#type-tabs .type-tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  currentType = btn.dataset.type;
-  startGame();
-});
-
-document.getElementById('new-word-btn').addEventListener('click', startGame);
+document.getElementById('new-puzzle-btn').addEventListener('click', startCrossword);
+document.getElementById('check-btn').addEventListener('click', checkAllWords);
+document.getElementById('reveal-btn').addEventListener('click', revealWord);
 
 // ─── Mode toggle ──────────────────────────────────────
 document.querySelector('.mode-toggle').addEventListener('click', e => {
@@ -1551,7 +2161,12 @@ let resizeTimer;
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => {
-    if (currentWord) setTileSize(currentWord.w.length);
+    if (gameMode === '1P' && currentPuzzle) {
+      const cols = currentPuzzle.bbox.maxC - currentPuzzle.bbox.minC + 1;
+      document.documentElement.style.setProperty('--cw-cell', computeCwCellSize(cols) + 'px');
+    } else if (gameMode === '2P' && currentWord) {
+      setTileSize(currentWord.w.length);
+    }
   }, 150);
 });
 
