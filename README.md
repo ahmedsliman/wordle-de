@@ -2,7 +2,7 @@
 
 A German Wordle game for language learners — guess German vocabulary words at A1, A2, or B1 (CEFR) difficulty. Hints are shown in English and Arabic. Includes a 2-player competitive mode.
 
-**Live demo:** [ahmedsoliman.github.io/wordle-de](https://ahmedsoliman.github.io/wordle-de)
+**Live demo:** [ahmedsliman.github.io/wordle-de](https://ahmedsliman.github.io/wordle-de)
 
 ---
 
