@@ -941,8 +941,161 @@
     @media (prefers-color-scheme: dark) {
       .cw-cell.cell-hl { background: #1e3a5f; }
     }
+
+    /* ─── Online Lobby ───────────────────────────────────── */
+    .mode-choice-row {
+      display: flex;
+      gap: 12px;
+    }
+    .mode-choice-btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.9rem;
+      font-weight: 500;
+      flex: 1;
+      padding: 16px 12px;
+      border: 2px solid var(--color-border);
+      border-radius: 12px;
+      background: var(--color-surface);
+      color: var(--color-text);
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .mode-choice-btn:hover:not(:disabled) {
+      border-color: var(--color-text-muted);
+      background: var(--color-bg);
+    }
+    .mode-choice-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .mode-choice-icon { font-size: 1.8rem; }
+    .mode-choice-sub  { font-size: 0.72rem; color: var(--color-text-muted); }
+
+    .lobby-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--color-text-muted);
+      font-size: 0.8rem;
+    }
+    .lobby-divider::before, .lobby-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--color-border);
+    }
+
+    .room-code-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 16px;
+      background: var(--color-surface);
+      border-radius: 12px;
+      border: 2px solid var(--color-border);
+    }
+    .room-code-label {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .room-code-value {
+      font-family: 'DM Mono', monospace;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--color-correct);
+    }
+    .copy-code-btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      padding: 6px 16px;
+      border: 1px solid var(--color-border);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .copy-code-btn:hover { border-color: var(--color-text-muted); color: var(--color-text); }
+
+    @keyframes dots {
+      0%   { content: ''; }
+      25%  { content: '.'; }
+      50%  { content: '..'; }
+      75%  { content: '...'; }
+      100% { content: ''; }
+    }
+    .waiting-dots::after {
+      content: '';
+      animation: dots 1.5s steps(4, end) infinite;
+    }
+
+    .join-row {
+      display: flex;
+      gap: 8px;
+    }
+    .join-row input {
+      flex: 1;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.95rem;
+      padding: 10px 14px;
+      border: 2px solid var(--color-border);
+      border-radius: 8px;
+      background: var(--color-surface);
+      color: var(--color-text);
+      outline: none;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: border-color 0.15s;
+    }
+    .join-row input:focus { border-color: var(--color-text-muted); }
+    .join-btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      background: var(--color-correct);
+      color: #fff;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      white-space: nowrap;
+    }
+    .join-btn:hover { opacity: 0.88; }
   </style>
 </head>
+
+<!-- Firebase Realtime Database SDK (ES module) -->
+<script type="module" id="firebase-module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js';
+  import { getDatabase, ref, set, get, update, onValue, remove, onDisconnect }
+    from 'https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js';
+
+  const firebaseConfig = {
+    apiKey:            "AIzaSyA84SBX0pC7BaLHAiwDdo6sRMCk9XhuLPM",
+    authDomain:        "wortle-de.firebaseapp.com",
+    databaseURL:       "https://wortle-de-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId:         "wortle-de",
+    storageBucket:     "wortle-de.firebasestorage.app",
+    messagingSenderId: "983732035600",
+    appId:             "1:983732035600:web:ab615bcf7083878343aa95",
+    measurementId:     "G-ZLHCN2FTM6"
+  };
+
+  try {
+    const app = initializeApp(firebaseConfig);
+    const db  = getDatabase(app);
+    window._fb = { db, ref, set, get, update, onValue, remove, onDisconnect };
+    window.dispatchEvent(new Event('firebase-ready'));
+  } catch (err) {
+    console.warn('Firebase init failed — Online mode disabled:', err.message);
+  }
+</script>
 <body>
 
   <div id="loading">Loading words…</div>
@@ -1040,10 +1193,30 @@
     <div>Beste: <span id="streak-best">0</span></div>
   </div>
 
-  <!-- Setup Overlay -->
-  <div id="setup-overlay" class="overlay hidden">
+  <!-- Mode Picker Overlay (Hot Seat vs Online) -->
+  <div id="mode-picker-overlay" class="overlay hidden">
     <div class="overlay-card">
       <h2 class="overlay-title">2-Spieler-Modus</h2>
+      <div class="mode-choice-row">
+        <button class="mode-choice-btn" id="hotseat-mode-btn">
+          <span class="mode-choice-icon">📱</span>
+          <span>Lokal</span>
+          <span class="mode-choice-sub">1 Gerät, abwechselnd</span>
+        </button>
+        <button class="mode-choice-btn" id="online-mode-btn" disabled>
+          <span class="mode-choice-icon">🌐</span>
+          <span>Online</span>
+          <span class="mode-choice-sub">2 Geräte</span>
+        </button>
+      </div>
+      <button class="cancel-btn" id="cancel-mode-picker-btn">Abbrechen</button>
+    </div>
+  </div>
+
+  <!-- Setup Overlay (Hot Seat) -->
+  <div id="setup-overlay" class="overlay hidden">
+    <div class="overlay-card">
+      <h2 class="overlay-title">Lokal spielen</h2>
       <div class="setup-fields">
         <label>
           <span class="player-label p1-label">Player 1</span>
@@ -1056,6 +1229,43 @@
       </div>
       <button id="start-2p-btn" class="start-btn">Spiel starten</button>
       <button id="cancel-setup-btn" class="cancel-btn">Abbrechen</button>
+    </div>
+  </div>
+
+  <!-- Online Lobby Overlay -->
+  <div id="online-lobby-overlay" class="overlay hidden">
+    <div class="overlay-card">
+      <h2 class="overlay-title">Online spielen</h2>
+
+      <!-- Screen A: Create / Join -->
+      <div id="lobby-screen-main">
+        <div class="setup-fields">
+          <label>
+            <span class="player-label">Dein Name</span>
+            <input type="text" id="online-name-input" value="Player 1" maxlength="16" />
+          </label>
+        </div>
+        <button class="start-btn" id="create-room-btn">Raum erstellen</button>
+        <div class="lobby-divider">oder beitreten</div>
+        <div class="join-row">
+          <input type="text" id="room-code-input" placeholder="RAUMCODE" maxlength="6" />
+          <button class="join-btn" id="join-room-btn">Beitreten</button>
+        </div>
+      </div>
+
+      <!-- Screen B: Waiting for opponent -->
+      <div id="lobby-screen-waiting" class="hidden">
+        <div class="room-code-box">
+          <span class="room-code-label">Dein Raumcode</span>
+          <span class="room-code-value" id="room-code-display">------</span>
+          <button class="copy-code-btn" id="copy-code-btn">Kopieren</button>
+        </div>
+        <p style="text-align:center;color:var(--color-text-muted);font-size:0.9rem;margin-top:8px">
+          Warte auf Mitspieler<span class="waiting-dots"></span>
+        </p>
+      </div>
+
+      <button class="cancel-btn" id="cancel-lobby-btn">Abbrechen</button>
     </div>
   </div>
 
@@ -1113,6 +1323,28 @@ let activePlayer     = 0;
 let roundStartPlayer = 0;
 let rowOwner         = [];
 let playerWords      = [null, null];
+
+// ─── Online 2P State ──────────────────────────────────
+let onlineMode    = false;
+let myPlayerIdx   = null;   // 0 or 1
+let roomId        = null;   // 6-char room code
+let fbListeners   = [];     // unsubscribe functions
+let onlineRoundNum = 0;
+let lastRoundNum  = -1;
+
+// ─── Firebase helpers ─────────────────────────────────
+function fbRef(path) {
+  return window._fb.ref(window._fb.db, path);
+}
+function fbOnValue(r, cb) {
+  const unsub = window._fb.onValue(r, cb);
+  fbListeners.push(unsub);
+  return unsub;
+}
+
+window.addEventListener('firebase-ready', () => {
+  document.getElementById('online-mode-btn').disabled = false;
+});
 
 // ─── Keyboard layout ──────────────────────────────────
 const KB_ROWS = [
@@ -1915,6 +2147,8 @@ function handleKey(key) {
   if (gameMode === '2P') {
     // 2P path
     if (gameOver || animating || !currentWord) return;
+    // Online: block input when it's the opponent's row
+    if (onlineMode && rowOwner[currentRow] !== myPlayerIdx) return;
     if (key === '⌫' || key === 'Backspace') { deleteLetter(); }
     else if (key === 'ENTER' || key === 'Enter') { submitGuess(); }
     else if (/^[A-ZÄÖÜa-zäöüß]$/.test(key)) { addLetter(norm(key)); }
@@ -1982,6 +2216,48 @@ function submitGuess() {
     const won  = results.every(r => r === 'correct');
     const last = currentRow === 5;
 
+    if (onlineMode) {
+      // ── Online path: push result to Firebase ──────────
+      const resultNums = results.map(r => r === 'correct' ? 0 : r === 'present' ? 1 : 2);
+      const updates = {
+        [`guesses/${currentRow}`]: resultNums,
+        currentRow:   currentRow + 1,
+        activePlayer: 1 - activePlayer,
+      };
+      if (won || last) {
+        gameOver = true; // prevent onRoundUpdate from double-handling
+        updates.gameOver     = true;
+        updates.roundWinner  = won ? myPlayerIdx : null;
+        if (won) {
+          animateBounce(currentRow);
+          players[myPlayerIdx].score++;
+          updateScoreStrip();
+          showMessage(players[myPlayerIdx].name + ' punktet! 🎉', 'win');
+          window._fb.update(fbRef(`rooms/${roomId}/players/${myPlayerIdx}`),
+            { score: players[myPlayerIdx].score });
+          if (players[myPlayerIdx].score >= WIN_SCORE_2P) {
+            window._fb.update(fbRef(`rooms/${roomId}`),
+              { winner: myPlayerIdx, status: 'finished' });
+          } else if (myPlayerIdx === 0) {
+            // Host drives next round (non-host waits for Firebase)
+            roundStartPlayer = 1 - myPlayerIdx;
+            onlineRoundNum++;
+            setTimeout(startOnlineRound, 1800);
+          }
+        } else {
+          showMessage('Das Wort war: ' + answer, 'lose');
+          if (myPlayerIdx === 0) {
+            roundStartPlayer = 1 - roundStartPlayer;
+            onlineRoundNum++;
+            setTimeout(startOnlineRound, 2000);
+          }
+        }
+      }
+      window._fb.update(fbRef(`rooms/${roomId}/round`), updates);
+      return; // skip hot-seat path below
+    }
+
+    // ── Hot-seat path (unchanged) ─────────────────────
     if (won) {
       animateBounce(currentRow);
       gameOver = true;
@@ -2056,8 +2332,16 @@ function setMode(mode) {
     panelHint.classList.remove('hidden');
     document.getElementById('panel-close-btn').classList.remove('hidden');
     document.querySelector('.grid-wrap').classList.remove('hidden');
-    showSetupOverlay();
+    showModePickerOverlay();
   }
+}
+
+function showModePickerOverlay() {
+  document.getElementById('mode-picker-overlay').classList.remove('hidden');
+}
+
+function hideModePickerOverlay() {
+  document.getElementById('mode-picker-overlay').classList.add('hidden');
 }
 
 // ─── Setup Overlay ────────────────────────────────────
@@ -2119,10 +2403,18 @@ function updateTurnBanner() {
   const badge  = document.getElementById('panel-player-badge');
   const p      = players[activePlayer];
   const cls    = activePlayer === 0 ? 'p1' : 'p2';
-  banner.textContent = p.name + "'s turn";
-  banner.className   = 'turn-banner ' + cls;
-  badge.textContent  = p.name;
-  badge.style.background = p.color;
+  if (onlineMode) {
+    const isMyTurn = activePlayer === myPlayerIdx;
+    banner.textContent = isMyTurn ? 'Du bist dran!' : (p.name + ' ist dran');
+    banner.className   = 'turn-banner ' + cls;
+    badge.textContent  = players[myPlayerIdx].name;
+    badge.style.background = players[myPlayerIdx].color;
+  } else {
+    banner.textContent = p.name + "'s turn";
+    banner.className   = 'turn-banner ' + cls;
+    badge.textContent  = p.name;
+    badge.style.background = p.color;
+  }
 }
 
 function updateScoreStrip() {
@@ -2141,6 +2433,12 @@ function updateRowOwnerVisuals() {
     const active = document.getElementById(`grid-row-${currentRow}`);
     if (active) active.classList.add('active-row');
   }
+  // Online: hide skip button on opponent's turns
+  if (onlineMode) {
+    const skipBtn = document.getElementById('skip-turn-btn');
+    const myTurn  = !gameOver && rowOwner[currentRow] === myPlayerIdx;
+    skipBtn.classList.toggle('hidden', !myTurn);
+  }
 }
 
 function showHandoff(nextPlayerIndex) {
@@ -2153,11 +2451,37 @@ function showHandoff(nextPlayerIndex) {
 
 function skipTurn2P() {
   if (gameOver || animating) return;
+  if (onlineMode && rowOwner[currentRow] !== myPlayerIdx) return;
+
   const wordLen = currentWord.w.length;
   for (let c = 0; c < wordLen; c++) {
     const tile = document.getElementById(`tile-${currentRow}-${c}`);
     if (tile) { tile.textContent = '–'; tile.classList.add('skipped'); }
   }
+
+  if (onlineMode) {
+    const nextRow = currentRow + 1;
+    const updates = {
+      [`skipped/${currentRow}`]: true,
+      currentRow:   nextRow,
+      activePlayer: 1 - activePlayer,
+    };
+    if (nextRow > 5) {
+      gameOver = true;
+      updates.gameOver    = true;
+      updates.roundWinner = null;
+      showMessage('Das Wort war: ' + currentWord.w, 'lose');
+      if (myPlayerIdx === 0) {
+        roundStartPlayer = 1 - roundStartPlayer;
+        onlineRoundNum++;
+        setTimeout(startOnlineRound, 2000);
+      }
+    }
+    window._fb.update(fbRef(`rooms/${roomId}/round`), updates);
+    return;
+  }
+
+  // Hot-seat path
   board[currentRow] = [];
   currentRow++;
   if (currentRow > 5) {
@@ -2202,6 +2526,290 @@ function end2PGame(winnerIndex) {
   document.getElementById('results-overlay').classList.remove('hidden');
 }
 
+// ─── Online: Room helpers ─────────────────────────────
+function genRoomCode() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  return Array.from({ length: 6 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+}
+
+async function createRoom() {
+  if (!window._fb) return;
+  const name = document.getElementById('online-name-input').value.trim() || 'Player 1';
+  const createBtn = document.getElementById('create-room-btn');
+  createBtn.disabled = true;
+  createBtn.textContent = '…';
+
+  try {
+    // Find a unique 6-char code
+    let code;
+    for (let i = 0; i < 10; i++) {
+      code = genRoomCode();
+      const snap = await window._fb.get(fbRef(`rooms/${code}`));
+      if (!snap.exists()) break;
+    }
+
+    roomId       = code;
+    myPlayerIdx  = 0;
+    players[0]   = { name, score: 0, color: '#3b82f6' };
+    players[1]   = { name: 'Player 2', score: 0, color: '#ef4444' };
+
+    await window._fb.set(fbRef(`rooms/${code}`), {
+      status: 'waiting',
+      level:  currentLevel,
+      createdAt: Date.now(),
+      players: { 0: { name, score: 0, connected: true } },
+      winner: null,
+    });
+
+    // Register onDisconnect cleanup
+    window._fb.onDisconnect(fbRef(`rooms/${code}/players/0/connected`)).set(false);
+
+    // Show waiting screen
+    document.getElementById('lobby-screen-main').classList.add('hidden');
+    document.getElementById('lobby-screen-waiting').classList.remove('hidden');
+    document.getElementById('room-code-display').textContent = code;
+
+    // Wait for Player 2 to join
+    const p2Unsub = window._fb.onValue(fbRef(`rooms/${code}/players/1`), snap => {
+      if (!snap.exists()) return;
+      players[1].name = snap.val().name || 'Player 2';
+      try { p2Unsub(); } catch (e) {}
+      startOnlineGame();
+      startOnlineRound();
+    });
+    fbListeners.push(p2Unsub);
+  } catch (err) {
+    console.error('createRoom failed:', err);
+    showMessage('Verbindungsfehler. Bitte Firebase konfigurieren.', 'lose');
+    roomId = null; myPlayerIdx = null;
+    createBtn.disabled = false;
+    createBtn.textContent = 'Raum erstellen';
+  }
+}
+
+async function joinRoom(code) {
+  if (!window._fb) return;
+  code = code.toUpperCase().trim();
+  if (code.length !== 6) { showMessage('Bitte einen 6-stelligen Raumcode eingeben.', 'lose'); return; }
+
+  const joinBtn = document.getElementById('join-room-btn');
+  joinBtn.disabled = true;
+  joinBtn.textContent = '…';
+
+  try {
+    const snap = await window._fb.get(fbRef(`rooms/${code}`));
+    if (!snap.exists()) { showMessage('Raum nicht gefunden.', 'lose'); joinBtn.disabled = false; joinBtn.textContent = 'Beitreten'; return; }
+    const roomData = snap.val();
+    if (roomData.status !== 'waiting') { showMessage('Raum nicht mehr verfügbar.', 'lose'); joinBtn.disabled = false; joinBtn.textContent = 'Beitreten'; return; }
+
+    const name = document.getElementById('online-name-input').value.trim() || 'Player 2';
+
+    roomId       = code;
+    myPlayerIdx  = 1;
+    players[0]   = { name: roomData.players[0].name, score: 0, color: '#3b82f6' };
+    players[1]   = { name, score: 0, color: '#ef4444' };
+    currentLevel = roomData.level;
+
+    await window._fb.update(fbRef(`rooms/${code}`), {
+      status: 'active',
+      'players/1': { name, score: 0, connected: true },
+    });
+
+    window._fb.onDisconnect(fbRef(`rooms/${code}/players/1/connected`)).set(false);
+
+    startOnlineGame();
+    // Player 2 waits — host's startOnlineRound() will push round data via Firebase
+  } catch (err) {
+    console.error('joinRoom failed:', err);
+    showMessage('Verbindungsfehler. Prüfe den Raumcode.', 'lose');
+    roomId = null; myPlayerIdx = null;
+    joinBtn.disabled = false;
+    joinBtn.textContent = 'Beitreten';
+  }
+}
+
+function startOnlineGame() {
+  document.getElementById('online-lobby-overlay').classList.add('hidden');
+  document.getElementById('lobby-screen-main').classList.remove('hidden');
+  document.getElementById('lobby-screen-waiting').classList.add('hidden');
+
+  onlineMode = true;
+  onlineRoundNum = 0;
+  roundStartPlayer = 0;
+  lastRoundNum = -1;
+
+  updateScoreStrip();
+
+  // Subscribe: round data (all game state)
+  fbOnValue(fbRef(`rooms/${roomId}/round`), onRoundUpdate);
+
+  // Subscribe: player scores + disconnect detection
+  fbOnValue(fbRef(`rooms/${roomId}/players`), snap => {
+    if (!snap.exists()) return;
+    const data = snap.val();
+    if (data[0]) players[0].score = data[0].score || 0;
+    if (data[1]) players[1].score = data[1].score || 0;
+    updateScoreStrip();
+    const oppIdx = 1 - myPlayerIdx;
+    if (data[oppIdx] && data[oppIdx].connected === false) {
+      showMessage(players[oppIdx].name + ' hat das Spiel verlassen', 'lose');
+    }
+  });
+
+  // Subscribe: game winner
+  fbOnValue(fbRef(`rooms/${roomId}/winner`), snap => {
+    if (snap.exists() && snap.val() !== null) {
+      end2PGame(snap.val());
+    }
+  });
+}
+
+function startOnlineRound() {
+  if (myPlayerIdx !== 0) return; // only host picks words
+
+  const w0 = pickWord(currentLevel, 'all');
+  if (!w0) return;
+  const w1 = pickWordSameLength(currentLevel, w0.w.length, w0.w) || w0;
+
+  const pool = words[currentLevel] || [];
+  const i0   = pool.findIndex(e => e.w === w0.w);
+  const i1   = pool.findIndex(e => e.w === w1.w);
+
+  window._fb.set(fbRef(`rooms/${roomId}/round`), {
+    roundNum:         onlineRoundNum,
+    roundStartPlayer: roundStartPlayer,
+    activePlayer:     roundStartPlayer,
+    currentRow:       0,
+    wordLen:          w0.w.length,
+    wordIndices:      { 0: i0, 1: i1 },
+    guesses:          {},
+    skipped:          {},
+    gameOver:         false,
+    roundWinner:      null,
+  });
+}
+
+function onRoundUpdate(snap) {
+  if (!snap.exists()) return;
+  const d = snap.val();
+
+  // ── New round: full rebuild ───────────────────────────
+  if (d.roundNum !== lastRoundNum) {
+    lastRoundNum     = d.roundNum;
+    onlineRoundNum   = d.roundNum;
+    currentRow       = d.currentRow;
+    activePlayer     = d.activePlayer;
+    roundStartPlayer = d.roundStartPlayer;
+    rowOwner         = Array.from({ length: 6 }, (_, i) => (d.roundStartPlayer + i) % 2);
+    gameOver         = false;
+    animating        = false;
+    keyColors        = {};
+    board            = Array.from({ length: 6 }, () => []);
+
+    const pool = words[currentLevel] || [];
+    const myEntry  = pool[d.wordIndices[myPlayerIdx]];
+    const oppEntry = pool[d.wordIndices[1 - myPlayerIdx]];
+    if (!myEntry) return;
+
+    playerWords[myPlayerIdx]     = myEntry;
+    playerWords[1 - myPlayerIdx] = oppEntry || myEntry;
+    currentWord = myEntry;
+
+    setTileSize(d.wordLen);
+    buildGrid(d.wordLen);
+    buildKeyboard();
+    renderHint(currentWord);
+    showMessage('', '');
+    updateTurnBanner();
+    updateRowOwnerVisuals();
+
+    // Re-render any existing guesses (reconnect or late-join)
+    if (d.guesses) {
+      Object.entries(d.guesses).forEach(([ri, nums]) =>
+        renderOpponentTiles(parseInt(ri), nums));
+    }
+    if (d.skipped) {
+      Object.keys(d.skipped).forEach(ri => markSkippedRow(parseInt(ri)));
+    }
+    return;
+  }
+
+  // ── Same round: sync incremental changes ─────────────
+  currentRow   = d.currentRow;
+  activePlayer = d.activePlayer;
+
+  if (d.guesses) {
+    Object.entries(d.guesses).forEach(([ri, nums]) =>
+      renderOpponentTiles(parseInt(ri), nums));
+  }
+  if (d.skipped) {
+    Object.keys(d.skipped).forEach(ri => markSkippedRow(parseInt(ri)));
+  }
+
+  updateTurnBanner();
+  updateRowOwnerVisuals();
+
+  // Round ended by the OTHER device
+  if (d.gameOver && !gameOver) {
+    gameOver = true;
+    if (d.roundWinner === myPlayerIdx) {
+      // My score was already shown locally — do nothing extra
+    } else if (d.roundWinner !== null) {
+      showMessage(players[d.roundWinner].name + ' punktet! Das Wort war: ' + currentWord.w, 'lose');
+    } else {
+      showMessage('Das Wort war: ' + currentWord.w, 'lose');
+    }
+    // Host drives next round
+    if (myPlayerIdx === 0 && players[0].score < WIN_SCORE_2P && players[1].score < WIN_SCORE_2P) {
+      roundStartPlayer = d.roundWinner !== null ? 1 - d.roundWinner : 1 - d.roundStartPlayer;
+      onlineRoundNum++;
+      setTimeout(startOnlineRound, 2000);
+    }
+  }
+}
+
+function renderOpponentTiles(rowIdx, resultNums) {
+  if (rowOwner[rowIdx] === myPlayerIdx) return; // skip my own rows
+  for (let c = 0; c < resultNums.length; c++) {
+    const tile = document.getElementById(`tile-${rowIdx}-${c}`);
+    if (!tile) continue;
+    const cls = ['correct', 'present', 'absent'][resultNums[c]];
+    tile.textContent = '';
+    tile.removeAttribute('data-letter');
+    tile.className = 'tile ' + cls;
+  }
+}
+
+function markSkippedRow(rowIdx) {
+  const len = currentWord ? currentWord.w.length : 5;
+  for (let c = 0; c < len; c++) {
+    const tile = document.getElementById(`tile-${rowIdx}-${c}`);
+    if (tile && !tile.classList.contains('correct') &&
+        !tile.classList.contains('present') && !tile.classList.contains('absent')) {
+      tile.textContent = '–';
+      tile.classList.add('skipped');
+    }
+  }
+}
+
+function cleanupOnline() {
+  fbListeners.forEach(unsub => { try { unsub(); } catch (e) {} });
+  fbListeners = [];
+  // Host removes room if still waiting
+  if (roomId && myPlayerIdx === 0 && window._fb) {
+    window._fb.get(fbRef(`rooms/${roomId}/status`)).then(snap => {
+      if (snap.exists() && snap.val() === 'waiting') {
+        window._fb.remove(fbRef(`rooms/${roomId}`));
+      }
+    }).catch(() => {});
+  }
+  onlineMode     = false;
+  roomId         = null;
+  myPlayerIdx    = null;
+  lastRoundNum   = -1;
+  onlineRoundNum = 0;
+}
+
 // ─── Tab switching ────────────────────────────────────
 document.getElementById('level-tabs').addEventListener('click', e => {
   const btn = e.target.closest('[data-level]');
@@ -2224,7 +2832,51 @@ document.querySelector('.mode-toggle').addEventListener('click', e => {
   setMode(btn.dataset.mode);
 });
 
-// ─── Setup overlay ────────────────────────────────────
+// ─── Mode picker overlay ──────────────────────────────
+document.getElementById('hotseat-mode-btn').addEventListener('click', () => {
+  hideModePickerOverlay();
+  showSetupOverlay();
+});
+
+document.getElementById('online-mode-btn').addEventListener('click', () => {
+  hideModePickerOverlay();
+  document.getElementById('online-lobby-overlay').classList.remove('hidden');
+});
+
+document.getElementById('cancel-mode-picker-btn').addEventListener('click', () => {
+  hideModePickerOverlay();
+  setMode('1P');
+});
+
+// ─── Online lobby overlay ─────────────────────────────
+document.getElementById('create-room-btn').addEventListener('click', createRoom);
+
+document.getElementById('join-room-btn').addEventListener('click', () => {
+  joinRoom(document.getElementById('room-code-input').value);
+});
+
+document.getElementById('room-code-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') joinRoom(e.target.value);
+});
+
+document.getElementById('copy-code-btn').addEventListener('click', () => {
+  const code = document.getElementById('room-code-display').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = document.getElementById('copy-code-btn');
+    btn.textContent = 'Kopiert!';
+    setTimeout(() => { btn.textContent = 'Kopieren'; }, 1500);
+  }).catch(() => {});
+});
+
+document.getElementById('cancel-lobby-btn').addEventListener('click', () => {
+  cleanupOnline();
+  document.getElementById('online-lobby-overlay').classList.add('hidden');
+  document.getElementById('lobby-screen-main').classList.remove('hidden');
+  document.getElementById('lobby-screen-waiting').classList.add('hidden');
+  setMode('1P');
+});
+
+// ─── Setup overlay (hot seat) ─────────────────────────
 document.getElementById('start-2p-btn').addEventListener('click', startGame2P);
 
 document.getElementById('cancel-setup-btn').addEventListener('click', () => {
@@ -2236,7 +2888,10 @@ document.getElementById('cancel-setup-btn').addEventListener('click', () => {
 document.getElementById('skip-turn-btn').addEventListener('click', skipTurn2P);
 
 // ─── Panel close button (2P → exit to 1P) ─────────────
-document.getElementById('panel-close-btn').addEventListener('click', () => setMode('1P'));
+document.getElementById('panel-close-btn').addEventListener('click', () => {
+  if (onlineMode) cleanupOnline();
+  setMode('1P');
+});
 
 // ─── Handoff overlay ──────────────────────────────────
 document.getElementById('handoff-ready-btn').addEventListener('click', () => {
@@ -2246,18 +2901,30 @@ document.getElementById('handoff-ready-btn').addEventListener('click', () => {
 // ─── Results overlay ──────────────────────────────────
 document.getElementById('play-again-btn').addEventListener('click', () => {
   document.getElementById('results-overlay').classList.add('hidden');
-  startGame2P();
+  if (onlineMode) {
+    players[0].score = 0;
+    players[1].score = 0;
+    onlineRoundNum   = 0;
+    roundStartPlayer = 0;
+    updateScoreStrip();
+    if (myPlayerIdx === 0) startOnlineRound();
+  } else {
+    startGame2P();
+  }
 });
 
 document.getElementById('back-1p-btn').addEventListener('click', () => {
   document.getElementById('results-overlay').classList.add('hidden');
+  if (onlineMode) cleanupOnline();
   setMode('1P');
 });
 
 // ─── Physical keyboard ────────────────────────────────
 document.addEventListener('keydown', e => {
   if (e.ctrlKey || e.metaKey || e.altKey) return;
-  if (gameMode === '2P' && document.getElementById('setup-overlay').classList.contains('hidden') === false) return;
+  if (!document.getElementById('setup-overlay').classList.contains('hidden')) return;
+  if (!document.getElementById('mode-picker-overlay').classList.contains('hidden')) return;
+  if (!document.getElementById('online-lobby-overlay').classList.contains('hidden')) return;
   if (!document.getElementById('handoff-overlay').classList.contains('hidden')) return;
   handleKey(e.key);
 });
