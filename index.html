@@ -2662,6 +2662,26 @@ function startOnlineGame() {
       end2PGame(snap.val());
     }
   });
+
+  // Host backup: if onValue for players/1 never fired (stale WebSocket),
+  // start the round via HTTP get() after 4 seconds
+  if (myPlayerIdx === 0) {
+    const backupTimer = setTimeout(async () => {
+      if (lastRoundNum !== -1) return; // round already started via onValue
+      const snap = await window._fb.get(fbRef(`rooms/${roomId}/players/1`)).catch(() => null);
+      if (snap && snap.exists()) {
+        players[1].name = snap.val().name || 'Player 2';
+        updateScoreStrip();
+        startOnlineRound();
+      }
+    }, 4000);
+    fbListeners.push(() => clearTimeout(backupTimer));
+  }
+
+  // Joiner: show loading hint while waiting for round data
+  if (myPlayerIdx === 1) {
+    showMessage('Warte auf Spielstart…', '');
+  }
 }
 
 function startOnlineRound() {
