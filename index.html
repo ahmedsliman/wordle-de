@@ -1112,6 +1112,7 @@ let players          = [
 let activePlayer     = 0;
 let roundStartPlayer = 0;
 let rowOwner         = [];
+let playerWords      = [null, null];
 
 // ─── Keyboard layout ──────────────────────────────────
 const KB_ROWS = [
@@ -1164,6 +1165,13 @@ function renderStreak() {
 function pickWord(level, type) {
   let pool = words[level] || [];
   if (type !== 'all') pool = pool.filter(e => e.type === type);
+  if (!pool.length) return null;
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+function pickWordSameLength(level, len, excludeWord) {
+  let pool = (words[level] || []).filter(e => e.w.length === len && e.w !== excludeWord);
+  if (!pool.length) pool = (words[level] || []).filter(e => e.w.length === len);
   if (!pool.length) return null;
   return pool[Math.floor(Math.random() * pool.length)];
 }
@@ -1994,8 +2002,12 @@ function submitGuess() {
     } else {
       currentRow++;
       activePlayer = 1 - activePlayer;
+      currentWord  = playerWords[activePlayer];
+      keyColors    = {};
       updateTurnBanner();
       updateRowOwnerVisuals();
+      buildKeyboard();
+      renderHint(currentWord);
       showHandoff(activePlayer);
     }
   });
@@ -2073,24 +2085,29 @@ function startGame2P() {
 }
 
 function startRound2P() {
-  const entry = pickWord(currentLevel, 'all');
-  if (!entry) return;
+  const w0 = pickWord(currentLevel, 'all');
+  if (!w0) return;
+  const w1 = pickWordSameLength(currentLevel, w0.w.length, w0.w) || w0;
 
-  currentWord = entry;
-  currentRow  = 0;
-  board       = Array.from({ length: 6 }, () => []);
-  gameOver    = false;
-  animating   = false;
-  keyColors   = {};
+  // Assign words: roundStartPlayer gets w0, the other gets w1
+  playerWords[roundStartPlayer]     = w0;
+  playerWords[1 - roundStartPlayer] = w1;
+
+  currentRow   = 0;
+  board        = Array.from({ length: 6 }, () => []);
+  gameOver     = false;
+  animating    = false;
+  keyColors    = {};
   activePlayer = roundStartPlayer;
+  currentWord  = playerWords[activePlayer];
 
   // Assign each row to a player: P0 gets even rows, P1 gets odd (relative to start)
   rowOwner = Array.from({ length: 6 }, (_, i) => (roundStartPlayer + i) % 2);
 
-  setTileSize(entry.w.length);
-  buildGrid(entry.w.length);
+  setTileSize(currentWord.w.length);
+  buildGrid(currentWord.w.length);
   buildKeyboard();
-  renderHint(entry);
+  renderHint(currentWord);
   showMessage('', '');
 
   updateTurnBanner();
@@ -2151,8 +2168,12 @@ function skipTurn2P() {
     return;
   }
   activePlayer = 1 - activePlayer;
+  currentWord  = playerWords[activePlayer];
+  keyColors    = {};
   updateTurnBanner();
   updateRowOwnerVisuals();
+  buildKeyboard();
+  renderHint(currentWord);
   showHandoff(activePlayer);
 }
 
