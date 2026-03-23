@@ -328,6 +328,13 @@
     .grid-row.active-row .tile:not(.correct):not(.present):not(.absent):not(.skipped) {
       border-color: var(--color-text-muted);
     }
+    .grid-row.active-row {
+      border-left-width: 5px;
+    }
+
+    .handoff-card { text-align: center; }
+    .handoff-icon { font-size: 3rem; margin-bottom: 0.5rem; }
+    .handoff-sub  { color: var(--color-text-muted); font-size: 0.95rem; margin: 0.5rem 0 1.2rem; }
 
     .tile.skipped {
       color: var(--color-text-muted);
@@ -477,6 +484,7 @@
     .key.correct { background: var(--color-correct); color: #fff; }
     .key.present { background: var(--color-present); color: #fff; }
     .key.absent  { background: var(--color-absent);  color: #fff; }
+    .key:focus-visible { outline: 2px solid var(--color-correct); outline-offset: 2px; }
 
     /* ─── Streak bar ─────────────────────────────────── */
     .streak-bar {
@@ -648,6 +656,9 @@
     .cell-owner-badge.p1 { background: var(--color-p1); }
     .cell-owner-badge.p2 { background: var(--color-p2); }
 
+    /* Hide fixed keyboard when any overlay is open */
+    body:has(.overlay:not(.hidden)) #keyboard { display: none !important; }
+
     /* ─── Overlays ───────────────────────────────────── */
     .overlay {
       position: fixed;
@@ -787,11 +798,36 @@
     }
 
     /* ─── Mobile ─────────────────────────────────────── */
+    @media (max-width: 680px) {
+      /* Reduce key height so keyboard fits on screen */
+      .key { height: 48px; }
+
+      /* Fixed keyboard at bottom of viewport */
+      #keyboard:not(:empty) {
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        background: var(--color-bg);
+        border-top: 1px solid var(--color-border);
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+        padding: 6px 4px calc(4px + env(safe-area-inset-bottom, 0px));
+        z-index: 40;
+      }
+
+      /* Reserve space so content isn't hidden under keyboard */
+      body.has-keyboard { padding-bottom: 185px; }
+    }
+
+    /* On very small screens shrink keys further */
     @media (max-width: 400px) {
       :root { --cell-size: 88px; }
-      .key { height: 48px; min-width: 28px; max-width: 36px; font-size: 0.7rem; }
+      .key { min-width: 28px; max-width: 36px; font-size: 0.7rem; }
       .key.wide { min-width: 44px; max-width: 54px; font-size: 0.62rem; }
       .cell-hint-text { font-size: 0.72rem; }
+    }
+
+    /* Desktop: hide keyboard in 1P crossword mode (physical keyboard used) */
+    @media (min-width: 681px) {
+      #wordle-panel.mode-1p #keyboard { display: none; }
     }
 
     /* ─── Crossword ──────────────────────────────────── */
@@ -816,8 +852,11 @@
       border: 1px solid var(--color-border);
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; user-select: none;
+      touch-action: manipulation;
     }
 
+    .cw-cell:focus { outline: none; }
+    .cw-cell:focus-visible { outline: 2px solid var(--color-correct); outline-offset: -2px; z-index: 1; }
     .cw-cell.black { background: #2a2a2a; border-color: #2a2a2a; cursor: default; }
     .cw-cell.word-hl { background: var(--color-surface); }
     .cw-cell.cell-hl { background: #bde0ff; }
@@ -861,7 +900,7 @@
       display: flex; gap: 6px; line-height: 1.4;
     }
 
-    .clue-item:hover  { background: var(--color-surface); }
+    .clue-item:hover, .clue-item:focus-visible { background: var(--color-surface); outline: none; }
     .clue-item.active { background: var(--color-tab-active-bg); color: var(--color-tab-active-text); }
     .clue-item.solved { color: var(--color-text-muted); text-decoration: line-through; }
     .clue-num { font-weight: 600; min-width: 22px; }
@@ -888,6 +927,8 @@
 
     #check-btn:hover, #reveal-btn:hover, #new-puzzle-btn:hover   { opacity: 0.88; }
     #check-btn:active, #reveal-btn:active, #new-puzzle-btn:active { transform: scale(0.97); }
+    #check-btn:focus-visible, #reveal-btn:focus-visible, #new-puzzle-btn:focus-visible,
+    .start-btn:focus-visible { outline: 2px solid var(--color-correct); outline-offset: 3px; }
 
     #cw-clue-bar .cw-clue-num { font-size: 0.85rem; font-weight: 600; color: var(--color-text-muted); }
 
@@ -921,7 +962,7 @@
   </header>
 
   <!-- Crossword clue bar (1P) -->
-  <div class="hint-bar hidden" id="cw-clue-bar">
+  <div class="hint-bar hidden" id="cw-clue-bar" aria-live="polite" aria-atomic="true">
     <span class="cw-clue-num" id="cw-clue-num"></span>
     <span class="hint-sep">·</span>
     <span class="hint-en" id="cw-clue-en"></span>
@@ -929,19 +970,22 @@
     <span class="hint-ar" id="cw-clue-ar"></span>
     <span class="type-badge" id="cw-type-badge"></span>
   </div>
+  <!-- Screen-reader announcements (word solved, game over) -->
+  <div id="sr-announce" aria-live="assertive" aria-atomic="true"
+       style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap"></div>
 
   <!-- Crossword area (1P) -->
   <div id="crossword-area" class="hidden">
     <div id="crossword-grid-container">
-      <div id="crossword-grid"></div>
+      <div id="crossword-grid" role="grid" aria-label="Kreuzworträtsel"></div>
     </div>
     <div id="clues-panel">
       <div class="clues-section">
-        <h3 class="clues-heading">Across</h3>
+        <h3 class="clues-heading">Waagerecht</h3>
         <ul id="across-clues"></ul>
       </div>
       <div class="clues-section">
-        <h3 class="clues-heading">Down</h3>
+        <h3 class="clues-heading">Senkrecht</h3>
         <ul id="down-clues"></ul>
       </div>
     </div>
@@ -949,9 +993,9 @@
 
   <!-- Crossword actions (1P) -->
   <div id="cw-actions" class="hidden">
-    <button id="check-btn">Check</button>
-    <button id="reveal-btn">Reveal Word</button>
-    <button id="new-puzzle-btn" class="hidden">New Puzzle</button>
+    <button id="check-btn">Prüfen</button>
+    <button id="reveal-btn">Wort aufdecken</button>
+    <button id="new-puzzle-btn" class="hidden">Neues Rätsel</button>
   </div>
 
   <!-- 2P Board -->
@@ -961,7 +1005,7 @@
       <div class="score-label p1" id="p1-score-label">Player 1: 0</div>
       <div class="score-label p2" id="p2-score-label">Player 2: 0</div>
     </div>
-    <button id="skip-turn-btn" class="skip-btn">Skip Turn</button>
+    <button id="skip-turn-btn" class="skip-btn">Zug überspringen</button>
   </div>
 
   <!-- Panel backdrop -->
@@ -972,7 +1016,7 @@
     <!-- Panel header — visible in 2P only -->
     <div class="panel-header hidden" id="panel-header">
       <div class="panel-player-badge" id="panel-player-badge">Player 1</div>
-      <button class="panel-close-btn" id="panel-close-btn">✕</button>
+      <button class="panel-close-btn" id="panel-close-btn" aria-label="Spiel beenden">✕</button>
     </div>
     <!-- Hint bar inside panel (2P) -->
     <div class="hint-bar hidden" id="hint-bar-panel">
@@ -992,14 +1036,14 @@
 
   <!-- Streak bar (1P) -->
   <div class="streak-bar" id="streak-bar">
-    <div>🔥 Streak: <span id="streak-current">0</span></div>
-    <div>Best: <span id="streak-best">0</span></div>
+    <div><span aria-hidden="true">🔥</span> Serie: <span id="streak-current">0</span></div>
+    <div>Beste: <span id="streak-best">0</span></div>
   </div>
 
   <!-- Setup Overlay -->
   <div id="setup-overlay" class="overlay hidden">
     <div class="overlay-card">
-      <h2 class="overlay-title">2 Player Setup</h2>
+      <h2 class="overlay-title">2-Spieler-Modus</h2>
       <div class="setup-fields">
         <label>
           <span class="player-label p1-label">Player 1</span>
@@ -1010,8 +1054,18 @@
           <input type="text" id="p2-name-input" value="Player 2" maxlength="16" />
         </label>
       </div>
-      <button id="start-2p-btn" class="start-btn">Start Game</button>
-      <button id="cancel-setup-btn" class="cancel-btn">Cancel</button>
+      <button id="start-2p-btn" class="start-btn">Spiel starten</button>
+      <button id="cancel-setup-btn" class="cancel-btn">Abbrechen</button>
+    </div>
+  </div>
+
+  <!-- Handoff Overlay -->
+  <div id="handoff-overlay" class="overlay hidden">
+    <div class="overlay-card handoff-card">
+      <div class="handoff-icon" id="handoff-icon">👤</div>
+      <h2 class="overlay-title" id="handoff-title">Player 2 ist dran!</h2>
+      <p class="handoff-sub" id="handoff-sub">Gib das Gerät an Player 2 weiter.</p>
+      <button id="handoff-ready-btn" class="start-btn">Bereit!</button>
     </div>
   </div>
 
@@ -1021,8 +1075,8 @@
       <div class="results-winner" id="results-winner"></div>
       <div class="results-breakdown" id="results-breakdown"></div>
       <div class="results-actions">
-        <button id="play-again-btn" class="start-btn">Play Again</button>
-        <button id="back-1p-btn"    class="cancel-btn">Back to 1P</button>
+        <button id="play-again-btn" class="start-btn">Nochmal spielen</button>
+        <button id="back-1p-btn"    class="cancel-btn">Zurück zu 1P</button>
       </div>
     </div>
   </div>
@@ -1040,6 +1094,7 @@ let currentPuzzle = null;   // { grid, words, bbox }
 let selectedCell  = null;   // { r, c }
 let selectedDir   = 'across';
 let usedReveal    = false;
+let cwCellMap     = {};     // "r,c" → DOM element, O(1) lookup
 
 // ─── 2P Wordle state (kept for 2P mode) ───────────────
 let currentWord  = null;
@@ -1210,7 +1265,6 @@ function generateCrossword(pool) {
       const oppDir = placed.length % 2 === 0 ? 'across' : 'down';
       let found    = false;
 
-      outer:
       for (let i = 0; i < word.length && !found; i++) {
         for (let r = 0; r < CW_GRID && !found; r++) {
           for (let c = 0; c < CW_GRID && !found; c++) {
@@ -1274,12 +1328,11 @@ function generateCrossword(pool) {
 }
 
 // ─── Render hint bar ──────────────────────────────────
-function renderHint(entry, usePanel) {
-  const p = usePanel ? 'panel-' : '';
-  document.getElementById(p + 'hint-en').textContent       = entry.en;
-  document.getElementById(p + 'hint-ar').textContent       = entry.ar;
-  document.getElementById(p + 'hint-sentence').textContent = entry.hint;
-  const badge = document.getElementById(p + 'type-badge');
+function renderHint(entry) {
+  document.getElementById('panel-hint-en').textContent       = entry.en;
+  document.getElementById('panel-hint-ar').textContent       = entry.ar;
+  document.getElementById('panel-hint-sentence').textContent = entry.hint;
+  const badge = document.getElementById('panel-type-badge');
   badge.textContent = entry.type;
   badge.className   = 'type-badge ' + entry.type;
 }
@@ -1304,12 +1357,6 @@ function buildGrid(wordLen) {
   }
 }
 
-function markActiveRow(row) {
-  document.querySelectorAll('.grid-row').forEach((el, i) => {
-    el.classList.toggle('active-row', i === row);
-  });
-}
-
 // ─── Build keyboard ───────────────────────────────────
 function buildKeyboard() {
   const kb = document.getElementById('keyboard');
@@ -1324,12 +1371,15 @@ function buildKeyboard() {
       btn.className = 'key' + (key.length > 1 ? ' wide' : '');
       btn.textContent = key;
       btn.dataset.key = key;
+      if (key === '⌫') btn.setAttribute('aria-label', 'Löschen');
+      else if (key === 'ENTER') btn.setAttribute('aria-label', 'Eingabe');
       btn.addEventListener('click', () => handleKey(key));
       rowEl.appendChild(btn);
     }
 
     kb.appendChild(rowEl);
   }
+  document.body.classList.add('has-keyboard');
 }
 
 // ─── Update key colors ────────────────────────────────
@@ -1446,7 +1496,7 @@ function computeCwCellSize(cols) {
   const vw   = Math.min(window.innerWidth, 600);
   const pad  = 32;
   const avail = (vw - pad) * (window.innerWidth <= 680 ? 1 : 0.62);
-  return Math.max(24, Math.min(40, Math.floor(avail / cols)));
+  return Math.max(24, Math.min(window.innerWidth <= 680 ? 44 : 40, Math.floor(avail / cols)));
 }
 
 function buildCrosswordGrid(puzzle) {
@@ -1461,25 +1511,34 @@ function buildCrosswordGrid(puzzle) {
   container.style.gridTemplateColumns = `repeat(${cols}, var(--cw-cell))`;
   container.style.gridTemplateRows    = `repeat(${rows}, var(--cw-cell))`;
 
+  cwCellMap = {};
   for (let r = bbox.minR; r <= bbox.maxR; r++) {
     for (let c = bbox.minC; c <= bbox.maxC; c++) {
       const div = document.createElement('div');
       const cell = grid[r][c];
       if (cell === null) {
         div.className = 'cw-cell black';
+        div.setAttribute('aria-hidden', 'true');
       } else {
         div.className = 'cw-cell';
+        div.setAttribute('role', 'gridcell');
+        div.setAttribute('tabindex', '-1');
         div.dataset.r = r;
         div.dataset.c = c;
+        cwCellMap[`${r},${c}`] = div;
+        const ariaLabel = cell.number !== null ? `Feld ${cell.number}` : 'Feld';
+        div.setAttribute('aria-label', ariaLabel);
         if (cell.number !== null) {
           const num = document.createElement('span');
           num.className   = 'cw-number';
           num.textContent = cell.number;
+          num.setAttribute('aria-hidden', 'true');
           div.appendChild(num);
         }
         const letter = document.createElement('span');
         letter.className = 'cw-letter';
         letter.id        = `cwl-${r}-${c}`;
+        letter.setAttribute('aria-hidden', 'true');
         div.appendChild(letter);
         div.addEventListener('click', () => selectCell(r, c));
       }
@@ -1495,6 +1554,7 @@ function renderClues(puzzle) {
   downList.innerHTML   = '';
 
   puzzle.words
+    .filter(pw => pw.number !== null)
     .slice()
     .sort((a, b) => a.number - b.number)
     .forEach(pw => {
@@ -1502,10 +1562,18 @@ function renderClues(puzzle) {
       li.className = 'clue-item';
       li.dataset.num = pw.number;
       li.dataset.dir = pw.dir;
-      li.innerHTML = `<span class="clue-num">${pw.number}${pw.dir === 'across' ? 'A' : 'D'}</span>`
-                   + `<span class="clue-text">${pw.entry.en} · ${pw.entry.ar}</span>`;
-      li.addEventListener('click', () => {
-        selectCell(pw.row, pw.col, pw.dir);
+      const numSpan = document.createElement('span');
+      numSpan.className   = 'clue-num';
+      numSpan.textContent = pw.number + (pw.dir === 'across' ? 'A' : 'D');
+      const txtSpan = document.createElement('span');
+      txtSpan.className   = 'clue-text';
+      txtSpan.textContent = `${pw.entry.en} · ${pw.entry.ar}`;
+      li.appendChild(numSpan);
+      li.appendChild(txtSpan);
+      li.setAttribute('tabindex', '0');
+      li.addEventListener('click', () => { selectCell(pw.row, pw.col, pw.dir); });
+      li.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectCell(pw.row, pw.col, pw.dir); }
       });
       (pw.dir === 'across' ? acrossList : downList).appendChild(li);
     });
@@ -1534,6 +1602,8 @@ function selectCell(r, c, forceDir) {
   selectedCell = { r, c };
   highlightWord();
   updateClueBar();
+  // Move DOM focus to the selected cell so keyboard users see a visible ring
+  cwCellEl(r, c)?.focus({ preventScroll: true });
 }
 
 function highlightWord() {
@@ -1557,11 +1627,11 @@ function highlightWord() {
 
   for (let i = 0; i < pw.entry.w.length; i++) {
     const rr = pw.row + dr * i, cc = pw.col + dc * i;
-    const el = cwCellEl(rr, cc, bbox);
+    const el = cwCellEl(rr, cc);
     if (el) el.classList.add('word-hl');
   }
   // Selected cell
-  const selEl = cwCellEl(selectedCell.r, selectedCell.c, bbox);
+  const selEl = cwCellEl(selectedCell.r, selectedCell.c);
   if (selEl) { selEl.classList.remove('word-hl'); selEl.classList.add('cell-hl'); }
 
   // Update active clue in list
@@ -1573,11 +1643,16 @@ function highlightWord() {
   }
 }
 
-function cwCellEl(r, c, bbox) {
-  const cols = bbox.maxC - bbox.minC + 1;
-  const idx  = (r - bbox.minR) * cols + (c - bbox.minC);
-  const cells = document.querySelectorAll('#crossword-grid .cw-cell');
-  return cells[idx] || null;
+function cwCellEl(r, c) {
+  return cwCellMap[`${r},${c}`] || null;
+}
+
+function srAnnounce(msg) {
+  const el = document.getElementById('sr-announce');
+  if (!el) return;
+  el.textContent = '';
+  // Force DOM update so re-announcing same message also fires
+  requestAnimationFrame(() => { el.textContent = msg; });
 }
 
 function updateClueBar() {
@@ -1609,11 +1684,13 @@ function getSelectedWord() {
 function fillCrosswordLetter(letter) {
   if (!selectedCell || !currentPuzzle) return;
   const { grid } = currentPuzzle;
-  grid[selectedCell.r][selectedCell.c].filled = letter;
-  const letterEl = document.getElementById(`cwl-${selectedCell.r}-${selectedCell.c}`);
+  const { r: fr, c: fc } = selectedCell;
+  grid[fr][fc].filled = letter;
+  const letterEl = document.getElementById(`cwl-${fr}-${fc}`);
   if (letterEl) letterEl.textContent = letter;
-  advanceCursor();
+  cwCellEl(fr, fc)?.setAttribute('aria-label', `Feld ${letter}`);
   checkWordComplete();
+  advanceCursor();
 }
 
 function advanceCursor() {
@@ -1681,6 +1758,7 @@ function backspaceCrossword() {
     cell.filled = '';
     const letterEl = document.getElementById(`cwl-${selectedCell.r}-${selectedCell.c}`);
     if (letterEl) letterEl.textContent = '';
+    cwCellEl(selectedCell.r, selectedCell.c)?.setAttribute('aria-label', 'Feld leer');
   } else {
     // Retreat cursor
     const pw = getSelectedWord();
@@ -1693,9 +1771,11 @@ function backspaceCrossword() {
       grid[rr][cc].filled = '';
       const letterEl = document.getElementById(`cwl-${rr}-${cc}`);
       if (letterEl) letterEl.textContent = '';
+      cwCellEl(rr, cc)?.setAttribute('aria-label', 'Feld leer');
       selectedCell = { r: rr, c: cc };
       highlightWord();
       updateClueBar();
+      cwCellEl(rr, cc)?.focus({ preventScroll: true });
     }
   }
 }
@@ -1716,8 +1796,8 @@ function checkWordComplete() {
   const pw = getSelectedWord();
   if (!pw || pw.solved) return;
   const { grid } = currentPuzzle;
-  const dr = selectedDir === 'down' ? 1 : 0;
-  const dc = selectedDir === 'across' ? 1 : 0;
+  const dr = pw.dir === 'down' ? 1 : 0;
+  const dc = pw.dir === 'across' ? 1 : 0;
   const wordStr = pw.entry.w;
   const allCorrect = wordStr.split('').every((ch, i) => {
     const rr = pw.row + dr * i, cc = pw.col + dc * i;
@@ -1728,12 +1808,14 @@ function checkWordComplete() {
     // Mark cells green
     wordStr.split('').forEach((_, i) => {
       const rr = pw.row + dr * i, cc = pw.col + dc * i;
-      const el = cwCellEl(rr, cc, currentPuzzle.bbox);
+      const el = cwCellEl(rr, cc);
       if (el) { el.classList.remove('word-hl', 'cell-hl', 'wrong'); el.classList.add('correct'); }
     });
     // Strikethrough clue
-    const li = document.querySelector(`.clue-item[data-num="${pw.number}"][data-dir="${selectedDir}"]`);
+    const li = document.querySelector(`.clue-item[data-num="${pw.number}"][data-dir="${pw.dir}"]`);
     if (li) li.classList.add('solved');
+    // Announce to screen reader
+    srAnnounce(`${pw.number} ${pw.dir === 'across' ? 'Waagerecht' : 'Senkrecht'}: richtig!`);
     // Check if all solved
     if (currentPuzzle.words.every(w => w.solved)) endCrossword(true);
   }
@@ -1750,7 +1832,7 @@ function checkAllWords() {
       const rr = pw.row + dr * i, cc = pw.col + dc * i;
       const cell = grid[rr][cc];
       if (!cell.filled) return;
-      const el = cwCellEl(rr, cc, bbox);
+      const el = cwCellEl(rr, cc);
       if (!el || el.classList.contains('correct')) return;
       if (cell.filled !== ch) {
         el.classList.add('wrong');
@@ -1763,7 +1845,7 @@ function checkAllWords() {
 function revealWord() {
   const pw = getSelectedWord();
   if (!pw) return;
-  const { grid, bbox } = currentPuzzle;
+  const { grid } = currentPuzzle;
   const dr = pw.dir === 'down' ? 1 : 0;
   const dc = pw.dir === 'across' ? 1 : 0;
   pw.entry.w.split('').forEach((ch, i) => {
@@ -1771,16 +1853,11 @@ function revealWord() {
     grid[rr][cc].filled = ch;
     const letterEl = document.getElementById(`cwl-${rr}-${cc}`);
     if (letterEl) letterEl.textContent = ch;
-    const el = cwCellEl(rr, cc, bbox);
-    if (el) el.classList.add('revealed');
+    const el = cwCellEl(rr, cc);
+    if (el) { el.classList.remove('word-hl', 'cell-hl', 'wrong'); el.classList.add('correct', 'revealed'); }
   });
   usedReveal = true;
   pw.solved = true;
-  pw.entry.w.split('').forEach((_, i) => {
-    const rr = pw.row + dr * i, cc = pw.col + dc * i;
-    const el = cwCellEl(rr, cc, bbox);
-    if (el) { el.classList.add('correct'); el.classList.add('revealed'); }
-  });
   const li = document.querySelector(`.clue-item[data-num="${pw.number}"][data-dir="${pw.dir}"]`);
   if (li) li.classList.add('solved');
   if (currentPuzzle.words.every(w => w.solved)) endCrossword(true);
@@ -1789,6 +1866,7 @@ function revealWord() {
 function endCrossword(won) {
   gameOver = true;
   if (won) {
+    srAnnounce('Ausgezeichnet! Alle Wörter richtig gelöst!');
     showMessage('Ausgezeichnet! 🎉', 'win');
     if (!usedReveal) {
       streak.current++;
@@ -1805,12 +1883,14 @@ function startCrossword() {
   const pool = words[currentLevel] || [];
   let puzzle = null;
   for (let i = 0; i < 3 && !puzzle; i++) puzzle = generateCrossword(pool);
-  if (!puzzle) { showMessage('Could not generate puzzle.', 'lose'); return; }
+  if (!puzzle) { showMessage('Rätsel konnte nicht erstellt werden.', 'lose'); return; }
 
   currentPuzzle = puzzle;
   gameOver      = false;
   usedReveal    = false;
   animating     = false;
+  keyColors     = {};
+  buildKeyboard();
 
   buildCrosswordGrid(puzzle);
   renderClues(puzzle);
@@ -1877,7 +1957,7 @@ function submitGuess() {
 
   if (row.length < wordLen) {
     animateShake(currentRow);
-    showMessage('Not enough letters', '');
+    showMessage('Zu wenig Buchstaben', '');
     setTimeout(() => showMessage('', ''), 1200);
     return;
   }
@@ -1899,7 +1979,7 @@ function submitGuess() {
       gameOver = true;
       players[activePlayer].score++;
       updateScoreStrip();
-      showMessage(players[activePlayer].name + ' scores! 🎉', 'win');
+      showMessage(players[activePlayer].name + ' punktet! 🎉', 'win');
       if (players[activePlayer].score >= WIN_SCORE_2P) {
         setTimeout(() => end2PGame(activePlayer), 1200);
       } else {
@@ -1908,7 +1988,7 @@ function submitGuess() {
       }
     } else if (last) {
       gameOver = true;
-      showMessage('The word was: ' + answer, 'lose');
+      showMessage('Das Wort war: ' + answer, 'lose');
       roundStartPlayer = 1 - roundStartPlayer;
       setTimeout(startRound2P, 1800);
     } else {
@@ -1916,6 +1996,7 @@ function submitGuess() {
       activePlayer = 1 - activePlayer;
       updateTurnBanner();
       updateRowOwnerVisuals();
+      showHandoff(activePlayer);
     }
   });
 }
@@ -1938,8 +2019,8 @@ function setMode(mode) {
   });
 
   if (mode === '1P') {
-    panel.classList.add('inline-mode');
-    panel.classList.remove('visible');
+    panel.classList.add('inline-mode', 'mode-1p');
+    panel.classList.remove('visible', 'mode-2p');
     document.getElementById('panel-backdrop').classList.remove('visible');
     cwClueBar.classList.remove('hidden');
     cwArea.classList.remove('hidden');
@@ -1952,7 +2033,8 @@ function setMode(mode) {
     document.querySelector('.grid-wrap').classList.add('hidden');
     startCrossword();
   } else {
-    panel.classList.add('inline-mode');
+    panel.classList.add('inline-mode', 'mode-2p');
+    panel.classList.remove('mode-1p');
     cwClueBar.classList.add('hidden');
     cwArea.classList.add('hidden');
     cwActions.classList.add('hidden');
@@ -1960,7 +2042,7 @@ function setMode(mode) {
     board2p.classList.remove('hidden');
     panelHdr.classList.remove('hidden');
     panelHint.classList.remove('hidden');
-    document.getElementById('panel-close-btn').classList.add('hidden');
+    document.getElementById('panel-close-btn').classList.remove('hidden');
     document.querySelector('.grid-wrap').classList.remove('hidden');
     showSetupOverlay();
   }
@@ -2008,7 +2090,7 @@ function startRound2P() {
   setTileSize(entry.w.length);
   buildGrid(entry.w.length);
   buildKeyboard();
-  renderHint(entry, true);
+  renderHint(entry);
   showMessage('', '');
 
   updateTurnBanner();
@@ -2035,9 +2117,21 @@ function updateRowOwnerVisuals() {
   for (let r = 0; r < 6; r++) {
     const rowEl = document.getElementById(`grid-row-${r}`);
     if (!rowEl) continue;
-    rowEl.classList.remove('row-owner-p1', 'row-owner-p2');
+    rowEl.classList.remove('row-owner-p1', 'row-owner-p2', 'active-row');
     rowEl.classList.add(rowOwner[r] === 0 ? 'row-owner-p1' : 'row-owner-p2');
   }
+  if (!gameOver) {
+    const active = document.getElementById(`grid-row-${currentRow}`);
+    if (active) active.classList.add('active-row');
+  }
+}
+
+function showHandoff(nextPlayerIndex) {
+  const p = players[nextPlayerIndex];
+  document.getElementById('handoff-title').textContent = p.name + ' ist dran!';
+  document.getElementById('handoff-sub').textContent   = 'Gib das Gerät an ' + p.name + ' weiter.';
+  document.getElementById('handoff-icon').textContent  = nextPlayerIndex === 0 ? '🔵' : '🔴';
+  document.getElementById('handoff-overlay').classList.remove('hidden');
 }
 
 function skipTurn2P() {
@@ -2051,7 +2145,7 @@ function skipTurn2P() {
   currentRow++;
   if (currentRow > 5) {
     gameOver = true;
-    showMessage('The word was: ' + currentWord.w, 'lose');
+    showMessage('Das Wort war: ' + currentWord.w, 'lose');
     roundStartPlayer = 1 - roundStartPlayer;
     setTimeout(startRound2P, 1800);
     return;
@@ -2059,25 +2153,28 @@ function skipTurn2P() {
   activePlayer = 1 - activePlayer;
   updateTurnBanner();
   updateRowOwnerVisuals();
+  showHandoff(activePlayer);
 }
 
 function end2PGame(winnerIndex) {
   gameOver = true;
-  const winnerText = winnerIndex !== null
-    ? players[winnerIndex].name + ' wins!'
-    : "It's a draw!";
-
-  document.getElementById('results-winner').textContent = winnerText;
+  document.getElementById('results-winner').textContent =
+    players[winnerIndex].name + ' gewinnt!';
 
   const breakdown = document.getElementById('results-breakdown');
   breakdown.innerHTML = '';
-  players.forEach((p, i) => {
-    const row = document.createElement('div');
-    row.className = 'breakdown-row';
-    row.innerHTML = `
-      <span class="breakdown-name" style="color:${p.color}">${p.name}</span>
-      <span class="breakdown-score">${p.score} / ${WIN_SCORE_2P} points</span>
-    `;
+  players.forEach(p => {
+    const row       = document.createElement('div');
+    row.className   = 'breakdown-row';
+    const nameSpan  = document.createElement('span');
+    nameSpan.className   = 'breakdown-name';
+    nameSpan.style.color = p.color;
+    nameSpan.textContent = p.name;
+    const scoreSpan = document.createElement('span');
+    scoreSpan.className   = 'breakdown-score';
+    scoreSpan.textContent = `${p.score} / ${WIN_SCORE_2P} Punkte`;
+    row.appendChild(nameSpan);
+    row.appendChild(scoreSpan);
     breakdown.appendChild(row);
   });
 
@@ -2092,6 +2189,7 @@ document.getElementById('level-tabs').addEventListener('click', e => {
   btn.classList.add('active');
   currentLevel = btn.dataset.level;
   if (gameMode === '1P') startCrossword();
+  else { showMessage('Niveau ab nächster Runde: ' + currentLevel, ''); setTimeout(() => showMessage('', ''), 1800); }
 });
 
 document.getElementById('new-puzzle-btn').addEventListener('click', startCrossword);
@@ -2116,6 +2214,14 @@ document.getElementById('cancel-setup-btn').addEventListener('click', () => {
 // ─── Skip turn button (2P) ────────────────────────────
 document.getElementById('skip-turn-btn').addEventListener('click', skipTurn2P);
 
+// ─── Panel close button (2P → exit to 1P) ─────────────
+document.getElementById('panel-close-btn').addEventListener('click', () => setMode('1P'));
+
+// ─── Handoff overlay ──────────────────────────────────
+document.getElementById('handoff-ready-btn').addEventListener('click', () => {
+  document.getElementById('handoff-overlay').classList.add('hidden');
+});
+
 // ─── Results overlay ──────────────────────────────────
 document.getElementById('play-again-btn').addEventListener('click', () => {
   document.getElementById('results-overlay').classList.add('hidden');
@@ -2131,6 +2237,7 @@ document.getElementById('back-1p-btn').addEventListener('click', () => {
 document.addEventListener('keydown', e => {
   if (e.ctrlKey || e.metaKey || e.altKey) return;
   if (gameMode === '2P' && document.getElementById('setup-overlay').classList.contains('hidden') === false) return;
+  if (!document.getElementById('handoff-overlay').classList.contains('hidden')) return;
   handleKey(e.key);
 });
 
