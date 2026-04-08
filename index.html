@@ -993,8 +993,10 @@
         z-index: 40;
       }
 
-      /* Reserve space so content isn't hidden under keyboard */
-      body.has-keyboard { padding-bottom: calc(185px + env(safe-area-inset-bottom, 0px)); }
+      /* Reserve space so content isn't hidden under the custom keyboard (2P only) */
+      body.has-keyboard:not(:has(#wordle-panel.mode-1p)) {
+        padding-bottom: calc(185px + env(safe-area-inset-bottom, 0px));
+      }
     }
 
     /* ─── Mobile header compaction ─────────────────── */
@@ -1022,9 +1024,22 @@
       #streak-bar-diamonds { display: flex !important; }
     }
 
-    /* Desktop: hide keyboard in 1P crossword mode (physical keyboard used) */
-    @media (min-width: 681px) {
-      #wordle-panel.mode-1p #keyboard { display: none; }
+    /* Hide custom keyboard in 1P crossword mode — native keyboard used via hidden input */
+    #wordle-panel.mode-1p #keyboard { display: none; }
+
+    /* Hidden input that summons the native mobile keyboard when a crossword cell is tapped */
+    #cw-native-input {
+      position: fixed;
+      top: -200px;
+      left: 0;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 16px; /* prevents iOS auto-zoom */
     }
 
     /* ─── Crossword ──────────────────────────────────── */
@@ -1349,6 +1364,10 @@
   </header>
 
   <main id="game-main">
+
+  <!-- Hidden input for native mobile keyboard in crossword mode -->
+  <input id="cw-native-input" type="text" inputmode="text" autocomplete="off"
+         autocorrect="off" autocapitalize="characters" spellcheck="false" aria-hidden="true" />
 
   <!-- Crossword clue bar (1P) -->
   <div class="hint-bar hidden" id="cw-clue-bar" aria-live="polite" aria-atomic="true">
@@ -2173,8 +2192,15 @@ function selectCell(r, c, forceDir) {
   selectedCell = { r, c };
   highlightWord();
   updateClueBar();
-  // Move DOM focus to the selected cell so keyboard users see a visible ring
-  cwCellEl(r, c)?.focus({ preventScroll: true });
+  // On touch devices focus the hidden input to summon native keyboard;
+  // on desktop focus the cell itself for the visible focus ring.
+  if (window.matchMedia('(pointer: coarse)').matches) {
+    const inp = document.getElementById('cw-native-input');
+    inp.value = '';
+    inp.focus({ preventScroll: true });
+  } else {
+    cwCellEl(r, c)?.focus({ preventScroll: true });
+  }
 }
 
 function highlightWord() {
@@ -3328,6 +3354,27 @@ document.getElementById('back-1p-btn').addEventListener('click', () => {
   if (onlineMode) cleanupOnline();
   setMode('1P');
 });
+
+// ─── Native mobile keyboard for crossword ─────────────
+(function() {
+  const inp = document.getElementById('cw-native-input');
+
+  inp.addEventListener('keydown', e => {
+    if (gameMode !== '1P') return;
+    if (e.key === 'Backspace') { e.preventDefault(); handleKey('Backspace'); }
+    if (e.key === 'Enter')     { e.preventDefault(); handleKey('Enter'); }
+  });
+
+  inp.addEventListener('input', e => {
+    if (gameMode !== '1P') return;
+    const val = inp.value;
+    inp.value = ''; // always clear so next tap registers
+    if (!val) return;
+    // Take only the last character typed (handles autocomplete/paste)
+    const ch = val[val.length - 1].toUpperCase();
+    if (/^[A-ZÜÖÄSS]$/.test(ch) || ch === 'ß') handleKey(ch);
+  });
+})();
 
 // ─── Physical keyboard ────────────────────────────────
 document.addEventListener('keydown', e => {
