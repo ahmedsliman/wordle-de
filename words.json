@@ -2,759 +2,867 @@
   "A1": [
     {
       "w": "HAUS",
-      "en": "house (das)",
+      "en": "house",
       "ar": "بيت",
       "hint": "Where you live",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "HUND",
-      "en": "dog (der)",
+      "en": "dog",
       "ar": "كلب",
       "hint": "Common pet that barks",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "KATZE",
-      "en": "cat (die)",
+      "en": "cat",
       "ar": "قطة",
       "hint": "Meows and purrs",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "BUCH",
-      "en": "book (das)",
+      "en": "book",
       "ar": "كتاب",
       "hint": "You read it",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "AUTO",
-      "en": "car (das)",
+      "en": "car",
       "ar": "سيارة",
       "hint": "Four-wheeled vehicle",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "KIND",
-      "en": "child (das)",
+      "en": "child",
       "ar": "طفل",
       "hint": "Young person",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "MANN",
-      "en": "man (der)",
+      "en": "man",
       "ar": "رجل",
       "hint": "Adult male person",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "FRAU",
-      "en": "woman (die)",
+      "en": "woman",
       "ar": "امرأة",
       "hint": "Adult female person",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "TISCH",
-      "en": "table (der)",
+      "en": "table",
       "ar": "طاولة",
       "hint": "Furniture you eat at",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "STUHL",
-      "en": "chair (der)",
+      "en": "chair",
       "ar": "كرسي",
       "hint": "You sit on it",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "BETT",
-      "en": "bed (das)",
+      "en": "bed",
       "ar": "سرير",
       "hint": "You sleep in it",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "BROT",
-      "en": "bread (das)",
+      "en": "bread",
       "ar": "خبز",
       "hint": "German staple food",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "MILCH",
-      "en": "milk (die)",
+      "en": "milk",
       "ar": "حليب",
       "hint": "White drink from a cow",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "WASSER",
-      "en": "water (das)",
+      "en": "water",
       "ar": "ماء",
       "hint": "H₂O, you drink it",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "APFEL",
-      "en": "apple (der)",
+      "en": "apple",
       "ar": "تفاحة",
       "hint": "Red or green fruit",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "BALL",
-      "en": "ball (der)",
+      "en": "ball",
       "ar": "كرة",
       "hint": "Round toy you kick or throw",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "BAUM",
-      "en": "tree (der)",
+      "en": "tree",
       "ar": "شجرة",
       "hint": "Has trunk, branches, leaves",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "BLUME",
-      "en": "flower (die)",
+      "en": "flower",
       "ar": "زهرة",
       "hint": "Colorful plant in a garden",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "BANK",
-      "en": "bank (die)",
+      "en": "bank",
       "ar": "بنك",
       "hint": "Where you keep money",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "BRIEF",
-      "en": "letter (der)",
+      "en": "letter",
       "ar": "رسالة",
       "hint": "Written message sent by post",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "GELD",
-      "en": "money (das)",
+      "en": "money",
       "ar": "مال",
       "hint": "Coins and banknotes",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "HAND",
-      "en": "hand (die)",
+      "en": "hand",
       "ar": "يد",
       "hint": "Body part with five fingers",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "KOPF",
-      "en": "head (der)",
+      "en": "head",
       "ar": "رأس",
       "hint": "Top of your body",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "AUGE",
-      "en": "eye (das)",
+      "en": "eye",
       "ar": "عين",
       "hint": "You see with it",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "NASE",
-      "en": "nose (die)",
+      "en": "nose",
       "ar": "أنف",
       "hint": "You smell with it",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "MUND",
-      "en": "mouth (der)",
+      "en": "mouth",
       "ar": "فم",
       "hint": "You eat and talk with it",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "OHR",
-      "en": "ear (das)",
+      "en": "ear",
       "ar": "أذن",
       "hint": "You hear with it",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "FUSS",
-      "en": "foot (der)",
+      "en": "foot",
       "ar": "قدم",
       "hint": "Bottom of the leg",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "BEIN",
-      "en": "leg (das)",
+      "en": "leg",
       "ar": "ساق",
       "hint": "Limb you walk with",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "HERZ",
-      "en": "heart (das)",
+      "en": "heart",
       "ar": "قلب",
       "hint": "Pumps blood in your chest",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "SCHULE",
-      "en": "school (die)",
+      "en": "school",
       "ar": "مدرسة",
       "hint": "Where pupils study",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "LEHRER",
-      "en": "teacher (der)",
+      "en": "teacher",
       "ar": "مدرس",
       "hint": "Person who teaches",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "KLASSE",
-      "en": "class (die)",
+      "en": "class",
       "ar": "صف",
       "hint": "Group of students learning together",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "STIFT",
-      "en": "pen/pencil (der)",
+      "en": "pen/pencil",
       "ar": "قلم",
       "hint": "You write with it",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "HEFT",
-      "en": "notebook (das)",
+      "en": "notebook",
       "ar": "دفتر",
       "hint": "You write notes in it",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "TAFEL",
-      "en": "blackboard (die)",
+      "en": "blackboard",
       "ar": "لوح",
       "hint": "Teacher writes on it",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "VATER",
-      "en": "father (der)",
+      "en": "father",
       "ar": "أب",
       "hint": "Male parent",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "MUTTER",
-      "en": "mother (die)",
+      "en": "mother",
       "ar": "أم",
       "hint": "Female parent",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "BRUDER",
-      "en": "brother (der)",
+      "en": "brother",
       "ar": "أخ",
       "hint": "Male sibling",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "SCHWESTER",
-      "en": "sister (die)",
+      "en": "sister",
       "ar": "أخت",
       "hint": "Female sibling",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "OMA",
-      "en": "grandma (die)",
+      "en": "grandma",
       "ar": "جدة",
       "hint": "Mother's or father's mother",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "OPA",
-      "en": "grandpa (der)",
+      "en": "grandpa",
       "ar": "جد",
       "hint": "Mother's or father's father",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "BABY",
-      "en": "baby (das)",
+      "en": "baby",
       "ar": "رضيع",
       "hint": "Very young child",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "FREUND",
-      "en": "friend (der)",
+      "en": "friend",
       "ar": "صديق",
       "hint": "Someone you like and trust",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "FELD",
-      "en": "field (das)",
+      "en": "field",
       "ar": "حقل",
       "hint": "Open land for farming",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "FLUSS",
-      "en": "river (der)",
+      "en": "river",
       "ar": "نهر",
       "hint": "Large flowing body of water",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "BERG",
-      "en": "mountain (der)",
+      "en": "mountain",
       "ar": "جبل",
       "hint": "Very tall landform",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "SEE",
-      "en": "lake (der)",
+      "en": "lake",
       "ar": "بحيرة",
       "hint": "Body of water surrounded by land",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "MEER",
-      "en": "sea (das)",
+      "en": "sea",
       "ar": "بحر",
       "hint": "Large saltwater body",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "LUFT",
-      "en": "air (die)",
+      "en": "air",
       "ar": "هواء",
       "hint": "What you breathe",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "FEUER",
-      "en": "fire (das)",
+      "en": "fire",
       "ar": "نار",
       "hint": "Hot, bright, burning",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "LICHT",
-      "en": "light (das)",
+      "en": "light",
       "ar": "ضوء",
       "hint": "Opposite of darkness",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "SONNE",
-      "en": "sun (die)",
+      "en": "sun",
       "ar": "شمس",
       "hint": "Star at the center of our solar system",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "MOND",
-      "en": "moon (der)",
+      "en": "moon",
       "ar": "قمر",
       "hint": "Earth's natural satellite",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "STERN",
-      "en": "star (der)",
+      "en": "star",
       "ar": "نجم",
       "hint": "Twinkling light in the night sky",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "TAG",
-      "en": "day (der)",
+      "en": "day",
       "ar": "يوم",
       "hint": "24 hours",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "NACHT",
-      "en": "night (die)",
+      "en": "night",
       "ar": "ليل",
       "hint": "Opposite of day",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "MORGEN",
-      "en": "morning (der)",
+      "en": "morning",
       "ar": "صباح",
       "hint": "Early part of the day",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "ABEND",
-      "en": "evening (der)",
+      "en": "evening",
       "ar": "مساء",
       "hint": "Late part of the day",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "WOCHE",
-      "en": "week (die)",
+      "en": "week",
       "ar": "أسبوع",
       "hint": "7 days",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "MONAT",
-      "en": "month (der)",
+      "en": "month",
       "ar": "شهر",
       "hint": "About 30 days",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "JAHR",
-      "en": "year (das)",
+      "en": "year",
       "ar": "سنة",
       "hint": "12 months",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "STUNDE",
-      "en": "hour (die)",
+      "en": "hour",
       "ar": "ساعة",
       "hint": "60 minutes",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "MINUTE",
-      "en": "minute (die)",
+      "en": "minute",
       "ar": "دقيقة",
       "hint": "60 seconds",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "STADT",
-      "en": "city (die)",
+      "en": "city",
       "ar": "مدينة",
       "hint": "Large urban settlement",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "STRASSE",
-      "en": "street (die)",
+      "en": "street",
       "ar": "شارع",
       "hint": "Road in a city",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "PLATZ",
-      "en": "square/place (der)",
+      "en": "square/place",
       "ar": "ساحة",
       "hint": "Open public space",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "PARK",
-      "en": "park (der)",
+      "en": "park",
       "ar": "حديقة عامة",
       "hint": "Green outdoor area in a city",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "MARKT",
-      "en": "market (der)",
+      "en": "market",
       "ar": "سوق",
       "hint": "Where you buy fresh food",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "LADEN",
-      "en": "shop (der)",
+      "en": "shop",
       "ar": "محل",
       "hint": "Small store",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "PREIS",
-      "en": "price (der)",
+      "en": "price",
       "ar": "سعر",
       "hint": "How much something costs",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "EURO",
-      "en": "euro (der)",
+      "en": "euro",
       "ar": "يورو",
       "hint": "European currency",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "FARBE",
-      "en": "color (die)",
+      "en": "color",
       "ar": "لون",
       "hint": "Red, blue, green...",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "ROT",
-      "en": "red (das)",
+      "en": "red",
       "ar": "أحمر",
       "hint": "Color of blood",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "BLAU",
-      "en": "blue (das)",
+      "en": "blue",
       "ar": "أزرق",
       "hint": "Color of the sky",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "GRUEN",
-      "en": "green (das)",
+      "en": "green",
       "ar": "أخضر",
       "hint": "Color of grass",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "GELB",
-      "en": "yellow (das)",
+      "en": "yellow",
       "ar": "أصفر",
       "hint": "Color of the sun",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "WEISS",
-      "en": "white (das)",
+      "en": "white",
       "ar": "أبيض",
       "hint": "Color of snow",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "SCHWARZ",
-      "en": "black (das)",
+      "en": "black",
       "ar": "أسود",
       "hint": "Color of night",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "VOGEL",
-      "en": "bird (der)",
+      "en": "bird",
       "ar": "طائر",
       "hint": "Has wings and feathers",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "FISCH",
-      "en": "fish (der)",
+      "en": "fish",
       "ar": "سمكة",
       "hint": "Lives in water, has fins",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "PFERD",
-      "en": "horse (das)",
+      "en": "horse",
       "ar": "حصان",
       "hint": "Large animal you can ride",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "KUH",
-      "en": "cow (die)",
+      "en": "cow",
       "ar": "بقرة",
       "hint": "Farm animal that gives milk",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "SCHAF",
-      "en": "sheep (das)",
+      "en": "sheep",
       "ar": "خروف",
       "hint": "Farm animal with wool",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "SCHWEIN",
-      "en": "pig (das)",
+      "en": "pig",
       "ar": "خنزير",
       "hint": "Pink farm animal",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "HAHN",
-      "en": "rooster (der)",
+      "en": "rooster",
       "ar": "ديك",
       "hint": "Male chicken, crows at dawn",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "MAUS",
-      "en": "mouse (die)",
+      "en": "mouse",
       "ar": "فأر",
       "hint": "Small rodent",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "HEMD",
-      "en": "shirt (das)",
+      "en": "shirt",
       "ar": "قميص",
       "hint": "Upper body garment",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "HOSE",
-      "en": "trousers (die)",
+      "en": "trousers",
       "ar": "بنطلون",
       "hint": "Clothing for legs",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "KLEID",
-      "en": "dress (das)",
+      "en": "dress",
       "ar": "فستان",
       "hint": "One-piece garment for women",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "MANTEL",
-      "en": "coat (der)",
+      "en": "coat",
       "ar": "معطف",
       "hint": "Warm outer garment",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "SCHUHE",
-      "en": "shoes (die/pl)",
+      "en": "shoes",
       "ar": "حذاء",
       "hint": "Wear them on your feet",
-      "type": "noun"
+      "type": "noun",
+      "article": "die/pl"
     },
     {
       "w": "JACKE",
-      "en": "jacket (die)",
+      "en": "jacket",
       "ar": "جاكيت",
       "hint": "Short outer garment",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "MÜTZE",
-      "en": "hat/beanie (die)",
+      "en": "hat/beanie",
       "ar": "قبعة",
       "hint": "Worn on the head when cold",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "ARZT",
-      "en": "doctor (der)",
+      "en": "doctor",
       "ar": "طبيب",
       "hint": "Treats sick people",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "KRANKENHAUS",
-      "en": "hospital (das)",
+      "en": "hospital",
       "ar": "مستشفى",
       "hint": "Where sick people are treated",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "APOTHEKE",
-      "en": "pharmacy (die)",
+      "en": "pharmacy",
       "ar": "صيدلية",
       "hint": "Where you buy medicine",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "BUS",
-      "en": "bus (der)",
+      "en": "bus",
       "ar": "حافلة",
       "hint": "Public road transport",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "ZUG",
-      "en": "train (der)",
+      "en": "train",
       "ar": "قطار",
       "hint": "Travels on rails",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "FLUGZEUG",
-      "en": "airplane (das)",
+      "en": "airplane",
       "ar": "طائرة",
       "hint": "Flies in the sky",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "FAHRRAD",
-      "en": "bicycle (das)",
+      "en": "bicycle",
       "ar": "دراجة",
       "hint": "Two-wheeled vehicle you pedal",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "NUMMER",
-      "en": "number (die)",
+      "en": "number",
       "ar": "رقم",
       "hint": "1, 2, 3...",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "NAME",
-      "en": "name (der)",
+      "en": "name",
       "ar": "اسم",
       "hint": "What you are called",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "LAND",
-      "en": "country (das)",
+      "en": "country",
       "ar": "بلد",
       "hint": "Nation with borders",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "SPRACHE",
-      "en": "language (die)",
+      "en": "language",
       "ar": "لغة",
       "hint": "System of communication",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "WORT",
-      "en": "word (das)",
+      "en": "word",
       "ar": "كلمة",
       "hint": "Unit of language",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "FRAGE",
-      "en": "question (die)",
+      "en": "question",
       "ar": "سؤال",
       "hint": "You ask it to get an answer",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "ANTWORT",
-      "en": "answer (die)",
+      "en": "answer",
       "ar": "جواب",
       "hint": "Reply to a question",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "SEIN",
@@ -1341,745 +1449,851 @@
   "A2": [
     {
       "w": "BAHNHOF",
-      "en": "train station (der)",
+      "en": "train station",
       "ar": "محطة قطار",
       "hint": "Where trains arrive and depart",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "FLUGHAFEN",
-      "en": "airport (der)",
+      "en": "airport",
       "ar": "مطار",
       "hint": "Where planes take off",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "HOTEL",
-      "en": "hotel (das)",
+      "en": "hotel",
       "ar": "فندق",
       "hint": "Temporary accommodation",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "RESTAURANT",
-      "en": "restaurant (das)",
+      "en": "restaurant",
       "ar": "مطعم",
       "hint": "You eat meals there",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "KÜCHE",
-      "en": "kitchen (die)",
+      "en": "kitchen",
       "ar": "مطبخ",
       "hint": "Room where you cook",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "WOHNZIMMER",
-      "en": "living room (das)",
+      "en": "living room",
       "ar": "غرفة المعيشة",
       "hint": "Room for relaxing and guests",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "SCHLAFZIMMER",
-      "en": "bedroom (das)",
+      "en": "bedroom",
       "ar": "غرفة نوم",
       "hint": "Room where you sleep",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "BADEZIMMER",
-      "en": "bathroom (das)",
+      "en": "bathroom",
       "ar": "حمام",
       "hint": "Room to wash in",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "FENSTER",
-      "en": "window (das)",
+      "en": "window",
       "ar": "نافذة",
       "hint": "You look outside through it",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "TUER",
-      "en": "door (die)",
+      "en": "door",
       "ar": "باب",
       "hint": "You open it to enter",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "TREPPE",
-      "en": "staircase (die)",
+      "en": "staircase",
       "ar": "درج",
       "hint": "Steps between floors",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "GARTEN",
-      "en": "garden (der)",
+      "en": "garden",
       "ar": "حديقة",
       "hint": "Outdoor space with plants",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "GARAGE",
-      "en": "garage (die)",
+      "en": "garage",
       "ar": "مرآب",
       "hint": "Where you park a car",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "BRÜCKE",
-      "en": "bridge (die)",
+      "en": "bridge",
       "ar": "جسر",
       "hint": "Crosses over water",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "KIRCHE",
-      "en": "church (die)",
+      "en": "church",
       "ar": "كنيسة",
       "hint": "Christian place of worship",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "RATHAUS",
-      "en": "town hall (das)",
+      "en": "town hall",
       "ar": "مبنى البلدية",
       "hint": "Local government building",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "BÜRO",
-      "en": "office (das)",
+      "en": "office",
       "ar": "مكتب",
       "hint": "Where people work",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "FABRIK",
-      "en": "factory (die)",
+      "en": "factory",
       "ar": "مصنع",
       "hint": "Where goods are manufactured",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "MUSEUM",
-      "en": "museum (das)",
+      "en": "museum",
       "ar": "متحف",
       "hint": "Houses historical artifacts",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "THEATER",
-      "en": "theatre (das)",
+      "en": "theatre",
       "ar": "مسرح",
       "hint": "You watch plays there",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "KINO",
-      "en": "cinema (das)",
+      "en": "cinema",
       "ar": "سينما",
       "hint": "You watch films there",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "SCHWIMMBAD",
-      "en": "swimming pool (das)",
+      "en": "swimming pool",
       "ar": "حمام سباحة",
       "hint": "You swim there",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "KRANKENSCHWESTER",
-      "en": "nurse (die)",
+      "en": "nurse",
       "ar": "ممرضة",
       "hint": "Assists doctors in a hospital",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "POLIZIST",
-      "en": "police officer (der)",
+      "en": "police officer",
       "ar": "شرطي",
       "hint": "Maintains law and order",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "FEUERWEHR",
-      "en": "fire brigade (die)",
+      "en": "fire brigade",
       "ar": "إطفاء",
       "hint": "Fights fires",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "VERKÄUFER",
-      "en": "salesperson (der)",
+      "en": "salesperson",
       "ar": "بائع",
       "hint": "Works in a shop",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "KELLNER",
-      "en": "waiter (der)",
+      "en": "waiter",
       "ar": "نادل",
       "hint": "Serves food in a restaurant",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "BÄCKER",
-      "en": "baker (der)",
+      "en": "baker",
       "ar": "خباز",
       "hint": "Makes and sells bread",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "METZGER",
-      "en": "butcher (der)",
+      "en": "butcher",
       "ar": "جزار",
       "hint": "Sells meat",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "FRÜHLING",
-      "en": "spring (der)",
+      "en": "spring",
       "ar": "ربيع",
       "hint": "Season after winter",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "SOMMER",
-      "en": "summer (der)",
+      "en": "summer",
       "ar": "صيف",
       "hint": "Hottest season",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "HERBST",
-      "en": "autumn (der)",
+      "en": "autumn",
       "ar": "خريف",
       "hint": "Season with falling leaves",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "WINTER",
-      "en": "winter (der)",
+      "en": "winter",
       "ar": "شتاء",
       "hint": "Coldest season",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "REGEN",
-      "en": "rain (der)",
+      "en": "rain",
       "ar": "مطر",
       "hint": "Water falling from clouds",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "SCHNEE",
-      "en": "snow (der)",
+      "en": "snow",
       "ar": "ثلج",
       "hint": "White frozen precipitation",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "WIND",
-      "en": "wind (der)",
+      "en": "wind",
       "ar": "ريح",
       "hint": "Moving air",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "GEWITTER",
-      "en": "thunderstorm (das)",
+      "en": "thunderstorm",
       "ar": "عاصفة رعدية",
       "hint": "Lightning and thunder",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "NEBEL",
-      "en": "fog (der)",
+      "en": "fog",
       "ar": "ضباب",
       "hint": "Thick mist reducing visibility",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "TEMPERATUR",
-      "en": "temperature (die)",
+      "en": "temperature",
       "ar": "درجة حرارة",
       "hint": "How hot or cold something is",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "WETTER",
-      "en": "weather (das)",
+      "en": "weather",
       "ar": "طقس",
       "hint": "Condition of the atmosphere",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "KOPFSCHMERZEN",
-      "en": "headache (die/pl)",
+      "en": "headache",
       "ar": "صداع",
       "hint": "Pain in your head",
-      "type": "noun"
+      "type": "noun",
+      "article": "die/pl"
     },
     {
       "w": "FIEBER",
-      "en": "fever (das)",
+      "en": "fever",
       "ar": "حمى",
       "hint": "High body temperature when sick",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "ERKÄLTUNG",
-      "en": "cold (die)",
+      "en": "cold",
       "ar": "زكام",
       "hint": "Runny nose, sneezing illness",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "TABLETTE",
-      "en": "tablet/pill (die)",
+      "en": "tablet/pill",
       "ar": "حبة دواء",
       "hint": "Medicine in solid form",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "REZEPT",
-      "en": "prescription/recipe (das)",
+      "en": "prescription/recipe",
       "ar": "وصفة",
       "hint": "Doctor's note for medicine",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "HOBBY",
-      "en": "hobby (das)",
+      "en": "hobby",
       "ar": "هواية",
       "hint": "Activity done for fun",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "MUSIK",
-      "en": "music (die)",
+      "en": "music",
       "ar": "موسيقى",
       "hint": "Organized sound",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "SPORT",
-      "en": "sport (der)",
+      "en": "sport",
       "ar": "رياضة",
       "hint": "Physical activity or competition",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "FUSSBALL",
-      "en": "football (der)",
+      "en": "football",
       "ar": "كرة قدم",
       "hint": "Game with a round ball and goalposts",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "TENNIS",
-      "en": "tennis (das)",
+      "en": "tennis",
       "ar": "تنس",
       "hint": "Sport with rackets and a net",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "REISE",
-      "en": "trip/journey (die)",
+      "en": "trip/journey",
       "ar": "رحلة",
       "hint": "Travel to another place",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "URLAUB",
-      "en": "holiday/vacation (der)",
+      "en": "holiday/vacation",
       "ar": "إجازة",
       "hint": "Time off work for rest",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "KOFFER",
-      "en": "suitcase (der)",
+      "en": "suitcase",
       "ar": "حقيبة سفر",
       "hint": "You pack clothes in it for travel",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "KARTE",
-      "en": "card/map (die)",
+      "en": "card/map",
       "ar": "بطاقة / خريطة",
       "hint": "Tourist map or playing card",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "TICKET",
-      "en": "ticket (das)",
+      "en": "ticket",
       "ar": "تذكرة",
       "hint": "Permits entry or travel",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "RECHNUNG",
-      "en": "bill/invoice (die)",
+      "en": "bill/invoice",
       "ar": "فاتورة",
       "hint": "Request for payment",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "QUITTUNG",
-      "en": "receipt (die)",
+      "en": "receipt",
       "ar": "إيصال",
       "hint": "Proof of payment",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "EINKAUF",
-      "en": "shopping (der)",
+      "en": "shopping",
       "ar": "تسوق",
       "hint": "Buying goods in shops",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "SUPERMARKT",
-      "en": "supermarket (der)",
+      "en": "supermarket",
       "ar": "سوبرماركت",
       "hint": "Large shop with many goods",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "GEMÜSE",
-      "en": "vegetables (das)",
+      "en": "vegetables",
       "ar": "خضروات",
       "hint": "Carrots, onions, tomatoes...",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "OBST",
-      "en": "fruit (das)",
+      "en": "fruit",
       "ar": "فاكهة",
       "hint": "Apples, oranges, bananas...",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "FLEISCH",
-      "en": "meat (das)",
+      "en": "meat",
       "ar": "لحم",
       "hint": "Beef, pork, chicken...",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "KÄSE",
-      "en": "cheese (der)",
+      "en": "cheese",
       "ar": "جبن",
       "hint": "Made from milk",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "BUTTER",
-      "en": "butter (die)",
+      "en": "butter",
       "ar": "زبدة",
       "hint": "Spread made from cream",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "EI",
-      "en": "egg (das)",
+      "en": "egg",
       "ar": "بيضة",
       "hint": "Laid by hens",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "KUCHEN",
-      "en": "cake (der)",
+      "en": "cake",
       "ar": "كعكة",
       "hint": "Sweet baked dessert",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "KAFFEE",
-      "en": "coffee (der)",
+      "en": "coffee",
       "ar": "قهوة",
       "hint": "Hot caffeinated drink",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "TEE",
-      "en": "tea (der)",
+      "en": "tea",
       "ar": "شاي",
       "hint": "Hot drink made with leaves",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "SAFT",
-      "en": "juice (der)",
+      "en": "juice",
       "ar": "عصير",
       "hint": "Squeezed fruit drink",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "BIER",
-      "en": "beer (das)",
+      "en": "beer",
       "ar": "بيرة",
       "hint": "Alcoholic drink from barley",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "WEIN",
-      "en": "wine (der)",
+      "en": "wine",
       "ar": "نبيذ",
       "hint": "Alcoholic drink from grapes",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "TASSE",
-      "en": "cup (die)",
+      "en": "cup",
       "ar": "كوب",
       "hint": "Container for hot drinks",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "GLAS",
-      "en": "glass (das)",
+      "en": "glass",
       "ar": "كأس / زجاج",
       "hint": "Container for cold drinks",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "TELLER",
-      "en": "plate (der)",
+      "en": "plate",
       "ar": "طبق",
       "hint": "Flat dish for food",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "LÖFFEL",
-      "en": "spoon (der)",
+      "en": "spoon",
       "ar": "ملعقة",
       "hint": "Used to eat soup",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "GABEL",
-      "en": "fork (die)",
+      "en": "fork",
       "ar": "شوكة",
       "hint": "Used to eat salad",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "MESSER",
-      "en": "knife (das)",
+      "en": "knife",
       "ar": "سكين",
       "hint": "Used to cut food",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "LAMPE",
-      "en": "lamp (die)",
+      "en": "lamp",
       "ar": "مصباح",
       "hint": "Provides artificial light",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "SOFA",
-      "en": "sofa (das)",
+      "en": "sofa",
       "ar": "أريكة",
       "hint": "Comfortable seat for several people",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "SCHRANK",
-      "en": "wardrobe (der)",
+      "en": "wardrobe",
       "ar": "خزانة",
       "hint": "Stores clothes",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "SPIEGEL",
-      "en": "mirror (der)",
+      "en": "mirror",
       "ar": "مرآة",
       "hint": "Shows your reflection",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "DUSCHE",
-      "en": "shower (die)",
+      "en": "shower",
       "ar": "دش",
       "hint": "You wash under running water",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "BADEWANNE",
-      "en": "bathtub (die)",
+      "en": "bathtub",
       "ar": "حوض استحمام",
       "hint": "You soak in hot water",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "WASCHMASCHINE",
-      "en": "washing machine (die)",
+      "en": "washing machine",
       "ar": "غسالة",
       "hint": "Cleans clothes automatically",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "KÜHLSCHRANK",
-      "en": "fridge (der)",
+      "en": "fridge",
       "ar": "ثلاجة",
       "hint": "Keeps food cold",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "HERD",
-      "en": "stove/cooker (der)",
+      "en": "stove/cooker",
       "ar": "موقد",
       "hint": "You cook on it",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "TELEFON",
-      "en": "telephone (das)",
+      "en": "telephone",
       "ar": "هاتف",
       "hint": "You call people with it",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "HANDY",
-      "en": "mobile phone (das)",
+      "en": "mobile phone",
       "ar": "هاتف محمول",
       "hint": "Portable telephone",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "COMPUTER",
-      "en": "computer (der)",
+      "en": "computer",
       "ar": "حاسوب",
       "hint": "Electronic machine for data",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "INTERNET",
-      "en": "internet (das)",
+      "en": "internet",
       "ar": "إنترنت",
       "hint": "Global network of computers",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "EMAIL",
-      "en": "email (die)",
+      "en": "email",
       "ar": "بريد إلكتروني",
       "hint": "Electronic message",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "ZEITUNG",
-      "en": "newspaper (die)",
+      "en": "newspaper",
       "ar": "جريدة",
       "hint": "Daily printed news",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "FERNSEHEN",
-      "en": "television (das)",
+      "en": "television",
       "ar": "تلفزيون",
       "hint": "Screen with moving images",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "RADIO",
-      "en": "radio (das)",
+      "en": "radio",
       "ar": "راديو",
       "hint": "Audio broadcasting device",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "FOTO",
-      "en": "photo (das)",
+      "en": "photo",
       "ar": "صورة",
       "hint": "Captured image",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "FILM",
-      "en": "film/movie (der)",
+      "en": "film/movie",
       "ar": "فيلم",
       "hint": "Moving pictures telling a story",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "KONZERT",
-      "en": "concert (das)",
+      "en": "concert",
       "ar": "حفلة موسيقية",
       "hint": "Live music performance",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "GEBURTSTAG",
-      "en": "birthday (der)",
+      "en": "birthday",
       "ar": "عيد ميلاد",
       "hint": "Anniversary of your birth",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "GESCHENK",
-      "en": "present/gift (das)",
+      "en": "present/gift",
       "ar": "هدية",
       "hint": "Something given for a special occasion",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "HOCHZEIT",
-      "en": "wedding (die)",
+      "en": "wedding",
       "ar": "زفاف",
       "hint": "Marriage ceremony",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "FEIER",
-      "en": "celebration (die)",
+      "en": "celebration",
       "ar": "احتفال",
       "hint": "Party for a special event",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "EINLADUNG",
-      "en": "invitation (die)",
+      "en": "invitation",
       "ar": "دعوة",
       "hint": "Request to attend an event",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "AUSFLUG",
-      "en": "excursion (der)",
+      "en": "excursion",
       "ar": "نزهة",
       "hint": "Short trip for leisure",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "STRAND",
-      "en": "beach (der)",
+      "en": "beach",
       "ar": "شاطئ",
       "hint": "Sandy area by the sea",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "WALD",
-      "en": "forest (der)",
+      "en": "forest",
       "ar": "غابة",
       "hint": "Large area of trees",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "WIESE",
-      "en": "meadow (die)",
+      "en": "meadow",
       "ar": "مرج",
       "hint": "Open grassy field",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "KOCHEN",
@@ -2750,654 +2964,747 @@
   "B1": [
     {
       "w": "GESELLSCHAFT",
-      "en": "society (die)",
+      "en": "society",
       "ar": "مجتمع",
       "hint": "Group of people living together",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "UMWELT",
-      "en": "environment (die)",
+      "en": "environment",
       "ar": "بيئة",
       "hint": "Natural surroundings",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "WIRTSCHAFT",
-      "en": "economy (die)",
+      "en": "economy",
       "ar": "اقتصاد",
       "hint": "System of production and trade",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "BILDUNG",
-      "en": "education (die)",
+      "en": "education",
       "ar": "تعليم",
       "hint": "Learning and development",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "GESUNDHEIT",
-      "en": "health (die)",
+      "en": "health",
       "ar": "صحة",
       "hint": "State of being well",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "POLITIK",
-      "en": "politics (die)",
+      "en": "politics",
       "ar": "سياسة",
       "hint": "System of government",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "KULTUR",
-      "en": "culture (die)",
+      "en": "culture",
       "ar": "ثقافة",
       "hint": "Art, customs and society",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "WISSENSCHAFT",
-      "en": "science (die)",
+      "en": "science",
       "ar": "علم",
       "hint": "Systematic study of the world",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "TECHNOLOGIE",
-      "en": "technology (die)",
+      "en": "technology",
       "ar": "تكنولوجيا",
       "hint": "Application of scientific knowledge",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "MEDIEN",
-      "en": "media (die/pl)",
+      "en": "media",
       "ar": "وسائل الإعلام",
       "hint": "TV, radio, internet, press",
-      "type": "noun"
+      "type": "noun",
+      "article": "die/pl"
     },
     {
       "w": "DEMOKRATIE",
-      "en": "democracy (die)",
+      "en": "democracy",
       "ar": "ديمقراطية",
       "hint": "Government by the people",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "REGIERUNG",
-      "en": "government (die)",
+      "en": "government",
       "ar": "حكومة",
       "hint": "Those who rule a country",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "GESETZ",
-      "en": "law (das)",
+      "en": "law",
       "ar": "قانون",
       "hint": "Legal rule of society",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "RECHT",
-      "en": "right/law (das)",
+      "en": "right/law",
       "ar": "حق / قانون",
       "hint": "Legal entitlement",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "PFLICHT",
-      "en": "duty/obligation (die)",
+      "en": "duty/obligation",
       "ar": "واجب",
       "hint": "What you are obliged to do",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "FREIHEIT",
-      "en": "freedom (die)",
+      "en": "freedom",
       "ar": "حرية",
       "hint": "Ability to act without restraint",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "GERECHTIGKEIT",
-      "en": "justice (die)",
+      "en": "justice",
       "ar": "عدالة",
       "hint": "Fairness in society",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "VERANTWORTUNG",
-      "en": "responsibility (die)",
+      "en": "responsibility",
       "ar": "مسؤولية",
       "hint": "Duty to account for your actions",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "MEINUNG",
-      "en": "opinion (die)",
+      "en": "opinion",
       "ar": "رأي",
       "hint": "Your view on a topic",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "DISKUSSION",
-      "en": "discussion (die)",
+      "en": "discussion",
       "ar": "نقاش",
       "hint": "Exchange of views",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "ARGUMENT",
-      "en": "argument (das)",
+      "en": "argument",
       "ar": "حجة",
       "hint": "Reasoning to support a view",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "KRITIK",
-      "en": "criticism (die)",
+      "en": "criticism",
       "ar": "نقد",
       "hint": "Analysis of faults",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "LÖSUNG",
-      "en": "solution (die)",
+      "en": "solution",
       "ar": "حل",
       "hint": "Answer to a problem",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "PROBLEM",
-      "en": "problem (das)",
+      "en": "problem",
       "ar": "مشكلة",
       "hint": "Difficulty to be solved",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "URSACHE",
-      "en": "cause (die)",
+      "en": "cause",
       "ar": "سبب",
       "hint": "Reason something happens",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "FOLGE",
-      "en": "consequence (die)",
+      "en": "consequence",
       "ar": "عاقبة",
       "hint": "Result of an action",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "EINFLUSS",
-      "en": "influence (der)",
+      "en": "influence",
       "ar": "تأثير",
       "hint": "Effect on something or someone",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "ENTWICKLUNG",
-      "en": "development (die)",
+      "en": "development",
       "ar": "تطور",
       "hint": "Process of growing or changing",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "VERÄNDERUNG",
-      "en": "change (die)",
+      "en": "change",
       "ar": "تغيير",
       "hint": "Something becoming different",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "VERBESSERUNG",
-      "en": "improvement (die)",
+      "en": "improvement",
       "ar": "تحسين",
       "hint": "Making something better",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "GEFAHR",
-      "en": "danger (die)",
+      "en": "danger",
       "ar": "خطر",
       "hint": "Risk of harm",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "RISIKO",
-      "en": "risk (das)",
+      "en": "risk",
       "ar": "مخاطرة",
       "hint": "Possibility of something bad",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "CHANCE",
-      "en": "chance/opportunity (die)",
+      "en": "chance/opportunity",
       "ar": "فرصة",
       "hint": "Good moment to do something",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "VORTEIL",
-      "en": "advantage (der)",
+      "en": "advantage",
       "ar": "ميزة",
       "hint": "A benefit over others",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "NACHTEIL",
-      "en": "disadvantage (der)",
+      "en": "disadvantage",
       "ar": "عيب",
       "hint": "A drawback",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "ZIEL",
-      "en": "goal/aim (das)",
+      "en": "goal/aim",
       "ar": "هدف",
       "hint": "What you are trying to achieve",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "ERGEBNIS",
-      "en": "result (das)",
+      "en": "result",
       "ar": "نتيجة",
       "hint": "Outcome of something",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "ERFOLG",
-      "en": "success (der)",
+      "en": "success",
       "ar": "نجاح",
       "hint": "Achieving a goal",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "MISSERFOLG",
-      "en": "failure (der)",
+      "en": "failure",
       "ar": "فشل",
       "hint": "Not achieving a goal",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "ERFAHRUNG",
-      "en": "experience (die)",
+      "en": "experience",
       "ar": "تجربة",
       "hint": "Knowledge from doing things",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "FÄHIGKEIT",
-      "en": "ability/skill (die)",
+      "en": "ability/skill",
       "ar": "قدرة / مهارة",
       "hint": "Capacity to do something",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "TALENT",
-      "en": "talent (das)",
+      "en": "talent",
       "ar": "موهبة",
       "hint": "Natural ability",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "INTERESSE",
-      "en": "interest (das)",
+      "en": "interest",
       "ar": "اهتمام",
       "hint": "Wanting to know more about something",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "LEIDENSCHAFT",
-      "en": "passion (die)",
+      "en": "passion",
       "ar": "شغف",
       "hint": "Strong enthusiasm",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "TRAUM",
-      "en": "dream (der)",
+      "en": "dream",
       "ar": "حلم",
       "hint": "Images during sleep or a wish",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "ZUKUNFT",
-      "en": "future (die)",
+      "en": "future",
       "ar": "مستقبل",
       "hint": "Time that is yet to come",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "VERGANGENHEIT",
-      "en": "past (die)",
+      "en": "past",
       "ar": "ماضي",
       "hint": "Time that has already gone",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "GEGENWART",
-      "en": "present (die)",
+      "en": "present",
       "ar": "حاضر",
       "hint": "Time happening now",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "TRADITION",
-      "en": "tradition (die)",
+      "en": "tradition",
       "ar": "تقليد",
       "hint": "Custom passed down generations",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "WERT",
-      "en": "value (der)",
+      "en": "value",
       "ar": "قيمة",
       "hint": "Importance or worth",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "MORAL",
-      "en": "morality (die)",
+      "en": "morality",
       "ar": "أخلاق",
       "hint": "Principles of right and wrong",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "ETHIK",
-      "en": "ethics (die)",
+      "en": "ethics",
       "ar": "أخلاقيات",
       "hint": "Study of moral principles",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "VERTRAUEN",
-      "en": "trust (das)",
+      "en": "trust",
       "ar": "ثقة",
       "hint": "Belief in someone's reliability",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "RESPEKT",
-      "en": "respect (der)",
+      "en": "respect",
       "ar": "احترام",
       "hint": "Admiration for someone",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "TOLERANZ",
-      "en": "tolerance (die)",
+      "en": "tolerance",
       "ar": "تسامح",
       "hint": "Accepting differences",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "VORURTEIL",
-      "en": "prejudice (das)",
+      "en": "prejudice",
       "ar": "تحيز",
       "hint": "Unfair opinion formed in advance",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "INTEGRATION",
-      "en": "integration (die)",
+      "en": "integration",
       "ar": "اندماج",
       "hint": "Inclusion into a group",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "MIGRATION",
-      "en": "migration (die)",
+      "en": "migration",
       "ar": "هجرة",
       "hint": "Moving to another country",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "GLOBALISIERUNG",
-      "en": "globalisation (die)",
+      "en": "globalisation",
       "ar": "عولمة",
       "hint": "World becoming more connected",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "KLIMAWANDEL",
-      "en": "climate change (der)",
+      "en": "climate change",
       "ar": "تغير المناخ",
       "hint": "Long-term shift in global temperatures",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "NACHHALTIGKEIT",
-      "en": "sustainability (die)",
+      "en": "sustainability",
       "ar": "استدامة",
       "hint": "Meeting needs without harming the future",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "ENERGIE",
-      "en": "energy (die)",
+      "en": "energy",
       "ar": "طاقة",
       "hint": "Power from fuel or renewables",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "RESSOURCE",
-      "en": "resource (die)",
+      "en": "resource",
       "ar": "مورد",
       "hint": "Useful material from nature",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "RECYCLING",
-      "en": "recycling (das)",
+      "en": "recycling",
       "ar": "إعادة تدوير",
       "hint": "Reusing waste materials",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "VERSCHMUTZUNG",
-      "en": "pollution (die)",
+      "en": "pollution",
       "ar": "تلوث",
       "hint": "Contamination of air, water, soil",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "ARMUT",
-      "en": "poverty (die)",
+      "en": "poverty",
       "ar": "فقر",
       "hint": "State of being very poor",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "REICHTUM",
-      "en": "wealth (der)",
+      "en": "wealth",
       "ar": "ثروة",
       "hint": "State of being very rich",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "UNGLEICHHEIT",
-      "en": "inequality (die)",
+      "en": "inequality",
       "ar": "عدم المساواة",
       "hint": "Unfair difference in wealth or rights",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "SOLIDARITÄT",
-      "en": "solidarity (die)",
+      "en": "solidarity",
       "ar": "تضامن",
       "hint": "Supporting others as a group",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "GEMEINSCHAFT",
-      "en": "community (die)",
+      "en": "community",
       "ar": "مجتمع محلي",
       "hint": "Group of people in one place",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "ZUSAMMENARBEIT",
-      "en": "cooperation (die)",
+      "en": "cooperation",
       "ar": "تعاون",
       "hint": "Working together",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "KONFLIKT",
-      "en": "conflict (der)",
+      "en": "conflict",
       "ar": "صراع",
       "hint": "Serious disagreement",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "FRIEDEN",
-      "en": "peace (der)",
+      "en": "peace",
       "ar": "سلام",
       "hint": "Absence of war or conflict",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "KRIEG",
-      "en": "war (der)",
+      "en": "war",
       "ar": "حرب",
       "hint": "Armed conflict between nations",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "GRENZE",
-      "en": "border (die)",
+      "en": "border",
       "ar": "حدود",
       "hint": "Line separating two countries",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "VERTRAG",
-      "en": "contract/treaty (der)",
+      "en": "contract/treaty",
       "ar": "عقد / معاهدة",
       "hint": "Formal written agreement",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "BEDARF",
-      "en": "need/demand (der)",
+      "en": "need/demand",
       "ar": "حاجة",
       "hint": "What is required",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "ANGEBOT",
-      "en": "offer/supply (das)",
+      "en": "offer/supply",
       "ar": "عرض",
       "hint": "What is available or proposed",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "NACHFRAGE",
-      "en": "demand (die)",
+      "en": "demand",
       "ar": "طلب",
       "hint": "Consumer desire for goods",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "INVESTITION",
-      "en": "investment (die)",
+      "en": "investment",
       "ar": "استثمار",
       "hint": "Putting money to work",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "SCHULDEN",
-      "en": "debt (die/pl)",
+      "en": "debt",
       "ar": "ديون",
       "hint": "Money owed to others",
-      "type": "noun"
+      "type": "noun",
+      "article": "die/pl"
     },
     {
       "w": "STEUER",
-      "en": "tax (die)",
+      "en": "tax",
       "ar": "ضريبة",
       "hint": "Money paid to the government",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "GEHALT",
-      "en": "salary (das)",
+      "en": "salary",
       "ar": "راتب",
       "hint": "Monthly payment for work",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "ARBEITSLOSIGKEIT",
-      "en": "unemployment (die)",
+      "en": "unemployment",
       "ar": "بطالة",
       "hint": "State of having no job",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "AUSBILDUNG",
-      "en": "training/apprenticeship (die)",
+      "en": "training/apprenticeship",
       "ar": "تدريب",
       "hint": "Vocational education",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "STUDIUM",
-      "en": "studies/degree (das)",
+      "en": "studies/degree",
       "ar": "دراسة جامعية",
       "hint": "University-level learning",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "ABSCHLUSS",
-      "en": "qualification/finish (der)",
+      "en": "qualification/finish",
       "ar": "شهادة / إتمام",
       "hint": "End of education or degree",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "PRÜFUNG",
-      "en": "exam (die)",
+      "en": "exam",
       "ar": "امتحان",
       "hint": "Test of knowledge",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "BEWERBUNG",
-      "en": "application (die)",
+      "en": "application",
       "ar": "طلب توظيف",
       "hint": "Formal request for a job",
-      "type": "noun"
+      "type": "noun",
+      "article": "die"
     },
     {
       "w": "LEBENSLAUF",
-      "en": "curriculum vitae (der)",
+      "en": "curriculum vitae",
       "ar": "سيرة ذاتية",
       "hint": "Summary of your life and work",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "INTERVIEW",
-      "en": "interview (das)",
+      "en": "interview",
       "ar": "مقابلة عمل",
       "hint": "Meeting to assess a candidate",
-      "type": "noun"
+      "type": "noun",
+      "article": "das"
     },
     {
       "w": "KOLLEGE",
-      "en": "colleague (der)",
+      "en": "colleague",
       "ar": "زميل",
       "hint": "Person you work with",
-      "type": "noun"
+      "type": "noun",
+      "article": "der"
     },
     {
       "w": "VORGESETZTE",
-      "en": "supervisor (die/der)",
+      "en": "supervisor",
       "ar": "مشرف",
       "hint": "Person above you at work",
-      "type": "noun"
+      "type": "noun",
+      "article": "die/der"
     },
     {
       "w": "ANALYSIEREN",
