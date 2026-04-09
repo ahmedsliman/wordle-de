@@ -69,6 +69,7 @@
       font-family: 'Inter', system-ui, sans-serif;
       background: var(--color-bg);
       color: var(--color-text);
+      line-height: 1.5;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -191,6 +192,7 @@
     }
 
     .tab:hover { color: var(--color-text); }
+    .tab:focus-visible, .type-tab:focus-visible { outline: 2px solid var(--color-correct); outline-offset: -2px; }
 
     .tab.active, .type-tab.active {
       color: var(--color-correct);
@@ -580,8 +582,9 @@
       font-weight: 500;
       padding: 6px 16px;
       text-align: center;
-      border-radius: 6px;
+      border-radius: 8px;
       transition: opacity 0.3s;
+      background: var(--color-surface);
     }
 
     #message.win  { color: var(--color-correct); }
@@ -635,6 +638,7 @@
     .key.correct { background: var(--color-correct); color: #fff; }
     .key.present { background: var(--color-present); color: #fff; }
     .key.absent  { background: var(--color-absent);  color: #fff; }
+    .key:hover:not(.correct):not(.present):not(.absent) { filter: brightness(0.9); }
     .key:focus-visible { outline: 2px solid var(--color-correct); outline-offset: 2px; }
 
     /* ─── Streak bar ─────────────────────────────────── */
@@ -851,6 +855,8 @@
       padding: 28px 24px;
       width: 100%;
       max-width: 380px;
+      max-height: 90dvh;
+      overflow-y: auto;
       display: flex;
       flex-direction: column;
       gap: 16px;
@@ -904,6 +910,7 @@
       border-color: var(--color-correct);
       box-shadow: 0 0 0 3px rgba(29,158,117,0.15);
     }
+    .setup-fields input::placeholder { color: var(--color-text-muted); opacity: 0.6; }
 
     .start-btn {
       font-family: 'Inter', system-ui, sans-serif;
@@ -1006,6 +1013,10 @@
       .tab, .type-tab { padding: 0 10px; font-size: 0.76rem; min-height: 48px; }
       .diamond-counter { font-size: 0.72rem; padding: 3px 6px; gap: 2px; }
       .mode-btn { font-size: 0.7rem; padding: 4px 9px; }
+      /* Streak bar wraps to 2 rows */
+      .streak-bar { flex-wrap: wrap; }
+      /* Clue bar: hide Arabic on small screens to prevent wrapping */
+      .hint-ar { display: none; }
     }
 
     /* Very small screens — shrink keys, hide diamond counter from header */
@@ -1178,6 +1189,8 @@
 
     @media (prefers-color-scheme: dark) {
       .cw-cell.cell-hl { background: rgba(29, 158, 117, 0.25); border-color: var(--color-correct); }
+      .board-cell.owned-p1 { background: rgba(59,130,246,0.22); }
+      .board-cell.owned-p2 { background: rgba(239,68,68,0.22); }
     }
 
     /* ─── Online Lobby ───────────────────────────────────── */
@@ -1242,7 +1255,7 @@
     }
     .room-code-value {
       font-family: 'DM Mono', monospace;
-      font-size: 2rem;
+      font-size: clamp(1.4rem, 6vw, 2rem);
       font-weight: 700;
       letter-spacing: 0.2em;
       color: var(--color-correct);
@@ -1348,9 +1361,9 @@
   <header>
     <div class="logo">Wörtle<span class="logo-dot">.</span></div>
     <div class="level-tabs" id="level-tabs">
-      <button class="tab active" data-level="A1">A1</button>
-      <button class="tab"        data-level="A2">A2</button>
-      <button class="tab"        data-level="B1">B1</button>
+      <button class="tab active" data-level="A1" aria-label="Schwierigkeitsstufe A1">A1</button>
+      <button class="tab"        data-level="A2" aria-label="Schwierigkeitsstufe A2">A2</button>
+      <button class="tab"        data-level="B1" aria-label="Schwierigkeitsstufe B1">B1</button>
     </div>
     <div style="display:flex;align-items:center;gap:8px;">
       <div class="diamond-counter" id="diamond-counter" title="Gesamt-Diamanten">
@@ -2745,9 +2758,20 @@ function hideModePickerOverlay() {
   document.getElementById('mode-picker-overlay').classList.add('hidden');
 }
 
+// ─── Overlay helpers ──────────────────────────────────
+function openOverlay(id) {
+  const el = document.getElementById(id);
+  el.classList.remove('hidden');
+  // Move focus to first interactive element for keyboard / screen-reader users
+  requestAnimationFrame(() => {
+    const first = el.querySelector('button, input, [tabindex="0"]');
+    if (first) first.focus();
+  });
+}
+
 // ─── Setup Overlay ────────────────────────────────────
 function showSetupOverlay() {
-  document.getElementById('setup-overlay').classList.remove('hidden');
+  openOverlay('setup-overlay');
 }
 
 function hideSetupOverlay() {
@@ -3276,7 +3300,7 @@ document.getElementById('hotseat-mode-btn').addEventListener('click', () => {
 
 document.getElementById('online-mode-btn').addEventListener('click', () => {
   hideModePickerOverlay();
-  document.getElementById('online-lobby-overlay').classList.remove('hidden');
+  openOverlay('online-lobby-overlay');
 });
 
 document.getElementById('cancel-mode-picker-btn').addEventListener('click', () => {
@@ -3435,6 +3459,12 @@ window.addEventListener('resize', () => {
       setTileSize(currentWord.w.length);
     }
   }, 150);
+});
+
+// ─── Backdrop click-to-close ──────────────────────────
+document.addEventListener('click', e => {
+  if (!e.target.classList.contains('overlay')) return;
+  e.target.classList.add('hidden');
 });
 
 init();
