@@ -571,7 +571,7 @@
 
     @media (prefers-reduced-motion: reduce) {
       .tile.pop, .tile.flipping, .tile.flipped, .tile.bounce, .row-shake,
-      .diamond-counter.pulse, .audio-btn.speaking { animation: none; }
+      .diamond-counter.pulse, .audio-btn.speaking, .cw-cell.letter-pop { animation: none; }
       .earn-toast { animation: none; opacity: 0; }
     }
 
@@ -1177,6 +1177,60 @@
 
     #cw-clue-bar .cw-clue-num { font-size: 0.85rem; font-weight: 600; color: var(--color-text-muted); }
 
+    .cw-word-len {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      background: var(--color-border);
+      border-radius: 999px;
+      padding: 2px 8px;
+      white-space: nowrap;
+    }
+
+    /* ─── Crossword progress bar ─────────────────────── */
+    #cw-progress {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 14px 6px;
+      background: var(--color-bg);
+    }
+    #cw-progress-fill {
+      flex: 1;
+      height: 4px;
+      background: var(--color-border);
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+    #cw-progress-fill::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--color-correct);
+      transform-origin: left;
+      transform: scaleX(var(--cw-progress, 0));
+      transition: transform 0.4s ease;
+      border-radius: 999px;
+    }
+    #cw-progress-text {
+      font-size: 0.72rem;
+      font-weight: 600;
+      font-family: 'DM Mono', monospace;
+      color: var(--color-text-muted);
+      white-space: nowrap;
+    }
+
+    /* Cell pop on letter entry */
+    @keyframes cw-pop {
+      0%   { transform: scale(1); }
+      40%  { transform: scale(1.18); }
+      100% { transform: scale(1); }
+    }
+    .cw-cell.letter-pop { animation: cw-pop 0.12s ease; }
+
     /* ─── Word chip strip (mobile) ──────────────────── */
     #clue-chips {
       width: 100%;
@@ -1442,7 +1496,14 @@
     <span class="hint-sep">·</span>
     <span class="hint-ar" id="cw-clue-ar"></span>
     <button class="audio-btn" id="cw-audio-btn" aria-label="Aussprache" title="Aussprache hören">🔊</button>
+    <span class="cw-word-len" id="cw-word-len"></span>
     <span class="type-badge" id="cw-type-badge"></span>
+  </div>
+
+  <!-- Progress bar (1P) -->
+  <div id="cw-progress" class="hidden">
+    <div id="cw-progress-fill"></div>
+    <span id="cw-progress-text"></span>
   </div>
   <!-- Screen-reader announcements (word solved, game over) -->
   <div id="sr-announce" aria-live="assertive" aria-atomic="true"
@@ -1618,6 +1679,16 @@
     </div>
   </div>
 
+  <!-- Crossword summary overlay (1P end-of-puzzle) -->
+  <div id="cw-summary-overlay" class="overlay hidden">
+    <div class="overlay-card" style="text-align:center;gap:20px;">
+      <div style="font-size:3rem;line-height:1;">🎉</div>
+      <div class="overlay-title">Ausgezeichnet!</div>
+      <div id="cw-summary-stats" style="display:flex;flex-direction:column;gap:10px;"></div>
+      <button id="cw-new-puzzle-btn" class="start-btn" style="width:100%;">Neues Rätsel</button>
+    </div>
+  </div>
+
 <script>
 // ─── Audio ────────────────────────────────────────────
 function speakWord(word) {
@@ -1646,8 +1717,9 @@ let animating    = false;
 let currentPuzzle = null;   // { grid, words, bbox }
 let selectedCell  = null;   // { r, c }
 let selectedDir   = 'across';
-let usedReveal    = false;
-let cwCellMap     = {};     // "r,c" → DOM element, O(1) lookup
+let usedReveal      = false;
+let puzzleStartTime = 0;
+let cwCellMap       = {};     // "r,c" → DOM element, O(1) lookup
 
 // ─── 2P Wordle state (kept for 2P mode) ───────────────
 let currentWord  = null;
@@ -2350,6 +2422,7 @@ function updateClueBar() {
   if (!pw) return;
 
   document.getElementById('cw-clue-num').textContent = wordNum + ' ' + (selectedDir === 'across' ? '→' : '↓');
+  document.getElementById('cw-word-len').textContent = pw.entry.w.length + ' Buchst.';
   document.getElementById('cw-clue-en').textContent  = pw.entry.en;
   document.getElementById('cw-clue-ar').textContent  = pw.entry.ar;
 
@@ -2371,6 +2444,14 @@ function updateClueBar() {
   badge.className   = 'type-badge ' + pw.entry.type;
 }
 
+function updateCwProgress() {
+  if (!currentPuzzle) return;
+  const total  = currentPuzzle.words.length;
+  const solved = currentPuzzle.words.filter(w => w.solved).length;
+  document.getElementById('cw-progress-text').textContent = solved + ' / ' + total;
+  document.getElementById('cw-progress-fill').style.setProperty('--cw-progress', solved / total);
+}
+
 function getSelectedWord() {
   if (!selectedCell || !currentPuzzle) return null;
   const { grid } = currentPuzzle;
@@ -2387,7 +2468,14 @@ function fillCrosswordLetter(letter) {
   grid[fr][fc].filled = letter;
   const letterEl = document.getElementById(`cwl-${fr}-${fc}`);
   if (letterEl) letterEl.textContent = letter;
-  cwCellEl(fr, fc)?.setAttribute('aria-label', `Feld ${letter}`);
+  const cellEl = cwCellEl(fr, fc);
+  cellEl?.setAttribute('aria-label', `Feld ${letter}`);
+  // Pop animation feedback
+  if (cellEl) {
+    cellEl.classList.remove('letter-pop');
+    void cellEl.offsetWidth;
+    cellEl.classList.add('letter-pop');
+  }
   checkWordComplete();
   advanceCursor();
 }
@@ -2520,6 +2608,7 @@ function checkWordComplete() {
     if (li) li.classList.add('solved');
     const chip = document.querySelector(`.clue-chip[data-num="${pw.number}"][data-dir="${pw.dir}"]`);
     if (chip) chip.classList.add('solved');
+    updateCwProgress();
     // Announce to screen reader
     srAnnounce(`${pw.number} ${pw.dir === 'across' ? 'Waagerecht' : 'Senkrecht'}: richtig!`);
     // Check if all solved
@@ -2529,7 +2618,8 @@ function checkWordComplete() {
 
 function checkAllWords() {
   if (!currentPuzzle) return;
-  const { grid, words, bbox } = currentPuzzle;
+  const { grid, words } = currentPuzzle;
+  let anyWrong = false;
   words.forEach(pw => {
     if (pw.solved) return;
     const dr = pw.dir === 'down' ? 1 : 0;
@@ -2542,12 +2632,17 @@ function checkAllWords() {
       if (!el || el.classList.contains('correct')) return;
       if (cell.filled !== ch) {
         pw._hadWrong = true;
+        anyWrong = true;
         el.classList.add('wrong');
         navigator.vibrate?.(80);
         setTimeout(() => el.classList.remove('wrong'), 1500);
       }
     });
   });
+  if (!anyWrong) {
+    showMessage('Alles korrekt so weit! ✓', 'win');
+    setTimeout(() => { if (!gameOver) showMessage('', ''); }, 2200);
+  }
 }
 
 function revealWord() {
@@ -2571,6 +2666,7 @@ function revealWord() {
   if (li) li.classList.add('solved');
   const chip2 = document.querySelector(`.clue-chip[data-num="${pw.number}"][data-dir="${pw.dir}"]`);
   if (chip2) chip2.classList.add('solved');
+  updateCwProgress();
   if (currentPuzzle.words.every(w => w.solved)) endCrossword(true);
 }
 
@@ -2579,27 +2675,25 @@ function endCrossword(won) {
   if (won) {
     srAnnounce('Ausgezeichnet! Alle Wörter richtig gelöst!');
 
+    // Time taken
+    const secs    = Math.round((Date.now() - puzzleStartTime) / 1000);
+    const timeStr = secs < 60 ? secs + 's' : Math.floor(secs / 60) + 'm ' + (secs % 60) + 's';
+
     // Calculate bonuses
     const bonuses = [];
     const counterEl = document.getElementById('diamond-counter');
-
     if (!usedReveal) {
-      bonuses.push({ amount: 10, label: 'Rätsel gelöst' });
-      // Check if puzzle was clean (no wrong-letter attempts recorded)
+      bonuses.push({ amount: 10, label: 'Rätsel abgeschlossen' });
       const hadWrong = currentPuzzle.words.some(pw => pw._hadWrong);
       if (!hadWrong) bonuses.push({ amount: 5, label: 'Kein Fehler!' });
     }
 
-    // Show bonus toasts with staggered delay
+    // Award diamonds with stagger
     bonuses.forEach((b, i) => {
       setTimeout(() => earnDiamonds(b.amount, 'puzzle_bonus', counterEl), 400 + i * 600);
     });
 
-    // Build message
-    let msg = 'Ausgezeichnet! 🎉';
-    if (bonuses.length) msg += '  ' + bonuses.map(b => `+${b.amount}💎`).join(' ');
-    showMessage(msg, 'win');
-
+    // Update streak
     if (!usedReveal) {
       streak.current++;
       if (streak.current > streak.best) streak.best = streak.current;
@@ -2607,6 +2701,30 @@ function endCrossword(won) {
       renderStreak();
       checkStreakMilestones();
     }
+
+    // Build summary overlay
+    const stats = document.getElementById('cw-summary-stats');
+    stats.innerHTML = '';
+    const rows = [
+      { icon: '⏱️', label: 'Zeit',    value: timeStr },
+      { icon: '✅', label: 'Wörter',  value: currentPuzzle.words.length + ' / ' + currentPuzzle.words.length },
+      { icon: '🔥', label: 'Serie',   value: streak.current + ' Tag' + (streak.current !== 1 ? 'e' : '') },
+    ];
+    if (bonuses.length) {
+      rows.push({ icon: '💎', label: 'Verdient', value: '+' + bonuses.reduce((s, b) => s + b.amount, 0) + ' Diamanten' });
+    }
+    rows.forEach(({ icon, label, value }) => {
+      const row = document.createElement('div');
+      row.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--color-surface);border-radius:10px;font-size:0.9rem;';
+      row.innerHTML = `<span style="color:var(--color-text-muted)">${icon} ${label}</span><strong>${value}</strong>`;
+      stats.appendChild(row);
+    });
+
+    // Show overlay after a short delay so the last word's green flash is visible
+    setTimeout(() => {
+      document.getElementById('cw-summary-overlay').classList.remove('hidden');
+      document.getElementById('cw-new-puzzle-btn').focus();
+    }, 700);
   }
   document.getElementById('new-puzzle-btn').classList.remove('hidden');
 }
@@ -2623,10 +2741,13 @@ function startCrossword() {
   usedReveal    = false;
   animating     = false;
   keyColors     = {};
+  puzzleStartTime = Date.now();
   buildKeyboard();
 
+  document.getElementById('cw-summary-overlay').classList.add('hidden');
   buildCrosswordGrid(puzzle);
   renderClues(puzzle);
+  updateCwProgress();
   showMessage('', '');
   document.getElementById('new-puzzle-btn').classList.add('hidden');
 
@@ -2651,6 +2772,7 @@ function handleKey(key) {
   if (gameOver || !currentPuzzle) return;
   if (key === '⌫' || key === 'Backspace') { backspaceCrossword(); }
   else if (key === 'ENTER' || key === 'Enter') { jumpToNextWord(); }
+  else if (key === ' ') { if (selectedCell) selectCell(selectedCell.r, selectedCell.c); } // toggle direction
   else if (key === 'ArrowRight') { moveCursor(0, 1); }
   else if (key === 'ArrowLeft')  { moveCursor(0, -1); }
   else if (key === 'ArrowDown')  { moveCursor(1, 0); }
@@ -2809,6 +2931,7 @@ function setMode(mode) {
     streakBar.classList.remove('hidden');
     board2p.classList.add('hidden');
     document.getElementById('clue-chips').classList.remove('hidden');
+    document.getElementById('cw-progress').classList.remove('hidden');
     panelHdr.classList.add('hidden');
     panelHint.classList.add('hidden');
     // Hide the Wordle grid — only keyboard is needed
@@ -2823,6 +2946,7 @@ function setMode(mode) {
     streakBar.classList.add('hidden');
     board2p.classList.remove('hidden');
     document.getElementById('clue-chips').classList.add('hidden');
+    document.getElementById('cw-progress').classList.add('hidden');
     panelHdr.classList.remove('hidden');
     panelHint.classList.remove('hidden');
     document.getElementById('panel-close-btn').classList.remove('hidden');
@@ -3348,6 +3472,10 @@ document.getElementById('level-tabs').addEventListener('click', e => {
 });
 
 document.getElementById('new-puzzle-btn').addEventListener('click', startCrossword);
+document.getElementById('cw-new-puzzle-btn').addEventListener('click', () => {
+  document.getElementById('cw-summary-overlay').classList.add('hidden');
+  startCrossword();
+});
 document.getElementById('check-btn').addEventListener('click', checkAllWords);
 document.getElementById('reveal-btn').addEventListener('click', () => {
   const btn = document.getElementById('reveal-btn');
@@ -3502,6 +3630,14 @@ document.addEventListener('keydown', e => {
   if (!document.getElementById('mode-picker-overlay').classList.contains('hidden')) return;
   if (!document.getElementById('online-lobby-overlay').classList.contains('hidden')) return;
   if (!document.getElementById('handoff-overlay').classList.contains('hidden')) return;
+
+  // Tab = jump to next unsolved word (crossword only)
+  if (e.key === 'Tab' && gameMode === '1P' && !gameOver && currentPuzzle) {
+    e.preventDefault();
+    jumpToNextWord();
+    return;
+  }
+
   handleKey(e.key);
 });
 
