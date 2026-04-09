@@ -1177,14 +1177,65 @@
 
     #cw-clue-bar .cw-clue-num { font-size: 0.85rem; font-weight: 600; color: var(--color-text-muted); }
 
+    /* ─── Word chip strip (mobile) ──────────────────── */
+    #clue-chips {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      overflow-x: auto;
+      overflow-y: hidden;
+      gap: 6px;
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--color-border);
+      background: var(--color-bg);
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    #clue-chips::-webkit-scrollbar { display: none; }
+
+    .clue-chip {
+      flex-shrink: 0;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 5px 11px;
+      border-radius: 999px;
+      border: 1.5px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .clue-chip:hover { border-color: var(--color-text-muted); }
+    .clue-chip.active {
+      background: var(--color-correct);
+      border-color: var(--color-correct);
+      color: #fff;
+    }
+    .clue-chip.solved {
+      opacity: 0.4;
+      text-decoration: line-through;
+    }
+
     @media (max-width: 680px) {
-      #crossword-area { flex-direction: column; overflow-x: auto; }
+      /* Show chip strip, hide the side clue panel */
+      #clue-chips { display: flex; }
+      #clues-panel { display: none; }
+      /* Grid no longer stacks with the panel */
+      #crossword-area { overflow-x: auto; }
+    }
+
+    @media (min-width: 681px) {
+      /* Desktop: side panel visible, chip strip hidden */
+      #clue-chips { display: none; }
+      #crossword-area { flex-direction: row; }
       #clues-panel {
-        max-width: 100%; max-height: 40vh;
-        display: flex; flex-direction: column; gap: 8px;
-        overflow-y: auto; flex: none;
+        flex: 1; min-width: 180px; max-width: 260px;
+        max-height: 60vh; overflow-y: auto;
+        display: block;
       }
-      .clues-section { flex: none; }
     }
 
     @media (prefers-color-scheme: dark) {
@@ -1396,6 +1447,9 @@
   <!-- Screen-reader announcements (word solved, game over) -->
   <div id="sr-announce" aria-live="assertive" aria-atomic="true"
        style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap"></div>
+
+  <!-- Word chip strip — mobile navigation (replaces side clue panel on small screens) -->
+  <div id="clue-chips" class="hidden" aria-label="Wörter" role="group"></div>
 
   <!-- Crossword area (1P) -->
   <div id="crossword-area" class="hidden">
@@ -2153,14 +2207,17 @@ function buildCrosswordGrid(puzzle) {
 function renderClues(puzzle) {
   const acrossList = document.getElementById('across-clues');
   const downList   = document.getElementById('down-clues');
+  const chipsEl    = document.getElementById('clue-chips');
   acrossList.innerHTML = '';
   downList.innerHTML   = '';
+  chipsEl.innerHTML    = '';
 
   puzzle.words
     .filter(pw => pw.number !== null)
     .slice()
-    .sort((a, b) => a.number - b.number)
+    .sort((a, b) => a.number - b.number || (pw => pw.dir === 'across' ? 0 : 1)(a))
     .forEach(pw => {
+      // ── Side panel list item (desktop) ──
       const li  = document.createElement('li');
       li.className = 'clue-item';
       li.dataset.num = pw.number;
@@ -2179,6 +2236,16 @@ function renderClues(puzzle) {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectCell(pw.row, pw.col, pw.dir); }
       });
       (pw.dir === 'across' ? acrossList : downList).appendChild(li);
+
+      // ── Chip (mobile) ──
+      const chip = document.createElement('button');
+      chip.className = 'clue-chip';
+      chip.dataset.num = pw.number;
+      chip.dataset.dir = pw.dir;
+      chip.textContent = pw.number + (pw.dir === 'across' ? ' →' : ' ↓');
+      chip.setAttribute('aria-label', `Wort ${pw.number} ${pw.dir === 'across' ? 'waagerecht' : 'senkrecht'}: ${pw.entry.en}`);
+      chip.addEventListener('click', () => selectCell(pw.row, pw.col, pw.dir));
+      chipsEl.appendChild(chip);
     });
 }
 
@@ -2244,12 +2311,20 @@ function highlightWord() {
   const selEl = cwCellEl(selectedCell.r, selectedCell.c);
   if (selEl) { selEl.classList.remove('word-hl'); selEl.classList.add('cell-hl'); }
 
-  // Update active clue in list
+  // Update active clue in side panel list
   document.querySelectorAll('.clue-item').forEach(li => li.classList.remove('active'));
   const activeLi = document.querySelector(`.clue-item[data-num="${wordNum}"][data-dir="${selectedDir}"]`);
   if (activeLi) {
     activeLi.classList.add('active');
     activeLi.scrollIntoView({ block: 'nearest' });
+  }
+
+  // Update active chip in mobile chip strip
+  document.querySelectorAll('.clue-chip').forEach(ch => ch.classList.remove('active'));
+  const activeChip = document.querySelector(`.clue-chip[data-num="${wordNum}"][data-dir="${selectedDir}"]`);
+  if (activeChip) {
+    activeChip.classList.add('active');
+    activeChip.scrollIntoView({ inline: 'nearest', block: 'nearest' });
   }
 }
 
@@ -2440,9 +2515,11 @@ function checkWordComplete() {
     navigator.vibrate?.([40, 30, 40]);
     // Earn diamonds
     earnDiamonds(5, 'word_solved', firstCellEl);
-    // Strikethrough clue
+    // Strikethrough clue (panel + chip)
     const li = document.querySelector(`.clue-item[data-num="${pw.number}"][data-dir="${pw.dir}"]`);
     if (li) li.classList.add('solved');
+    const chip = document.querySelector(`.clue-chip[data-num="${pw.number}"][data-dir="${pw.dir}"]`);
+    if (chip) chip.classList.add('solved');
     // Announce to screen reader
     srAnnounce(`${pw.number} ${pw.dir === 'across' ? 'Waagerecht' : 'Senkrecht'}: richtig!`);
     // Check if all solved
@@ -2492,6 +2569,8 @@ function revealWord() {
   earnDiamonds(1, 'word_revealed', cwCellEl(pw.row, pw.col));
   const li = document.querySelector(`.clue-item[data-num="${pw.number}"][data-dir="${pw.dir}"]`);
   if (li) li.classList.add('solved');
+  const chip2 = document.querySelector(`.clue-chip[data-num="${pw.number}"][data-dir="${pw.dir}"]`);
+  if (chip2) chip2.classList.add('solved');
   if (currentPuzzle.words.every(w => w.solved)) endCrossword(true);
 }
 
@@ -2729,6 +2808,7 @@ function setMode(mode) {
     cwActions.classList.remove('hidden');
     streakBar.classList.remove('hidden');
     board2p.classList.add('hidden');
+    document.getElementById('clue-chips').classList.remove('hidden');
     panelHdr.classList.add('hidden');
     panelHint.classList.add('hidden');
     // Hide the Wordle grid — only keyboard is needed
@@ -2742,6 +2822,7 @@ function setMode(mode) {
     cwActions.classList.add('hidden');
     streakBar.classList.add('hidden');
     board2p.classList.remove('hidden');
+    document.getElementById('clue-chips').classList.add('hidden');
     panelHdr.classList.remove('hidden');
     panelHint.classList.remove('hidden');
     document.getElementById('panel-close-btn').classList.remove('hidden');
