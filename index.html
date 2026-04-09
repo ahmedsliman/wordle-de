@@ -2494,17 +2494,13 @@ function advanceCursor() {
   for (let i = curOffset + 1; i < wordLen; i++) {
     const rr = pw.row + dr * i, cc = pw.col + dc * i;
     if (!grid[rr][cc].filled) {
-      selectedCell = { r: rr, c: cc };
-      highlightWord();
-      updateClueBar();
+      selectCell(rr, cc, pw.dir); // use selectCell to keep direction consistent
       return;
     }
   }
   // If no empty cells ahead, just move forward anyway (overwrites)
   if (curOffset + 1 < wordLen) {
-    selectedCell = { r: pw.row + dr * (curOffset + 1), c: pw.col + dc * (curOffset + 1) };
-    highlightWord();
-    updateClueBar();
+    selectCell(pw.row + dr * (curOffset + 1), pw.col + dc * (curOffset + 1), pw.dir);
   } else {
     // At end of word — jump to next unsolved word
     jumpToNextWord();
