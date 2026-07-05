@@ -1059,9 +1059,10 @@
         z-index: 40;
       }
 
-      /* Reserve space for native keyboard on all modes */
-      body.has-keyboard {
-        padding-bottom: max(env(keyboard-inset-height, 0px), calc(185px + env(safe-area-inset-bottom, 0px)));
+      /* Reserve space for the custom keyboard in 2P mode only.
+         In 1P crossword mode #cw-keyboard is a flex child — no body padding needed. */
+      body.has-keyboard:not(:has(#wordle-panel.mode-1p)) {
+        padding-bottom: calc(185px + env(safe-area-inset-bottom, 0px));
       }
     }
 
