@@ -1688,6 +1688,52 @@
     }
     @keyframes badge-pop { from { transform: scale(0); } to { transform: scale(1); } }
     .tab-review.active { color: var(--color-present); border-bottom-color: var(--color-present); }
+    /* B2 tab: purple accent */
+    .tab-b2.active { color: #7c3aed; border-bottom-color: #7c3aed; }
+
+    /* Multi-select: small checkmark dot on active non-review tabs */
+    .tab[data-level]:not([data-level="REVIEW"]).active::after {
+      content: '';
+      display: inline-block;
+      width: 5px; height: 5px;
+      background: currentColor;
+      border-radius: 50%;
+      margin-left: 4px;
+      vertical-align: middle;
+      opacity: 0.7;
+    }
+
+    /* ── Motivation toast ────────────────────────────────── */
+    #motivation-toast {
+      position: fixed;
+      top: 64px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-12px);
+      background: var(--color-text);
+      color: var(--color-text-inv);
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      pointer-events: none;
+      z-index: 90;
+      opacity: 0;
+      transition: opacity 0.2s ease, transform 0.2s var(--ease-spring);
+      white-space: nowrap;
+    }
+    #motivation-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ── Word-solved cell pop animation ─────────────────── */
+    @keyframes cell-pop {
+      0%   { transform: scale(1); }
+      40%  { transform: scale(1.18); }
+      70%  { transform: scale(0.94); }
+      100% { transform: scale(1); }
+    }
+    .cw-cell.pop { animation: cell-pop 0.38s var(--ease-spring); }
 
     /* ── Crossword cells: white playable, indigo blocks (Cool Indigo) ── */
     .cw-cell       { background: var(--color-cell); border-color: var(--color-border); }
@@ -1754,10 +1800,11 @@
   <header>
     <div class="logo">Wörtle<span class="logo-dot">.</span></div>
     <div class="level-tabs" id="level-tabs">
-      <button class="tab active" data-level="A1" aria-label="Schwierigkeitsstufe A1">A1</button>
-      <button class="tab"        data-level="A2" aria-label="Schwierigkeitsstufe A2">A2</button>
-      <button class="tab"        data-level="B1" aria-label="Schwierigkeitsstufe B1">B1</button>
-      <button class="tab tab-review" data-level="REVIEW" aria-label="Wiederholung — fällige Wörter">★<span class="review-badge" id="review-badge" hidden>0</span></button>
+      <button class="tab active" data-level="A1" aria-label="Schwierigkeitsstufe A1" aria-pressed="true">A1</button>
+      <button class="tab"        data-level="A2" aria-label="Schwierigkeitsstufe A2" aria-pressed="false">A2</button>
+      <button class="tab"        data-level="B1" aria-label="Schwierigkeitsstufe B1" aria-pressed="false">B1</button>
+      <button class="tab tab-b2" data-level="B2" aria-label="Schwierigkeitsstufe B2" aria-pressed="false">B2</button>
+      <button class="tab tab-review" data-level="REVIEW" aria-label="Wiederholung — fällige Wörter" aria-pressed="false">★<span class="review-badge" id="review-badge" hidden>0</span></button>
     </div>
     <div style="display:flex;align-items:center;gap:8px;">
       <div class="diamond-counter" id="diamond-counter" title="Gesamt-Diamanten">
@@ -1872,6 +1919,9 @@
   </div>
 
   </main><!-- /game-main -->
+
+  <!-- Motivation toast (word solved feedback) -->
+  <div id="motivation-toast" aria-live="polite" aria-atomic="true"></div>
 
   <!-- Mode Picker Overlay (Hot Seat vs Online) -->
   <div id="mode-picker-overlay" class="overlay hidden">
@@ -2038,9 +2088,27 @@ function speakWord(word, btn) {
   window.speechSynthesis.speak(utt);
 }
 
+// ─── Motivation messages ──────────────────────────────
+const MOTIVATION = [
+  '🎯 Genau!', '✨ Super!', '💪 Weiter so!', '🌟 Klasse!',
+  '🔥 Stark!', '👏 Toll!', '⭐ Ausgezeichnet!', '🎉 Fantastisch!',
+  '💡 Gut gemacht!', '🚀 Weiter!', '😊 Prima!', '✅ Perfekt!',
+  '🏆 Bravo!', '🌈 Wunderbar!', '💎 Brilliant!', '🎊 Sehr gut!',
+];
+let _motivTimer = null;
+function showMotivation() {
+  const el = document.getElementById('motivation-toast');
+  if (!el) return;
+  el.textContent = MOTIVATION[Math.floor(Math.random() * MOTIVATION.length)];
+  el.classList.add('show');
+  clearTimeout(_motivTimer);
+  _motivTimer = setTimeout(() => el.classList.remove('show'), 1600);
+}
+
 // ─── State ────────────────────────────────────────────
 let words        = {};
-let currentLevel = 'A1';
+let currentLevel  = 'A1';          // kept for 2P compat (single level)
+let selectedLevels = new Set(['A1']); // 1P multi-select
 let gameOver     = false;
 let streak       = { current: 0, best: 0 };
 let animating    = false;
@@ -3050,6 +3118,19 @@ function checkWordComplete() {
     });
     // Haptic feedback: short double-tap for success
     navigator.vibrate?.([40, 30, 40]);
+    // Motivation toast
+    showMotivation();
+    // Cell pop animation (staggered along word)
+    wordStr.split('').forEach((_, i) => {
+      const rr = pw.row + dr * i, cc = pw.col + dc * i;
+      const el = cwCellEl(rr, cc);
+      if (el) {
+        setTimeout(() => {
+          el.classList.add('pop');
+          el.addEventListener('animationend', () => el.classList.remove('pop'), { once: true });
+        }, i * 40);
+      }
+    });
     // Auto-play pronunciation on solve (reinforces the sound↔spelling link)
     speakWord(wordStr);
     // Earn diamonds
@@ -3280,12 +3361,18 @@ function startCrossword() {
   if (gameMode === '2P') return;
   document.getElementById('cw-review-empty').classList.add('hidden');
   let pool;
-  if (currentLevel === 'REVIEW') {
+  if (selectedLevels.has('REVIEW')) {
     pool = dueWords().map(w => wordEntryIndex[w]).filter(Boolean);
     const eligible = pool.filter(e => e.w.length >= CW_MIN && e.w.length <= CW_MAX);
     if (eligible.length < 5) { showReviewEmpty(eligible.length); return; }
   } else {
-    pool = words[currentLevel] || [];
+    // Merge words from all selected levels, deduped by word string
+    const seen = new Set();
+    pool = [...selectedLevels].flatMap(lvl => words[lvl] || []).filter(e => {
+      if (seen.has(e.w)) return false;
+      seen.add(e.w);
+      return true;
+    });
   }
   let puzzle = null;
   for (let i = 0; i < 3 && !puzzle; i++) puzzle = generateCrossword(pool);
@@ -4023,29 +4110,66 @@ function cleanupOnline() {
   onlineRoundNum = 0;
 }
 
-// ─── Tab switching ────────────────────────────────────
+// ─── Tab switching (multi-select for 1P, single for 2P) ──
 document.getElementById('level-tabs').addEventListener('click', e => {
   const btn = e.target.closest('[data-level]');
   if (!btn) return;
-  // Review mode is a 1P-only feature
-  if (btn.dataset.level === 'REVIEW' && gameMode === '2P') {
+  const level = btn.dataset.level;
+
+  if (level === 'REVIEW' && gameMode === '2P') {
     showMessage('Wiederholung nur im Solo-Modus', '');
     setTimeout(() => showMessage('', ''), 1800);
     return;
   }
-  document.querySelectorAll('#level-tabs .tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  currentLevel = btn.dataset.level;
-  if (gameMode === '1P') startCrossword();
-  else { showMessage('Niveau ab nächster Runde: ' + currentLevel, ''); setTimeout(() => showMessage('', ''), 1800); }
+
+  if (gameMode === '2P') {
+    // 2P: single-select only
+    document.querySelectorAll('#level-tabs .tab').forEach(t => {
+      t.classList.remove('active');
+      t.setAttribute('aria-pressed', 'false');
+    });
+    btn.classList.add('active');
+    btn.setAttribute('aria-pressed', 'true');
+    currentLevel = level;
+    selectedLevels = new Set([level]);
+    showMessage('Niveau ab nächster Runde: ' + level, '');
+    setTimeout(() => showMessage('', ''), 1800);
+    return;
+  }
+
+  // 1P: multi-select
+  if (level === 'REVIEW') {
+    // REVIEW is exclusive
+    selectedLevels = new Set(['REVIEW']);
+  } else {
+    selectedLevels.delete('REVIEW');
+    if (selectedLevels.has(level) && selectedLevels.size > 1) {
+      selectedLevels.delete(level); // deselect if others remain
+    } else {
+      selectedLevels.add(level);   // always keep at least one
+    }
+  }
+  currentLevel = [...selectedLevels][0]; // 2P compat
+  // Update tab visuals
+  document.querySelectorAll('#level-tabs .tab').forEach(t => {
+    const on = selectedLevels.has(t.dataset.level);
+    t.classList.toggle('active', on);
+    t.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+  startCrossword();
 });
 
 document.getElementById('cw-review-empty-btn').addEventListener('click', () => {
   document.getElementById('cw-review-empty').classList.add('hidden');
+  document.querySelectorAll('#level-tabs .tab').forEach(t => {
+    t.classList.remove('active');
+    t.setAttribute('aria-pressed', 'false');
+  });
   const a1 = document.querySelector('#level-tabs [data-level="A1"]');
-  document.querySelectorAll('#level-tabs .tab').forEach(t => t.classList.remove('active'));
   a1.classList.add('active');
+  a1.setAttribute('aria-pressed', 'true');
   currentLevel = 'A1';
+  selectedLevels = new Set(['A1']);
   startCrossword();
 });
 
