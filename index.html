@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="description" content="Wörtle — lerne deutsche Wörter (A1/A2/B1) mit einem Kreuzworträtsel-Spiel: Aussprache, Grammatik-Gender, und Wiederholung mit Spaced Repetition." />
   <meta name="color-scheme" content="light" />
   <meta name="theme-color" content="#FAFAF8" />
@@ -1090,10 +1090,86 @@
       #streak-bar-diamonds { display: flex !important; }
     }
 
-    /* Hide custom keyboard in 1P crossword mode — native keyboard used via hidden input */
+    /* Hide custom keyboard in 1P crossword mode — custom #cw-keyboard used instead */
     #wordle-panel.mode-1p #keyboard { display: none; }
 
-    /* Hidden input that summons the native mobile keyboard when a crossword cell is tapped */
+    /* ─── 1P Crossword: mobile viewport lock + three-zone layout ── */
+    /* body.cw-active is set by startCrossword() on mobile */
+    @media (max-width: 680px) {
+      body.cw-active {
+        height: 100dvh;
+        overflow: hidden;
+      }
+      body.cw-active #game-main {
+        /* Let the flex item shrink below its content's natural height */
+        min-height: 0;
+        overflow: hidden;
+      }
+      /* Streak bar has no space in locked viewport */
+      body.cw-active #streak-bar { display: none; }
+
+      /* Collapsible chrome: collapse chips + progress when a cell is selected */
+      body.cw-active #cw-progress,
+      body.cw-active #clue-chips {
+        overflow: hidden;
+        transition: max-height 0.22s ease, opacity 0.22s ease;
+        max-height: 72px;
+      }
+      body.cw-active.cw-typing #cw-progress,
+      body.cw-active.cw-typing #clue-chips {
+        max-height: 0;
+        opacity: 0;
+      }
+
+      /* Clue bar stays visible; prevent flex from squishing it */
+      body.cw-active #cw-clue-bar { flex-shrink: 0; }
+
+      /* Board zone: takes all remaining space */
+      body.cw-active #crossword-area {
+        flex: 1;
+        min-height: 0;
+        overflow: hidden;
+        /* override the overflow-x:auto set by the mobile media query above */
+        overflow-x: hidden;
+        align-items: center;
+        justify-content: center;
+        padding: 4px 8px;
+        gap: 0;
+      }
+      body.cw-active #crossword-grid-container {
+        overflow: auto;
+        height: 100%;
+        max-height: 100%;
+        max-width: 100%;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /* Actions: compact, above keyboard */
+      body.cw-active #cw-actions {
+        flex-shrink: 0;
+        padding: 4px 12px;
+        margin: 0;
+      }
+
+      /* Custom crossword keyboard — hidden on desktop, shown in cw-active mobile */
+      #cw-keyboard { display: none; }
+      body.cw-active #cw-keyboard {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        align-items: center;
+        flex-shrink: 0;
+        width: 100%;
+        background: var(--color-bg);
+        border-top: 1px solid var(--color-border);
+        box-shadow: 0 -2px 8px rgba(28,25,23,0.06);
+        padding: 5px 4px calc(5px + env(safe-area-inset-bottom, 0px));
+      }
+      /* Crossword keyboard keys: slightly shorter than 2P keys (48px) */
+      body.cw-active #cw-keyboard .key { height: 42px; }
+    }
+
+    /* Hidden input that captures native keyboard events (physical keyboard) in crossword mode */
     #cw-native-input {
       position: fixed;
       top: -200px;
@@ -1676,7 +1752,7 @@
       <div class="diamond-counter" id="diamond-counter" title="Gesamt-Diamanten">
         💎 <span id="diamond-count">0</span>
       </div>
-      <div class="mode-toggle">
+      <div class="mode-toggle" style="display:none">
         <button class="mode-btn active" data-mode="1P">Solo</button>
         <button class="mode-btn"        data-mode="2P">Duo</button>
       </div>
@@ -1685,8 +1761,8 @@
 
   <main id="game-main" tabindex="-1">
 
-  <!-- Hidden input for native mobile keyboard in crossword mode -->
-  <input id="cw-native-input" type="text" inputmode="text" autocomplete="off"
+  <!-- Hidden input captures physical keyboard events in crossword mode (OS keyboard suppressed via inputmode=none) -->
+  <input id="cw-native-input" type="text" inputmode="none" autocomplete="off"
          autocorrect="off" autocapitalize="characters" spellcheck="false" aria-hidden="true" />
 
   <!-- Crossword clue bar (1P) -->
@@ -1737,6 +1813,9 @@
     <button id="reveal-btn">Wort aufdecken</button>
     <button id="new-puzzle-btn" class="hidden">Neues Rätsel</button>
   </div>
+
+  <!-- Custom crossword keyboard (mobile only, replaces OS keyboard in 1P mode) -->
+  <div id="cw-keyboard" aria-label="Tastatur" role="group"></div>
 
   <!-- 2P Board -->
   <div id="board-2p" class="hidden">
@@ -2416,6 +2495,29 @@ function buildKeyboard() {
   document.body.classList.add('has-keyboard');
 }
 
+// ─── Custom crossword keyboard (mobile, 1P mode) ──────
+function buildCwKeyboard() {
+  const kb = document.getElementById('cw-keyboard');
+  if (!kb) return;
+  kb.innerHTML = '';
+  for (const row of KB_ROWS) {
+    const rowEl = document.createElement('div');
+    rowEl.className = 'kb-row';
+    for (const key of row) {
+      const btn = document.createElement('button');
+      btn.className = 'key' + (key.length > 1 ? ' wide' : '');
+      btn.textContent = key;
+      btn.dataset.key = key;
+      if (key === '⌫') btn.setAttribute('aria-label', 'Löschen');
+      else if (key === 'ENTER') btn.setAttribute('aria-label', 'Prüfen');
+      // pointerdown + preventDefault keeps focus on grid, not button
+      btn.addEventListener('pointerdown', e => { e.preventDefault(); handleKey(key); });
+      rowEl.appendChild(btn);
+    }
+    kb.appendChild(rowEl);
+  }
+}
+
 // ─── Update key colors ────────────────────────────────
 const PRIORITY = { correct: 3, present: 2, absent: 1 };
 
@@ -2526,18 +2628,29 @@ function showMessage(text, type) {
 }
 
 // ─── Crossword UI ─────────────────────────────────────
-function computeCwCellSize(cols) {
-  const vw   = Math.min(window.innerWidth, 600);
-  const pad  = 32;
-  const avail = (vw - pad) * (window.innerWidth <= 680 ? 1 : 0.62);
-  return Math.max(24, Math.min(window.innerWidth <= 680 ? 44 : 40, Math.floor(avail / cols)));
+function computeCwCellSize(cols, rows) {
+  const vw = Math.min(window.innerWidth, 600);
+  const isMobile = window.innerWidth <= 680;
+  const pad = 32;
+  const availW = (vw - pad) * (isMobile ? 1 : 0.62);
+  const byWidth = Math.floor(availW / cols);
+
+  let byHeight = 999;
+  if (isMobile && rows) {
+    // Reserve: header(52) + clue-bar(44) + actions(48) + kb(3 rows × 47px + 10px padding ≈ 151) + cushion(16)
+    const availH = window.innerHeight - 52 - 44 - 48 - 161 - 16;
+    if (availH > 0) byHeight = Math.floor(availH / rows);
+  }
+
+  const maxSize = isMobile ? 44 : 40;
+  return Math.max(20, Math.min(maxSize, byWidth, byHeight));
 }
 
 function buildCrosswordGrid(puzzle) {
   const { grid, bbox } = puzzle;
   const rows = bbox.maxR - bbox.minR + 1;
   const cols = bbox.maxC - bbox.minC + 1;
-  const cellSz = computeCwCellSize(cols);
+  const cellSz = computeCwCellSize(cols, rows);
   document.documentElement.style.setProperty('--cw-cell', cellSz + 'px');
 
   const container = document.getElementById('crossword-grid');
@@ -2652,15 +2765,11 @@ function selectCell(r, c, forceDir) {
   selectedCell = { r, c };
   highlightWord();
   updateClueBar();
-  // On touch devices focus the hidden input to summon native keyboard;
-  // on desktop focus the cell itself for the visible focus ring.
-  if (window.matchMedia('(pointer: coarse)').matches) {
-    const inp = document.getElementById('cw-native-input');
-    inp.value = '';
-    inp.focus({ preventScroll: true });
-  } else {
-    cwCellEl(r, c)?.focus({ preventScroll: true });
-  }
+  // Collapse non-essential chrome (chips/progress) once user starts interacting
+  document.body.classList.add('cw-typing');
+  // On mobile: custom keyboard handles input — just show the focus ring on the cell.
+  // On desktop: focus the cell for the keyboard event target.
+  cwCellEl(r, c)?.focus({ preventScroll: true });
 }
 
 function highlightWord() {
@@ -3067,6 +3176,8 @@ function buildReviewPanel() {
 
 function endCrossword(won) {
   gameOver = true;
+  // Restore scrollable layout when puzzle ends
+  document.body.classList.remove('cw-active', 'cw-typing');
   if (won) {
     srAnnounce('Ausgezeichnet! Alle Wörter richtig gelöst!');
 
@@ -3161,6 +3272,12 @@ function startCrossword() {
   keyColors     = {};
   puzzleStartTime = Date.now();
   buildKeyboard();
+
+  // On mobile: activate custom crossword keyboard + lock layout to viewport
+  if (window.innerWidth <= 680) {
+    buildCwKeyboard();
+    document.body.classList.add('cw-active');
+  }
 
   document.getElementById('cw-summary-overlay').classList.add('hidden');
   buildCrosswordGrid(puzzle);
@@ -3356,6 +3473,8 @@ function setMode(mode) {
     document.querySelector('.grid-wrap').classList.add('hidden');
     startCrossword();
   } else {
+    // Clear 1P viewport lock when switching to 2P
+    document.body.classList.remove('cw-active', 'cw-typing');
     panel.classList.add('inline-mode', 'mode-2p');
     panel.classList.remove('mode-1p');
     cwClueBar.classList.add('hidden');
@@ -4021,40 +4140,18 @@ document.getElementById('back-1p-btn').addEventListener('click', () => {
   setMode('1P');
 });
 
-// ─── Native mobile keyboard for crossword ─────────────
+// ─── Physical keyboard input for crossword (Bluetooth/desktop) ───
+// The OS virtual keyboard is suppressed via inputmode="none" on #cw-native-input.
+// Mobile input is handled by #cw-keyboard (custom keys). Physical keyboards
+// (desktop + Bluetooth) are handled by the document keydown listener below.
 (function() {
-  const inp    = document.getElementById('cw-native-input');
-  const gameEl = document.getElementById('game-main');
-
-  // Push content above the native keyboard so action buttons stay reachable
-  function applyKbInset() {
-    if (!window.visualViewport) return;
-    const inset = Math.max(0, window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop);
-    gameEl.style.paddingBottom = inset > 50 ? inset + 'px' : '';
-  }
-  function clearKbInset() {
-    gameEl.style.paddingBottom = '';
-    if (window.visualViewport) window.visualViewport.removeEventListener('resize', applyKbInset);
-  }
-
-  inp.addEventListener('focus', () => {
-    if (window.visualViewport) window.visualViewport.addEventListener('resize', applyKbInset);
-    applyKbInset();
-  });
-  inp.addEventListener('blur', clearKbInset);
-
-  inp.addEventListener('keydown', e => {
-    if (gameMode !== '1P') return;
-    if (e.key === 'Backspace') { e.preventDefault(); handleKey('Backspace'); }
-    if (e.key === 'Enter')     { e.preventDefault(); handleKey('Enter'); }
-  });
-
+  const inp = document.getElementById('cw-native-input');
+  // Keep input events as fallback for edge-case browsers that ignore inputmode=none
   inp.addEventListener('input', e => {
     if (gameMode !== '1P') return;
     const val = inp.value;
-    inp.value = ''; // always clear so next tap registers
+    inp.value = '';
     if (!val) return;
-    // Take only the last character typed (handles autocomplete/paste)
     const ch = val[val.length - 1].toUpperCase();
     if (/^[A-ZÜÖÄSS]$/.test(ch) || ch === 'ß') handleKey(ch);
   });
@@ -4129,7 +4226,8 @@ window.addEventListener('resize', () => {
   resizeTimer = setTimeout(() => {
     if (gameMode === '1P' && currentPuzzle) {
       const cols = currentPuzzle.bbox.maxC - currentPuzzle.bbox.minC + 1;
-      document.documentElement.style.setProperty('--cw-cell', computeCwCellSize(cols) + 'px');
+      const rows = currentPuzzle.bbox.maxR - currentPuzzle.bbox.minR + 1;
+      document.documentElement.style.setProperty('--cw-cell', computeCwCellSize(cols, rows) + 'px');
     } else if (gameMode === '2P' && currentWord) {
       setTileSize(currentWord.w.length);
     }
