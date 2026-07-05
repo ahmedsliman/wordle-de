@@ -1055,9 +1055,9 @@
         z-index: 40;
       }
 
-      /* Reserve space so content isn't hidden under the custom keyboard (2P only) */
-      body.has-keyboard:not(:has(#wordle-panel.mode-1p)) {
-        padding-bottom: calc(185px + env(safe-area-inset-bottom, 0px));
+      /* Reserve space for native keyboard on all modes */
+      body.has-keyboard {
+        padding-bottom: max(env(keyboard-inset-height, 0px), calc(185px + env(safe-area-inset-bottom, 0px)));
       }
     }
 
@@ -3341,6 +3341,7 @@ function endCrossword(won) {
   gameOver = true;
   // Restore scrollable layout when puzzle ends
   document.body.classList.remove('cw-active', 'cw-typing');
+  cleanupKeyboardInsetFallback();
   if (won) {
     srAnnounce('Ausgezeichnet! Alle Wörter richtig gelöst!');
 
@@ -3459,6 +3460,33 @@ async function startCrossword() {
   // Select first across word's first cell
   const firstAcross = puzzle.words.find(w => w.dir === 'across');
   if (firstAcross) selectCell(firstAcross.row, firstAcross.col, 'across');
+
+  // Setup visualViewport listener for keyboard inset (fallback for browsers without env() support)
+  if (window.visualViewport && window.innerWidth <= 680) {
+    setupKeyboardInsetFallback();
+  }
+}
+
+let keyboardInsetListener = null;
+function setupKeyboardInsetFallback() {
+  if (keyboardInsetListener) return;
+  keyboardInsetListener = () => {
+    const crosswordArea = document.getElementById('crossword-area');
+    if (crosswordArea && gameMode === '1P') {
+      const keyboardHeight = window.innerHeight - window.visualViewport.height;
+      crosswordArea.style.paddingBottom = keyboardHeight > 0 ? keyboardHeight + 'px' : '';
+    }
+  };
+  window.visualViewport.addEventListener('resize', keyboardInsetListener);
+}
+
+function cleanupKeyboardInsetFallback() {
+  if (keyboardInsetListener && window.visualViewport) {
+    window.visualViewport.removeEventListener('resize', keyboardInsetListener);
+    keyboardInsetListener = null;
+    const crosswordArea = document.getElementById('crossword-area');
+    if (crosswordArea) crosswordArea.style.paddingBottom = '';
+  }
 }
 
 // ─── Key handling ─────────────────────────────────────
