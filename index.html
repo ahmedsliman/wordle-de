@@ -194,6 +194,30 @@
       border-bottom-color: var(--color-correct-text);
     }
 
+    /* ─── Fullscreen button (mobile only) ─────────── */
+    .fullscreen-btn {
+      display: none; /* shown only at ≤680px via media query */
+      background: none;
+      border: 1.5px solid var(--color-border);
+      border-radius: 8px;
+      font-size: 1.1rem;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--color-text-muted);
+      padding: 0;
+      line-height: 1;
+      transition: color 0.15s, border-color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .fullscreen-btn:hover { color: var(--color-text); border-color: var(--color-text-muted); }
+    .fullscreen-btn.active { color: var(--color-correct-text); border-color: var(--color-correct-text); }
+    @media (max-width: 680px) {
+      .fullscreen-btn { display: inline-flex; }
+    }
+
     /* ─── Diamond Counter ──────────────────────────── */
     .diamond-counter {
       display: flex;
@@ -1818,6 +1842,180 @@
       .start-btn:hover, .diamond-counter:hover, .rev-card:hover,
       .rev-audio:hover, .mode-choice-btn:active, .cancel-btn:active { transform: none; }
     }
+
+    /* ─── Satz-Modus ──────────────────────────────────── */
+    .tab-satz { font-size: 1rem; }
+
+    #satz-panel {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 16px 24px;
+      flex: 1;
+    }
+
+    .satz-progress-wrap {
+      width: 100%; display: flex; align-items: center; gap: 10px;
+    }
+    .satz-progress-bar {
+      flex: 1; height: 6px; background: var(--color-border);
+      border-radius: 999px; overflow: hidden;
+    }
+    .satz-progress-fill {
+      height: 100%; background: var(--color-correct);
+      border-radius: 999px;
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+    .satz-progress-text {
+      font-size: 0.75rem; font-weight: 600; color: var(--color-text-muted);
+      white-space: nowrap;
+    }
+
+    .satz-word-info {
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      justify-content: center;
+    }
+    .satz-en  { font-size: 1.2rem; font-weight: 700; color: var(--color-text); }
+    .satz-ar  { font-size: 1.1rem; font-weight: 500; color: var(--color-text-muted); direction: rtl; }
+    .satz-badge {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; padding: 2px 8px; border-radius: 999px; color: #fff;
+    }
+    .satz-badge.noun { background: var(--color-badge-noun); }
+    .satz-badge.verb { background: var(--color-badge-verb); }
+    .satz-badge.adjective { background: var(--color-badge-adj); }
+
+    .satz-sentence {
+      font-size: 1.05rem; font-weight: 600; color: var(--color-text);
+      text-align: center; line-height: 1.55;
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      border-radius: 12px;
+      padding: 12px 20px;
+      width: 100%;
+    }
+    .satz-sentence .satz-blank {
+      display: inline-block;
+      border-bottom: 2.5px solid var(--color-correct);
+      min-width: 50px;
+      color: var(--color-text-muted);
+      font-style: italic;
+    }
+    .satz-sentence .satz-revealed {
+      color: var(--color-correct-text);
+      font-weight: 800;
+    }
+
+    /* Fill-in tiles */
+    .satz-tiles {
+      display: flex; gap: 5px; justify-content: center; flex-wrap: wrap;
+    }
+    .satz-tiles .tile {
+      width: 46px; height: 52px;
+      font-size: 1.3rem;
+      border-width: 2px;
+    }
+    .satz-tiles .tile.active-tile {
+      border-color: var(--color-correct);
+      box-shadow: 0 0 0 2px rgba(29,158,117,0.2);
+    }
+
+    .satz-fill-actions {
+      display: flex; gap: 10px; justify-content: center; width: 100%;
+    }
+    .satz-primary-btn {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.9rem; font-weight: 600;
+      padding: 11px 28px; border-radius: 999px;
+      background: var(--color-correct); color: #fff; border: none;
+      cursor: pointer; min-height: 44px;
+      transition: opacity 0.15s, transform 0.1s;
+      box-shadow: 0 2px 8px rgba(29,158,117,0.3);
+    }
+    .satz-primary-btn:hover  { opacity: 0.9; }
+    .satz-primary-btn:active { transform: scale(0.97); }
+    .satz-ghost-btn {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.85rem; font-weight: 500;
+      padding: 11px 20px; border-radius: 999px;
+      background: transparent; color: var(--color-text-muted);
+      border: 1.5px solid var(--color-border);
+      cursor: pointer; min-height: 44px;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .satz-ghost-btn:hover { color: var(--color-text); border-color: var(--color-text-muted); }
+
+    /* Word-order chips */
+    .satz-answer-row {
+      min-height: 52px; width: 100%;
+      display: flex; flex-wrap: wrap; gap: 6px;
+      align-content: flex-start;
+      background: var(--color-surface);
+      border: 2px dashed var(--color-border);
+      border-radius: 12px; padding: 10px;
+      transition: border-color 0.2s;
+    }
+    .satz-answer-row.has-words { border-style: solid; border-color: var(--color-correct); }
+    .satz-answer-row.correct  { border-color: var(--color-correct); background: rgba(29,158,117,0.06); }
+    .satz-answer-row.wrong    { border-color: #ef4444; background: rgba(239,68,68,0.06); }
+
+    .satz-chip-pool {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      justify-content: center; width: 100%; padding: 4px 0;
+    }
+    .satz-chip {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.92rem; font-weight: 600;
+      padding: 8px 14px; border-radius: 8px;
+      background: var(--color-key-bg); color: var(--color-key-text);
+      border: 1.5px solid var(--color-border);
+      cursor: pointer; user-select: none;
+      min-height: 40px; display: inline-flex; align-items: center;
+      transition: background 0.12s, transform 0.1s, opacity 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .satz-chip:hover  { background: var(--color-surface); }
+    .satz-chip:active { transform: scale(0.95); }
+    .satz-chip.used   { opacity: 0.3; pointer-events: none; }
+    .satz-chip.placed {
+      background: rgba(29,158,117,0.12);
+      border-color: var(--color-correct);
+      color: var(--color-correct-text);
+    }
+
+    .satz-feedback {
+      font-size: 1rem; font-weight: 700; text-align: center;
+      min-height: 28px; padding: 4px 0;
+    }
+    .satz-feedback.correct { color: var(--color-correct-text); }
+    .satz-feedback.wrong   { color: #ef4444; }
+
+    /* Summary overlay */
+    .satz-summary-score {
+      font-size: 2.2rem; font-weight: 800;
+      color: var(--color-correct-text); text-align: center;
+      margin: 4px 0 12px;
+    }
+    .satz-summary-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      gap: 8px; width: 100%; margin-bottom: 16px;
+    }
+    .satz-summary-item {
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      font-size: 0.7rem; font-weight: 600; color: var(--color-text-muted);
+    }
+    .satz-summary-item .satz-item-icon {
+      font-size: 1.4rem;
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .satz-summary-item.win  .satz-item-icon { background: rgba(29,158,117,0.12); }
+    .satz-summary-item.lose .satz-item-icon { background: rgba(239,68,68,0.08); }
   </style>
 </head>
 
@@ -1866,8 +2064,10 @@
       <button class="tab"        data-level="B1" aria-label="Schwierigkeitsstufe B1" aria-pressed="false">B1</button>
       <button class="tab tab-b2" data-level="B2" aria-label="Schwierigkeitsstufe B2" aria-pressed="false">B2</button>
       <button class="tab tab-review" data-level="REVIEW" aria-label="Wiederholung — fällige Wörter" aria-pressed="false">★<span class="review-badge" id="review-badge" hidden>0</span></button>
+      <button class="tab tab-satz" id="satz-tab" aria-label="Satz-Übungen" aria-pressed="false">✍</button>
     </div>
     <div style="display:flex;align-items:center;gap:8px;">
+      <button id="fullscreen-btn" class="fullscreen-btn" title="Vollbild" aria-label="Vollbild ein/aus">⛶</button>
       <div class="diamond-counter" id="diamond-counter" title="Gesamt-Diamanten">
         💎 <span id="diamond-count">0</span>
       </div>
@@ -1979,6 +2179,53 @@
     <div class="streak-pill">🔥 Serie <span id="streak-current">0</span></div>
     <div class="streak-pill">🏆 Beste <span id="streak-best">0</span></div>
     <div class="streak-pill" id="streak-bar-diamonds" style="display:none;color:var(--color-correct-text)">💎 <span id="streak-diamond-count">0</span></div>
+  </div>
+
+  <!-- ── Satz-Modus (sentence exercises) ─────────── -->
+  <div id="satz-panel" class="hidden">
+    <!-- Progress bar -->
+    <div class="satz-progress-wrap">
+      <div class="satz-progress-bar"><div class="satz-progress-fill" id="satz-progress-fill"></div></div>
+      <span class="satz-progress-text" id="satz-progress-text">1 / 10</span>
+    </div>
+    <!-- Word info -->
+    <div class="satz-word-info" id="satz-word-info">
+      <span class="satz-en" id="satz-en"></span>
+      <span class="satz-ar" id="satz-ar"></span>
+      <span class="satz-badge" id="satz-type-badge"></span>
+    </div>
+    <!-- Sentence display (shown in both modes) -->
+    <div class="satz-sentence" id="satz-sentence"></div>
+    <!-- Mode A: fill-in-blank tile row -->
+    <div id="satz-fill-area" class="hidden">
+      <div class="satz-tiles" id="satz-tiles"></div>
+      <div class="satz-fill-actions">
+        <button id="satz-fill-check" class="satz-primary-btn">Prüfen</button>
+        <button id="satz-fill-skip"  class="satz-ghost-btn">Überspringen</button>
+      </div>
+    </div>
+    <!-- Mode B: word order chips -->
+    <div id="satz-order-area" class="hidden">
+      <div class="satz-answer-row" id="satz-answer-row" aria-label="Antwort-Bereich"></div>
+      <div class="satz-chip-pool" id="satz-chip-pool"></div>
+      <div class="satz-fill-actions">
+        <button id="satz-order-check" class="satz-primary-btn">Prüfen</button>
+        <button id="satz-order-reset" class="satz-ghost-btn">Reset</button>
+      </div>
+    </div>
+    <!-- Feedback message -->
+    <div class="satz-feedback" id="satz-feedback" aria-live="polite"></div>
+  </div>
+
+  <!-- Satz summary overlay -->
+  <div class="overlay hidden" id="satz-summary-overlay" role="dialog" aria-modal="true" aria-labelledby="satz-summary-title">
+    <div class="overlay-card">
+      <div class="overlay-title" id="satz-summary-title">Übung beendet!</div>
+      <div class="satz-summary-score" id="satz-summary-score"></div>
+      <div class="satz-summary-grid" id="satz-summary-grid"></div>
+      <button class="start-btn" id="satz-again-btn">Nochmal üben</button>
+      <button class="satz-ghost-btn" id="satz-back-btn" style="margin-top:8px;">Zurück zum Rätsel</button>
+    </div>
   </div>
 
   </main><!-- /game-main -->
@@ -3504,6 +3751,11 @@ async function startCrossword() {
 
 // ─── Key handling ─────────────────────────────────────
 function handleKey(key) {
+  if (gameMode === 'SATZ') {
+    const round = satzQueue[satzRoundIdx];
+    if (round && round.mode === 'fill') satzFillHandleKey(key);
+    return;
+  }
   if (gameMode === '2P') {
     // 2P path
     if (gameOver || animating || !currentWord) return;
@@ -3653,6 +3905,8 @@ function submitGuess() {
 // ─── Mode switching ───────────────────────────────────
 function setMode(mode) {
   gameMode = mode;
+  // Always hide satz panel when switching to a non-SATZ mode
+  document.getElementById('satz-panel')?.classList.add('hidden');
 
   const panel       = document.getElementById('wordle-panel');
   const cwClueBar   = document.getElementById('cw-clue-bar');
@@ -4611,6 +4865,353 @@ function fireConfetti() {
     else ctx.clearRect(0, 0, W, H);
   })(start);
 }
+
+// ─── Satz-Modus (sentence exercises) ─────────────────
+const SATZ_ROUNDS = 10; // 5 words × 2 sub-modes (fill-in + word-order)
+let satzQueue     = [];  // [{entry, mode:'fill'|'order'}]
+let satzRoundIdx  = 0;
+let satzScore     = 0;
+let satzResults   = [];  // [{entry, mode, correct}]
+let satzInput     = [];  // current letter array (fill mode)
+let satzCursor    = 0;   // active tile index (fill mode)
+let satzOrderPlaced = []; // words placed in answer row (order mode)
+let satzOrderPool   = []; // {word, idx, el} word chips
+
+function showSatzPanel() {
+  // Hide all 1P chrome
+  document.body.classList.remove('cw-active', 'cw-typing');
+  ['cw-clue-bar','cw-progress','clue-chips','crossword-area','cw-actions','cw-keyboard','streak-bar'].forEach(id => {
+    document.getElementById(id)?.classList.add('hidden');
+  });
+  document.getElementById('wordle-panel').classList.add('hidden');
+  document.getElementById('satz-panel').classList.remove('hidden');
+}
+
+function hideSatzPanel() {
+  document.getElementById('satz-panel').classList.add('hidden');
+}
+
+async function startSatzMode() {
+  await ensureLevels(selectedLevels);
+  const seen = new Set();
+  const pool = [...selectedLevels].flatMap(lvl => words[lvl] || []).filter(e => {
+    if (!e.sentence || seen.has(e.w)) return false;
+    seen.add(e.w); return true;
+  });
+  if (pool.length < 5) { showMessage('Nicht genug Sätze für diese Stufe.', 'lose'); return; }
+
+  // Pick 5 random entries, shuffle
+  const picked = pool.slice().sort(() => Math.random() - 0.5).slice(0, 5);
+  satzQueue   = picked.flatMap(e => [{ entry: e, mode: 'fill' }, { entry: e, mode: 'order' }]);
+  satzRoundIdx = 0;
+  satzScore    = 0;
+  satzResults  = [];
+
+  showSatzPanel();
+  renderSatzRound();
+}
+
+function renderSatzRound() {
+  if (satzRoundIdx >= satzQueue.length) { showSatzSummary(); return; }
+  const { entry, mode } = satzQueue[satzRoundIdx];
+  const total = satzQueue.length;
+
+  // Progress
+  document.getElementById('satz-progress-fill').style.width = (satzRoundIdx / total * 100) + '%';
+  document.getElementById('satz-progress-text').textContent = (satzRoundIdx + 1) + ' / ' + total;
+
+  // Word info
+  document.getElementById('satz-en').textContent = entry.en;
+  document.getElementById('satz-ar').textContent = entry.ar || '';
+  const badge = document.getElementById('satz-type-badge');
+  badge.textContent = entry.type === 'noun' ? (entry.article ? entry.article + ' — Nomen' : 'Nomen')
+                    : entry.type === 'verb' ? 'Verb' : 'Adjektiv';
+  badge.className = 'satz-badge ' + (entry.type || 'noun');
+
+  // Clear feedback
+  const fb = document.getElementById('satz-feedback');
+  fb.textContent = '';
+  fb.className = 'satz-feedback';
+
+  if (mode === 'fill') renderFillMode(entry);
+  else                  renderOrderMode(entry);
+}
+
+// ── Mode A: Fill-in-blank ──
+function renderFillMode(entry) {
+  document.getElementById('satz-fill-area').classList.remove('hidden');
+  document.getElementById('satz-order-area').classList.add('hidden');
+
+  // Render sentence with blank
+  const sentEl = document.getElementById('satz-sentence');
+  sentEl.innerHTML = entry.sentence.replace('___', '<span class="satz-blank">___</span>');
+
+  // Build tile row
+  const word   = entry.w;
+  const tilesEl = document.getElementById('satz-tiles');
+  tilesEl.innerHTML = '';
+  satzInput  = Array(word.length).fill('');
+  satzCursor = 0;
+
+  for (let i = 0; i < word.length; i++) {
+    const tile = document.createElement('div');
+    tile.className = 'tile' + (i === 0 ? ' active-tile' : '');
+    tile.dataset.idx = i;
+    tile.addEventListener('click', () => { satzCursor = i; updateSatzTileCursor(); });
+    tilesEl.appendChild(tile);
+  }
+}
+
+function updateSatzTileCursor() {
+  document.querySelectorAll('#satz-tiles .tile').forEach((t, i) => {
+    t.classList.toggle('active-tile', i === satzCursor);
+  });
+}
+
+function satzFillHandleKey(key) {
+  const entry = satzQueue[satzRoundIdx].entry;
+  const word  = entry.w;
+  if (key === 'BACKSPACE' || key === '⌫') {
+    if (satzInput[satzCursor]) {
+      satzInput[satzCursor] = '';
+    } else if (satzCursor > 0) {
+      satzCursor--;
+      satzInput[satzCursor] = '';
+    }
+  } else if (/^[A-ZÄÖÜa-zäöüß]$/.test(key)) {
+    const ch = norm(key);
+    satzInput[satzCursor] = ch;
+    if (satzCursor < word.length - 1) satzCursor++;
+  }
+  // Update tiles
+  document.querySelectorAll('#satz-tiles .tile').forEach((t, i) => {
+    t.textContent = satzInput[i] || '';
+    t.dataset.letter = satzInput[i] ? '1' : '';
+    t.classList.toggle('active-tile', i === satzCursor);
+  });
+}
+
+function checkSatzFill() {
+  const { entry } = satzQueue[satzRoundIdx];
+  const typed = satzInput.join('').toUpperCase();
+  const correct = typed === entry.w;
+
+  document.querySelectorAll('#satz-tiles .tile').forEach(t => {
+    t.classList.add(correct ? 'correct' : 'absent');
+  });
+
+  const fb = document.getElementById('satz-feedback');
+  if (correct) {
+    fb.textContent = '✓ Richtig!';
+    fb.className = 'satz-feedback correct';
+    satzScore++;
+    navigator.vibrate?.([40, 30, 40]);
+    earnDiamonds(2, 'satz_fill_correct', document.getElementById('diamond-counter'));
+  } else {
+    fb.textContent = '✗ ' + entry.w;
+    fb.className = 'satz-feedback wrong';
+    navigator.vibrate?.([80]);
+    // Reveal correct word in sentence
+    document.getElementById('satz-sentence').innerHTML =
+      entry.sentence.replace('___', '<span class="satz-revealed">' + entry.w + '</span>');
+  }
+
+  satzResults.push({ entry, mode: 'fill', correct });
+  document.getElementById('satz-fill-check').disabled = true;
+
+  setTimeout(advanceSatzRound, correct ? 1000 : 1800);
+}
+
+// ── Mode B: Word order ──
+function renderOrderMode(entry) {
+  document.getElementById('satz-order-area').classList.remove('hidden');
+  document.getElementById('satz-fill-area').classList.add('hidden');
+
+  // Build full sentence (replace ___ with the word, then split)
+  const full = entry.sentence.replace('___', entry.w);
+  const words_list = full.split(/\s+/).filter(Boolean);
+
+  // Show shuffled sentence without the blank marker
+  const sentEl = document.getElementById('satz-sentence');
+  sentEl.textContent = 'Ordne die Wörter:';
+
+  const answerRow = document.getElementById('satz-answer-row');
+  const chipPool  = document.getElementById('satz-chip-pool');
+  answerRow.innerHTML = '';
+  chipPool.innerHTML  = '';
+  answerRow.classList.remove('has-words','correct','wrong');
+
+  satzOrderPlaced = [];
+  // Shuffle chips
+  const shuffled = words_list.map((w, i) => ({ word: w, origIdx: i }))
+    .sort(() => Math.random() - 0.5);
+
+  satzOrderPool = shuffled.map(({ word, origIdx }) => {
+    const chip = document.createElement('button');
+    chip.className = 'satz-chip';
+    chip.textContent = word;
+    chip.dataset.origIdx = origIdx;
+    chip.addEventListener('click', () => satzChipTap(chip, word));
+    chipPool.appendChild(chip);
+    return { word, origIdx, el: chip };
+  });
+}
+
+function satzChipTap(chipEl, word) {
+  if (chipEl.classList.contains('used')) return;
+  chipEl.classList.add('used');
+  satzOrderPlaced.push(word);
+
+  const answerRow = document.getElementById('satz-answer-row');
+  const placed = document.createElement('button');
+  placed.className = 'satz-chip placed';
+  placed.textContent = word;
+  placed.addEventListener('click', () => {
+    placed.remove();
+    // Remove one occurrence of word from satzOrderPlaced
+    const i = satzOrderPlaced.indexOf(word);
+    if (i !== -1) satzOrderPlaced.splice(i, 1);
+    chipEl.classList.remove('used');
+    answerRow.classList.toggle('has-words', answerRow.children.length > 0);
+  });
+  answerRow.appendChild(placed);
+  answerRow.classList.add('has-words');
+}
+
+function checkSatzOrder() {
+  const { entry } = satzQueue[satzRoundIdx];
+  const full = entry.sentence.replace('___', entry.w);
+  const correctWords = full.split(/\s+/).filter(Boolean);
+  const placedWords = [...document.querySelectorAll('#satz-answer-row .satz-chip')]
+    .map(c => c.textContent);
+
+  const correct = placedWords.length === correctWords.length &&
+    placedWords.every((w, i) => w === correctWords[i]);
+
+  const answerRow = document.getElementById('satz-answer-row');
+  answerRow.classList.add(correct ? 'correct' : 'wrong');
+
+  const fb = document.getElementById('satz-feedback');
+  if (correct) {
+    fb.textContent = '✓ Richtig!';
+    fb.className = 'satz-feedback correct';
+    satzScore++;
+    navigator.vibrate?.([40, 30, 40]);
+    earnDiamonds(3, 'satz_order_correct', document.getElementById('diamond-counter'));
+  } else {
+    fb.textContent = '✗ Richtige Reihenfolge: ' + correctWords.join(' ');
+    fb.className = 'satz-feedback wrong';
+    navigator.vibrate?.([80]);
+  }
+
+  satzResults.push({ entry, mode: 'order', correct });
+  document.getElementById('satz-order-check').disabled = true;
+  document.getElementById('satz-chip-pool').querySelectorAll('.satz-chip').forEach(c => c.disabled = true);
+
+  setTimeout(advanceSatzRound, correct ? 1000 : 2200);
+}
+
+function advanceSatzRound() {
+  satzRoundIdx++;
+  // Re-enable buttons
+  ['satz-fill-check','satz-order-check'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.disabled = false;
+  });
+  renderSatzRound();
+}
+
+function showSatzSummary() {
+  document.getElementById('satz-progress-fill').style.width = '100%';
+  const total   = satzQueue.length;
+  const pct     = Math.round(satzScore / total * 100);
+  const emoji   = pct >= 90 ? '🏆' : pct >= 70 ? '🌟' : pct >= 50 ? '👍' : '💪';
+
+  document.getElementById('satz-summary-score').textContent = emoji + ' ' + satzScore + ' / ' + total + ' (' + pct + '%)';
+
+  const grid = document.getElementById('satz-summary-grid');
+  grid.innerHTML = '';
+  // Show one item per word (5 words, show combined result)
+  const byWord = {};
+  satzResults.forEach(r => {
+    if (!byWord[r.entry.w]) byWord[r.entry.w] = { entry: r.entry, fill: null, order: null };
+    byWord[r.entry.w][r.mode === 'fill' ? 'fill' : 'order'] = r.correct;
+  });
+  Object.values(byWord).forEach(({ entry, fill, order }) => {
+    const won = fill && order;
+    const item = document.createElement('div');
+    item.className = 'satz-summary-item ' + (won ? 'win' : 'lose');
+    item.innerHTML = `<div class="satz-item-icon">${won ? '✅' : '❌'}</div><span>${entry.en}</span>`;
+    grid.appendChild(item);
+  });
+
+  document.getElementById('satz-summary-overlay').classList.remove('hidden');
+}
+
+// Wire up buttons
+document.getElementById('satz-fill-check').addEventListener('click', checkSatzFill);
+document.getElementById('satz-fill-skip').addEventListener('click', () => {
+  satzResults.push({ entry: satzQueue[satzRoundIdx].entry, mode: 'fill', correct: false });
+  advanceSatzRound();
+});
+document.getElementById('satz-order-check').addEventListener('click', checkSatzOrder);
+document.getElementById('satz-order-reset').addEventListener('click', () => {
+  const entry = satzQueue[satzRoundIdx].entry;
+  renderOrderMode(entry);
+});
+document.getElementById('satz-again-btn').addEventListener('click', () => {
+  document.getElementById('satz-summary-overlay').classList.add('hidden');
+  startSatzMode();
+});
+document.getElementById('satz-back-btn').addEventListener('click', () => {
+  document.getElementById('satz-summary-overlay').classList.add('hidden');
+  hideSatzPanel();
+  setMode('1P');
+  // Switch tab back
+  document.querySelectorAll('#level-tabs .tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.level === [...selectedLevels][0] || false);
+    t.setAttribute('aria-pressed', t.classList.contains('active') ? 'true' : 'false');
+  });
+  document.getElementById('satz-tab').classList.remove('active');
+  document.getElementById('satz-tab').setAttribute('aria-pressed', 'false');
+});
+
+// Tab click — wire up satz tab
+document.getElementById('satz-tab').addEventListener('click', () => {
+  document.querySelectorAll('#level-tabs .tab').forEach(t => {
+    t.classList.remove('active');
+    t.setAttribute('aria-pressed', 'false');
+  });
+  document.getElementById('satz-tab').classList.add('active');
+  document.getElementById('satz-tab').setAttribute('aria-pressed', 'true');
+  gameMode = 'SATZ';
+  // Hide 1P crossword
+  document.body.classList.remove('cw-active', 'cw-typing');
+  ['cw-clue-bar','cw-progress','clue-chips','crossword-area','cw-actions','cw-keyboard'].forEach(id => {
+    document.getElementById(id)?.classList.add('hidden');
+  });
+  document.getElementById('wordle-panel').classList.add('hidden');
+  startSatzMode();
+});
+
+// ─── Fullscreen ──────────────────────────────────────
+(function setupFullscreen() {
+  const btn = document.getElementById('fullscreen-btn');
+  if (!btn || !document.documentElement.requestFullscreen) { btn?.remove(); return; }
+
+  function update() {
+    const on = !!document.fullscreenElement;
+    btn.textContent = on ? '⊠' : '⛶';
+    btn.setAttribute('aria-label', on ? 'Vollbild beenden' : 'Vollbild');
+    btn.classList.toggle('active', on);
+  }
+
+  btn.addEventListener('click', () => {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else document.documentElement.requestFullscreen().catch(() => {});
+  });
+  document.addEventListener('fullscreenchange', update);
+  update();
+})();
 
 // ─── Accessibility: dialog semantics, focus trap, Escape, state mirroring ──
 (function setupA11y() {
