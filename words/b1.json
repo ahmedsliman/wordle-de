@@ -1,0 +1,1813 @@
+[
+  {
+    "w": "GESELLSCHAFT",
+    "en": "society",
+    "ar": "مجتمع",
+    "hint": "Group of people living together",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "UMWELT",
+    "en": "environment",
+    "ar": "بيئة",
+    "hint": "Natural surroundings",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "WIRTSCHAFT",
+    "en": "economy",
+    "ar": "اقتصاد",
+    "hint": "System of production and trade",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "BILDUNG",
+    "en": "education",
+    "ar": "تعليم",
+    "hint": "Learning and development",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "GESUNDHEIT",
+    "en": "health",
+    "ar": "صحة",
+    "hint": "State of being well",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "POLITIK",
+    "en": "politics",
+    "ar": "سياسة",
+    "hint": "System of government",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "KULTUR",
+    "en": "culture",
+    "ar": "ثقافة",
+    "hint": "Art, customs and society",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "WISSENSCHAFT",
+    "en": "science",
+    "ar": "علم",
+    "hint": "Systematic study of the world",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "TECHNOLOGIE",
+    "en": "technology",
+    "ar": "تكنولوجيا",
+    "hint": "Application of scientific knowledge",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "MEDIEN",
+    "en": "media",
+    "ar": "وسائل الإعلام",
+    "hint": "TV, radio, internet, press",
+    "type": "noun",
+    "article": "die/pl"
+  },
+  {
+    "w": "DEMOKRATIE",
+    "en": "democracy",
+    "ar": "ديمقراطية",
+    "hint": "Government by the people",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "REGIERUNG",
+    "en": "government",
+    "ar": "حكومة",
+    "hint": "Those who rule a country",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "GESETZ",
+    "en": "law",
+    "ar": "قانون",
+    "hint": "Legal rule of society",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "RECHT",
+    "en": "right/law",
+    "ar": "حق / قانون",
+    "hint": "Legal entitlement",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "PFLICHT",
+    "en": "duty/obligation",
+    "ar": "واجب",
+    "hint": "What you are obliged to do",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "FREIHEIT",
+    "en": "freedom",
+    "ar": "حرية",
+    "hint": "Ability to act without restraint",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "GERECHTIGKEIT",
+    "en": "justice",
+    "ar": "عدالة",
+    "hint": "Fairness in society",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "VERANTWORTUNG",
+    "en": "responsibility",
+    "ar": "مسؤولية",
+    "hint": "Duty to account for your actions",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "MEINUNG",
+    "en": "opinion",
+    "ar": "رأي",
+    "hint": "Your view on a topic",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "DISKUSSION",
+    "en": "discussion",
+    "ar": "نقاش",
+    "hint": "Exchange of views",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "ARGUMENT",
+    "en": "argument",
+    "ar": "حجة",
+    "hint": "Reasoning to support a view",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "KRITIK",
+    "en": "criticism",
+    "ar": "نقد",
+    "hint": "Analysis of faults",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "LÖSUNG",
+    "en": "solution",
+    "ar": "حل",
+    "hint": "Answer to a problem",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "PROBLEM",
+    "en": "problem",
+    "ar": "مشكلة",
+    "hint": "Difficulty to be solved",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "URSACHE",
+    "en": "cause",
+    "ar": "سبب",
+    "hint": "Reason something happens",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "FOLGE",
+    "en": "consequence",
+    "ar": "عاقبة",
+    "hint": "Result of an action",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "EINFLUSS",
+    "en": "influence",
+    "ar": "تأثير",
+    "hint": "Effect on something or someone",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "ENTWICKLUNG",
+    "en": "development",
+    "ar": "تطور",
+    "hint": "Process of growing or changing",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "VERÄNDERUNG",
+    "en": "change",
+    "ar": "تغيير",
+    "hint": "Something becoming different",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "VERBESSERUNG",
+    "en": "improvement",
+    "ar": "تحسين",
+    "hint": "Making something better",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "GEFAHR",
+    "en": "danger",
+    "ar": "خطر",
+    "hint": "Risk of harm",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "RISIKO",
+    "en": "risk",
+    "ar": "مخاطرة",
+    "hint": "Possibility of something bad",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "CHANCE",
+    "en": "chance/opportunity",
+    "ar": "فرصة",
+    "hint": "Good moment to do something",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "VORTEIL",
+    "en": "advantage",
+    "ar": "ميزة",
+    "hint": "A benefit over others",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "NACHTEIL",
+    "en": "disadvantage",
+    "ar": "عيب",
+    "hint": "A drawback",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "ZIEL",
+    "en": "goal/aim",
+    "ar": "هدف",
+    "hint": "What you are trying to achieve",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "ERGEBNIS",
+    "en": "result",
+    "ar": "نتيجة",
+    "hint": "Outcome of something",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "ERFOLG",
+    "en": "success",
+    "ar": "نجاح",
+    "hint": "Achieving a goal",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "MISSERFOLG",
+    "en": "failure",
+    "ar": "فشل",
+    "hint": "Not achieving a goal",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "ERFAHRUNG",
+    "en": "experience",
+    "ar": "تجربة",
+    "hint": "Knowledge from doing things",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "FÄHIGKEIT",
+    "en": "ability/skill",
+    "ar": "قدرة / مهارة",
+    "hint": "Capacity to do something",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "TALENT",
+    "en": "talent",
+    "ar": "موهبة",
+    "hint": "Natural ability",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "INTERESSE",
+    "en": "interest",
+    "ar": "اهتمام",
+    "hint": "Wanting to know more about something",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "LEIDENSCHAFT",
+    "en": "passion",
+    "ar": "شغف",
+    "hint": "Strong enthusiasm",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "TRAUM",
+    "en": "dream",
+    "ar": "حلم",
+    "hint": "Images during sleep or a wish",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "ZUKUNFT",
+    "en": "future",
+    "ar": "مستقبل",
+    "hint": "Time that is yet to come",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "VERGANGENHEIT",
+    "en": "past",
+    "ar": "ماضي",
+    "hint": "Time that has already gone",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "GEGENWART",
+    "en": "present",
+    "ar": "حاضر",
+    "hint": "Time happening now",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "TRADITION",
+    "en": "tradition",
+    "ar": "تقليد",
+    "hint": "Custom passed down generations",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "WERT",
+    "en": "value",
+    "ar": "قيمة",
+    "hint": "Importance or worth",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "MORAL",
+    "en": "morality",
+    "ar": "أخلاق",
+    "hint": "Principles of right and wrong",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "ETHIK",
+    "en": "ethics",
+    "ar": "أخلاقيات",
+    "hint": "Study of moral principles",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "VERTRAUEN",
+    "en": "trust",
+    "ar": "ثقة",
+    "hint": "Belief in someone's reliability",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "RESPEKT",
+    "en": "respect",
+    "ar": "احترام",
+    "hint": "Admiration for someone",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "TOLERANZ",
+    "en": "tolerance",
+    "ar": "تسامح",
+    "hint": "Accepting differences",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "VORURTEIL",
+    "en": "prejudice",
+    "ar": "تحيز",
+    "hint": "Unfair opinion formed in advance",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "INTEGRATION",
+    "en": "integration",
+    "ar": "اندماج",
+    "hint": "Inclusion into a group",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "MIGRATION",
+    "en": "migration",
+    "ar": "هجرة",
+    "hint": "Moving to another country",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "GLOBALISIERUNG",
+    "en": "globalisation",
+    "ar": "عولمة",
+    "hint": "World becoming more connected",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "KLIMAWANDEL",
+    "en": "climate change",
+    "ar": "تغير المناخ",
+    "hint": "Long-term shift in global temperatures",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "NACHHALTIGKEIT",
+    "en": "sustainability",
+    "ar": "استدامة",
+    "hint": "Meeting needs without harming the future",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "ENERGIE",
+    "en": "energy",
+    "ar": "طاقة",
+    "hint": "Power from fuel or renewables",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "RESSOURCE",
+    "en": "resource",
+    "ar": "مورد",
+    "hint": "Useful material from nature",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "RECYCLING",
+    "en": "recycling",
+    "ar": "إعادة تدوير",
+    "hint": "Reusing waste materials",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "VERSCHMUTZUNG",
+    "en": "pollution",
+    "ar": "تلوث",
+    "hint": "Contamination of air, water, soil",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "ARMUT",
+    "en": "poverty",
+    "ar": "فقر",
+    "hint": "State of being very poor",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "REICHTUM",
+    "en": "wealth",
+    "ar": "ثروة",
+    "hint": "State of being very rich",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "UNGLEICHHEIT",
+    "en": "inequality",
+    "ar": "عدم المساواة",
+    "hint": "Unfair difference in wealth or rights",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "SOLIDARITÄT",
+    "en": "solidarity",
+    "ar": "تضامن",
+    "hint": "Supporting others as a group",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "GEMEINSCHAFT",
+    "en": "community",
+    "ar": "مجتمع محلي",
+    "hint": "Group of people in one place",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "ZUSAMMENARBEIT",
+    "en": "cooperation",
+    "ar": "تعاون",
+    "hint": "Working together",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "KONFLIKT",
+    "en": "conflict",
+    "ar": "صراع",
+    "hint": "Serious disagreement",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "FRIEDEN",
+    "en": "peace",
+    "ar": "سلام",
+    "hint": "Absence of war or conflict",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "KRIEG",
+    "en": "war",
+    "ar": "حرب",
+    "hint": "Armed conflict between nations",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "GRENZE",
+    "en": "border",
+    "ar": "حدود",
+    "hint": "Line separating two countries",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "VERTRAG",
+    "en": "contract/treaty",
+    "ar": "عقد / معاهدة",
+    "hint": "Formal written agreement",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "BEDARF",
+    "en": "need/demand",
+    "ar": "حاجة",
+    "hint": "What is required",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "ANGEBOT",
+    "en": "offer/supply",
+    "ar": "عرض",
+    "hint": "What is available or proposed",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "NACHFRAGE",
+    "en": "demand",
+    "ar": "طلب",
+    "hint": "Consumer desire for goods",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "INVESTITION",
+    "en": "investment",
+    "ar": "استثمار",
+    "hint": "Putting money to work",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "SCHULDEN",
+    "en": "debt",
+    "ar": "ديون",
+    "hint": "Money owed to others",
+    "type": "noun",
+    "article": "die/pl"
+  },
+  {
+    "w": "STEUER",
+    "en": "tax",
+    "ar": "ضريبة",
+    "hint": "Money paid to the government",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "GEHALT",
+    "en": "salary",
+    "ar": "راتب",
+    "hint": "Monthly payment for work",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "ARBEITSLOSIGKEIT",
+    "en": "unemployment",
+    "ar": "بطالة",
+    "hint": "State of having no job",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "AUSBILDUNG",
+    "en": "training/apprenticeship",
+    "ar": "تدريب",
+    "hint": "Vocational education",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "STUDIUM",
+    "en": "studies/degree",
+    "ar": "دراسة جامعية",
+    "hint": "University-level learning",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "ABSCHLUSS",
+    "en": "qualification/finish",
+    "ar": "شهادة / إتمام",
+    "hint": "End of education or degree",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "PRÜFUNG",
+    "en": "exam",
+    "ar": "امتحان",
+    "hint": "Test of knowledge",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "BEWERBUNG",
+    "en": "application",
+    "ar": "طلب توظيف",
+    "hint": "Formal request for a job",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "LEBENSLAUF",
+    "en": "curriculum vitae",
+    "ar": "سيرة ذاتية",
+    "hint": "Summary of your life and work",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "INTERVIEW",
+    "en": "interview",
+    "ar": "مقابلة عمل",
+    "hint": "Meeting to assess a candidate",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "KOLLEGE",
+    "en": "colleague",
+    "ar": "زميل",
+    "hint": "Person you work with",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "VORGESETZTE",
+    "en": "supervisor",
+    "ar": "مشرف",
+    "hint": "Person above you at work",
+    "type": "noun",
+    "article": "die/der"
+  },
+  {
+    "w": "ANALYSIEREN",
+    "en": "to analyse",
+    "ar": "يحلل",
+    "hint": "Examine in detail",
+    "type": "verb"
+  },
+  {
+    "w": "BESCHREIBEN",
+    "en": "to describe",
+    "ar": "يصف",
+    "hint": "Give details about something",
+    "type": "verb"
+  },
+  {
+    "w": "VERGLEICHEN",
+    "en": "to compare",
+    "ar": "يقارن",
+    "hint": "Look at similarities and differences",
+    "type": "verb"
+  },
+  {
+    "w": "BEURTEILEN",
+    "en": "to assess/judge",
+    "ar": "يحكم / يقيّم",
+    "hint": "Form an opinion about quality",
+    "type": "verb"
+  },
+  {
+    "w": "KRITISIEREN",
+    "en": "to criticise",
+    "ar": "ينتقد",
+    "hint": "Point out faults",
+    "type": "verb"
+  },
+  {
+    "w": "DISKUTIEREN",
+    "en": "to discuss",
+    "ar": "يناقش",
+    "hint": "Talk about a topic in depth",
+    "type": "verb"
+  },
+  {
+    "w": "ARGUMENTIEREN",
+    "en": "to argue (a point)",
+    "ar": "يحتج / يجادل",
+    "hint": "Give reasons for a view",
+    "type": "verb"
+  },
+  {
+    "w": "ENTSCHEIDEN",
+    "en": "to decide",
+    "ar": "يقرر",
+    "hint": "Make a choice",
+    "type": "verb"
+  },
+  {
+    "w": "ÜBERZEUGEN",
+    "en": "to convince",
+    "ar": "يقنع",
+    "hint": "Persuade someone to believe",
+    "type": "verb"
+  },
+  {
+    "w": "PLANEN",
+    "en": "to plan",
+    "ar": "يخطط",
+    "hint": "Organise in advance",
+    "type": "verb"
+  },
+  {
+    "w": "ORGANISIEREN",
+    "en": "to organise",
+    "ar": "ينظم",
+    "hint": "Arrange things systematically",
+    "type": "verb"
+  },
+  {
+    "w": "VORBEREITEN",
+    "en": "to prepare",
+    "ar": "يستعد",
+    "hint": "Get ready for something",
+    "type": "verb"
+  },
+  {
+    "w": "ENTWICKELN",
+    "en": "to develop",
+    "ar": "يطور",
+    "hint": "Grow or advance",
+    "type": "verb"
+  },
+  {
+    "w": "VERBESSERN",
+    "en": "to improve",
+    "ar": "يحسن",
+    "hint": "Make better",
+    "type": "verb"
+  },
+  {
+    "w": "VERÄNDERN",
+    "en": "to change",
+    "ar": "يغير",
+    "hint": "Make different",
+    "type": "verb"
+  },
+  {
+    "w": "ERREICHEN",
+    "en": "to achieve/reach",
+    "ar": "يحقق / يصل إلى",
+    "hint": "Attain a goal",
+    "type": "verb"
+  },
+  {
+    "w": "UNTERSTÜTZEN",
+    "en": "to support",
+    "ar": "يدعم",
+    "hint": "Give help or backing",
+    "type": "verb"
+  },
+  {
+    "w": "FÖRDERN",
+    "en": "to promote/support",
+    "ar": "يعزز / يشجع",
+    "hint": "Encourage growth",
+    "type": "verb"
+  },
+  {
+    "w": "VERHINDERN",
+    "en": "to prevent",
+    "ar": "يمنع",
+    "hint": "Stop something from happening",
+    "type": "verb"
+  },
+  {
+    "w": "LÖSEN",
+    "en": "to solve",
+    "ar": "يحل",
+    "hint": "Find an answer to a problem",
+    "type": "verb"
+  },
+  {
+    "w": "UNTERSUCHEN",
+    "en": "to investigate",
+    "ar": "يحقق / يدرس",
+    "hint": "Examine carefully",
+    "type": "verb"
+  },
+  {
+    "w": "FORSCHEN",
+    "en": "to research",
+    "ar": "يبحث علمياً",
+    "hint": "Conduct scientific study",
+    "type": "verb"
+  },
+  {
+    "w": "BEWEISEN",
+    "en": "to prove",
+    "ar": "يثبت",
+    "hint": "Show something is true",
+    "type": "verb"
+  },
+  {
+    "w": "WIDERSPRECHEN",
+    "en": "to contradict",
+    "ar": "يعارض",
+    "hint": "Say the opposite",
+    "type": "verb"
+  },
+  {
+    "w": "ZUSTIMMEN",
+    "en": "to agree",
+    "ar": "يوافق",
+    "hint": "Share the same opinion",
+    "type": "verb"
+  },
+  {
+    "w": "ABLEHNEN",
+    "en": "to reject/decline",
+    "ar": "يرفض",
+    "hint": "Say no to something",
+    "type": "verb"
+  },
+  {
+    "w": "AKZEPTIEREN",
+    "en": "to accept",
+    "ar": "يقبل",
+    "hint": "Agree to something offered",
+    "type": "verb"
+  },
+  {
+    "w": "VORSCHLAGEN",
+    "en": "to suggest",
+    "ar": "يقترح",
+    "hint": "Offer an idea",
+    "type": "verb"
+  },
+  {
+    "w": "ERMÖGLICHEN",
+    "en": "to enable",
+    "ar": "يمكّن",
+    "hint": "Make something possible",
+    "type": "verb"
+  },
+  {
+    "w": "BEEINFLUSSEN",
+    "en": "to influence",
+    "ar": "يؤثر على",
+    "hint": "Have an effect on",
+    "type": "verb"
+  },
+  {
+    "w": "BETONEN",
+    "en": "to emphasise",
+    "ar": "يؤكد / يشدد",
+    "hint": "Stress importance",
+    "type": "verb"
+  },
+  {
+    "w": "ERWÄHNEN",
+    "en": "to mention",
+    "ar": "يذكر",
+    "hint": "Refer to briefly",
+    "type": "verb"
+  },
+  {
+    "w": "ZUSAMMENFASSEN",
+    "en": "to summarise",
+    "ar": "يلخص",
+    "hint": "Give a brief overview",
+    "type": "verb"
+  },
+  {
+    "w": "DARSTELLEN",
+    "en": "to represent/present",
+    "ar": "يمثل / يعرض",
+    "hint": "Show or portray",
+    "type": "verb"
+  },
+  {
+    "w": "EINSETZEN",
+    "en": "to deploy/use",
+    "ar": "يستخدم / يوظف",
+    "hint": "Put into use",
+    "type": "verb"
+  },
+  {
+    "w": "ANWENDEN",
+    "en": "to apply",
+    "ar": "يطبق",
+    "hint": "Use in practice",
+    "type": "verb"
+  },
+  {
+    "w": "KOMMUNIZIEREN",
+    "en": "to communicate",
+    "ar": "يتواصل",
+    "hint": "Exchange information",
+    "type": "verb"
+  },
+  {
+    "w": "REAGIEREN",
+    "en": "to react",
+    "ar": "يتفاعل / يرد",
+    "hint": "Respond to something",
+    "type": "verb"
+  },
+  {
+    "w": "INTEGRIEREN",
+    "en": "to integrate",
+    "ar": "يدمج",
+    "hint": "Combine into a whole",
+    "type": "verb"
+  },
+  {
+    "w": "ENGAGIEREN",
+    "en": "to engage/commit",
+    "ar": "ينخرط / يلتزم",
+    "hint": "Get involved",
+    "type": "verb"
+  },
+  {
+    "w": "TEILNEHMEN",
+    "en": "to participate",
+    "ar": "يشارك",
+    "hint": "Take part in something",
+    "type": "verb"
+  },
+  {
+    "w": "BEITRAGEN",
+    "en": "to contribute",
+    "ar": "يساهم",
+    "hint": "Add to a shared effort",
+    "type": "verb"
+  },
+  {
+    "w": "GELINGEN",
+    "en": "to succeed",
+    "ar": "ينجح",
+    "hint": "Turn out well",
+    "type": "verb"
+  },
+  {
+    "w": "SCHEITERN",
+    "en": "to fail",
+    "ar": "يفشل",
+    "hint": "Not succeed",
+    "type": "verb"
+  },
+  {
+    "w": "RISKIEREN",
+    "en": "to risk",
+    "ar": "يخاطر",
+    "hint": "Take a chance",
+    "type": "verb"
+  },
+  {
+    "w": "SCHÜTZEN",
+    "en": "to protect",
+    "ar": "يحمي",
+    "hint": "Keep safe from harm",
+    "type": "verb"
+  },
+  {
+    "w": "GARANTIEREN",
+    "en": "to guarantee",
+    "ar": "يضمن",
+    "hint": "Promise with certainty",
+    "type": "verb"
+  },
+  {
+    "w": "FINANZIEREN",
+    "en": "to finance",
+    "ar": "يموّل",
+    "hint": "Provide money for something",
+    "type": "verb"
+  },
+  {
+    "w": "POLITISCH",
+    "en": "political",
+    "ar": "سياسي",
+    "hint": "Related to government or politics",
+    "type": "adjective"
+  },
+  {
+    "w": "WIRTSCHAFTLICH",
+    "en": "economic",
+    "ar": "اقتصادي",
+    "hint": "Related to the economy",
+    "type": "adjective"
+  },
+  {
+    "w": "SOZIAL",
+    "en": "social",
+    "ar": "اجتماعي",
+    "hint": "Related to society",
+    "type": "adjective"
+  },
+  {
+    "w": "KULTURELL",
+    "en": "cultural",
+    "ar": "ثقافي",
+    "hint": "Related to culture",
+    "type": "adjective"
+  },
+  {
+    "w": "TECHNISCH",
+    "en": "technical",
+    "ar": "تقني",
+    "hint": "Related to technology",
+    "type": "adjective"
+  },
+  {
+    "w": "WISSENSCHAFTLICH",
+    "en": "scientific",
+    "ar": "علمي",
+    "hint": "Based on science",
+    "type": "adjective"
+  },
+  {
+    "w": "ÖFFENTLICH",
+    "en": "public",
+    "ar": "عام",
+    "hint": "For everyone",
+    "type": "adjective"
+  },
+  {
+    "w": "PRIVAT",
+    "en": "private",
+    "ar": "خاص",
+    "hint": "Not for general use",
+    "type": "adjective"
+  },
+  {
+    "w": "NACHHALTIG",
+    "en": "sustainable",
+    "ar": "مستدام",
+    "hint": "Able to continue long-term",
+    "type": "adjective"
+  },
+  {
+    "w": "ÖKOLOGISCH",
+    "en": "ecological",
+    "ar": "بيئي",
+    "hint": "Relating to the natural environment",
+    "type": "adjective"
+  },
+  {
+    "w": "GLOBAL",
+    "en": "global",
+    "ar": "عالمي",
+    "hint": "Concerning the whole world",
+    "type": "adjective"
+  },
+  {
+    "w": "LOKAL",
+    "en": "local",
+    "ar": "محلي",
+    "hint": "Concerning a small area",
+    "type": "adjective"
+  },
+  {
+    "w": "NATIONAL",
+    "en": "national",
+    "ar": "وطني",
+    "hint": "Concerning one country",
+    "type": "adjective"
+  },
+  {
+    "w": "INTERNATIONAL",
+    "en": "international",
+    "ar": "دولي",
+    "hint": "Between or among nations",
+    "type": "adjective"
+  },
+  {
+    "w": "DIGITAL",
+    "en": "digital",
+    "ar": "رقمي",
+    "hint": "Using computers or the internet",
+    "type": "adjective"
+  },
+  {
+    "w": "ANALOG",
+    "en": "analogue",
+    "ar": "تماثلي",
+    "hint": "Non-digital, traditional",
+    "type": "adjective"
+  },
+  {
+    "w": "KREATIV",
+    "en": "creative",
+    "ar": "مبدع",
+    "hint": "Good at coming up with ideas",
+    "type": "adjective"
+  },
+  {
+    "w": "INNOVATIV",
+    "en": "innovative",
+    "ar": "مبتكر",
+    "hint": "Introducing new ideas",
+    "type": "adjective"
+  },
+  {
+    "w": "EFFIZIENT",
+    "en": "efficient",
+    "ar": "فعّال",
+    "hint": "Achieving goals without waste",
+    "type": "adjective"
+  },
+  {
+    "w": "EFFEKTIV",
+    "en": "effective",
+    "ar": "مؤثر",
+    "hint": "Producing the desired result",
+    "type": "adjective"
+  },
+  {
+    "w": "FLEXIBEL",
+    "en": "flexible",
+    "ar": "مرن",
+    "hint": "Able to adapt easily",
+    "type": "adjective"
+  },
+  {
+    "w": "KRITISCH",
+    "en": "critical",
+    "ar": "نقدي",
+    "hint": "Examining faults or implications",
+    "type": "adjective"
+  },
+  {
+    "w": "KOMPLEX",
+    "en": "complex",
+    "ar": "معقد",
+    "hint": "Having many interrelated parts",
+    "type": "adjective"
+  },
+  {
+    "w": "VIELFÄLTIG",
+    "en": "diverse",
+    "ar": "متنوع",
+    "hint": "Having great variety",
+    "type": "adjective"
+  },
+  {
+    "w": "EINHEITLICH",
+    "en": "uniform",
+    "ar": "موحد",
+    "hint": "All the same",
+    "type": "adjective"
+  },
+  {
+    "w": "GRUNDLEGEND",
+    "en": "fundamental",
+    "ar": "أساسي",
+    "hint": "Forming the base or foundation",
+    "type": "adjective"
+  },
+  {
+    "w": "WESENTLICH",
+    "en": "essential",
+    "ar": "جوهري",
+    "hint": "Absolutely necessary",
+    "type": "adjective"
+  },
+  {
+    "w": "AUSREICHEND",
+    "en": "sufficient",
+    "ar": "كافٍ",
+    "hint": "Enough for the purpose",
+    "type": "adjective"
+  },
+  {
+    "w": "UNZUREICHEND",
+    "en": "insufficient",
+    "ar": "غير كافٍ",
+    "hint": "Not enough",
+    "type": "adjective"
+  },
+  {
+    "w": "ERHEBLICH",
+    "en": "considerable",
+    "ar": "ملحوظ",
+    "hint": "Notably large in amount",
+    "type": "adjective"
+  },
+  {
+    "w": "GERING",
+    "en": "low/small",
+    "ar": "ضئيل",
+    "hint": "Small in amount or degree",
+    "type": "adjective"
+  },
+  {
+    "w": "ZUNEHMEND",
+    "en": "increasing",
+    "ar": "متزايد",
+    "hint": "Growing more and more",
+    "type": "adjective"
+  },
+  {
+    "w": "ABNEHMEND",
+    "en": "decreasing",
+    "ar": "متناقص",
+    "hint": "Getting less and less",
+    "type": "adjective"
+  },
+  {
+    "w": "BERUFLICH",
+    "en": "professional",
+    "ar": "مهني",
+    "hint": "Related to work or career",
+    "type": "adjective"
+  },
+  {
+    "w": "PERSÖNLICH",
+    "en": "personal",
+    "ar": "شخصي",
+    "hint": "Relating to oneself",
+    "type": "adjective"
+  },
+  {
+    "w": "GEGENSEITIG",
+    "en": "mutual",
+    "ar": "متبادل",
+    "hint": "Felt by both sides equally",
+    "type": "adjective"
+  },
+  {
+    "w": "FREIWILLIG",
+    "en": "voluntary",
+    "ar": "طوعي",
+    "hint": "Done by choice, not obligation",
+    "type": "adjective"
+  },
+  {
+    "w": "GESETZLICH",
+    "en": "legal",
+    "ar": "قانوني",
+    "hint": "Permitted or required by law",
+    "type": "adjective"
+  },
+  {
+    "w": "ILLEGAL",
+    "en": "illegal",
+    "ar": "غير قانوني",
+    "hint": "Against the law",
+    "type": "adjective"
+  },
+  {
+    "w": "DEMOKRATISCH",
+    "en": "democratic",
+    "ar": "ديمقراطي",
+    "hint": "Based on equal rights and votes",
+    "type": "adjective"
+  },
+  {
+    "w": "AUTORITÄR",
+    "en": "authoritarian",
+    "ar": "استبدادي",
+    "hint": "Demanding strict obedience",
+    "type": "adjective"
+  },
+  {
+    "w": "AKTUELL",
+    "en": "current",
+    "ar": "حالي / راهن",
+    "hint": "Happening right now",
+    "type": "adjective"
+  },
+  {
+    "w": "ZUKÜNFTIG",
+    "en": "future (adj)",
+    "ar": "مستقبلي",
+    "hint": "Yet to come",
+    "type": "adjective"
+  },
+  {
+    "w": "HISTORISCH",
+    "en": "historical",
+    "ar": "تاريخي",
+    "hint": "Relating to history",
+    "type": "adjective"
+  },
+  {
+    "w": "TYPISCH",
+    "en": "typical",
+    "ar": "نموذجي",
+    "hint": "Characteristic of a type",
+    "type": "adjective"
+  },
+  {
+    "w": "URSPRÜNGLICH",
+    "en": "original",
+    "ar": "أصلي",
+    "hint": "From the beginning",
+    "type": "adjective"
+  },
+  {
+    "w": "VERGLEICHBAR",
+    "en": "comparable",
+    "ar": "قابل للمقارنة",
+    "hint": "Can be compared",
+    "type": "adjective"
+  },
+  {
+    "w": "UNABHÄNGIG",
+    "en": "independent",
+    "ar": "مستقل",
+    "hint": "Not controlled by others",
+    "type": "adjective"
+  },
+  {
+    "w": "ABHÄNGIG",
+    "en": "dependent",
+    "ar": "تابع / مدمن",
+    "hint": "Relying on something else",
+    "type": "adjective"
+  },
+  {
+    "w": "VERANTWORTLICH",
+    "en": "responsible",
+    "ar": "مسؤول",
+    "hint": "Accountable for something",
+    "type": "adjective"
+  },
+  {
+    "w": "BEWUSST",
+    "en": "conscious/aware",
+    "ar": "واعٍ",
+    "hint": "Aware of something",
+    "type": "adjective"
+  },
+  {
+    "w": "UNBEWUSST",
+    "en": "unconscious",
+    "ar": "غير واعٍ",
+    "hint": "Not aware, done without thinking",
+    "type": "adjective"
+  },
+  {
+    "w": "ÜBERZEUGEND",
+    "en": "convincing",
+    "ar": "مقنع",
+    "hint": "Able to persuade",
+    "type": "adjective"
+  },
+  {
+    "w": "GLAUBWÜRDIG",
+    "en": "credible",
+    "ar": "موثوق به",
+    "hint": "Able to be believed",
+    "type": "adjective"
+  },
+  {
+    "w": "VERSTÄNDLICH",
+    "en": "understandable",
+    "ar": "مفهوم",
+    "hint": "Easy to understand",
+    "type": "adjective"
+  },
+  {
+    "w": "UNVERSTÄNDLICH",
+    "en": "incomprehensible",
+    "ar": "غير مفهوم",
+    "hint": "Hard to understand",
+    "type": "adjective"
+  },
+  {
+    "w": "STREIK",
+    "en": "strike",
+    "ar": "إضراب",
+    "hint": "Arbeiter hören auf zu arbeiten für Forderungen.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Die Arbeiter sind im ___."
+  },
+  {
+    "w": "BETRIEB",
+    "en": "company",
+    "ar": "مؤسسة",
+    "hint": "Ein Unternehmen, in dem Menschen arbeiten.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ hat über 50 Mitarbeiter."
+  },
+  {
+    "w": "KUNDE",
+    "en": "customer",
+    "ar": "زبون",
+    "hint": "Er kauft etwas in einem Geschäft.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ möchte das Produkt zurückgeben."
+  },
+  {
+    "w": "WETTBEWERB",
+    "en": "competition",
+    "ar": "منافسة",
+    "hint": "Firmen oder Menschen kämpfen um den besten Platz.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Im ___ ist unsere Firma sehr stark."
+  },
+  {
+    "w": "REFORM",
+    "en": "reform",
+    "ar": "إصلاح",
+    "hint": "Eine wichtige Veränderung im System.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ verbessert das Bildungssystem."
+  },
+  {
+    "w": "PARTEI",
+    "en": "party",
+    "ar": "حزب",
+    "hint": "Eine politische Gruppe, die bei Wahlen antritt.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Welche ___ wählst du bei der Wahl?"
+  },
+  {
+    "w": "WÄHLER",
+    "en": "voter",
+    "ar": "ناخب",
+    "hint": "Er nimmt an der Wahl teil.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Die ___ gehen zur Wahl."
+  },
+  {
+    "w": "BOTSCHAFT",
+    "en": "embassy",
+    "ar": "سفارة",
+    "hint": "Das offizielle Gebäude eines fremden Landes.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Er arbeitet in der deutschen ___ in Paris."
+  },
+  {
+    "w": "BEHÖRDE",
+    "en": "authority",
+    "ar": "هيئة حكومية",
+    "hint": "Ein staatliches Amt mit bestimmten Aufgaben.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ prüft den Antrag."
+  },
+  {
+    "w": "ANTRAG",
+    "en": "application",
+    "ar": "طلب رسمي",
+    "hint": "Man reicht ihn beim Amt ein.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Sie stellt einen ___ auf finanzielle Hilfe."
+  },
+  {
+    "w": "VORWURF",
+    "en": "accusation",
+    "ar": "اتهام",
+    "hint": "Man sagt jemandem, dass er etwas falsch gemacht hat.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ gegen ihn ist unfair."
+  },
+  {
+    "w": "IRRTUM",
+    "en": "mistake",
+    "ar": "خطأ",
+    "hint": "Man hat etwas falsch verstanden oder gemacht.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Das war ein großer ___."
+  },
+  {
+    "w": "MANGEL",
+    "en": "lack",
+    "ar": "نقص",
+    "hint": "Es fehlt an etwas Wichtigem.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Es gibt einen ___ an Fachkräften."
+  },
+  {
+    "w": "VORBILD",
+    "en": "role model",
+    "ar": "قدوة",
+    "hint": "Eine Person, die man bewundert und imitiert.",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Sie ist mein großes ___."
+  },
+  {
+    "w": "GERÄT",
+    "en": "device",
+    "ar": "جهاز",
+    "hint": "Ein technisches Hilfsmittel.",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das ___ funktioniert leider nicht."
+  },
+  {
+    "w": "ZEUGE",
+    "en": "witness",
+    "ar": "شاهد",
+    "hint": "Er hat etwas gesehen und kann es berichten.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ sagt die Wahrheit vor Gericht."
+  },
+  {
+    "w": "STRAFE",
+    "en": "punishment",
+    "ar": "عقوبة",
+    "hint": "Die Konsequenz für ein Vergehen.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ war sehr hoch."
+  },
+  {
+    "w": "TÄTER",
+    "en": "perpetrator",
+    "ar": "جانٍ",
+    "hint": "Die Person, die eine Tat begangen hat.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ wurde von der Polizei verhaftet."
+  },
+  {
+    "w": "OPFER",
+    "en": "victim",
+    "ar": "ضحية",
+    "hint": "Jemand, dem etwas Schlimmes passiert ist.",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das ___ braucht sofortige Hilfe."
+  },
+  {
+    "w": "AUSDRÜCKEN",
+    "en": "express",
+    "ar": "يعبّر عن",
+    "hint": "Man zeigt seine Gefühle oder Gedanken in Worten.",
+    "type": "verb",
+    "sentence": "Er kann seine Gefühle gut ___."
+  },
+  {
+    "w": "VERBINDEN",
+    "en": "connect",
+    "ar": "يربط",
+    "hint": "Zwei Dinge oder Personen zusammenbringen.",
+    "type": "verb",
+    "sentence": "Das Projekt soll die zwei Teams ___."
+  },
+  {
+    "w": "EINREICHEN",
+    "en": "submit",
+    "ar": "يقدّم",
+    "hint": "Man gibt ein Dokument offiziell ab.",
+    "type": "verb",
+    "sentence": "Sie muss die Bewerbung bis Freitag ___."
+  },
+  {
+    "w": "BEACHTEN",
+    "en": "heed",
+    "ar": "يراعي",
+    "hint": "Man achtet auf etwas Wichtiges.",
+    "type": "verb",
+    "sentence": "Wir müssen alle Sicherheitsregeln ___."
+  },
+  {
+    "w": "BEWÄLTIGEN",
+    "en": "overcome",
+    "ar": "يتغلّب على",
+    "hint": "Man schafft eine schwierige Aufgabe.",
+    "type": "verb",
+    "sentence": "Er kann die Aufgabe allein ___."
+  },
+  {
+    "w": "NACHWEISEN",
+    "en": "prove",
+    "ar": "يثبت",
+    "hint": "Man zeigt mit Fakten, dass etwas wahr ist.",
+    "type": "verb",
+    "sentence": "Sie muss ihre Qualifikation ___."
+  },
+  {
+    "w": "ABSTIMMEN",
+    "en": "vote",
+    "ar": "يصوّت",
+    "hint": "Man wählt für oder gegen etwas.",
+    "type": "verb",
+    "sentence": "Das Parlament soll über das Gesetz ___."
+  },
+  {
+    "w": "AUFFORDERN",
+    "en": "call upon",
+    "ar": "يطلب",
+    "hint": "Man bittet jemanden, etwas zu tun.",
+    "type": "verb",
+    "sentence": "Er möchte alle zur Teilnahme ___."
+  },
+  {
+    "w": "BERICHTEN",
+    "en": "report",
+    "ar": "يُبلّغ",
+    "hint": "Man erzählt über ein Ereignis.",
+    "type": "verb",
+    "sentence": "Wir ___ über die aktuellen Ergebnisse."
+  },
+  {
+    "w": "ANPASSEN",
+    "en": "adapt",
+    "ar": "يتأقلم",
+    "hint": "Man ändert sich für eine neue Situation.",
+    "type": "verb",
+    "sentence": "Man muss sich an die neue Situation ___."
+  },
+  {
+    "w": "ÜBERNEHMEN",
+    "en": "take over",
+    "ar": "يتولّى",
+    "hint": "Man übernimmt eine Aufgabe oder ein Amt.",
+    "type": "verb",
+    "sentence": "Sie möchte die Leitung der Abteilung ___."
+  },
+  {
+    "w": "NACHFRAGEN",
+    "en": "inquire",
+    "ar": "يستفسر",
+    "hint": "Man fragt nach weiteren Informationen.",
+    "type": "verb",
+    "sentence": "Er will beim Amt wegen des Antrags ___."
+  },
+  {
+    "w": "VORWERFEN",
+    "en": "accuse",
+    "ar": "يتّهم",
+    "hint": "Man sagt jemandem, dass er falsch gehandelt hat.",
+    "type": "verb",
+    "sentence": "Man kann ihr mangelnde Sorgfalt ___."
+  },
+  {
+    "w": "RECHTLICH",
+    "en": "legal",
+    "ar": "قانوني",
+    "hint": "Es bezieht sich auf das Gesetz.",
+    "type": "adjective",
+    "sentence": "Das ist eine ___ Frage."
+  },
+  {
+    "w": "STAATLICH",
+    "en": "governmental",
+    "ar": "حكومي",
+    "hint": "Es gehört zum Staat.",
+    "type": "adjective",
+    "sentence": "Die Schule ist ___."
+  },
+  {
+    "w": "GEMEINSAM",
+    "en": "joint",
+    "ar": "مشترك",
+    "hint": "Zusammen mit anderen.",
+    "type": "adjective",
+    "sentence": "Wir lösen das Problem ___."
+  },
+  {
+    "w": "SACHLICH",
+    "en": "factual",
+    "ar": "موضوعي",
+    "hint": "Ohne Emotionen, nur Fakten.",
+    "type": "adjective",
+    "sentence": "Bitte bleiben Sie ___."
+  },
+  {
+    "w": "DEUTLICH",
+    "en": "clear",
+    "ar": "واضح",
+    "hint": "Leicht zu verstehen oder zu sehen.",
+    "type": "adjective",
+    "sentence": "Die Verbesserung ist ___ sichtbar."
+  },
+  {
+    "w": "GRÜNDLICH",
+    "en": "thorough",
+    "ar": "دقيق",
+    "hint": "Man macht etwas mit viel Sorgfalt.",
+    "type": "adjective",
+    "sentence": "Sie reinigt das Haus sehr ___."
+  },
+  {
+    "w": "DRINGEND",
+    "en": "urgent",
+    "ar": "عاجل",
+    "hint": "Sehr wichtig, muss sofort erledigt werden.",
+    "type": "adjective",
+    "sentence": "Diese Aufgabe ist sehr ___."
+  },
+  {
+    "w": "SORGFÄLTIG",
+    "en": "careful",
+    "ar": "متأنٍّ",
+    "hint": "Man macht etwas sehr genau und aufmerksam.",
+    "type": "adjective",
+    "sentence": "Er prüft alles ___ nach."
+  }
+]
