@@ -1,0 +1,1 @@
+[   15681ms] [ERROR] WebSocket connection to 'wss://your_project-default-rtdb.firebaseio.com/.ws?v=5&p=YOUR_APP_ID' failed: Error during WebSocket handshake: Unexpected response code: 403 @ https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js:0

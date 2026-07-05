@@ -1,0 +1,39 @@
+type User @table {
+  username: String!
+  email: String
+  profilePictureUrl: String
+  totalWins: Int
+  totalLosses: Int
+  currentStreak: Int
+  createdAt: Timestamp!
+}
+
+type GameSession @table {
+  gameType: String!
+  status: String!
+  guesses: [String]
+  createdAt: Timestamp!
+  startTime: Timestamp
+  endTime: Timestamp
+  currentWord: String!
+  winner: User
+  player1: User
+  player2: User
+}
+
+type GermanWord @table {
+  word: String!
+  length: Int!
+  difficulty: String!
+  definition: String
+  partOfSpeech: String
+}
+
+type CrosswordPuzzle @table {
+  puzzleDate: Date!
+  layout: String!
+  solutionWords: String!
+  clues: String
+  difficulty: String
+  createdAt: Timestamp!
+}

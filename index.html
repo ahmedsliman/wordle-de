@@ -3,18 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Wörtle — lerne deutsche Wörter (A1/A2/B1) mit einem Kreuzworträtsel-Spiel: Aussprache, Grammatik-Gender, und Wiederholung mit Spaced Repetition." />
+  <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#121213" media="(prefers-color-scheme: dark)" />
   <title>Wörtle — German Wordle</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,700;1,9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     /* ─── CSS Variables ─────────────────────────────── */
     :root {
-      --color-bg:               #fafaf9;
-      --color-surface:          #f3f3f1;
-      --color-border:           #d3d6da;
-      --color-text:             #1a1a2e;
+      --color-bg:               #eef1f6;
+      --color-surface:          #e4e9f2;
+      --color-border:           #d4dbea;
+      --color-text:             #1b2233;
       --color-text-inv:         #ffffff;
-      --color-text-muted:       #6b7280;
+      --color-text-muted:       #616d87;
+      --color-cell:             #ffffff;
+      --color-cell-block:       #2b3350;
       --color-correct:          #1D9E75;
       --color-present:          #EF9F27;
       --color-absent:           #787c7e;
@@ -23,8 +28,8 @@
       --color-key-text:         #1a1a2e;
       --color-tile-border:      #d3d6da;
       --color-tile-filled:      #878a8c;
-      --color-header-bg:        #fafaf9;
-      --color-header-border:    #d3d6da;
+      --color-header-bg:        #eef1f6;
+      --color-header-border:    #d4dbea;
       --color-badge-noun:       #3b82f6;
       --color-badge-verb:       #1D9E75;
       --color-badge-adj:        #EF9F27;
@@ -38,6 +43,10 @@
       --color-p2:               #ef4444;
       --cell-size:              120px;
       --cw-cell:                36px;
+      --gender-der:             #3b82f6;
+      --gender-die:             #ef4444;
+      --gender-das:             #1D9E75;
+      --gender-neutral:         #8b7cf6;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -46,7 +55,9 @@
         --color-surface:         #1a1a1b;
         --color-border:          #3a3a3c;
         --color-text:            #ffffff;
-        --color-text-muted:      #818384;
+        --color-text-muted:      #9aa0b0;
+        --color-cell:            #1e1f24;
+        --color-cell-block:      #2b3350;
         --color-absent:          #3a3a3c;
         --color-absent-bg:       #3a3a3c;
         --color-key-bg:          #818384;
@@ -90,8 +101,8 @@
     /* Desktop: body gets a warm canvas, game floats as a card */
     @media (min-width: 681px) {
       :root {
-        --color-canvas: #dedad6;
-        --color-header-bg: #fafaf9;
+        --color-canvas: #dce1ec;
+        --color-header-bg: #eef1f6;
       }
 
       body {
@@ -165,6 +176,28 @@
     }
 
     .logo-dot { color: var(--color-correct); }
+
+    /* ─── Skip link (visible on keyboard focus) ──────── */
+    .skip-link {
+      position: absolute; left: 8px; top: -48px; z-index: 1000;
+      background: var(--color-correct); color: #fff;
+      padding: 10px 16px; border-radius: 0 0 10px 10px;
+      font-family: 'Inter', system-ui, sans-serif; font-weight: 600; font-size: 0.9rem;
+      text-decoration: none; transition: top 0.15s ease;
+    }
+    .skip-link:focus { top: 0; outline: 3px solid var(--color-present); outline-offset: 2px; }
+
+    /* Keyboard-only focus ring fallback for any interactive element
+       that doesn't define its own (mouse users are unaffected). */
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    [tabindex]:focus-visible {
+      outline: 2.5px solid var(--color-correct);
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
+    #game-main:focus { outline: none; }
 
     /* ─── Level Tabs (inside header, underline style) ── */
     .level-tabs {
@@ -871,6 +904,61 @@
       color: var(--color-text);
     }
 
+    /* ─── Gender color-coding (post-round only) ──────── */
+    .g-der     { color: var(--gender-der); }
+    .g-die     { color: var(--gender-die); }
+    .g-das     { color: var(--gender-das); }
+    .g-neutral { color: var(--gender-neutral); }
+
+    /* ─── Post-round review panel ────────────────────── */
+    .cw-review-panel {
+      display: flex; flex-direction: column; gap: 10px;
+      text-align: left; margin-top: 4px;
+    }
+    .cw-review-title {
+      font-size: 0.82rem; font-weight: 700; color: var(--color-text-muted);
+      text-transform: uppercase; letter-spacing: 0.04em; text-align: left;
+    }
+    .rev-card {
+      background: var(--color-surface); border-radius: 12px; padding: 12px 14px;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .rev-word-row { display: flex; align-items: center; gap: 8px; }
+    .rev-word {
+      font-family: 'DM Mono', monospace; font-size: 1.05rem; font-weight: 600;
+      color: var(--color-text);
+    }
+    .rev-word .rev-article { font-weight: 700; }
+    .rev-audio { margin-left: auto; }
+    .rev-meta { font-size: 0.9rem; color: var(--color-text); }
+    .rev-meta .rev-ar { color: var(--color-text-muted); }
+    .rev-ar { direction: rtl; unicode-bidi: isolate; }
+    .rev-grammar {
+      font-size: 0.82rem; color: var(--color-text-muted);
+      font-family: 'DM Mono', monospace;
+    }
+    .rev-example { font-size: 0.82rem; color: var(--color-text-muted); font-style: italic; }
+    .rev-example .rev-ex-ar { direction: rtl; unicode-bidi: isolate; display: block; font-style: normal; }
+    .rev-add {
+      display: flex; align-items: center; gap: 6px; margin-top: 2px;
+      font-size: 0.8rem; color: var(--color-text-muted); cursor: pointer; user-select: none;
+    }
+    .rev-add input { accent-color: var(--color-correct); width: 15px; height: 15px; }
+
+    /* ─── Review level tab + due badge ───────────────── */
+    .tab-review { gap: 4px; }
+    .review-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px;
+      background: var(--color-present); color: #1a1a2e;
+      font-size: 0.66rem; font-weight: 700; line-height: 1;
+    }
+    .review-badge[hidden] { display: none; }
+    .cw-empty-review {
+      text-align: center; color: var(--color-text-muted); font-size: 0.95rem;
+      padding: 40px 20px; line-height: 1.6;
+    }
+
     /* ─── Setup Overlay ──────────────────────────────── */
     .setup-fields {
       display: flex;
@@ -1426,6 +1514,165 @@
       white-space: nowrap;
     }
     .join-btn:hover { opacity: 0.88; }
+    /* ══════════════════════════════════════════════════════════════
+       REDESIGN LAYER — depth, motion, review polish (open redesign).
+       Appended last so it refines existing components via the cascade.
+       ══════════════════════════════════════════════════════════════ */
+    :root {
+      --space-1: 4px;  --space-2: 8px;  --space-3: 12px;
+      --space-4: 16px; --space-5: 24px; --space-6: 32px;
+      --radius-sm: 10px; --radius-md: 14px; --radius-lg: 20px; --radius-xl: 28px;
+      --shadow-sm: 0 1px 3px rgba(17,24,39,0.08), 0 1px 2px rgba(17,24,39,0.04);
+      --shadow-md: 0 6px 18px rgba(17,24,39,0.10), 0 2px 6px rgba(17,24,39,0.06);
+      --shadow-lg: 0 18px 50px rgba(17,24,39,0.20), 0 6px 16px rgba(17,24,39,0.10);
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --grad-accent: linear-gradient(135deg, #23b184 0%, var(--color-correct) 55%, #17845f 100%);
+      --grad-header: linear-gradient(180deg, rgba(238,241,246,0.9), rgba(238,241,246,0.72));
+      --hairline: rgba(27,34,51,0.09);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
+        --shadow-md: 0 6px 20px rgba(0,0,0,0.55);
+        --shadow-lg: 0 20px 60px rgba(0,0,0,0.7);
+        --grad-header: linear-gradient(180deg, rgba(26,26,27,0.9), rgba(18,18,19,0.72));
+        --hairline: rgba(255,255,255,0.08);
+        --gender-die: #f26d6d;   /* lift red for dark-bg legibility */
+      }
+    }
+
+    /* ── Header: frosted, gradient ── */
+    header {
+      background: var(--grad-header);
+      -webkit-backdrop-filter: saturate(1.4) blur(12px);
+      backdrop-filter: saturate(1.4) blur(12px);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .logo { letter-spacing: -0.8px; }
+
+    /* ── Primary buttons: gradient + spring press ── */
+    .start-btn {
+      background: var(--grad-accent);
+      box-shadow: 0 4px 14px rgba(29,158,117,0.35), inset 0 1px 0 rgba(255,255,255,0.25);
+      transition: transform 0.14s var(--ease-spring), box-shadow 0.2s ease, filter 0.2s ease;
+      padding: 13px 26px;
+    }
+    .start-btn:hover  { opacity: 1; filter: brightness(1.05); box-shadow: 0 8px 22px rgba(29,158,117,0.5), inset 0 1px 0 rgba(255,255,255,0.3); transform: translateY(-1px); }
+    .start-btn:active { transform: translateY(0) scale(0.96); }
+    button { -webkit-tap-highlight-color: transparent; }
+    .mode-choice-btn, .cancel-btn { transition: transform 0.14s var(--ease-spring), border-color 0.15s, color 0.15s, box-shadow 0.2s; }
+    .mode-choice-btn:active, .cancel-btn:active { transform: scale(0.97); }
+
+    /* ── Overlays: blurred backdrop + spring pop-in ── */
+    .overlay {
+      background: rgba(12,14,20,0.55);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+    }
+    .overlay-card {
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--hairline);
+      animation: overlay-pop 0.34s var(--ease-spring) both;
+    }
+    @keyframes overlay-pop {
+      from { opacity: 0; transform: translateY(12px) scale(0.96); }
+      to   { opacity: 1; transform: translateY(0)    scale(1); }
+    }
+    .overlay-title { letter-spacing: -0.4px; }
+
+    /* ── Chips: tabs active pill glow, diamond counter depth ── */
+    .tab.active, .type-tab.active { color: var(--color-correct); }
+    .diamond-counter { box-shadow: var(--shadow-sm); transition: transform 0.15s var(--ease-spring); }
+    .diamond-counter:hover { transform: translateY(-1px); }
+
+    /* ── Summary stats rows: subtle depth ── */
+    #cw-summary-stats > div { box-shadow: var(--shadow-sm); border: 1px solid var(--hairline); }
+
+    /* ── Review panel polish ── */
+    .cw-review-title { display: flex; align-items: center; gap: var(--space-2); }
+    .gender-legend {
+      display: flex; flex-wrap: wrap; gap: var(--space-2);
+      justify-content: center; margin: var(--space-1) 0 var(--space-2);
+    }
+    .gender-legend span {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.72rem; font-weight: 600; color: var(--color-text-muted);
+      background: var(--color-surface); border: 1px solid var(--hairline);
+      padding: 3px 9px; border-radius: 999px;
+    }
+    .gender-legend .dot { width: 9px; height: 9px; border-radius: 50%; }
+    .gender-legend .dot.g-der { background: var(--gender-der); }
+    .gender-legend .dot.g-die { background: var(--gender-die); }
+    .gender-legend .dot.g-das { background: var(--gender-das); }
+
+    .rev-card {
+      position: relative; overflow: hidden;
+      border: 1px solid var(--hairline); box-shadow: var(--shadow-sm);
+      border-radius: var(--radius-md); padding-left: 16px;
+      transition: transform 0.16s var(--ease-out), box-shadow 0.2s ease;
+      animation: rev-in 0.3s var(--ease-out) both;
+    }
+    .rev-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    @keyframes rev-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    /* gender accent bar on the card edge */
+    .rev-card::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+      background: var(--color-border);
+    }
+    .rev-card.g-der::before     { background: var(--gender-der); }
+    .rev-card.g-die::before     { background: var(--gender-die); }
+    .rev-card.g-das::before     { background: var(--gender-das); }
+    .rev-card.g-neutral::before { background: var(--gender-neutral); }
+    .rev-audio {
+      background: var(--color-surface); border: 1px solid var(--hairline);
+      border-radius: 50%; width: 34px; height: 34px; display: grid; place-items: center;
+      box-shadow: var(--shadow-sm); transition: transform 0.14s var(--ease-spring), background 0.2s;
+    }
+    .rev-audio:hover  { transform: scale(1.08); }
+    .rev-audio:active { transform: scale(0.92); }
+    .rev-add {
+      background: var(--color-surface); border: 1px solid var(--hairline);
+      border-radius: 999px; padding: 6px 12px; align-self: flex-start; margin-top: var(--space-1);
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .rev-add:hover { color: var(--color-text); }
+    .rev-add:has(input:checked) {
+      color: var(--color-correct); border-color: rgba(29,158,117,0.4);
+      background: rgba(29,158,117,0.08);
+    }
+
+    /* ── Due-count badge: pop when it appears ── */
+    .review-badge {
+      box-shadow: 0 2px 6px rgba(239,159,39,0.5);
+      animation: badge-pop 0.4s var(--ease-spring);
+    }
+    @keyframes badge-pop { from { transform: scale(0); } to { transform: scale(1); } }
+    .tab-review.active { color: var(--color-present); border-bottom-color: var(--color-present); }
+
+    /* ── Crossword cells: white playable, indigo blocks (Cool Indigo) ── */
+    .cw-cell       { background: var(--color-cell); border-color: var(--color-border); }
+    .cw-cell.black { background: var(--color-cell-block); border-color: var(--color-cell-block); }
+
+    /* ── Confetti canvas (win celebration) ── */
+    #confetti-canvas {
+      position: fixed; inset: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 80;
+    }
+
+    /* ── Solved crossword word: celebratory settle ── */
+    @keyframes cell-settle {
+      0% { transform: scale(1); } 45% { transform: scale(1.12); } 100% { transform: scale(1); }
+    }
+    .cw-cell.correct.just-solved { animation: cell-settle 0.4s var(--ease-spring); }
+
+    /* Respect reduced motion for all new animations */
+    @media (prefers-reduced-motion: reduce) {
+      .overlay-card, .rev-card, .review-badge, .cw-cell.correct.just-solved { animation: none; }
+      .start-btn:hover, .diamond-counter:hover, .rev-card:hover,
+      .rev-audio:hover, .mode-choice-btn:active, .cancel-btn:active { transform: none; }
+    }
   </style>
 </head>
 
@@ -1457,6 +1704,9 @@
 </script>
 <body>
 
+  <a href="#game-main" class="skip-link">Zum Spiel springen</a>
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
   <div id="loading">
     <div class="loading-spinner"></div>
     Wörter werden geladen…
@@ -1469,6 +1719,7 @@
       <button class="tab active" data-level="A1" aria-label="Schwierigkeitsstufe A1">A1</button>
       <button class="tab"        data-level="A2" aria-label="Schwierigkeitsstufe A2">A2</button>
       <button class="tab"        data-level="B1" aria-label="Schwierigkeitsstufe B1">B1</button>
+      <button class="tab tab-review" data-level="REVIEW" aria-label="Wiederholung — fällige Wörter">★<span class="review-badge" id="review-badge" hidden>0</span></button>
     </div>
     <div style="display:flex;align-items:center;gap:8px;">
       <div class="diamond-counter" id="diamond-counter" title="Gesamt-Diamanten">
@@ -1481,7 +1732,7 @@
     </div>
   </header>
 
-  <main id="game-main">
+  <main id="game-main" tabindex="-1">
 
   <!-- Hidden input for native mobile keyboard in crossword mode -->
   <input id="cw-native-input" type="text" inputmode="text" autocomplete="off"
@@ -1685,23 +1936,63 @@
       <div style="font-size:3rem;line-height:1;">🎉</div>
       <div class="overlay-title">Ausgezeichnet!</div>
       <div id="cw-summary-stats" style="display:flex;flex-direction:column;gap:10px;"></div>
+      <div id="cw-review-panel" class="cw-review-panel"></div>
       <button id="cw-new-puzzle-btn" class="start-btn" style="width:100%;">Neues Rätsel</button>
+    </div>
+  </div>
+
+  <!-- Review mode: nothing due -->
+  <div id="cw-review-empty" class="overlay hidden">
+    <div class="overlay-card" style="text-align:center;gap:16px;">
+      <div style="font-size:3rem;line-height:1;">✅</div>
+      <div class="overlay-title">Wiederholung</div>
+      <div class="cw-empty-review" id="cw-review-empty-msg"></div>
+      <button id="cw-review-empty-btn" class="start-btn" style="width:100%;">Zurück zu A1</button>
     </div>
   </div>
 
 <script>
 // ─── Audio ────────────────────────────────────────────
-function speakWord(word) {
-  if (!window.speechSynthesis) return;
+// ─── Pronunciation (Web Speech API, de-DE) ────────────
+let deVoice          = null;   // preferred German voice, if any
+let deVoiceAvailable = null;   // null = unknown, true/false once resolved
+
+function refreshVoices() {
+  if (!window.speechSynthesis) { deVoiceAvailable = false; applyVoiceAvailability(); return; }
+  const voices = window.speechSynthesis.getVoices();
+  if (!voices.length) return;   // not ready yet; voiceschanged will re-fire
+  deVoice = voices.find(v => /^de[-_]de/i.test(v.lang))
+         || voices.find(v => /^de([-_]|$)/i.test(v.lang)) || null;
+  deVoiceAvailable = !!deVoice;
+  applyVoiceAvailability();
+}
+
+function applyVoiceAvailability() {
+  if (deVoiceAvailable !== false) return;   // only act on a definitive "no voice"
+  document.querySelectorAll('.audio-btn').forEach(b => {
+    b.disabled = true;
+    b.title    = 'Keine deutsche Stimme auf diesem Gerät verfügbar';
+    b.style.opacity = '0.35';
+  });
+}
+
+if (window.speechSynthesis) {
+  refreshVoices();
+  window.speechSynthesis.onvoiceschanged = refreshVoices;
+}
+
+function speakWord(word, btn) {
+  if (!window.speechSynthesis || deVoiceAvailable === false) return;
   window.speechSynthesis.cancel();
   const utt  = new SpeechSynthesisUtterance(word.toLowerCase());
   utt.lang   = 'de-DE';
   utt.rate   = 0.85;
-  const btn  = document.getElementById('cw-audio-btn');
-  if (btn) {
-    btn.classList.add('speaking');
-    utt.onend = () => btn.classList.remove('speaking');
-    utt.onerror = () => btn.classList.remove('speaking');
+  if (deVoice) utt.voice = deVoice;
+  const b = btn || document.getElementById('cw-audio-btn');
+  if (b) {
+    b.classList.add('speaking');
+    utt.onend   = () => b.classList.remove('speaking');
+    utt.onerror = () => b.classList.remove('speaking');
   }
   window.speechSynthesis.speak(utt);
 }
@@ -1883,6 +2174,69 @@ function checkStreakMilestones() {
 }
 
 // ─── Word picking ─────────────────────────────────────
+// ─── Gender helper (post-round color-coding) ──────────
+function genderClass(article) {
+  if (article === 'der') return 'g-der';
+  if (article === 'die') return 'g-die';
+  if (article === 'das') return 'g-das';
+  return 'g-neutral';   // die/pl, die/der, or unknown
+}
+
+// ─── Spaced-repetition review deck (Leitner) ──────────
+// localStorage `wortle-review`: { version, cards: { WORD: {box,due,seen,correct,level,type,lastSeen} } }
+const REVIEW_KEY        = 'wortle-review';
+const LEITNER_INTERVALS = [0, 1, 2, 4, 7];   // days until next due, indexed by box (0–4)
+let reviewDeck      = { version: 1, cards: {} };
+let wordLevelIndex  = {};   // WORD -> original CEFR level, built at load
+let wordEntryIndex  = {};   // WORD -> full entry, built at load
+
+function loadReview() {
+  try {
+    const d = JSON.parse(localStorage.getItem(REVIEW_KEY) || '{}');
+    if (d && d.cards) reviewDeck = { version: 1, cards: d.cards };
+  } catch {}
+  updateReviewBadge();
+}
+function saveReview() {
+  localStorage.setItem(REVIEW_KEY, JSON.stringify(reviewDeck));
+  updateReviewBadge();
+}
+function dayStr(offset = 0) {
+  const d = new Date();
+  d.setDate(d.getDate() + offset);
+  return d.toISOString().slice(0, 10);
+}
+function isDue(card)   { return card && card.due <= dayStr(); }
+function dueWords()    { return Object.keys(reviewDeck.cards).filter(w => isDue(reviewDeck.cards[w])); }
+function inDeck(word)  { return !!reviewDeck.cards[word]; }
+
+// Record a review outcome. `correct` advances the box; wrong resets to box 0.
+function gradeReview(word, correct) {
+  let c = reviewDeck.cards[word];
+  if (!c) c = { box: 0, due: dayStr(), seen: 0, correct: 0,
+                level: wordLevelIndex[word] || currentLevel, type: (wordEntryIndex[word] || {}).type };
+  c.seen++;
+  if (correct) {
+    c.correct++;
+    c.box = Math.min((c.box || 0) + 1, 4);
+    c.due = dayStr(LEITNER_INTERVALS[c.box]);
+  } else {
+    c.box = 0;
+    c.due = dayStr(1);   // review again tomorrow
+  }
+  c.lastSeen = dayStr();
+  reviewDeck.cards[word] = c;
+  saveReview();
+}
+
+function updateReviewBadge() {
+  const badge = document.getElementById('review-badge');
+  if (!badge) return;
+  const n = dueWords().length;
+  badge.textContent = n;
+  badge.hidden = n === 0;
+}
+
 function pickWord(level, type) {
   let pool = words[level] || [];
   if (type !== 'all') pool = pool.filter(e => e.type === type);
@@ -2593,10 +2947,22 @@ function checkWordComplete() {
     wordStr.split('').forEach((_, i) => {
       const rr = pw.row + dr * i, cc = pw.col + dc * i;
       const el = cwCellEl(rr, cc);
-      if (el) { el.classList.remove('word-hl', 'cell-hl', 'wrong'); el.classList.add('correct'); }
+      if (el) {
+        el.classList.remove('word-hl', 'cell-hl', 'wrong');
+        el.classList.add('correct');
+        // Celebratory settle-pop cascade along the word
+        el.style.animationDelay = (i * 45) + 'ms';
+        el.classList.add('just-solved');
+        el.addEventListener('animationend', () => {
+          el.classList.remove('just-solved');
+          el.style.animationDelay = '';
+        }, { once: true });
+      }
     });
     // Haptic feedback: short double-tap for success
     navigator.vibrate?.([40, 30, 40]);
+    // Auto-play pronunciation on solve (reinforces the sound↔spelling link)
+    speakWord(wordStr);
     // Earn diamonds
     earnDiamonds(5, 'word_solved', firstCellEl);
     // Strikethrough clue (panel + chip)
@@ -2657,6 +3023,8 @@ function revealWord() {
   });
   usedReveal = true;
   pw.solved = true;
+  pw._revealed = true;   // graded as "wrong" for the review deck
+  speakWord(pw.entry.w);
   earnDiamonds(1, 'word_revealed', cwCellEl(pw.row, pw.col));
   const li = document.querySelector(`.clue-item[data-num="${pw.number}"][data-dir="${pw.dir}"]`);
   if (li) li.classList.add('solved');
@@ -2664,6 +3032,83 @@ function revealWord() {
   if (chip2) chip2.classList.add('solved');
   updateCwProgress();
   if (currentPuzzle.words.every(w => w.solved)) endCrossword(true);
+}
+
+// Build the post-round review card for one puzzle word.
+function renderReviewCard(pw, autoAdded) {
+  const e   = pw.entry;
+  const isNoun = e.type === 'noun';
+  const gc  = isNoun ? genderClass(e.article) : '';
+  const wordDisplay = isNoun && e.article
+    ? `<span class="${gc}"><span class="rev-article">${e.article}</span> ${e.w}</span>`
+    : `<span>${e.w}</span>`;
+
+  let grammar = '';
+  if (isNoun && e.plural)          grammar = `Plural: ${e.plural}`;
+  else if (e.type === 'verb' && e.principal_parts) grammar = e.principal_parts;
+  const grammarHtml = grammar ? `<div class="rev-grammar">${grammar}</div>` : '';
+
+  let exampleHtml = '';
+  if (e.example && e.example.de) {
+    const en = e.example.en ? ` — ${e.example.en}` : '';
+    const ar = e.example.ar ? `<span class="rev-ex-ar">${e.example.ar}</span>` : '';
+    exampleHtml = `<div class="rev-example">„${e.example.de}"${en}${ar}</div>`;
+  }
+
+  const already = autoAdded || inDeck(e.w);
+  const addHtml = already
+    ? `<label class="rev-add"><input type="checkbox" checked disabled> Zur Wiederholung hinzugefügt</label>`
+    : `<label class="rev-add"><input type="checkbox" class="rev-add-chk" data-word="${e.w}"> Zur Wiederholung</label>`;
+
+  return `<div class="rev-card ${gc}">
+    <div class="rev-word-row">
+      <span class="rev-word ${gc}">${wordDisplay}</span>
+      <button class="audio-btn rev-audio" data-word="${e.w}" aria-label="Aussprache" title="Aussprache hören">🔊</button>
+    </div>
+    <div class="rev-meta">${e.en} · <span class="rev-ar">${e.ar}</span></div>
+    ${grammarHtml}
+    ${exampleHtml}
+    ${addHtml}
+  </div>`;
+}
+
+// Grade every puzzle word into the Leitner deck and render the review panel.
+function buildReviewPanel() {
+  const panel = document.getElementById('cw-review-panel');
+  if (!panel || !currentPuzzle) return;
+  panel.innerHTML = '<div class="cw-review-title">Wörter dieser Runde</div>';
+
+  // Gender legend — only when the puzzle contains nouns
+  if (currentPuzzle.words.some(pw => pw.entry.type === 'noun' && pw.entry.article)) {
+    panel.insertAdjacentHTML('beforeend',
+      `<div class="gender-legend" aria-label="Farben für grammatisches Geschlecht">
+         <span><span class="dot g-der"></span>der</span>
+         <span><span class="dot g-die"></span>die</span>
+         <span><span class="dot g-das"></span>das</span>
+       </div>`);
+  }
+
+  currentPuzzle.words.forEach(pw => {
+    const word     = pw.entry.w;
+    const fumbled  = !!pw._hadWrong || !!pw._revealed;
+    let autoAdded  = false;
+    if (fumbled)          { gradeReview(word, false); autoAdded = true; }  // auto-add on loss
+    else if (inDeck(word)) { gradeReview(word, true);  autoAdded = true; }  // due word solved cleanly → advance
+    panel.insertAdjacentHTML('beforeend', renderReviewCard(pw, autoAdded));
+  });
+
+  // Wire per-card audio + opt-in checkboxes
+  panel.querySelectorAll('.rev-audio').forEach(btn => {
+    btn.onclick = () => speakWord(btn.dataset.word, btn);
+  });
+  panel.querySelectorAll('.rev-add-chk').forEach(chk => {
+    chk.onchange = () => {
+      if (!chk.checked) return;
+      gradeReview(chk.dataset.word, true);   // clean solve, user opted in
+      chk.disabled = true;
+      chk.parentElement.lastChild.textContent = ' Zur Wiederholung hinzugefügt';
+    };
+  });
 }
 
 function endCrossword(won) {
@@ -2716,18 +3161,41 @@ function endCrossword(won) {
       stats.appendChild(row);
     });
 
+    // Grade words into the review deck + build the review panel
+    buildReviewPanel();
+
     // Show overlay after a short delay so the last word's green flash is visible
     setTimeout(() => {
       document.getElementById('cw-summary-overlay').classList.remove('hidden');
       document.getElementById('cw-new-puzzle-btn').focus();
+      if (!usedReveal) fireConfetti();   // celebrate a clean solve
     }, 700);
   }
   document.getElementById('new-puzzle-btn').classList.remove('hidden');
 }
 
+function showReviewEmpty(eligibleCount) {
+  const msg   = document.getElementById('cw-review-empty-msg');
+  const total = Object.keys(reviewDeck.cards).length;
+  msg.innerHTML = total === 0
+    ? 'Du hast noch keine Wörter zum Wiederholen.<br>Löse ein Rätsel in A1–B1, um deine Wiederholungsliste aufzubauen.'
+    : `Aktuell sind nur <strong>${eligibleCount}</strong> passende Wörter fällig — für ein Rätsel werden mindestens 5 gebraucht.<br>Komm später wieder oder übe eine Stufe.`;
+  document.getElementById('cw-summary-overlay').classList.add('hidden');
+  document.getElementById('cw-review-empty').classList.remove('hidden');
+  document.getElementById('new-puzzle-btn').classList.add('hidden');
+}
+
 function startCrossword() {
   if (gameMode === '2P') return;
-  const pool = words[currentLevel] || [];
+  document.getElementById('cw-review-empty').classList.add('hidden');
+  let pool;
+  if (currentLevel === 'REVIEW') {
+    pool = dueWords().map(w => wordEntryIndex[w]).filter(Boolean);
+    const eligible = pool.filter(e => e.w.length >= CW_MIN && e.w.length <= CW_MAX);
+    if (eligible.length < 5) { showReviewEmpty(eligible.length); return; }
+  } else {
+    pool = words[currentLevel] || [];
+  }
   let puzzle = null;
   for (let i = 0; i < 3 && !puzzle; i++) puzzle = generateCrossword(pool);
   if (!puzzle) { showMessage('Rätsel konnte nicht erstellt werden.', 'lose'); return; }
@@ -3460,11 +3928,26 @@ function cleanupOnline() {
 document.getElementById('level-tabs').addEventListener('click', e => {
   const btn = e.target.closest('[data-level]');
   if (!btn) return;
+  // Review mode is a 1P-only feature
+  if (btn.dataset.level === 'REVIEW' && gameMode === '2P') {
+    showMessage('Wiederholung nur im Solo-Modus', '');
+    setTimeout(() => showMessage('', ''), 1800);
+    return;
+  }
   document.querySelectorAll('#level-tabs .tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
   currentLevel = btn.dataset.level;
   if (gameMode === '1P') startCrossword();
   else { showMessage('Niveau ab nächster Runde: ' + currentLevel, ''); setTimeout(() => showMessage('', ''), 1800); }
+});
+
+document.getElementById('cw-review-empty-btn').addEventListener('click', () => {
+  document.getElementById('cw-review-empty').classList.add('hidden');
+  const a1 = document.querySelector('#level-tabs [data-level="A1"]');
+  document.querySelectorAll('#level-tabs .tab').forEach(t => t.classList.remove('active'));
+  a1.classList.add('active');
+  currentLevel = 'A1';
+  startCrossword();
 });
 
 document.getElementById('new-puzzle-btn').addEventListener('click', startCrossword);
@@ -3650,8 +4133,15 @@ async function init() {
     if (dupes.length) console.warn('Duplicate words found:', dupes);
     else              console.info('Wörtle: no duplicate words found ✓');
 
+    // Index every word by its CEFR level and full entry (for the review deck)
+    ['A1', 'A2', 'B1'].forEach(lvl => (words[lvl] || []).forEach(e => {
+      wordLevelIndex[e.w] = lvl;
+      wordEntryIndex[e.w] = e;
+    }));
+
     loadStreak();
     loadDiamonds();
+    loadReview();
     setMode('1P');
     loading.classList.add('hidden');
   } catch (err) {
@@ -3679,6 +4169,112 @@ document.addEventListener('click', e => {
   if (!e.target.classList.contains('overlay')) return;
   e.target.classList.add('hidden');
 });
+
+// ─── Win celebration: lightweight canvas confetti ─────
+function fireConfetti() {
+  if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+  const canvas = document.getElementById('confetti-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width  = window.innerWidth  * dpr;
+  canvas.height = window.innerHeight * dpr;
+  ctx.scale(dpr, dpr);
+  const W = window.innerWidth, H = window.innerHeight;
+  const colors = ['#1D9E75', '#EF9F27', '#3b82f6', '#ef4444', '#8b7cf6'];
+  const N = window.innerWidth < 480 ? 90 : 150;
+  const parts = Array.from({ length: N }, () => ({
+    x: W / 2 + (Math.random() - 0.5) * 120,
+    y: H * 0.32 + (Math.random() - 0.5) * 40,
+    vx: (Math.random() - 0.5) * 12,
+    vy: Math.random() * -13 - 5,
+    size: Math.random() * 6 + 4,
+    rot: Math.random() * Math.PI,
+    vr: (Math.random() - 0.5) * 0.4,
+    color: colors[(Math.random() * colors.length) | 0],
+    shape: Math.random() < 0.5 ? 'rect' : 'circle',
+  }));
+  const start = performance.now();
+  const DURATION = 2600;
+  (function frame(now) {
+    const t = now - start;
+    ctx.clearRect(0, 0, W, H);
+    parts.forEach(p => {
+      p.vy += 0.32;             // gravity
+      p.vx *= 0.99;             // air drag
+      p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.globalAlpha = Math.max(0, 1 - t / DURATION);
+      ctx.fillStyle = p.color;
+      if (p.shape === 'rect') ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+      else { ctx.beginPath(); ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2); ctx.fill(); }
+      ctx.restore();
+    });
+    if (t < DURATION) requestAnimationFrame(frame);
+    else ctx.clearRect(0, 0, W, H);
+  })(start);
+}
+
+// ─── Accessibility: dialog semantics, focus trap, Escape, state mirroring ──
+(function setupA11y() {
+  const FOCUSABLE = 'button:not([disabled]), input:not([disabled]), select, textarea, a[href], [tabindex]:not([tabindex="-1"])';
+  let lastFocused = null;
+
+  // 1) Mark every overlay as a modal dialog labelled by its title.
+  document.querySelectorAll('.overlay').forEach((ov, i) => {
+    ov.setAttribute('role', 'dialog');
+    ov.setAttribute('aria-modal', 'true');
+    const title = ov.querySelector('.overlay-title');
+    if (title) {
+      if (!title.id) title.id = 'overlay-title-' + i;
+      ov.setAttribute('aria-labelledby', title.id);
+    }
+    // Observe show/hide to manage focus (works no matter how it's toggled).
+    let wasHidden = ov.classList.contains('hidden');
+    new MutationObserver(() => {
+      const hidden = ov.classList.contains('hidden');
+      if (hidden === wasHidden) return;
+      wasHidden = hidden;
+      if (!hidden) {
+        lastFocused = document.activeElement;
+        requestAnimationFrame(() => { ov.querySelector(FOCUSABLE)?.focus(); });
+      } else if (lastFocused && document.contains(lastFocused)) {
+        try { lastFocused.focus(); } catch {}
+        lastFocused = null;
+      }
+    }).observe(ov, { attributes: true, attributeFilter: ['class'] });
+  });
+
+  const topOverlay = () => {
+    const open = document.querySelectorAll('.overlay:not(.hidden)');
+    return open.length ? open[open.length - 1] : null;
+  };
+
+  // 2) Escape closes the topmost overlay; Tab is trapped inside it.
+  document.addEventListener('keydown', e => {
+    const ov = topOverlay();
+    if (!ov) return;
+    if (e.key === 'Escape') {
+      ov.classList.add('hidden');
+      e.stopPropagation();
+    } else if (e.key === 'Tab') {
+      const f = [...ov.querySelectorAll(FOCUSABLE)].filter(el => el.offsetParent !== null);
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { last.focus(); e.preventDefault(); }
+      else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
+    }
+  }, true);
+
+  // 3) Mirror `.active` visual state to `aria-pressed` on the toggle groups.
+  document.querySelectorAll('#level-tabs .tab, .mode-toggle .mode-btn').forEach(btn => {
+    const sync = () => btn.setAttribute('aria-pressed', btn.classList.contains('active') ? 'true' : 'false');
+    sync();
+    new MutationObserver(sync).observe(btn, { attributes: true, attributeFilter: ['class'] });
+  });
+})();
 
 init();
 </script>

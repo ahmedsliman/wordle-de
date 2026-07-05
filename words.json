@@ -6,7 +6,13 @@
       "ar": "بيت",
       "hint": "Where you live",
       "type": "noun",
-      "article": "das"
+      "article": "das",
+      "plural": "die Häuser",
+      "example": {
+        "de": "Das Haus ist sehr alt.",
+        "en": "The house is very old.",
+        "ar": "المنزل قديم جدًا."
+      }
     },
     {
       "w": "HUND",
@@ -14,7 +20,13 @@
       "ar": "كلب",
       "hint": "Common pet that barks",
       "type": "noun",
-      "article": "der"
+      "article": "der",
+      "plural": "die Hunde",
+      "example": {
+        "de": "Der Hund schläft im Garten.",
+        "en": "The dog sleeps in the garden.",
+        "ar": "الكلب ينام في الحديقة."
+      }
     },
     {
       "w": "KATZE",
@@ -22,7 +34,13 @@
       "ar": "قطة",
       "hint": "Meows and purrs",
       "type": "noun",
-      "article": "die"
+      "article": "die",
+      "plural": "die Katzen",
+      "example": {
+        "de": "Die Katze trinkt Milch.",
+        "en": "The cat drinks milk.",
+        "ar": "القطة تشرب الحليب."
+      }
     },
     {
       "w": "BUCH",
@@ -30,7 +48,13 @@
       "ar": "كتاب",
       "hint": "You read it",
       "type": "noun",
-      "article": "das"
+      "article": "das",
+      "plural": "die Bücher",
+      "example": {
+        "de": "Das Buch ist interessant.",
+        "en": "The book is interesting.",
+        "ar": "الكتاب مثير للاهتمام."
+      }
     },
     {
       "w": "AUTO",
@@ -38,7 +62,8 @@
       "ar": "سيارة",
       "hint": "Four-wheeled vehicle",
       "type": "noun",
-      "article": "das"
+      "article": "das",
+      "plural": "die Autos"
     },
     {
       "w": "KIND",
@@ -46,7 +71,13 @@
       "ar": "طفل",
       "hint": "Young person",
       "type": "noun",
-      "article": "das"
+      "article": "das",
+      "plural": "die Kinder",
+      "example": {
+        "de": "Das Kind spielt draußen.",
+        "en": "The child plays outside.",
+        "ar": "الطفل يلعب في الخارج."
+      }
     },
     {
       "w": "MANN",
@@ -54,7 +85,8 @@
       "ar": "رجل",
       "hint": "Adult male person",
       "type": "noun",
-      "article": "der"
+      "article": "der",
+      "plural": "die Männer"
     },
     {
       "w": "FRAU",
@@ -62,7 +94,8 @@
       "ar": "امرأة",
       "hint": "Adult female person",
       "type": "noun",
-      "article": "die"
+      "article": "die",
+      "plural": "die Frauen"
     },
     {
       "w": "TISCH",
@@ -70,7 +103,8 @@
       "ar": "طاولة",
       "hint": "Furniture you eat at",
       "type": "noun",
-      "article": "der"
+      "article": "der",
+      "plural": "die Tische"
     },
     {
       "w": "STUHL",
@@ -78,7 +112,8 @@
       "ar": "كرسي",
       "hint": "You sit on it",
       "type": "noun",
-      "article": "der"
+      "article": "der",
+      "plural": "die Stühle"
     },
     {
       "w": "BETT",
@@ -86,7 +121,8 @@
       "ar": "سرير",
       "hint": "You sleep in it",
       "type": "noun",
-      "article": "das"
+      "article": "das",
+      "plural": "die Betten"
     },
     {
       "w": "BROT",
@@ -94,7 +130,8 @@
       "ar": "خبز",
       "hint": "German staple food",
       "type": "noun",
-      "article": "das"
+      "article": "das",
+      "plural": "die Brote"
     },
     {
       "w": "MILCH",
@@ -118,7 +155,8 @@
       "ar": "تفاحة",
       "hint": "Red or green fruit",
       "type": "noun",
-      "article": "der"
+      "article": "der",
+      "plural": "die Äpfel"
     },
     {
       "w": "BALL",
@@ -134,7 +172,8 @@
       "ar": "شجرة",
       "hint": "Has trunk, branches, leaves",
       "type": "noun",
-      "article": "der"
+      "article": "der",
+      "plural": "die Bäume"
     },
     {
       "w": "BLUME",
@@ -142,7 +181,8 @@
       "ar": "زهرة",
       "hint": "Colorful plant in a garden",
       "type": "noun",
-      "article": "die"
+      "article": "die",
+      "plural": "die Blumen"
     },
     {
       "w": "BANK",
@@ -174,7 +214,8 @@
       "ar": "يد",
       "hint": "Body part with five fingers",
       "type": "noun",
-      "article": "die"
+      "article": "die",
+      "plural": "die Hände"
     },
     {
       "w": "KOPF",
@@ -182,7 +223,8 @@
       "ar": "رأس",
       "hint": "Top of your body",
       "type": "noun",
-      "article": "der"
+      "article": "der",
+      "plural": "die Köpfe"
     },
     {
       "w": "AUGE",
@@ -190,7 +232,8 @@
       "ar": "عين",
       "hint": "You see with it",
       "type": "noun",
-      "article": "das"
+      "article": "das",
+      "plural": "die Augen"
     },
     {
       "w": "NASE",
@@ -246,7 +289,8 @@
       "ar": "مدرسة",
       "hint": "Where pupils study",
       "type": "noun",
-      "article": "die"
+      "article": "die",
+      "plural": "die Schulen"
     },
     {
       "w": "LEHRER",
@@ -446,7 +490,8 @@
       "ar": "يوم",
       "hint": "24 hours",
       "type": "noun",
-      "article": "der"
+      "article": "der",
+      "plural": "die Tage"
     },
     {
       "w": "NACHT",
@@ -494,7 +539,8 @@
       "ar": "سنة",
       "hint": "12 months",
       "type": "noun",
-      "article": "das"
+      "article": "das",
+      "plural": "die Jahre"
     },
     {
       "w": "STUNDE",
@@ -518,7 +564,8 @@
       "ar": "مدينة",
       "hint": "Large urban settlement",
       "type": "noun",
-      "article": "die"
+      "article": "die",
+      "plural": "die Städte"
     },
     {
       "w": "STRASSE",
@@ -526,7 +573,8 @@
       "ar": "شارع",
       "hint": "Road in a city",
       "type": "noun",
-      "article": "die"
+      "article": "die",
+      "plural": "die Straßen"
     },
     {
       "w": "PLATZ",
@@ -846,7 +894,8 @@
       "ar": "كلمة",
       "hint": "Unit of language",
       "type": "noun",
-      "article": "das"
+      "article": "das",
+      "plural": "die Wörter"
     },
     {
       "w": "FRAGE",
@@ -869,63 +918,87 @@
       "en": "to be",
       "ar": "يكون",
       "hint": "Exists, is — most basic verb",
-      "type": "verb"
+      "type": "verb",
+      "principal_parts": "sein, war, ist gewesen"
     },
     {
       "w": "HABEN",
       "en": "to have",
       "ar": "يملك",
       "hint": "Possession",
-      "type": "verb"
+      "type": "verb",
+      "principal_parts": "haben, hatte, hat gehabt"
     },
     {
       "w": "GEHEN",
       "en": "to go",
       "ar": "يذهب",
       "hint": "Move on foot",
-      "type": "verb"
+      "type": "verb",
+      "principal_parts": "gehen, ging, ist gegangen",
+      "example": {
+        "de": "Wir gehen nach Hause.",
+        "en": "We are going home.",
+        "ar": "نحن ذاهبون إلى المنزل."
+      }
     },
     {
       "w": "KOMMEN",
       "en": "to come",
       "ar": "يأتي",
       "hint": "Move toward something",
-      "type": "verb"
+      "type": "verb",
+      "principal_parts": "kommen, kam, ist gekommen"
     },
     {
       "w": "ESSEN",
       "en": "to eat",
       "ar": "يأكل",
       "hint": "Put food in your mouth",
-      "type": "verb"
+      "type": "verb",
+      "principal_parts": "essen, aß, hat gegessen",
+      "example": {
+        "de": "Ich esse einen Apfel.",
+        "en": "I am eating an apple.",
+        "ar": "أنا آكل تفاحة."
+      }
     },
     {
       "w": "TRINKEN",
       "en": "to drink",
       "ar": "يشرب",
       "hint": "Consume a liquid",
-      "type": "verb"
+      "type": "verb",
+      "principal_parts": "trinken, trank, hat getrunken",
+      "example": {
+        "de": "Sie trinkt gern Kaffee.",
+        "en": "She likes to drink coffee.",
+        "ar": "هي تحب شرب القهوة."
+      }
     },
     {
       "w": "SCHLAFEN",
       "en": "to sleep",
       "ar": "ينام",
       "hint": "Rest with eyes closed",
-      "type": "verb"
+      "type": "verb",
+      "principal_parts": "schlafen, schlief, hat geschlafen"
     },
     {
       "w": "MACHEN",
       "en": "to make/do",
       "ar": "يصنع / يفعل",
       "hint": "Create or perform",
-      "type": "verb"
+      "type": "verb",
+      "principal_parts": "machen, machte, hat gemacht"
     },
     {
       "w": "SEHEN",
       "en": "to see",
       "ar": "يرى",
       "hint": "Perceive with eyes",
-      "type": "verb"
+      "type": "verb",
+      "principal_parts": "sehen, sah, hat gesehen"
     },
     {
       "w": "HÖREN",
@@ -946,14 +1019,16 @@
       "en": "to read",
       "ar": "يقرأ",
       "hint": "Look at text and understand it",
-      "type": "verb"
+      "type": "verb",
+      "principal_parts": "lesen, las, hat gelesen"
     },
     {
       "w": "SCHREIBEN",
       "en": "to write",
       "ar": "يكتب",
       "hint": "Put words on paper",
-      "type": "verb"
+      "type": "verb",
+      "principal_parts": "schreiben, schrieb, hat geschrieben"
     },
     {
       "w": "SPIELEN",
@@ -974,7 +1049,8 @@
       "en": "to drive/travel",
       "ar": "يقود / يسافر",
       "hint": "Move in a vehicle",
-      "type": "verb"
+      "type": "verb",
+      "principal_parts": "fahren, fuhr, ist gefahren"
     },
     {
       "w": "WOHNEN",
@@ -1016,7 +1092,8 @@
       "en": "to speak",
       "ar": "يتكلم",
       "hint": "Use your voice to communicate",
-      "type": "verb"
+      "type": "verb",
+      "principal_parts": "sprechen, sprach, hat gesprochen"
     },
     {
       "w": "FRAGEN",
@@ -1121,21 +1198,24 @@
       "en": "to run/walk",
       "ar": "يجري / يمشي",
       "hint": "Move quickly on foot",
-      "type": "verb"
+      "type": "verb",
+      "principal_parts": "laufen, lief, ist gelaufen"
     },
     {
       "w": "NEHMEN",
       "en": "to take",
       "ar": "يأخذ",
       "hint": "Grab something",
-      "type": "verb"
+      "type": "verb",
+      "principal_parts": "nehmen, nahm, hat genommen"
     },
     {
       "w": "GEBEN",
       "en": "to give",
       "ar": "يعطي",
       "hint": "Hand something to someone",
-      "type": "verb"
+      "type": "verb",
+      "principal_parts": "geben, gab, hat gegeben"
     },
     {
       "w": "BRINGEN",
@@ -1149,7 +1229,8 @@
       "en": "to find",
       "ar": "يجد",
       "hint": "Locate something",
-      "type": "verb"
+      "type": "verb",
+      "principal_parts": "finden, fand, hat gefunden"
     },
     {
       "w": "ÖFFNEN",
@@ -1517,7 +1598,8 @@
       "ar": "نافذة",
       "hint": "You look outside through it",
       "type": "noun",
-      "article": "das"
+      "article": "das",
+      "plural": "die Fenster"
     },
     {
       "w": "TUER",
@@ -2069,7 +2151,8 @@
       "ar": "مصباح",
       "hint": "Provides artificial light",
       "type": "noun",
-      "article": "die"
+      "article": "die",
+      "plural": "die Lampen"
     },
     {
       "w": "SOFA",
