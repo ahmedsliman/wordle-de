@@ -1843,71 +1843,151 @@
       .rev-audio:hover, .mode-choice-btn:active, .cancel-btn:active { transform: none; }
     }
 
+    /* ─── Mode Switcher ──────────────────────────────── */
+    .mode-switcher {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      padding: 8px 16px 0;
+      background: var(--color-bg);
+      position: sticky;
+      top: 52px;
+      z-index: 9;
+    }
+    .mode-switch-btn {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 7px 20px;
+      border: 1.5px solid var(--color-border);
+      background: transparent;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+      white-space: nowrap;
+    }
+    .mode-switch-btn:first-child {
+      border-radius: 999px 0 0 999px;
+      border-right-width: 0.75px;
+    }
+    .mode-switch-btn:last-child {
+      border-radius: 0 999px 999px 0;
+      border-left-width: 0.75px;
+    }
+    .mode-switch-btn:hover { color: var(--color-text); background: var(--color-surface); }
+    .mode-switch-btn.active {
+      background: var(--color-correct);
+      color: #fff;
+      border-color: var(--color-correct);
+    }
+    .mode-switch-icon { font-size: 1rem; line-height: 1; }
+    @media (max-width: 380px) {
+      .mode-switch-label { display: none; }
+      .mode-switch-btn { padding: 7px 14px; }
+    }
+
     /* ─── Satz-Modus ──────────────────────────────────── */
-    .tab-satz { font-size: 1rem; }
 
     #satz-panel {
       width: 100%;
-      max-width: 600px;
+      max-width: 560px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 14px;
-      padding: 16px 16px 24px;
+      gap: 16px;
+      padding: 16px 16px 32px;
       flex: 1;
     }
 
-    .satz-progress-wrap {
+    /* Top bar: progress + round badge */
+    .satz-top-bar {
       width: 100%; display: flex; align-items: center; gap: 10px;
     }
+    .satz-round-badge {
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.07em; padding: 3px 10px; border-radius: 999px;
+      white-space: nowrap;
+    }
+    .satz-round-badge.fill  { background: rgba(59,130,246,0.12); color: #3b82f6; }
+    .satz-round-badge.order { background: rgba(239,159,39,0.15); color: #b37208; }
+    @media (prefers-color-scheme: dark) {
+      .satz-round-badge.order { color: #EF9F27; }
+    }
+    .satz-progress-wrap {
+      flex: 1; display: flex; align-items: center; gap: 8px;
+    }
     .satz-progress-bar {
-      flex: 1; height: 6px; background: var(--color-border);
+      flex: 1; height: 7px; background: var(--color-border);
       border-radius: 999px; overflow: hidden;
     }
     .satz-progress-fill {
       height: 100%; background: var(--color-correct);
       border-radius: 999px;
-      transition: width 0.3s ease;
+      transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
       width: 0%;
     }
     .satz-progress-text {
       font-size: 0.75rem; font-weight: 600; color: var(--color-text-muted);
-      white-space: nowrap;
+      white-space: nowrap; min-width: 36px; text-align: right;
     }
 
-    .satz-word-info {
-      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-      justify-content: center;
+    /* Word info card */
+    .satz-word-card {
+      width: 100%;
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      border-radius: 16px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
-    .satz-en  { font-size: 1.2rem; font-weight: 700; color: var(--color-text); }
-    .satz-ar  { font-size: 1.1rem; font-weight: 500; color: var(--color-text-muted); direction: rtl; }
+    .satz-word-main {
+      flex: 1; display: flex; flex-direction: column; gap: 2px;
+    }
+    .satz-en  { font-size: 1.15rem; font-weight: 800; color: var(--color-text); }
+    .satz-ar  { font-size: 1rem; font-weight: 500; color: var(--color-text-muted); direction: rtl; }
     .satz-badge {
       font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.06em; padding: 2px 8px; border-radius: 999px; color: #fff;
+      letter-spacing: 0.06em; padding: 4px 10px; border-radius: 999px; color: #fff;
+      white-space: nowrap; align-self: flex-start;
     }
     .satz-badge.noun { background: var(--color-badge-noun); }
     .satz-badge.verb { background: var(--color-badge-verb); }
     .satz-badge.adjective { background: var(--color-badge-adj); }
+    .satz-level-pip {
+      font-size: 0.65rem; font-weight: 800; letter-spacing: 0.05em;
+      padding: 3px 8px; border-radius: 6px;
+      background: rgba(29,158,117,0.12); color: var(--color-correct-text);
+    }
 
+    /* Sentence display */
     .satz-sentence {
-      font-size: 1.05rem; font-weight: 600; color: var(--color-text);
-      text-align: center; line-height: 1.55;
-      background: var(--color-surface);
-      border: 1.5px solid var(--color-border);
-      border-radius: 12px;
-      padding: 12px 20px;
+      font-size: 1.1rem; font-weight: 600; color: var(--color-text);
+      text-align: center; line-height: 1.65;
+      background: var(--color-bg);
+      border: 2px solid var(--color-border);
+      border-radius: 14px;
+      padding: 14px 20px;
       width: 100%;
+      position: relative;
     }
     .satz-sentence .satz-blank {
       display: inline-block;
       border-bottom: 2.5px solid var(--color-correct);
-      min-width: 50px;
+      min-width: 60px; padding: 0 4px;
       color: var(--color-text-muted);
-      font-style: italic;
     }
     .satz-sentence .satz-revealed {
       color: var(--color-correct-text);
       font-weight: 800;
+      background: rgba(29,158,117,0.1);
+      border-radius: 4px;
+      padding: 0 3px;
     }
 
     /* Fill-in tiles */
@@ -1990,9 +2070,25 @@
     .satz-feedback {
       font-size: 1rem; font-weight: 700; text-align: center;
       min-height: 28px; padding: 4px 0;
+      transition: opacity 0.2s;
     }
-    .satz-feedback.correct { color: var(--color-correct-text); }
-    .satz-feedback.wrong   { color: #ef4444; }
+    .satz-feedback.correct { color: var(--color-correct-text); animation: satz-pop 0.3s ease; }
+    .satz-feedback.wrong   { color: #ef4444; animation: satz-shake 0.35s ease; }
+    @keyframes satz-pop {
+      0% { transform: scale(0.8); opacity: 0; }
+      60% { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes satz-shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .satz-feedback.correct, .satz-feedback.wrong { animation: none; }
+    }
 
     /* Summary overlay */
     .satz-summary-score {
@@ -2064,7 +2160,6 @@
       <button class="tab"        data-level="B1" aria-label="Schwierigkeitsstufe B1" aria-pressed="false">B1</button>
       <button class="tab tab-b2" data-level="B2" aria-label="Schwierigkeitsstufe B2" aria-pressed="false">B2</button>
       <button class="tab tab-review" data-level="REVIEW" aria-label="Wiederholung — fällige Wörter" aria-pressed="false">★<span class="review-badge" id="review-badge" hidden>0</span></button>
-      <button class="tab tab-satz" id="satz-tab" aria-label="Satz-Übungen" aria-pressed="false">✍</button>
     </div>
     <div style="display:flex;align-items:center;gap:8px;">
       <button id="fullscreen-btn" class="fullscreen-btn" title="Vollbild" aria-label="Vollbild ein/aus">⛶</button>
@@ -2077,6 +2172,17 @@
       </div>
     </div>
   </header>
+
+  <div class="mode-switcher" id="mode-switcher" role="tablist" aria-label="Spielmodus">
+    <button class="mode-switch-btn active" id="switch-crossword" role="tab" aria-selected="true" aria-controls="crossword-area">
+      <span class="mode-switch-icon">⊞</span>
+      <span class="mode-switch-label">Kreuzwort</span>
+    </button>
+    <button class="mode-switch-btn" id="switch-satz" role="tab" aria-selected="false" aria-controls="satz-panel">
+      <span class="mode-switch-icon">✍</span>
+      <span class="mode-switch-label">Sätze</span>
+    </button>
+  </div>
 
   <main id="game-main" tabindex="-1">
 
@@ -2183,15 +2289,21 @@
 
   <!-- ── Satz-Modus (sentence exercises) ─────────── -->
   <div id="satz-panel" class="hidden">
-    <!-- Progress bar -->
-    <div class="satz-progress-wrap">
-      <div class="satz-progress-bar"><div class="satz-progress-fill" id="satz-progress-fill"></div></div>
-      <span class="satz-progress-text" id="satz-progress-text">1 / 10</span>
+    <!-- Top bar: round type + progress -->
+    <div class="satz-top-bar">
+      <span class="satz-round-badge fill" id="satz-round-badge">Lückentext</span>
+      <div class="satz-progress-wrap">
+        <div class="satz-progress-bar"><div class="satz-progress-fill" id="satz-progress-fill"></div></div>
+        <span class="satz-progress-text" id="satz-progress-text">1 / 10</span>
+      </div>
     </div>
-    <!-- Word info -->
-    <div class="satz-word-info" id="satz-word-info">
-      <span class="satz-en" id="satz-en"></span>
-      <span class="satz-ar" id="satz-ar"></span>
+    <!-- Word card -->
+    <div class="satz-word-card" id="satz-word-info">
+      <div class="satz-word-main">
+        <span class="satz-en" id="satz-en"></span>
+        <span class="satz-ar" id="satz-ar"></span>
+      </div>
+      <span class="satz-level-pip" id="satz-level-pip">A1</span>
       <span class="satz-badge" id="satz-type-badge"></span>
     </div>
     <!-- Sentence display (shown in both modes) -->
@@ -4489,26 +4601,29 @@ document.getElementById('level-tabs').addEventListener('click', e => {
     return;
   }
 
-  // 1P: multi-select
+  // 1P / SATZ: multi-select
   if (level === 'REVIEW') {
-    // REVIEW is exclusive
     selectedLevels = new Set(['REVIEW']);
   } else {
     selectedLevels.delete('REVIEW');
     if (selectedLevels.has(level) && selectedLevels.size > 1) {
-      selectedLevels.delete(level); // deselect if others remain
+      selectedLevels.delete(level);
     } else {
-      selectedLevels.add(level);   // always keep at least one
+      selectedLevels.add(level);
     }
   }
-  currentLevel = [...selectedLevels][0]; // 2P compat
+  currentLevel = [...selectedLevels][0];
   // Update tab visuals
   document.querySelectorAll('#level-tabs .tab').forEach(t => {
     const on = selectedLevels.has(t.dataset.level);
     t.classList.toggle('active', on);
     t.setAttribute('aria-pressed', on ? 'true' : 'false');
   });
-  startCrossword();
+  if (gameMode === 'SATZ') {
+    startSatzMode(); // restart with new level selection
+  } else {
+    startCrossword();
+  }
 });
 
 document.getElementById('cw-review-empty-btn').addEventListener('click', () => {
@@ -4878,13 +4993,14 @@ let satzOrderPlaced = []; // words placed in answer row (order mode)
 let satzOrderPool   = []; // {word, idx, el} word chips
 
 function showSatzPanel() {
-  // Hide all 1P chrome
+  gameMode = 'SATZ';
   document.body.classList.remove('cw-active', 'cw-typing');
   ['cw-clue-bar','cw-progress','clue-chips','crossword-area','cw-actions','cw-keyboard','streak-bar'].forEach(id => {
     document.getElementById(id)?.classList.add('hidden');
   });
   document.getElementById('wordle-panel').classList.add('hidden');
   document.getElementById('satz-panel').classList.remove('hidden');
+  setSatzSwitcher(true);
 }
 
 function hideSatzPanel() {
@@ -4920,13 +5036,32 @@ function renderSatzRound() {
   document.getElementById('satz-progress-fill').style.width = (satzRoundIdx / total * 100) + '%';
   document.getElementById('satz-progress-text').textContent = (satzRoundIdx + 1) + ' / ' + total;
 
-  // Word info
+  // Round type badge
+  const roundBadge = document.getElementById('satz-round-badge');
+  if (mode === 'fill') {
+    roundBadge.textContent = 'Lückentext';
+    roundBadge.className = 'satz-round-badge fill';
+  } else {
+    roundBadge.textContent = 'Satzordnung';
+    roundBadge.className = 'satz-round-badge order';
+  }
+
+  // Word card
   document.getElementById('satz-en').textContent = entry.en;
   document.getElementById('satz-ar').textContent = entry.ar || '';
   const badge = document.getElementById('satz-type-badge');
-  badge.textContent = entry.type === 'noun' ? (entry.article ? entry.article + ' — Nomen' : 'Nomen')
-                    : entry.type === 'verb' ? 'Verb' : 'Adjektiv';
+  badge.textContent = entry.type === 'noun' ? (entry.article ? entry.article : 'Nomen')
+                    : entry.type === 'verb' ? 'Verb' : 'Adj.';
   badge.className = 'satz-badge ' + (entry.type || 'noun');
+
+  // Level pip — show which level this word is from
+  const levelPip = document.getElementById('satz-level-pip');
+  if (levelPip) {
+    // Find which level has this word
+    const wordLevel = ['A1','A2','B1','B2'].find(l => (words[l] || []).some(w => w.w === entry.w)) || '';
+    levelPip.textContent = wordLevel;
+    levelPip.style.display = wordLevel ? '' : 'none';
+  }
 
   // Clear feedback
   const fb = document.getElementById('satz-feedback');
@@ -5165,32 +5300,29 @@ document.getElementById('satz-again-btn').addEventListener('click', () => {
 document.getElementById('satz-back-btn').addEventListener('click', () => {
   document.getElementById('satz-summary-overlay').classList.add('hidden');
   hideSatzPanel();
+  setSatzSwitcher(false);
   setMode('1P');
-  // Switch tab back
-  document.querySelectorAll('#level-tabs .tab').forEach(t => {
-    t.classList.toggle('active', t.dataset.level === [...selectedLevels][0] || false);
-    t.setAttribute('aria-pressed', t.classList.contains('active') ? 'true' : 'false');
-  });
-  document.getElementById('satz-tab').classList.remove('active');
-  document.getElementById('satz-tab').setAttribute('aria-pressed', 'false');
 });
 
-// Tab click — wire up satz tab
-document.getElementById('satz-tab').addEventListener('click', () => {
-  document.querySelectorAll('#level-tabs .tab').forEach(t => {
-    t.classList.remove('active');
-    t.setAttribute('aria-pressed', 'false');
-  });
-  document.getElementById('satz-tab').classList.add('active');
-  document.getElementById('satz-tab').setAttribute('aria-pressed', 'true');
-  gameMode = 'SATZ';
-  // Hide 1P crossword
-  document.body.classList.remove('cw-active', 'cw-typing');
-  ['cw-clue-bar','cw-progress','clue-chips','crossword-area','cw-actions','cw-keyboard'].forEach(id => {
-    document.getElementById(id)?.classList.add('hidden');
-  });
-  document.getElementById('wordle-panel').classList.add('hidden');
+// ── Mode switcher buttons ──
+function setSatzSwitcher(isSatz) {
+  document.getElementById('switch-crossword').classList.toggle('active', !isSatz);
+  document.getElementById('switch-satz').classList.toggle('active', isSatz);
+  document.getElementById('switch-crossword').setAttribute('aria-selected', !isSatz ? 'true' : 'false');
+  document.getElementById('switch-satz').setAttribute('aria-selected', isSatz ? 'true' : 'false');
+}
+
+document.getElementById('switch-satz').addEventListener('click', () => {
+  if (gameMode === 'SATZ') return;
+  setSatzSwitcher(true);
   startSatzMode();
+});
+
+document.getElementById('switch-crossword').addEventListener('click', () => {
+  if (gameMode !== 'SATZ') return;
+  setSatzSwitcher(false);
+  hideSatzPanel();
+  setMode('1P');
 });
 
 // ─── Fullscreen ──────────────────────────────────────
