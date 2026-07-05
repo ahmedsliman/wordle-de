@@ -35,15 +35,18 @@ Constants at top of `<script>`: `CW_GRID=11`, `CW_MIN=3`, `CW_MAX=7`, `CW_COUNT=
 
 ```json
 {
-  "A1": [{ "w": "HAUS", "en": "house", "ar": "بيت", "hint": "...", "type": "noun", "article": "das" }],
+  "A1": [{ "w": "HAUS", "en": "house", "ar": "بيت", "hint": "Man wohnt darin.", "sentence": "Wir haben ein großes ___.", "type": "noun", "article": "das" }],
   "A2": [...],
-  "B1": [...]
+  "B1": [...],
+  "B2": [...]
 }
 ```
 
 - `w`: uppercase, no article; verbs in infinitive; adjectives in base form
 - `type`: exactly `"noun"` | `"verb"` | `"adjective"`
 - `article`: `"der"` | `"die"` | `"das"` | `"die/pl"` — present only on nouns
+- `sentence`: optional — a short German example sentence with `___` replacing the word; shown in the clue bar and revealed (word highlighted) after solving
+- `hint`: short German description or clue (shown if `sentence` is absent)
 - A dedup check runs on every page load and logs to console
 
 ### localStorage Keys

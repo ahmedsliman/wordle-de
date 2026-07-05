@@ -1703,6 +1703,35 @@
       opacity: 0.7;
     }
 
+    /* ── Example sentence in clue bar ───────────────────── */
+    .cw-sentence {
+      flex-basis: 100%;           /* always on its own line */
+      font-size: 0.82rem;
+      font-style: italic;
+      color: var(--color-text-muted);
+      line-height: 1.4;
+      padding: 3px 0 1px;
+      transition: color 0.3s ease;
+    }
+    /* Highlighted word after solve */
+    .cw-sentence .cw-sentence-word {
+      font-style: normal;
+      font-weight: 700;
+      color: var(--color-correct-text);
+      background: rgba(29,158,117,0.12);
+      border-radius: 4px;
+      padding: 0 3px;
+      animation: word-reveal 0.45s var(--ease-spring) both;
+    }
+    @keyframes word-reveal {
+      from { opacity: 0; transform: scale(0.7); background: rgba(29,158,117,0.35); }
+      to   { opacity: 1; transform: scale(1);   background: rgba(29,158,117,0.12); }
+    }
+    /* On very small screens keep sentence readable but compact */
+    @media (max-width: 380px) {
+      .cw-sentence { font-size: 0.76rem; }
+    }
+
     /* ── Motivation toast ────────────────────────────────── */
     #motivation-toast {
       position: fixed;
@@ -1834,6 +1863,8 @@
     <button class="audio-btn" id="cw-audio-btn" aria-label="Aussprache" title="Aussprache hören">🔊</button>
     <span class="cw-word-len" id="cw-word-len"></span>
     <span class="type-badge" id="cw-type-badge"></span>
+    <!-- Example sentence: shown with ___ while unsolved, word revealed after solve -->
+    <span class="cw-sentence" id="cw-sentence" hidden></span>
   </div>
 
   <!-- Progress bar (1P) -->
@@ -2953,6 +2984,28 @@ function updateClueBar() {
   const badge = document.getElementById('cw-type-badge');
   badge.textContent = pw.entry.type;
   badge.className   = 'type-badge ' + pw.entry.type;
+
+  // Example sentence: use `sentence` field if present, fall back to `hint`
+  renderClueSentence(pw);
+}
+
+function renderClueSentence(pw) {
+  const el = document.getElementById('cw-sentence');
+  if (!el) return;
+  // Prefer `sentence` field (has ___); fall back to `hint`
+  const raw = pw.entry.sentence || pw.entry.hint || '';
+  if (!raw) { el.hidden = true; return; }
+
+  el.hidden = false;
+  if (pw.solved && raw.includes('___')) {
+    // Reveal: replace ___ with highlighted word (force re-animation via clone trick)
+    const safe = raw.replace(/[<>&"]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));
+    el.innerHTML = safe.replace('___',
+      `<strong class="cw-sentence-word" aria-label="${pw.entry.w}">${pw.entry.w}</strong>`);
+  } else {
+    // Show with blank (plain text, no innerHTML needed)
+    el.textContent = raw;
+  }
 }
 
 function updateCwProgress() {
@@ -3120,6 +3173,8 @@ function checkWordComplete() {
     navigator.vibrate?.([40, 30, 40]);
     // Motivation toast
     showMotivation();
+    // Reveal example sentence with word highlighted (small delay so cell-pop fires first)
+    setTimeout(() => renderClueSentence(pw), 120);
     // Cell pop animation (staggered along word)
     wordStr.split('').forEach((_, i) => {
       const rr = pw.row + dr * i, cc = pw.col + dc * i;
