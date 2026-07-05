@@ -283,10 +283,15 @@
       border-bottom: 1px solid var(--color-border);
       border-left: 3px solid var(--color-correct);
       min-height: 48px;
-      /* Sticky on mobile to keep clue visible during scrolling */
-      position: sticky;
-      top: 0;
-      z-index: 10;
+    }
+
+    /* Sticky clue bar only on desktop — mobile uses overflow:hidden flex lock */
+    @media (min-width: 681px) {
+      .hint-bar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
     }
 
     .hint-en {
@@ -3346,7 +3351,6 @@ function endCrossword(won) {
   gameOver = true;
   // Restore scrollable layout when puzzle ends
   document.body.classList.remove('cw-active', 'cw-typing');
-  cleanupKeyboardInsetFallback();
   if (won) {
     srAnnounce('Ausgezeichnet! Alle Wörter richtig gelöst!');
 
@@ -3465,33 +3469,6 @@ async function startCrossword() {
   // Select first across word's first cell
   const firstAcross = puzzle.words.find(w => w.dir === 'across');
   if (firstAcross) selectCell(firstAcross.row, firstAcross.col, 'across');
-
-  // Setup visualViewport listener for keyboard inset (fallback for browsers without env() support)
-  if (window.visualViewport && window.innerWidth <= 680) {
-    setupKeyboardInsetFallback();
-  }
-}
-
-let keyboardInsetListener = null;
-function setupKeyboardInsetFallback() {
-  if (keyboardInsetListener) return;
-  keyboardInsetListener = () => {
-    const crosswordArea = document.getElementById('crossword-area');
-    if (crosswordArea && gameMode === '1P') {
-      const keyboardHeight = window.innerHeight - window.visualViewport.height;
-      crosswordArea.style.paddingBottom = keyboardHeight > 0 ? keyboardHeight + 'px' : '';
-    }
-  };
-  window.visualViewport.addEventListener('resize', keyboardInsetListener);
-}
-
-function cleanupKeyboardInsetFallback() {
-  if (keyboardInsetListener && window.visualViewport) {
-    window.visualViewport.removeEventListener('resize', keyboardInsetListener);
-    keyboardInsetListener = null;
-    const crosswordArea = document.getElementById('crossword-area');
-    if (crosswordArea) crosswordArea.style.paddingBottom = '';
-  }
 }
 
 // ─── Key handling ─────────────────────────────────────
