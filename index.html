@@ -283,6 +283,10 @@
       border-bottom: 1px solid var(--color-border);
       border-left: 3px solid var(--color-correct);
       min-height: 48px;
+      /* Sticky on mobile to keep clue visible during scrolling */
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
     .hint-en {
