@@ -1525,6 +1525,438 @@
       "ar": "جاهز / منتهي",
       "hint": "Finished or prepared",
       "type": "adjective"
+    },
+    {
+      "w": "HAAR",
+      "en": "hair",
+      "ar": "شعر",
+      "hint": "Es wächst auf dem Kopf.",
+      "type": "noun",
+      "article": "das",
+      "sentence": "Sie kämmt ihr ___ jeden Morgen."
+    },
+    {
+      "w": "BAUCH",
+      "en": "belly",
+      "ar": "بطن",
+      "hint": "Zwischen Brust und Hüfte.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Mein ___ tut weh."
+    },
+    {
+      "w": "ZAHN",
+      "en": "tooth",
+      "ar": "سنّ",
+      "hint": "Man putzt ihn zweimal täglich.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Mir tut ein ___ weh."
+    },
+    {
+      "w": "RÜCKEN",
+      "en": "back",
+      "ar": "ظهر",
+      "hint": "Die hintere Seite des Körpers.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Sein ___ schmerzt nach dem Sitzen."
+    },
+    {
+      "w": "SOHN",
+      "en": "son",
+      "ar": "ابن",
+      "hint": "Das männliche Kind der Eltern.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Ihr ___ ist fünf Jahre alt."
+    },
+    {
+      "w": "TOCHTER",
+      "en": "daughter",
+      "ar": "ابنة",
+      "hint": "Das weibliche Kind der Eltern.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Meine ___ geht schon zur Schule."
+    },
+    {
+      "w": "ONKEL",
+      "en": "uncle",
+      "ar": "عمّ",
+      "hint": "Der Bruder des Vaters oder der Mutter.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Mein ___ wohnt in München."
+    },
+    {
+      "w": "TANTE",
+      "en": "aunt",
+      "ar": "عمّة",
+      "hint": "Die Schwester des Vaters oder der Mutter.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Meine ___ backt sehr guten Kuchen."
+    },
+    {
+      "w": "WAND",
+      "en": "wall",
+      "ar": "جدار",
+      "hint": "Sie trennt zwei Räume voneinander.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Das Bild hängt an der ___."
+    },
+    {
+      "w": "BODEN",
+      "en": "floor",
+      "ar": "أرضية",
+      "hint": "Man geht auf ihm im Haus.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Die Katze liegt auf dem ___."
+    },
+    {
+      "w": "BANANE",
+      "en": "banana",
+      "ar": "موز",
+      "hint": "Gelbe, gebogene Frucht.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Er isst eine ___ zum Frühstück."
+    },
+    {
+      "w": "TOMATE",
+      "en": "tomato",
+      "ar": "طماطم",
+      "hint": "Rote Frucht für Salat und Soße.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Die ___ ist rot und rund."
+    },
+    {
+      "w": "ZUCKER",
+      "en": "sugar",
+      "ar": "سكّر",
+      "hint": "Man gibt ihn in den Kaffee.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Sie gibt ___ in ihren Tee."
+    },
+    {
+      "w": "SALZ",
+      "en": "salt",
+      "ar": "ملح",
+      "hint": "Weißes Gewürz für das Essen.",
+      "type": "noun",
+      "article": "das",
+      "sentence": "Das Essen braucht mehr ___."
+    },
+    {
+      "w": "SUPPE",
+      "en": "soup",
+      "ar": "حساء",
+      "hint": "Warme Flüssigkeit im Teller.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Im Winter trinken wir gern ___."
+    },
+    {
+      "w": "PIZZA",
+      "en": "pizza",
+      "ar": "بيتزا",
+      "hint": "Italienisches Gericht mit Belag.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Wir bestellen eine ___ mit Käse."
+    },
+    {
+      "w": "SCHLÜSSEL",
+      "en": "key",
+      "ar": "مفتاح",
+      "hint": "Man öffnet damit die Tür.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Ich finde meinen ___ nicht."
+    },
+    {
+      "w": "BIRNE",
+      "en": "pear",
+      "ar": "كمّثرى",
+      "hint": "Grüne oder gelbe süße Frucht.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Die ___ ist süß und saftig."
+    },
+    {
+      "w": "PILZ",
+      "en": "mushroom",
+      "ar": "فطر",
+      "hint": "Er wächst im Wald auf dem Boden.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Im Wald findet man viele ___."
+    },
+    {
+      "w": "DORF",
+      "en": "village",
+      "ar": "قرية",
+      "hint": "Kleiner als eine Stadt.",
+      "type": "noun",
+      "article": "das",
+      "sentence": "Er kommt aus einem kleinen ___."
+    },
+    {
+      "w": "INSEL",
+      "en": "island",
+      "ar": "جزيرة",
+      "hint": "Land, das von Wasser umgeben ist.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Wir verbringen den Urlaub auf einer ___."
+    },
+    {
+      "w": "TIGER",
+      "en": "tiger",
+      "ar": "نمر",
+      "hint": "Großes Raubtier mit Streifen.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Der ___ ist das schnellste Raubtier."
+    },
+    {
+      "w": "LÖWE",
+      "en": "lion",
+      "ar": "أسد",
+      "hint": "Großes Raubtier, König der Tiere.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Der ___ schläft in der Sonne."
+    },
+    {
+      "w": "TURM",
+      "en": "tower",
+      "ar": "برج",
+      "hint": "Ein sehr hohes, schmales Gebäude.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Der ___ ist sehr hoch."
+    },
+    {
+      "w": "ROSA",
+      "en": "pink",
+      "ar": "وردي",
+      "hint": "Heller als Rot, wie eine Rose.",
+      "type": "adjective",
+      "sentence": "Sie trägt ein ___ Kleid."
+    },
+    {
+      "w": "GRAU",
+      "en": "gray",
+      "ar": "رمادي",
+      "hint": "Farbe zwischen Weiß und Schwarz.",
+      "type": "adjective",
+      "sentence": "Der Himmel ist heute ___."
+    },
+    {
+      "w": "LILA",
+      "en": "purple",
+      "ar": "بنفسجي",
+      "hint": "Mischung aus Blau und Rot.",
+      "type": "adjective",
+      "sentence": "Die Blume ist ___."
+    },
+    {
+      "w": "ORANGE",
+      "en": "orange",
+      "ar": "برتقالي",
+      "hint": "Farbe wie die gleichnamige Frucht.",
+      "type": "adjective",
+      "sentence": "Das Auto ist ___."
+    },
+    {
+      "w": "RUND",
+      "en": "round",
+      "ar": "مستدير",
+      "hint": "Wie ein Ball oder Kreis geformt.",
+      "type": "adjective",
+      "sentence": "Der Ball ist ___."
+    },
+    {
+      "w": "WEICH",
+      "en": "soft",
+      "ar": "ناعم",
+      "hint": "Nicht hart, angenehm zu berühren.",
+      "type": "adjective",
+      "sentence": "Das Kissen ist sehr ___."
+    },
+    {
+      "w": "HART",
+      "en": "hard",
+      "ar": "صلب",
+      "hint": "Das Gegenteil von weich.",
+      "type": "adjective",
+      "sentence": "Der Stein ist ___."
+    },
+    {
+      "w": "DÜNN",
+      "en": "thin",
+      "ar": "رفيع",
+      "hint": "Nicht dick, wenig Breite.",
+      "type": "adjective",
+      "sentence": "Das Papier ist sehr ___."
+    },
+    {
+      "w": "DICK",
+      "en": "thick",
+      "ar": "سميك",
+      "hint": "Das Gegenteil von dünn.",
+      "type": "adjective",
+      "sentence": "Das Buch ist sehr ___."
+    },
+    {
+      "w": "HÜBSCH",
+      "en": "pretty",
+      "ar": "جميل",
+      "hint": "Schön anzusehen.",
+      "type": "adjective",
+      "sentence": "Sie hat ein ___ Lächeln."
+    },
+    {
+      "w": "TANZEN",
+      "en": "dance",
+      "ar": "يرقص",
+      "hint": "Man bewegt sich zur Musik.",
+      "type": "verb",
+      "sentence": "Wir ___ gern auf Partys."
+    },
+    {
+      "w": "SINGEN",
+      "en": "sing",
+      "ar": "يغني",
+      "hint": "Man macht Musik mit der Stimme.",
+      "type": "verb",
+      "sentence": "Wir ___ ein Lied zusammen."
+    },
+    {
+      "w": "MALEN",
+      "en": "paint",
+      "ar": "يرسم",
+      "hint": "Man macht Bilder mit Farbe.",
+      "type": "verb",
+      "sentence": "Das Kind möchte ein Bild ___."
+    },
+    {
+      "w": "LACHEN",
+      "en": "laugh",
+      "ar": "يضحك",
+      "hint": "Man zeigt Freude mit dem Mund.",
+      "type": "verb",
+      "sentence": "Wir ___ über den lustigen Witz."
+    },
+    {
+      "w": "RUFEN",
+      "en": "call out",
+      "ar": "ينادي",
+      "hint": "Man spricht laut, um jemanden zu rufen.",
+      "type": "verb",
+      "sentence": "Wir ___ nach dem Kellner."
+    },
+    {
+      "w": "SCHICKEN",
+      "en": "send",
+      "ar": "يرسل",
+      "hint": "Man gibt etwas ab, z.B. einen Brief.",
+      "type": "verb",
+      "sentence": "Ich möchte dir eine Nachricht ___."
+    },
+    {
+      "w": "SCHWIMMEN",
+      "en": "swim",
+      "ar": "يسبح",
+      "hint": "Man bewegt sich im Wasser.",
+      "type": "verb",
+      "sentence": "Wir ___ im Sommer im See."
+    },
+    {
+      "w": "WEINEN",
+      "en": "cry",
+      "ar": "يبكي",
+      "hint": "Tränen fließen, wenn man traurig ist.",
+      "type": "verb",
+      "sentence": "Wir ___ manchmal aus Freude."
+    },
+    {
+      "w": "STELLEN",
+      "en": "place",
+      "ar": "يضع",
+      "hint": "Man bringt etwas an einen Ort.",
+      "type": "verb",
+      "sentence": "Bitte ___ die Tasse auf den Tisch."
+    },
+    {
+      "w": "HOLEN",
+      "en": "fetch",
+      "ar": "يجلب",
+      "hint": "Man geht und bringt etwas zurück.",
+      "type": "verb",
+      "sentence": "Kannst du Wasser ___?"
+    },
+    {
+      "w": "WECKEN",
+      "en": "wake up",
+      "ar": "يوقظ",
+      "hint": "Man hilft jemandem aufzustehen.",
+      "type": "verb",
+      "sentence": "Kannst du mich um sieben ___?"
+    },
+    {
+      "w": "ZEICHNEN",
+      "en": "draw",
+      "ar": "يرسم بقلم",
+      "hint": "Man macht Bilder mit einem Stift.",
+      "type": "verb",
+      "sentence": "Wir ___ gern Tiere und Pflanzen."
+    },
+    {
+      "w": "BASTELN",
+      "en": "craft",
+      "ar": "يصنع يدوياً",
+      "hint": "Man baut etwas mit den Händen.",
+      "type": "verb",
+      "sentence": "Die Kinder ___ eine Laterne."
+    },
+    {
+      "w": "TIPPEN",
+      "en": "type",
+      "ar": "يكتب",
+      "hint": "Man schreibt mit der Tastatur.",
+      "type": "verb",
+      "sentence": "Wir ___ schnell auf dem Computer."
+    },
+    {
+      "w": "RETTEN",
+      "en": "rescue",
+      "ar": "ينقذ",
+      "hint": "Man hilft in einer Gefahr.",
+      "type": "verb",
+      "sentence": "Der Arzt kann viele Leben ___."
+    },
+    {
+      "w": "BAUEN",
+      "en": "build",
+      "ar": "يبني",
+      "hint": "Man macht ein Haus oder eine Brücke.",
+      "type": "verb",
+      "sentence": "Sie wollen ein neues Haus ___."
+    },
+    {
+      "w": "FALLEN",
+      "en": "fall",
+      "ar": "يسقط",
+      "hint": "Man verliert das Gleichgewicht.",
+      "type": "verb",
+      "sentence": "Pass auf, du könntest ___!"
     }
   ],
   "A2": [
@@ -3042,6 +3474,392 @@
       "ar": "موثوق",
       "hint": "Can be counted on",
       "type": "adjective"
+    },
+    {
+      "w": "KÜSTE",
+      "en": "coast",
+      "ar": "ساحل",
+      "hint": "Das Land direkt am Meer.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Wir fahren an die ___ für den Urlaub."
+    },
+    {
+      "w": "STAU",
+      "en": "traffic jam",
+      "ar": "ازدحام",
+      "hint": "Viele Autos stehen auf der Straße still.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Es gibt einen langen ___ auf der Autobahn."
+    },
+    {
+      "w": "SCHIRM",
+      "en": "umbrella",
+      "ar": "مظلة",
+      "hint": "Man hält ihn bei Regen über den Kopf.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Nimm einen ___ mit, es regnet!"
+    },
+    {
+      "w": "PAKET",
+      "en": "package",
+      "ar": "طرد",
+      "hint": "Man schickt es per Post.",
+      "type": "noun",
+      "article": "das",
+      "sentence": "Das ___ kommt morgen an."
+    },
+    {
+      "w": "RICHTUNG",
+      "en": "direction",
+      "ar": "اتجاه",
+      "hint": "Links, rechts oder geradeaus.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "In welche ___ gehen wir?"
+    },
+    {
+      "w": "AUSGANG",
+      "en": "exit",
+      "ar": "مخرج",
+      "hint": "Der Weg nach draußen.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Der ___ ist auf der linken Seite."
+    },
+    {
+      "w": "EINGANG",
+      "en": "entrance",
+      "ar": "مدخل",
+      "hint": "Der Weg hinein ins Gebäude.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Wir treffen uns am ___ des Museums."
+    },
+    {
+      "w": "TERMIN",
+      "en": "appointment",
+      "ar": "موعد",
+      "hint": "Ein festgelegter Zeitpunkt.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Ich habe morgen einen ___ beim Arzt."
+    },
+    {
+      "w": "FORMULAR",
+      "en": "form",
+      "ar": "استمارة",
+      "hint": "Man füllt es beim Amt aus.",
+      "type": "noun",
+      "article": "das",
+      "sentence": "Bitte füllen Sie das ___ aus."
+    },
+    {
+      "w": "GEPÄCK",
+      "en": "luggage",
+      "ar": "أمتعة",
+      "hint": "Das, was man auf Reisen trägt.",
+      "type": "noun",
+      "article": "das",
+      "sentence": "Das ___ ist zu schwer für das Flugzeug."
+    },
+    {
+      "w": "ABFAHRT",
+      "en": "departure",
+      "ar": "مغادرة",
+      "hint": "Der Moment, wenn der Zug losfährt.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Die ___ des Zuges ist um 10 Uhr."
+    },
+    {
+      "w": "ANKUNFT",
+      "en": "arrival",
+      "ar": "وصول",
+      "hint": "Der Moment, wenn man ankommt.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Die ___ in Berlin ist um 14 Uhr."
+    },
+    {
+      "w": "HAUSHALT",
+      "en": "household",
+      "ar": "منزل",
+      "hint": "Familie und Wohnung zusammen.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Sie führt den ___ sehr gut."
+    },
+    {
+      "w": "MIETE",
+      "en": "rent",
+      "ar": "إيجار",
+      "hint": "Man zahlt sie monatlich für die Wohnung.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Die ___ in der Stadt steigt jedes Jahr."
+    },
+    {
+      "w": "BALKON",
+      "en": "balcony",
+      "ar": "شرفة",
+      "hint": "Kleiner Außenbereich am Haus.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Wir frühstücken auf dem ___."
+    },
+    {
+      "w": "FLUR",
+      "en": "hallway",
+      "ar": "رواق",
+      "hint": "Er verbindet die Zimmer in der Wohnung.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Die Jacken hängen im ___."
+    },
+    {
+      "w": "HEIZUNG",
+      "en": "heating",
+      "ar": "تدفئة",
+      "hint": "Sie macht das Zimmer warm.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Im Winter ist die ___ sehr wichtig."
+    },
+    {
+      "w": "STECKDOSE",
+      "en": "socket",
+      "ar": "مقبس كهربائي",
+      "hint": "Man steckt den Stecker hinein.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Steck das Kabel in die ___."
+    },
+    {
+      "w": "BÜHNE",
+      "en": "stage",
+      "ar": "خشبة المسرح",
+      "hint": "Dort spielen die Schauspieler.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Die Sängerin steht auf der ___."
+    },
+    {
+      "w": "VEREIN",
+      "en": "club",
+      "ar": "نادٍ",
+      "hint": "Eine Gruppe mit einem gemeinsamen Ziel.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Er ist Mitglied in einem ___."
+    },
+    {
+      "w": "WERKZEUG",
+      "en": "tool",
+      "ar": "أداة",
+      "hint": "Man braucht es zum Reparieren.",
+      "type": "noun",
+      "article": "das",
+      "sentence": "Er braucht das richtige ___."
+    },
+    {
+      "w": "SCHERE",
+      "en": "scissors",
+      "ar": "مقصّ",
+      "hint": "Man schneidet damit Papier.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Kannst du mir die ___ geben?"
+    },
+    {
+      "w": "TASCHE",
+      "en": "bag",
+      "ar": "حقيبة",
+      "hint": "Man trägt Sachen darin.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Meine ___ ist sehr schwer."
+    },
+    {
+      "w": "KASSE",
+      "en": "checkout",
+      "ar": "صندوق دفع",
+      "hint": "Hier bezahlt man im Laden.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Bitte zahlen Sie an der ___."
+    },
+    {
+      "w": "FAHRT",
+      "en": "trip",
+      "ar": "رحلة",
+      "hint": "Eine kurze Reise mit Auto oder Zug.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Die ___ zum Bahnhof dauert zehn Minuten."
+    },
+    {
+      "w": "REGAL",
+      "en": "shelf",
+      "ar": "رف",
+      "hint": "Dort stehen Bücher oder Waren.",
+      "type": "noun",
+      "article": "das",
+      "sentence": "Das Buch steht im ___."
+    },
+    {
+      "w": "AUSRUHEN",
+      "en": "rest",
+      "ar": "يستريح",
+      "hint": "Man macht eine Pause und entspannt sich.",
+      "type": "verb",
+      "sentence": "Nach der Reise muss ich mich ___."
+    },
+    {
+      "w": "SPAZIEREN",
+      "en": "stroll",
+      "ar": "يتنزّه",
+      "hint": "Man geht langsam draußen.",
+      "type": "verb",
+      "sentence": "Wir ___ jeden Abend im Park."
+    },
+    {
+      "w": "PROBIEREN",
+      "en": "try",
+      "ar": "يجرّب",
+      "hint": "Man testet etwas zum ersten Mal.",
+      "type": "verb",
+      "sentence": "Sie möchte das neue Gericht ___."
+    },
+    {
+      "w": "AUFRÄUMEN",
+      "en": "tidy up",
+      "ar": "يرتّب",
+      "hint": "Man bringt Ordnung ins Zimmer.",
+      "type": "verb",
+      "sentence": "Er muss sein Zimmer ___."
+    },
+    {
+      "w": "BESORGEN",
+      "en": "obtain",
+      "ar": "يحصل على",
+      "hint": "Man kauft oder holt etwas.",
+      "type": "verb",
+      "sentence": "Kannst du das ___ bitte?"
+    },
+    {
+      "w": "EINPACKEN",
+      "en": "pack",
+      "ar": "يعبّئ",
+      "hint": "Man legt Sachen in den Koffer.",
+      "type": "verb",
+      "sentence": "Sie muss die Koffer für die Reise ___."
+    },
+    {
+      "w": "VERPASSEN",
+      "en": "miss",
+      "ar": "يفوّت",
+      "hint": "Man kommt zu spät und ist nicht dabei.",
+      "type": "verb",
+      "sentence": "Er will den Zug nicht ___."
+    },
+    {
+      "w": "WECHSELN",
+      "en": "change",
+      "ar": "يبدّل",
+      "hint": "Man tauscht etwas gegen etwas anderes.",
+      "type": "verb",
+      "sentence": "Ich möchte das Geld ___."
+    },
+    {
+      "w": "SPAREN",
+      "en": "save",
+      "ar": "يوفّر",
+      "hint": "Man gibt weniger Geld aus.",
+      "type": "verb",
+      "sentence": "Wir ___ für einen neuen Computer."
+    },
+    {
+      "w": "TREFFEN",
+      "en": "meet",
+      "ar": "يلتقي",
+      "hint": "Man sieht jemanden an einem Ort.",
+      "type": "verb",
+      "sentence": "Wir ___ uns um fünf Uhr."
+    },
+    {
+      "w": "ERLEDIGEN",
+      "en": "get done",
+      "ar": "ينجز",
+      "hint": "Man macht eine Aufgabe fertig.",
+      "type": "verb",
+      "sentence": "Wir müssen das noch ___."
+    },
+    {
+      "w": "BEENDEN",
+      "en": "finish",
+      "ar": "ينهي",
+      "hint": "Man bringt etwas zu einem Abschluss.",
+      "type": "verb",
+      "sentence": "Er möchte die Arbeit heute ___."
+    },
+    {
+      "w": "MITMACHEN",
+      "en": "join in",
+      "ar": "يشارك",
+      "hint": "Man ist dabei und macht mit.",
+      "type": "verb",
+      "sentence": "Alle Kinder sollen ___."
+    },
+    {
+      "w": "FREI",
+      "en": "free",
+      "ar": "شاغر",
+      "hint": "Nicht besetzt, verfügbar.",
+      "type": "adjective",
+      "sentence": "Der Platz ist noch ___."
+    },
+    {
+      "w": "BESETZT",
+      "en": "occupied",
+      "ar": "مشغول",
+      "hint": "Kein Platz frei, jemand ist schon da.",
+      "type": "adjective",
+      "sentence": "Alle Tische sind ___."
+    },
+    {
+      "w": "KAPUTT",
+      "en": "broken",
+      "ar": "معطوب",
+      "hint": "Es funktioniert nicht mehr.",
+      "type": "adjective",
+      "sentence": "Mein Handy ist ___."
+    },
+    {
+      "w": "ORDENTLICH",
+      "en": "tidy",
+      "ar": "منظّم",
+      "hint": "Alles liegt an seinem Platz.",
+      "type": "adjective",
+      "sentence": "Ihr Zimmer ist immer sehr ___."
+    },
+    {
+      "w": "ÄHNLICH",
+      "en": "similar",
+      "ar": "مشابه",
+      "hint": "Fast gleich, aber nicht identisch.",
+      "type": "adjective",
+      "sentence": "Die zwei Schwestern sehen ___ aus."
+    },
+    {
+      "w": "GÜNSTIG",
+      "en": "affordable",
+      "ar": "مناسب السعر",
+      "hint": "Nicht zu teuer, gutes Preis-Leistungs-Verhältnis.",
+      "type": "adjective",
+      "sentence": "Das Hotel ist ___ und komfortabel."
     }
   ],
   "B1": [
@@ -4516,6 +5334,780 @@
       "ar": "غير مفهوم",
       "hint": "Hard to understand",
       "type": "adjective"
+    },
+    {
+      "w": "STREIK",
+      "en": "strike",
+      "ar": "إضراب",
+      "hint": "Arbeiter hören auf zu arbeiten für Forderungen.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Die Arbeiter sind im ___."
+    },
+    {
+      "w": "BETRIEB",
+      "en": "company",
+      "ar": "مؤسسة",
+      "hint": "Ein Unternehmen, in dem Menschen arbeiten.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Der ___ hat über 50 Mitarbeiter."
+    },
+    {
+      "w": "KUNDE",
+      "en": "customer",
+      "ar": "زبون",
+      "hint": "Er kauft etwas in einem Geschäft.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Der ___ möchte das Produkt zurückgeben."
+    },
+    {
+      "w": "WETTBEWERB",
+      "en": "competition",
+      "ar": "منافسة",
+      "hint": "Firmen oder Menschen kämpfen um den besten Platz.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Im ___ ist unsere Firma sehr stark."
+    },
+    {
+      "w": "REFORM",
+      "en": "reform",
+      "ar": "إصلاح",
+      "hint": "Eine wichtige Veränderung im System.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Die ___ verbessert das Bildungssystem."
+    },
+    {
+      "w": "PARTEI",
+      "en": "party",
+      "ar": "حزب",
+      "hint": "Eine politische Gruppe, die bei Wahlen antritt.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Welche ___ wählst du bei der Wahl?"
+    },
+    {
+      "w": "WÄHLER",
+      "en": "voter",
+      "ar": "ناخب",
+      "hint": "Er nimmt an der Wahl teil.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Die ___ gehen zur Wahl."
+    },
+    {
+      "w": "BOTSCHAFT",
+      "en": "embassy",
+      "ar": "سفارة",
+      "hint": "Das offizielle Gebäude eines fremden Landes.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Er arbeitet in der deutschen ___ in Paris."
+    },
+    {
+      "w": "BEHÖRDE",
+      "en": "authority",
+      "ar": "هيئة حكومية",
+      "hint": "Ein staatliches Amt mit bestimmten Aufgaben.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Die ___ prüft den Antrag."
+    },
+    {
+      "w": "ANTRAG",
+      "en": "application",
+      "ar": "طلب رسمي",
+      "hint": "Man reicht ihn beim Amt ein.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Sie stellt einen ___ auf finanzielle Hilfe."
+    },
+    {
+      "w": "VORWURF",
+      "en": "accusation",
+      "ar": "اتهام",
+      "hint": "Man sagt jemandem, dass er etwas falsch gemacht hat.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Der ___ gegen ihn ist unfair."
+    },
+    {
+      "w": "IRRTUM",
+      "en": "mistake",
+      "ar": "خطأ",
+      "hint": "Man hat etwas falsch verstanden oder gemacht.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Das war ein großer ___."
+    },
+    {
+      "w": "MANGEL",
+      "en": "lack",
+      "ar": "نقص",
+      "hint": "Es fehlt an etwas Wichtigem.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Es gibt einen ___ an Fachkräften."
+    },
+    {
+      "w": "VORBILD",
+      "en": "role model",
+      "ar": "قدوة",
+      "hint": "Eine Person, die man bewundert und imitiert.",
+      "type": "noun",
+      "article": "das",
+      "sentence": "Sie ist mein großes ___."
+    },
+    {
+      "w": "GERÄT",
+      "en": "device",
+      "ar": "جهاز",
+      "hint": "Ein technisches Hilfsmittel.",
+      "type": "noun",
+      "article": "das",
+      "sentence": "Das ___ funktioniert leider nicht."
+    },
+    {
+      "w": "ZEUGE",
+      "en": "witness",
+      "ar": "شاهد",
+      "hint": "Er hat etwas gesehen und kann es berichten.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Der ___ sagt die Wahrheit vor Gericht."
+    },
+    {
+      "w": "STRAFE",
+      "en": "punishment",
+      "ar": "عقوبة",
+      "hint": "Die Konsequenz für ein Vergehen.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Die ___ war sehr hoch."
+    },
+    {
+      "w": "TÄTER",
+      "en": "perpetrator",
+      "ar": "جانٍ",
+      "hint": "Die Person, die eine Tat begangen hat.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Der ___ wurde von der Polizei verhaftet."
+    },
+    {
+      "w": "OPFER",
+      "en": "victim",
+      "ar": "ضحية",
+      "hint": "Jemand, dem etwas Schlimmes passiert ist.",
+      "type": "noun",
+      "article": "das",
+      "sentence": "Das ___ braucht sofortige Hilfe."
+    },
+    {
+      "w": "AUSDRÜCKEN",
+      "en": "express",
+      "ar": "يعبّر عن",
+      "hint": "Man zeigt seine Gefühle oder Gedanken in Worten.",
+      "type": "verb",
+      "sentence": "Er kann seine Gefühle gut ___."
+    },
+    {
+      "w": "VERBINDEN",
+      "en": "connect",
+      "ar": "يربط",
+      "hint": "Zwei Dinge oder Personen zusammenbringen.",
+      "type": "verb",
+      "sentence": "Das Projekt soll die zwei Teams ___."
+    },
+    {
+      "w": "EINREICHEN",
+      "en": "submit",
+      "ar": "يقدّم",
+      "hint": "Man gibt ein Dokument offiziell ab.",
+      "type": "verb",
+      "sentence": "Sie muss die Bewerbung bis Freitag ___."
+    },
+    {
+      "w": "BEACHTEN",
+      "en": "heed",
+      "ar": "يراعي",
+      "hint": "Man achtet auf etwas Wichtiges.",
+      "type": "verb",
+      "sentence": "Wir müssen alle Sicherheitsregeln ___."
+    },
+    {
+      "w": "BEWÄLTIGEN",
+      "en": "overcome",
+      "ar": "يتغلّب على",
+      "hint": "Man schafft eine schwierige Aufgabe.",
+      "type": "verb",
+      "sentence": "Er kann die Aufgabe allein ___."
+    },
+    {
+      "w": "NACHWEISEN",
+      "en": "prove",
+      "ar": "يثبت",
+      "hint": "Man zeigt mit Fakten, dass etwas wahr ist.",
+      "type": "verb",
+      "sentence": "Sie muss ihre Qualifikation ___."
+    },
+    {
+      "w": "ABSTIMMEN",
+      "en": "vote",
+      "ar": "يصوّت",
+      "hint": "Man wählt für oder gegen etwas.",
+      "type": "verb",
+      "sentence": "Das Parlament soll über das Gesetz ___."
+    },
+    {
+      "w": "AUFFORDERN",
+      "en": "call upon",
+      "ar": "يطلب",
+      "hint": "Man bittet jemanden, etwas zu tun.",
+      "type": "verb",
+      "sentence": "Er möchte alle zur Teilnahme ___."
+    },
+    {
+      "w": "BERICHTEN",
+      "en": "report",
+      "ar": "يُبلّغ",
+      "hint": "Man erzählt über ein Ereignis.",
+      "type": "verb",
+      "sentence": "Wir ___ über die aktuellen Ergebnisse."
+    },
+    {
+      "w": "ANPASSEN",
+      "en": "adapt",
+      "ar": "يتأقلم",
+      "hint": "Man ändert sich für eine neue Situation.",
+      "type": "verb",
+      "sentence": "Man muss sich an die neue Situation ___."
+    },
+    {
+      "w": "ÜBERNEHMEN",
+      "en": "take over",
+      "ar": "يتولّى",
+      "hint": "Man übernimmt eine Aufgabe oder ein Amt.",
+      "type": "verb",
+      "sentence": "Sie möchte die Leitung der Abteilung ___."
+    },
+    {
+      "w": "NACHFRAGEN",
+      "en": "inquire",
+      "ar": "يستفسر",
+      "hint": "Man fragt nach weiteren Informationen.",
+      "type": "verb",
+      "sentence": "Er will beim Amt wegen des Antrags ___."
+    },
+    {
+      "w": "VORWERFEN",
+      "en": "accuse",
+      "ar": "يتّهم",
+      "hint": "Man sagt jemandem, dass er falsch gehandelt hat.",
+      "type": "verb",
+      "sentence": "Man kann ihr mangelnde Sorgfalt ___."
+    },
+    {
+      "w": "RECHTLICH",
+      "en": "legal",
+      "ar": "قانوني",
+      "hint": "Es bezieht sich auf das Gesetz.",
+      "type": "adjective",
+      "sentence": "Das ist eine ___ Frage."
+    },
+    {
+      "w": "STAATLICH",
+      "en": "governmental",
+      "ar": "حكومي",
+      "hint": "Es gehört zum Staat.",
+      "type": "adjective",
+      "sentence": "Die Schule ist ___."
+    },
+    {
+      "w": "GEMEINSAM",
+      "en": "joint",
+      "ar": "مشترك",
+      "hint": "Zusammen mit anderen.",
+      "type": "adjective",
+      "sentence": "Wir lösen das Problem ___."
+    },
+    {
+      "w": "SACHLICH",
+      "en": "factual",
+      "ar": "موضوعي",
+      "hint": "Ohne Emotionen, nur Fakten.",
+      "type": "adjective",
+      "sentence": "Bitte bleiben Sie ___."
+    },
+    {
+      "w": "DEUTLICH",
+      "en": "clear",
+      "ar": "واضح",
+      "hint": "Leicht zu verstehen oder zu sehen.",
+      "type": "adjective",
+      "sentence": "Die Verbesserung ist ___ sichtbar."
+    },
+    {
+      "w": "GRÜNDLICH",
+      "en": "thorough",
+      "ar": "دقيق",
+      "hint": "Man macht etwas mit viel Sorgfalt.",
+      "type": "adjective",
+      "sentence": "Sie reinigt das Haus sehr ___."
+    },
+    {
+      "w": "DRINGEND",
+      "en": "urgent",
+      "ar": "عاجل",
+      "hint": "Sehr wichtig, muss sofort erledigt werden.",
+      "type": "adjective",
+      "sentence": "Diese Aufgabe ist sehr ___."
+    },
+    {
+      "w": "SORGFÄLTIG",
+      "en": "careful",
+      "ar": "متأنٍّ",
+      "hint": "Man macht etwas sehr genau und aufmerksam.",
+      "type": "adjective",
+      "sentence": "Er prüft alles ___ nach."
+    }
+  ],
+  "B2": [
+    {
+      "w": "AUSNAHME",
+      "en": "exception",
+      "ar": "استثناء",
+      "hint": "Ein Fall, der nicht der Regel entspricht.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Das ist eine ___ von der Regel."
+    },
+    {
+      "w": "MENSCHHEIT",
+      "en": "humanity",
+      "ar": "الإنسانية",
+      "hint": "Alle Menschen auf der Welt zusammen.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Der Klimawandel bedroht die ___."
+    },
+    {
+      "w": "PFLEGE",
+      "en": "care",
+      "ar": "رعاية",
+      "hint": "Die Betreuung von kranken oder alten Menschen.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Die ___ alter Menschen ist sehr wichtig."
+    },
+    {
+      "w": "BÜRGER",
+      "en": "citizen",
+      "ar": "مواطن",
+      "hint": "Ein Mitglied eines Staates mit Rechten und Pflichten.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Jeder ___ hat Rechte und Pflichten."
+    },
+    {
+      "w": "BEITRAG",
+      "en": "contribution",
+      "ar": "مساهمة",
+      "hint": "Was man zu etwas beiträgt.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Sie leistet einen wichtigen ___ zur Forschung."
+    },
+    {
+      "w": "ZUWACHS",
+      "en": "growth",
+      "ar": "نموّ",
+      "hint": "Eine Zunahme an Größe oder Menge.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Es gibt einen starken ___ an Arbeitsplätzen."
+    },
+    {
+      "w": "RÜCKGANG",
+      "en": "decline",
+      "ar": "تراجع",
+      "hint": "Eine Abnahme oder Verschlechterung.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Der ___ der Geburtenrate ist ein Problem."
+    },
+    {
+      "w": "EINLEITUNG",
+      "en": "introduction",
+      "ar": "مقدّمة",
+      "hint": "Der Beginn eines Textes oder einer Rede.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Die ___ des Berichts ist sehr präzise."
+    },
+    {
+      "w": "SCHLUSS",
+      "en": "conclusion",
+      "ar": "خاتمة",
+      "hint": "Das Ende eines Textes oder einer Rede.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Im ___ fasst er die Ergebnisse zusammen."
+    },
+    {
+      "w": "STANDPUNKT",
+      "en": "viewpoint",
+      "ar": "موقف",
+      "hint": "Die eigene Meinung zu einem Thema.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Ich vertrete einen anderen ___."
+    },
+    {
+      "w": "ÜBERBLICK",
+      "en": "overview",
+      "ar": "نظرة عامة",
+      "hint": "Ein kurzer Blick auf das Ganze.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Geben Sie einen kurzen ___ über das Thema."
+    },
+    {
+      "w": "AUSWIRKUNG",
+      "en": "impact",
+      "ar": "تأثير",
+      "hint": "Die Folge oder das Ergebnis von etwas.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Die ___ des Gesetzes ist noch unklar."
+    },
+    {
+      "w": "BEGRÜNDUNG",
+      "en": "justification",
+      "ar": "تبرير",
+      "hint": "Die Erklärung, warum man etwas tut.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Die ___ für die Entscheidung fehlt."
+    },
+    {
+      "w": "VORGEHEN",
+      "en": "approach",
+      "ar": "أسلوب",
+      "hint": "Die Art und Weise, wie man etwas macht.",
+      "type": "noun",
+      "article": "das",
+      "sentence": "Das ___ bei der Analyse war sehr präzise."
+    },
+    {
+      "w": "SCHWÄCHE",
+      "en": "weakness",
+      "ar": "ضعف",
+      "hint": "Ein Bereich, in dem man nicht stark ist.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Er kennt seine eigene ___."
+    },
+    {
+      "w": "STÄRKE",
+      "en": "strength",
+      "ar": "قوّة",
+      "hint": "Ein Bereich, in dem man besonders gut ist.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Geduld ist eine ihrer großen ___."
+    },
+    {
+      "w": "ASPEKT",
+      "en": "aspect",
+      "ar": "جانب",
+      "hint": "Ein Teil oder Gesichtspunkt eines Themas.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Ein wichtiger ___ wurde übersehen."
+    },
+    {
+      "w": "TENDENZ",
+      "en": "tendency",
+      "ar": "ميل",
+      "hint": "Eine Richtung, in die sich etwas entwickelt.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Es gibt eine ___ zur Digitalisierung."
+    },
+    {
+      "w": "WIRKUNG",
+      "en": "effect",
+      "ar": "تأثير",
+      "hint": "Das, was etwas bewirkt oder auslöst.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Die ___ des Medikaments tritt schnell ein."
+    },
+    {
+      "w": "VERFASSUNG",
+      "en": "constitution",
+      "ar": "دستور",
+      "hint": "Das Grundgesetz eines Landes.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Das Grundgesetz ist die ___ Deutschlands."
+    },
+    {
+      "w": "VORKEHRUNG",
+      "en": "precaution",
+      "ar": "احتياط",
+      "hint": "Man trifft sie, um etwas Schlimmes zu verhindern.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Sie trifft alle nötigen ___ für den Winter."
+    },
+    {
+      "w": "VERFAHREN",
+      "en": "procedure",
+      "ar": "إجراء",
+      "hint": "Ein geregelter Ablauf zur Lösung eines Problems.",
+      "type": "noun",
+      "article": "das",
+      "sentence": "Das gerichtliche ___ dauert sehr lange."
+    },
+    {
+      "w": "ANLIEGEN",
+      "en": "concern",
+      "ar": "مطلب",
+      "hint": "Ein wichtiges Thema oder eine Bitte.",
+      "type": "noun",
+      "article": "das",
+      "sentence": "Ihr ___ wird sehr ernst genommen."
+    },
+    {
+      "w": "GRUNDLAGE",
+      "en": "basis",
+      "ar": "أساس",
+      "hint": "Das Fundament, auf dem etwas aufgebaut ist.",
+      "type": "noun",
+      "article": "die",
+      "sentence": "Daten sind die ___ guter Entscheidungen."
+    },
+    {
+      "w": "RÜCKHALT",
+      "en": "backing",
+      "ar": "سند",
+      "hint": "Unterstützung von anderen Personen.",
+      "type": "noun",
+      "article": "der",
+      "sentence": "Sie findet ___ in ihrer Familie."
+    },
+    {
+      "w": "ERÖRTERN",
+      "en": "discuss",
+      "ar": "يناقش",
+      "hint": "Ein Thema ausführlich und sachlich besprechen.",
+      "type": "verb",
+      "sentence": "Wir ___ die Vor- und Nachteile."
+    },
+    {
+      "w": "BEGRÜNDEN",
+      "en": "justify",
+      "ar": "يبرّر",
+      "hint": "Man erklärt, warum etwas richtig oder nötig ist.",
+      "type": "verb",
+      "sentence": "Er muss seine Entscheidung ausführlich ___."
+    },
+    {
+      "w": "ABWÄGEN",
+      "en": "weigh up",
+      "ar": "يوازن",
+      "hint": "Man vergleicht Vor- und Nachteile sorgfältig.",
+      "type": "verb",
+      "sentence": "Sie möchte alle Optionen sorgfältig ___."
+    },
+    {
+      "w": "BELEGEN",
+      "en": "substantiate",
+      "ar": "يدعم بأدلة",
+      "hint": "Man beweist etwas mit Fakten oder Beispielen.",
+      "type": "verb",
+      "sentence": "Man muss die Aussage mit Quellen ___."
+    },
+    {
+      "w": "ABLEITEN",
+      "en": "derive",
+      "ar": "يستنتج",
+      "hint": "Man zieht einen Schluss aus Informationen.",
+      "type": "verb",
+      "sentence": "Aus den Daten lässt sich eine Regel ___."
+    },
+    {
+      "w": "GESTALTEN",
+      "en": "shape",
+      "ar": "يُشكّل",
+      "hint": "Man formt oder beeinflusst etwas aktiv.",
+      "type": "verb",
+      "sentence": "Sie wollen den Unterricht kreativ ___."
+    },
+    {
+      "w": "UMSETZEN",
+      "en": "implement",
+      "ar": "ينفّذ",
+      "hint": "Man macht eine Idee zur Realität.",
+      "type": "verb",
+      "sentence": "Sie wollen die Idee in die Praxis ___."
+    },
+    {
+      "w": "EINWIRKEN",
+      "en": "influence",
+      "ar": "يؤثّر",
+      "hint": "Etwas hat Auswirkungen auf etwas anderes.",
+      "type": "verb",
+      "sentence": "Stress kann negativ auf die Gesundheit ___."
+    },
+    {
+      "w": "WAHRNEHMEN",
+      "en": "perceive",
+      "ar": "يُدرك",
+      "hint": "Man bemerkt oder erkennt etwas bewusst.",
+      "type": "verb",
+      "sentence": "Er kann die Veränderungen klar ___."
+    },
+    {
+      "w": "VERFASSEN",
+      "en": "compose",
+      "ar": "يؤلّف",
+      "hint": "Man schreibt einen Text oder Artikel.",
+      "type": "verb",
+      "sentence": "Sie muss einen langen Bericht ___."
+    },
+    {
+      "w": "WIDERLEGEN",
+      "en": "refute",
+      "ar": "يدحض",
+      "hint": "Man beweist, dass ein Argument falsch ist.",
+      "type": "verb",
+      "sentence": "Er kann das Argument nicht ___."
+    },
+    {
+      "w": "UMGEHEN",
+      "en": "deal with",
+      "ar": "يتعامل مع",
+      "hint": "Man geht mit einer Situation um.",
+      "type": "verb",
+      "sentence": "Man muss mit Kritik ___ können."
+    },
+    {
+      "w": "ABSTRAKT",
+      "en": "abstract",
+      "ar": "مجرّد",
+      "hint": "Nicht konkret, nur als Idee vorhanden.",
+      "type": "adjective",
+      "sentence": "Das Konzept ist sehr ___."
+    },
+    {
+      "w": "PRÄZISE",
+      "en": "precise",
+      "ar": "دقيق",
+      "hint": "Sehr genau und exakt.",
+      "type": "adjective",
+      "sentence": "Die Antwort muss sehr ___ sein."
+    },
+    {
+      "w": "FUNDIERT",
+      "en": "well-founded",
+      "ar": "مستند",
+      "hint": "Auf soliden Fakten oder Argumenten basierend.",
+      "type": "adjective",
+      "sentence": "Das ist eine sehr ___ Kritik."
+    },
+    {
+      "w": "OBJEKTIV",
+      "en": "objective",
+      "ar": "موضوعي",
+      "hint": "Ohne persönliche Meinung, nur Fakten.",
+      "type": "adjective",
+      "sentence": "Bitte beurteilen Sie die Situation ___."
+    },
+    {
+      "w": "SUBJEKTIV",
+      "en": "subjective",
+      "ar": "ذاتي",
+      "hint": "Aus der persönlichen Sicht einer Person.",
+      "type": "adjective",
+      "sentence": "Das ist eine ___ Einschätzung."
+    },
+    {
+      "w": "RELEVANT",
+      "en": "relevant",
+      "ar": "ذو صلة",
+      "hint": "Wichtig und bezogen auf das Thema.",
+      "type": "adjective",
+      "sentence": "Nur ___ Informationen werden berücksichtigt."
+    },
+    {
+      "w": "KOMPETENT",
+      "en": "competent",
+      "ar": "كفؤ",
+      "hint": "Man kann etwas gut und weiß, wie es geht.",
+      "type": "adjective",
+      "sentence": "Der Arzt ist sehr ___."
+    },
+    {
+      "w": "KONTROVERS",
+      "en": "controversial",
+      "ar": "جدلي",
+      "hint": "Verschiedene Menschen haben sehr gegensätzliche Meinungen dazu.",
+      "type": "adjective",
+      "sentence": "Das Thema wird ___ diskutiert."
+    },
+    {
+      "w": "NUANCIERT",
+      "en": "nuanced",
+      "ar": "دقيق الفروق",
+      "hint": "Mit feinen Unterschieden und Abstufungen.",
+      "type": "adjective",
+      "sentence": "Ihre Analyse ist sehr ___."
+    },
+    {
+      "w": "KONSISTENT",
+      "en": "consistent",
+      "ar": "متسقّ",
+      "hint": "Immer gleich und widerspruchsfrei.",
+      "type": "adjective",
+      "sentence": "Seine Argumentation ist nicht ___."
+    },
+    {
+      "w": "AUSGEWOGEN",
+      "en": "balanced",
+      "ar": "متوازن",
+      "hint": "Alle Seiten werden gleich berücksichtigt.",
+      "type": "adjective",
+      "sentence": "Der Bericht ist ___ und fair."
+    },
+    {
+      "w": "STRITTIG",
+      "en": "contentious",
+      "ar": "مثير للجدل",
+      "hint": "Darüber wird gestritten, keine Einigkeit.",
+      "type": "adjective",
+      "sentence": "Das Thema ist noch ___."
+    },
+    {
+      "w": "TREFFEND",
+      "en": "apt",
+      "ar": "موفّق",
+      "hint": "Genau passend zur Situation oder zum Thema.",
+      "type": "adjective",
+      "sentence": "Das ist eine sehr ___ Formulierung."
+    },
+    {
+      "w": "FRAGWÜRDIG",
+      "en": "questionable",
+      "ar": "مشكوك فيه",
+      "hint": "Man zweifelt, ob es richtig oder sicher ist.",
+      "type": "adjective",
+      "sentence": "Seine Methoden sind ___."
     }
   ]
 }
