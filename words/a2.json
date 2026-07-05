@@ -1,0 +1,1903 @@
+[
+  {
+    "w": "BAHNHOF",
+    "en": "train station",
+    "ar": "محطة قطار",
+    "hint": "Where trains arrive and depart",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "FLUGHAFEN",
+    "en": "airport",
+    "ar": "مطار",
+    "hint": "Where planes take off",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "HOTEL",
+    "en": "hotel",
+    "ar": "فندق",
+    "hint": "Temporary accommodation",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "RESTAURANT",
+    "en": "restaurant",
+    "ar": "مطعم",
+    "hint": "You eat meals there",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "KÜCHE",
+    "en": "kitchen",
+    "ar": "مطبخ",
+    "hint": "Room where you cook",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "WOHNZIMMER",
+    "en": "living room",
+    "ar": "غرفة المعيشة",
+    "hint": "Room for relaxing and guests",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "SCHLAFZIMMER",
+    "en": "bedroom",
+    "ar": "غرفة نوم",
+    "hint": "Room where you sleep",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "BADEZIMMER",
+    "en": "bathroom",
+    "ar": "حمام",
+    "hint": "Room to wash in",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "FENSTER",
+    "en": "window",
+    "ar": "نافذة",
+    "hint": "You look outside through it",
+    "type": "noun",
+    "article": "das",
+    "plural": "die Fenster"
+  },
+  {
+    "w": "TUER",
+    "en": "door",
+    "ar": "باب",
+    "hint": "You open it to enter",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "TREPPE",
+    "en": "staircase",
+    "ar": "درج",
+    "hint": "Steps between floors",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "GARTEN",
+    "en": "garden",
+    "ar": "حديقة",
+    "hint": "Outdoor space with plants",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "GARAGE",
+    "en": "garage",
+    "ar": "مرآب",
+    "hint": "Where you park a car",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "BRÜCKE",
+    "en": "bridge",
+    "ar": "جسر",
+    "hint": "Crosses over water",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "KIRCHE",
+    "en": "church",
+    "ar": "كنيسة",
+    "hint": "Christian place of worship",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "RATHAUS",
+    "en": "town hall",
+    "ar": "مبنى البلدية",
+    "hint": "Local government building",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "BÜRO",
+    "en": "office",
+    "ar": "مكتب",
+    "hint": "Where people work",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "FABRIK",
+    "en": "factory",
+    "ar": "مصنع",
+    "hint": "Where goods are manufactured",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "MUSEUM",
+    "en": "museum",
+    "ar": "متحف",
+    "hint": "Houses historical artifacts",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "THEATER",
+    "en": "theatre",
+    "ar": "مسرح",
+    "hint": "You watch plays there",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "KINO",
+    "en": "cinema",
+    "ar": "سينما",
+    "hint": "You watch films there",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "SCHWIMMBAD",
+    "en": "swimming pool",
+    "ar": "حمام سباحة",
+    "hint": "You swim there",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "KRANKENSCHWESTER",
+    "en": "nurse",
+    "ar": "ممرضة",
+    "hint": "Assists doctors in a hospital",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "POLIZIST",
+    "en": "police officer",
+    "ar": "شرطي",
+    "hint": "Maintains law and order",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "FEUERWEHR",
+    "en": "fire brigade",
+    "ar": "إطفاء",
+    "hint": "Fights fires",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "VERKÄUFER",
+    "en": "salesperson",
+    "ar": "بائع",
+    "hint": "Works in a shop",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "KELLNER",
+    "en": "waiter",
+    "ar": "نادل",
+    "hint": "Serves food in a restaurant",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "BÄCKER",
+    "en": "baker",
+    "ar": "خباز",
+    "hint": "Makes and sells bread",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "METZGER",
+    "en": "butcher",
+    "ar": "جزار",
+    "hint": "Sells meat",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "FRÜHLING",
+    "en": "spring",
+    "ar": "ربيع",
+    "hint": "Season after winter",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "SOMMER",
+    "en": "summer",
+    "ar": "صيف",
+    "hint": "Hottest season",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "HERBST",
+    "en": "autumn",
+    "ar": "خريف",
+    "hint": "Season with falling leaves",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "WINTER",
+    "en": "winter",
+    "ar": "شتاء",
+    "hint": "Coldest season",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "REGEN",
+    "en": "rain",
+    "ar": "مطر",
+    "hint": "Water falling from clouds",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "SCHNEE",
+    "en": "snow",
+    "ar": "ثلج",
+    "hint": "White frozen precipitation",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "WIND",
+    "en": "wind",
+    "ar": "ريح",
+    "hint": "Moving air",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "GEWITTER",
+    "en": "thunderstorm",
+    "ar": "عاصفة رعدية",
+    "hint": "Lightning and thunder",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "NEBEL",
+    "en": "fog",
+    "ar": "ضباب",
+    "hint": "Thick mist reducing visibility",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "TEMPERATUR",
+    "en": "temperature",
+    "ar": "درجة حرارة",
+    "hint": "How hot or cold something is",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "WETTER",
+    "en": "weather",
+    "ar": "طقس",
+    "hint": "Condition of the atmosphere",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "KOPFSCHMERZEN",
+    "en": "headache",
+    "ar": "صداع",
+    "hint": "Pain in your head",
+    "type": "noun",
+    "article": "die/pl"
+  },
+  {
+    "w": "FIEBER",
+    "en": "fever",
+    "ar": "حمى",
+    "hint": "High body temperature when sick",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "ERKÄLTUNG",
+    "en": "cold",
+    "ar": "زكام",
+    "hint": "Runny nose, sneezing illness",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "TABLETTE",
+    "en": "tablet/pill",
+    "ar": "حبة دواء",
+    "hint": "Medicine in solid form",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "REZEPT",
+    "en": "prescription/recipe",
+    "ar": "وصفة",
+    "hint": "Doctor's note for medicine",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "HOBBY",
+    "en": "hobby",
+    "ar": "هواية",
+    "hint": "Activity done for fun",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "MUSIK",
+    "en": "music",
+    "ar": "موسيقى",
+    "hint": "Organized sound",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "SPORT",
+    "en": "sport",
+    "ar": "رياضة",
+    "hint": "Physical activity or competition",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "FUSSBALL",
+    "en": "football",
+    "ar": "كرة قدم",
+    "hint": "Game with a round ball and goalposts",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "TENNIS",
+    "en": "tennis",
+    "ar": "تنس",
+    "hint": "Sport with rackets and a net",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "REISE",
+    "en": "trip/journey",
+    "ar": "رحلة",
+    "hint": "Travel to another place",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "URLAUB",
+    "en": "holiday/vacation",
+    "ar": "إجازة",
+    "hint": "Time off work for rest",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "KOFFER",
+    "en": "suitcase",
+    "ar": "حقيبة سفر",
+    "hint": "You pack clothes in it for travel",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "KARTE",
+    "en": "card/map",
+    "ar": "بطاقة / خريطة",
+    "hint": "Tourist map or playing card",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "TICKET",
+    "en": "ticket",
+    "ar": "تذكرة",
+    "hint": "Permits entry or travel",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "RECHNUNG",
+    "en": "bill/invoice",
+    "ar": "فاتورة",
+    "hint": "Request for payment",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "QUITTUNG",
+    "en": "receipt",
+    "ar": "إيصال",
+    "hint": "Proof of payment",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "EINKAUF",
+    "en": "shopping",
+    "ar": "تسوق",
+    "hint": "Buying goods in shops",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "SUPERMARKT",
+    "en": "supermarket",
+    "ar": "سوبرماركت",
+    "hint": "Large shop with many goods",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "GEMÜSE",
+    "en": "vegetables",
+    "ar": "خضروات",
+    "hint": "Carrots, onions, tomatoes...",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "OBST",
+    "en": "fruit",
+    "ar": "فاكهة",
+    "hint": "Apples, oranges, bananas...",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "FLEISCH",
+    "en": "meat",
+    "ar": "لحم",
+    "hint": "Beef, pork, chicken...",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "KÄSE",
+    "en": "cheese",
+    "ar": "جبن",
+    "hint": "Made from milk",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "BUTTER",
+    "en": "butter",
+    "ar": "زبدة",
+    "hint": "Spread made from cream",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "EI",
+    "en": "egg",
+    "ar": "بيضة",
+    "hint": "Laid by hens",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "KUCHEN",
+    "en": "cake",
+    "ar": "كعكة",
+    "hint": "Sweet baked dessert",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "KAFFEE",
+    "en": "coffee",
+    "ar": "قهوة",
+    "hint": "Hot caffeinated drink",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "TEE",
+    "en": "tea",
+    "ar": "شاي",
+    "hint": "Hot drink made with leaves",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "SAFT",
+    "en": "juice",
+    "ar": "عصير",
+    "hint": "Squeezed fruit drink",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "BIER",
+    "en": "beer",
+    "ar": "بيرة",
+    "hint": "Alcoholic drink from barley",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "WEIN",
+    "en": "wine",
+    "ar": "نبيذ",
+    "hint": "Alcoholic drink from grapes",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "TASSE",
+    "en": "cup",
+    "ar": "كوب",
+    "hint": "Container for hot drinks",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "GLAS",
+    "en": "glass",
+    "ar": "كأس / زجاج",
+    "hint": "Container for cold drinks",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "TELLER",
+    "en": "plate",
+    "ar": "طبق",
+    "hint": "Flat dish for food",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "LÖFFEL",
+    "en": "spoon",
+    "ar": "ملعقة",
+    "hint": "Used to eat soup",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "GABEL",
+    "en": "fork",
+    "ar": "شوكة",
+    "hint": "Used to eat salad",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "MESSER",
+    "en": "knife",
+    "ar": "سكين",
+    "hint": "Used to cut food",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "LAMPE",
+    "en": "lamp",
+    "ar": "مصباح",
+    "hint": "Provides artificial light",
+    "type": "noun",
+    "article": "die",
+    "plural": "die Lampen"
+  },
+  {
+    "w": "SOFA",
+    "en": "sofa",
+    "ar": "أريكة",
+    "hint": "Comfortable seat for several people",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "SCHRANK",
+    "en": "wardrobe",
+    "ar": "خزانة",
+    "hint": "Stores clothes",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "SPIEGEL",
+    "en": "mirror",
+    "ar": "مرآة",
+    "hint": "Shows your reflection",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "DUSCHE",
+    "en": "shower",
+    "ar": "دش",
+    "hint": "You wash under running water",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "BADEWANNE",
+    "en": "bathtub",
+    "ar": "حوض استحمام",
+    "hint": "You soak in hot water",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "WASCHMASCHINE",
+    "en": "washing machine",
+    "ar": "غسالة",
+    "hint": "Cleans clothes automatically",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "KÜHLSCHRANK",
+    "en": "fridge",
+    "ar": "ثلاجة",
+    "hint": "Keeps food cold",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "HERD",
+    "en": "stove/cooker",
+    "ar": "موقد",
+    "hint": "You cook on it",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "TELEFON",
+    "en": "telephone",
+    "ar": "هاتف",
+    "hint": "You call people with it",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "HANDY",
+    "en": "mobile phone",
+    "ar": "هاتف محمول",
+    "hint": "Portable telephone",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "COMPUTER",
+    "en": "computer",
+    "ar": "حاسوب",
+    "hint": "Electronic machine for data",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "INTERNET",
+    "en": "internet",
+    "ar": "إنترنت",
+    "hint": "Global network of computers",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "EMAIL",
+    "en": "email",
+    "ar": "بريد إلكتروني",
+    "hint": "Electronic message",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "ZEITUNG",
+    "en": "newspaper",
+    "ar": "جريدة",
+    "hint": "Daily printed news",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "FERNSEHEN",
+    "en": "television",
+    "ar": "تلفزيون",
+    "hint": "Screen with moving images",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "RADIO",
+    "en": "radio",
+    "ar": "راديو",
+    "hint": "Audio broadcasting device",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "FOTO",
+    "en": "photo",
+    "ar": "صورة",
+    "hint": "Captured image",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "FILM",
+    "en": "film/movie",
+    "ar": "فيلم",
+    "hint": "Moving pictures telling a story",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "KONZERT",
+    "en": "concert",
+    "ar": "حفلة موسيقية",
+    "hint": "Live music performance",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "GEBURTSTAG",
+    "en": "birthday",
+    "ar": "عيد ميلاد",
+    "hint": "Anniversary of your birth",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "GESCHENK",
+    "en": "present/gift",
+    "ar": "هدية",
+    "hint": "Something given for a special occasion",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "HOCHZEIT",
+    "en": "wedding",
+    "ar": "زفاف",
+    "hint": "Marriage ceremony",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "FEIER",
+    "en": "celebration",
+    "ar": "احتفال",
+    "hint": "Party for a special event",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "EINLADUNG",
+    "en": "invitation",
+    "ar": "دعوة",
+    "hint": "Request to attend an event",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "AUSFLUG",
+    "en": "excursion",
+    "ar": "نزهة",
+    "hint": "Short trip for leisure",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "STRAND",
+    "en": "beach",
+    "ar": "شاطئ",
+    "hint": "Sandy area by the sea",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "WALD",
+    "en": "forest",
+    "ar": "غابة",
+    "hint": "Large area of trees",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "WIESE",
+    "en": "meadow",
+    "ar": "مرج",
+    "hint": "Open grassy field",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "KOCHEN",
+    "en": "to cook",
+    "ar": "يطبخ",
+    "hint": "Prepare food with heat",
+    "type": "verb"
+  },
+  {
+    "w": "BACKEN",
+    "en": "to bake",
+    "ar": "يخبز",
+    "hint": "Cook in an oven",
+    "type": "verb"
+  },
+  {
+    "w": "BESTELLEN",
+    "en": "to order",
+    "ar": "يطلب",
+    "hint": "Ask for food or goods",
+    "type": "verb"
+  },
+  {
+    "w": "BEZAHLEN",
+    "en": "to pay",
+    "ar": "يدفع",
+    "hint": "Give money for something",
+    "type": "verb"
+  },
+  {
+    "w": "EINKAUFEN",
+    "en": "to shop",
+    "ar": "يتسوق",
+    "hint": "Buy goods in a store",
+    "type": "verb"
+  },
+  {
+    "w": "WASCHEN",
+    "en": "to wash",
+    "ar": "يغسل",
+    "hint": "Clean with water",
+    "type": "verb"
+  },
+  {
+    "w": "PUTZEN",
+    "en": "to clean",
+    "ar": "ينظف",
+    "hint": "Make something tidy",
+    "type": "verb"
+  },
+  {
+    "w": "KOSTEN",
+    "en": "to cost",
+    "ar": "يكلف",
+    "hint": "Have a price",
+    "type": "verb"
+  },
+  {
+    "w": "REISEN",
+    "en": "to travel",
+    "ar": "يسافر",
+    "hint": "Go to another place",
+    "type": "verb"
+  },
+  {
+    "w": "BUCHEN",
+    "en": "to book",
+    "ar": "يحجز",
+    "hint": "Reserve in advance",
+    "type": "verb"
+  },
+  {
+    "w": "ANKOMMEN",
+    "en": "to arrive",
+    "ar": "يصل",
+    "hint": "Reach a destination",
+    "type": "verb"
+  },
+  {
+    "w": "ABFAHREN",
+    "en": "to depart",
+    "ar": "يغادر",
+    "hint": "Leave a place",
+    "type": "verb"
+  },
+  {
+    "w": "EINSTEIGEN",
+    "en": "to board/get in",
+    "ar": "يركب",
+    "hint": "Get into a vehicle",
+    "type": "verb"
+  },
+  {
+    "w": "AUSSTEIGEN",
+    "en": "to get off",
+    "ar": "ينزل من وسيلة النقل",
+    "hint": "Exit a vehicle",
+    "type": "verb"
+  },
+  {
+    "w": "UMSTEIGEN",
+    "en": "to transfer/change",
+    "ar": "يبدل وسيلة نقل",
+    "hint": "Switch to another train or bus",
+    "type": "verb"
+  },
+  {
+    "w": "BESUCHEN",
+    "en": "to visit",
+    "ar": "يزور",
+    "hint": "Go to see someone or somewhere",
+    "type": "verb"
+  },
+  {
+    "w": "ANRUFEN",
+    "en": "to call (phone)",
+    "ar": "يتصل",
+    "hint": "Phone someone",
+    "type": "verb"
+  },
+  {
+    "w": "ABHOLEN",
+    "en": "to pick up",
+    "ar": "يستلم / يأخذ",
+    "hint": "Collect someone or something",
+    "type": "verb"
+  },
+  {
+    "w": "ERKLÄREN",
+    "en": "to explain",
+    "ar": "يشرح",
+    "hint": "Make something clear",
+    "type": "verb"
+  },
+  {
+    "w": "ERZÄHLEN",
+    "en": "to tell/narrate",
+    "ar": "يحكي",
+    "hint": "Describe a story",
+    "type": "verb"
+  },
+  {
+    "w": "BEGINNEN",
+    "en": "to begin",
+    "ar": "يبدأ",
+    "hint": "Start something",
+    "type": "verb"
+  },
+  {
+    "w": "AUFHÖREN",
+    "en": "to stop",
+    "ar": "يتوقف",
+    "hint": "Cease doing something",
+    "type": "verb"
+  },
+  {
+    "w": "VERGESSEN",
+    "en": "to forget",
+    "ar": "ينسى",
+    "hint": "Fail to remember",
+    "type": "verb"
+  },
+  {
+    "w": "ERINNERN",
+    "en": "to remember",
+    "ar": "يتذكر",
+    "hint": "Recall from memory",
+    "type": "verb"
+  },
+  {
+    "w": "EINLADEN",
+    "en": "to invite",
+    "ar": "يدعو",
+    "hint": "Ask someone to come",
+    "type": "verb"
+  },
+  {
+    "w": "EMPFEHLEN",
+    "en": "to recommend",
+    "ar": "يوصي",
+    "hint": "Suggest something good",
+    "type": "verb"
+  },
+  {
+    "w": "ZEIGEN",
+    "en": "to show",
+    "ar": "يُري",
+    "hint": "Display to someone",
+    "type": "verb"
+  },
+  {
+    "w": "SUCHEN",
+    "en": "to search/look for",
+    "ar": "يبحث عن",
+    "hint": "Try to find something",
+    "type": "verb"
+  },
+  {
+    "w": "WARTEN",
+    "en": "to wait",
+    "ar": "ينتظر",
+    "hint": "Stay until something happens",
+    "type": "verb"
+  },
+  {
+    "w": "GEWINNEN",
+    "en": "to win",
+    "ar": "يفوز",
+    "hint": "Be victorious",
+    "type": "verb"
+  },
+  {
+    "w": "VERLIEREN",
+    "en": "to lose",
+    "ar": "يخسر",
+    "hint": "Not win",
+    "type": "verb"
+  },
+  {
+    "w": "AUFSTEHEN",
+    "en": "to get up",
+    "ar": "يستيقظ / ينهض",
+    "hint": "Rise from bed",
+    "type": "verb"
+  },
+  {
+    "w": "EINSCHLAFEN",
+    "en": "to fall asleep",
+    "ar": "يغفو",
+    "hint": "Begin to sleep",
+    "type": "verb"
+  },
+  {
+    "w": "ANKLINGEN",
+    "en": "to sound like",
+    "ar": "يبدو مثل",
+    "hint": "Have a certain sound",
+    "type": "verb"
+  },
+  {
+    "w": "GLAUBEN",
+    "en": "to believe",
+    "ar": "يؤمن / يعتقد",
+    "hint": "Think something is true",
+    "type": "verb"
+  },
+  {
+    "w": "HOFFEN",
+    "en": "to hope",
+    "ar": "يأمل",
+    "hint": "Wish for something good",
+    "type": "verb"
+  },
+  {
+    "w": "FÜHLEN",
+    "en": "to feel",
+    "ar": "يشعر",
+    "hint": "Experience an emotion",
+    "type": "verb"
+  },
+  {
+    "w": "GEFALLEN",
+    "en": "to please/like",
+    "ar": "يعجب",
+    "hint": "Be pleasing to someone",
+    "type": "verb"
+  },
+  {
+    "w": "INTERESSIEREN",
+    "en": "to interest",
+    "ar": "يهتم",
+    "hint": "Engage someone's curiosity",
+    "type": "verb"
+  },
+  {
+    "w": "ÜBERSETZEN",
+    "en": "to translate",
+    "ar": "يترجم",
+    "hint": "Convert to another language",
+    "type": "verb"
+  },
+  {
+    "w": "WIEDERHOLEN",
+    "en": "to repeat",
+    "ar": "يكرر",
+    "hint": "Do or say again",
+    "type": "verb"
+  },
+  {
+    "w": "AUFMACHEN",
+    "en": "to open (up)",
+    "ar": "يفتح",
+    "hint": "Unseal or open",
+    "type": "verb"
+  },
+  {
+    "w": "ZUMACHEN",
+    "en": "to close",
+    "ar": "يغلق",
+    "hint": "Shut something",
+    "type": "verb"
+  },
+  {
+    "w": "AUSSCHALTEN",
+    "en": "to switch off",
+    "ar": "يطفئ",
+    "hint": "Turn off a device",
+    "type": "verb"
+  },
+  {
+    "w": "EINSCHALTEN",
+    "en": "to switch on",
+    "ar": "يشغل",
+    "hint": "Turn on a device",
+    "type": "verb"
+  },
+  {
+    "w": "FREUNDLICH",
+    "en": "friendly",
+    "ar": "ودود",
+    "hint": "Kind and pleasant",
+    "type": "adjective"
+  },
+  {
+    "w": "HÖFLICH",
+    "en": "polite",
+    "ar": "مؤدب",
+    "hint": "Well-mannered",
+    "type": "adjective"
+  },
+  {
+    "w": "UNHÖFLICH",
+    "en": "rude/impolite",
+    "ar": "غير مؤدب",
+    "hint": "Bad-mannered",
+    "type": "adjective"
+  },
+  {
+    "w": "NETT",
+    "en": "nice",
+    "ar": "لطيف",
+    "hint": "Pleasant and kind",
+    "type": "adjective"
+  },
+  {
+    "w": "LUSTIG",
+    "en": "funny",
+    "ar": "مضحك",
+    "hint": "Makes you laugh",
+    "type": "adjective"
+  },
+  {
+    "w": "LANGWEILIG",
+    "en": "boring",
+    "ar": "ممل",
+    "hint": "Not interesting",
+    "type": "adjective"
+  },
+  {
+    "w": "INTERESSANT",
+    "en": "interesting",
+    "ar": "مثير للاهتمام",
+    "hint": "Captures attention",
+    "type": "adjective"
+  },
+  {
+    "w": "WICHTIG",
+    "en": "important",
+    "ar": "مهم",
+    "hint": "Has great significance",
+    "type": "adjective"
+  },
+  {
+    "w": "GEFÄHRLICH",
+    "en": "dangerous",
+    "ar": "خطير",
+    "hint": "Can cause harm",
+    "type": "adjective"
+  },
+  {
+    "w": "SICHER",
+    "en": "safe/certain",
+    "ar": "آمن / مؤكد",
+    "hint": "Free from danger or doubt",
+    "type": "adjective"
+  },
+  {
+    "w": "NÜTZLICH",
+    "en": "useful",
+    "ar": "مفيد",
+    "hint": "Has a practical use",
+    "type": "adjective"
+  },
+  {
+    "w": "EINFACH",
+    "en": "easy/simple",
+    "ar": "سهل / بسيط",
+    "hint": "Not complex",
+    "type": "adjective"
+  },
+  {
+    "w": "SCHWIERIG",
+    "en": "difficult",
+    "ar": "صعب",
+    "hint": "Hard to do or understand",
+    "type": "adjective"
+  },
+  {
+    "w": "MÖGLICH",
+    "en": "possible",
+    "ar": "ممكن",
+    "hint": "Can happen or be done",
+    "type": "adjective"
+  },
+  {
+    "w": "UNMÖGLICH",
+    "en": "impossible",
+    "ar": "مستحيل",
+    "hint": "Cannot happen",
+    "type": "adjective"
+  },
+  {
+    "w": "MODERN",
+    "en": "modern",
+    "ar": "حديث",
+    "hint": "Contemporary, up-to-date",
+    "type": "adjective"
+  },
+  {
+    "w": "TRADITIONELL",
+    "en": "traditional",
+    "ar": "تقليدي",
+    "hint": "Based on long-standing customs",
+    "type": "adjective"
+  },
+  {
+    "w": "BELIEBT",
+    "en": "popular",
+    "ar": "شعبي / محبوب",
+    "hint": "Liked by many people",
+    "type": "adjective"
+  },
+  {
+    "w": "BEKANNT",
+    "en": "known/famous",
+    "ar": "مشهور / معروف",
+    "hint": "Well recognized",
+    "type": "adjective"
+  },
+  {
+    "w": "UNBEKANNT",
+    "en": "unknown",
+    "ar": "مجهول",
+    "hint": "Not familiar",
+    "type": "adjective"
+  },
+  {
+    "w": "GLÜCKLICH",
+    "en": "happy/lucky",
+    "ar": "سعيد / محظوظ",
+    "hint": "Feeling joy",
+    "type": "adjective"
+  },
+  {
+    "w": "UNGLÜCKLICH",
+    "en": "unhappy/unlucky",
+    "ar": "غير سعيد",
+    "hint": "Feeling sorrow",
+    "type": "adjective"
+  },
+  {
+    "w": "AUFGEREGT",
+    "en": "excited",
+    "ar": "متحمس",
+    "hint": "Thrilled and eager",
+    "type": "adjective"
+  },
+  {
+    "w": "NERVÖS",
+    "en": "nervous",
+    "ar": "متوتر",
+    "hint": "Anxious, uneasy",
+    "type": "adjective"
+  },
+  {
+    "w": "RUHIG",
+    "en": "calm/quiet",
+    "ar": "هادئ",
+    "hint": "Peaceful, not agitated",
+    "type": "adjective"
+  },
+  {
+    "w": "PÜNKTLICH",
+    "en": "punctual",
+    "ar": "دقيق في المواعيد",
+    "hint": "Arriving on time",
+    "type": "adjective"
+  },
+  {
+    "w": "SPÄT",
+    "en": "late",
+    "ar": "متأخر",
+    "hint": "After the expected time",
+    "type": "adjective"
+  },
+  {
+    "w": "FRÜH",
+    "en": "early",
+    "ar": "مبكر",
+    "hint": "Before the expected time",
+    "type": "adjective"
+  },
+  {
+    "w": "TÄGLICH",
+    "en": "daily",
+    "ar": "يومي",
+    "hint": "Every day",
+    "type": "adjective"
+  },
+  {
+    "w": "WÖCHENTLICH",
+    "en": "weekly",
+    "ar": "أسبوعي",
+    "hint": "Every week",
+    "type": "adjective"
+  },
+  {
+    "w": "MONATLICH",
+    "en": "monthly",
+    "ar": "شهري",
+    "hint": "Every month",
+    "type": "adjective"
+  },
+  {
+    "w": "KOSTENLOS",
+    "en": "free (no cost)",
+    "ar": "مجاني",
+    "hint": "Without charge",
+    "type": "adjective"
+  },
+  {
+    "w": "GRATIS",
+    "en": "gratis/free",
+    "ar": "مجاني",
+    "hint": "Costs nothing",
+    "type": "adjective"
+  },
+  {
+    "w": "LECKER",
+    "en": "tasty",
+    "ar": "لذيذ",
+    "hint": "Delicious",
+    "type": "adjective"
+  },
+  {
+    "w": "FRISCH",
+    "en": "fresh",
+    "ar": "طازج",
+    "hint": "Recently made or picked",
+    "type": "adjective"
+  },
+  {
+    "w": "BEQUEM",
+    "en": "comfortable",
+    "ar": "مريح",
+    "hint": "Easy on the body",
+    "type": "adjective"
+  },
+  {
+    "w": "UNBEQUEM",
+    "en": "uncomfortable",
+    "ar": "غير مريح",
+    "hint": "Not easy on the body",
+    "type": "adjective"
+  },
+  {
+    "w": "GEMÜTLICH",
+    "en": "cozy",
+    "ar": "مريح ودافئ",
+    "hint": "Warm, pleasant atmosphere",
+    "type": "adjective"
+  },
+  {
+    "w": "PRAKTISCH",
+    "en": "practical",
+    "ar": "عملي",
+    "hint": "Good for real-world use",
+    "type": "adjective"
+  },
+  {
+    "w": "INTELLIGENT",
+    "en": "intelligent",
+    "ar": "ذكي",
+    "hint": "Quick to learn and understand",
+    "type": "adjective"
+  },
+  {
+    "w": "KLUG",
+    "en": "clever/smart",
+    "ar": "ذكي / حكيم",
+    "hint": "Showing good judgment",
+    "type": "adjective"
+  },
+  {
+    "w": "DUMM",
+    "en": "stupid",
+    "ar": "غبي",
+    "hint": "Lacking intelligence",
+    "type": "adjective"
+  },
+  {
+    "w": "FLEISSIG",
+    "en": "hardworking",
+    "ar": "مجتهد",
+    "hint": "Works diligently",
+    "type": "adjective"
+  },
+  {
+    "w": "FAUL",
+    "en": "lazy",
+    "ar": "كسول",
+    "hint": "Avoids work",
+    "type": "adjective"
+  },
+  {
+    "w": "EHRLICH",
+    "en": "honest",
+    "ar": "صادق",
+    "hint": "Tells the truth",
+    "type": "adjective"
+  },
+  {
+    "w": "MUTIG",
+    "en": "brave",
+    "ar": "شجاع",
+    "hint": "Not afraid of danger",
+    "type": "adjective"
+  },
+  {
+    "w": "ÄNGSTLICH",
+    "en": "fearful/anxious",
+    "ar": "خائف",
+    "hint": "Easily frightened",
+    "type": "adjective"
+  },
+  {
+    "w": "STARK",
+    "en": "strong",
+    "ar": "قوي",
+    "hint": "Has great physical power",
+    "type": "adjective"
+  },
+  {
+    "w": "SCHWACH",
+    "en": "weak",
+    "ar": "ضعيف",
+    "hint": "Lacks strength",
+    "type": "adjective"
+  },
+  {
+    "w": "ZUVERLÄSSIG",
+    "en": "reliable",
+    "ar": "موثوق",
+    "hint": "Can be counted on",
+    "type": "adjective"
+  },
+  {
+    "w": "KÜSTE",
+    "en": "coast",
+    "ar": "ساحل",
+    "hint": "Das Land direkt am Meer.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Wir fahren an die ___ für den Urlaub."
+  },
+  {
+    "w": "STAU",
+    "en": "traffic jam",
+    "ar": "ازدحام",
+    "hint": "Viele Autos stehen auf der Straße still.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Es gibt einen langen ___ auf der Autobahn."
+  },
+  {
+    "w": "SCHIRM",
+    "en": "umbrella",
+    "ar": "مظلة",
+    "hint": "Man hält ihn bei Regen über den Kopf.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Nimm einen ___ mit, es regnet!"
+  },
+  {
+    "w": "PAKET",
+    "en": "package",
+    "ar": "طرد",
+    "hint": "Man schickt es per Post.",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das ___ kommt morgen an."
+  },
+  {
+    "w": "RICHTUNG",
+    "en": "direction",
+    "ar": "اتجاه",
+    "hint": "Links, rechts oder geradeaus.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "In welche ___ gehen wir?"
+  },
+  {
+    "w": "AUSGANG",
+    "en": "exit",
+    "ar": "مخرج",
+    "hint": "Der Weg nach draußen.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ ist auf der linken Seite."
+  },
+  {
+    "w": "EINGANG",
+    "en": "entrance",
+    "ar": "مدخل",
+    "hint": "Der Weg hinein ins Gebäude.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Wir treffen uns am ___ des Museums."
+  },
+  {
+    "w": "TERMIN",
+    "en": "appointment",
+    "ar": "موعد",
+    "hint": "Ein festgelegter Zeitpunkt.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Ich habe morgen einen ___ beim Arzt."
+  },
+  {
+    "w": "FORMULAR",
+    "en": "form",
+    "ar": "استمارة",
+    "hint": "Man füllt es beim Amt aus.",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Bitte füllen Sie das ___ aus."
+  },
+  {
+    "w": "GEPÄCK",
+    "en": "luggage",
+    "ar": "أمتعة",
+    "hint": "Das, was man auf Reisen trägt.",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das ___ ist zu schwer für das Flugzeug."
+  },
+  {
+    "w": "ABFAHRT",
+    "en": "departure",
+    "ar": "مغادرة",
+    "hint": "Der Moment, wenn der Zug losfährt.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ des Zuges ist um 10 Uhr."
+  },
+  {
+    "w": "ANKUNFT",
+    "en": "arrival",
+    "ar": "وصول",
+    "hint": "Der Moment, wenn man ankommt.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ in Berlin ist um 14 Uhr."
+  },
+  {
+    "w": "HAUSHALT",
+    "en": "household",
+    "ar": "منزل",
+    "hint": "Familie und Wohnung zusammen.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Sie führt den ___ sehr gut."
+  },
+  {
+    "w": "MIETE",
+    "en": "rent",
+    "ar": "إيجار",
+    "hint": "Man zahlt sie monatlich für die Wohnung.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ in der Stadt steigt jedes Jahr."
+  },
+  {
+    "w": "BALKON",
+    "en": "balcony",
+    "ar": "شرفة",
+    "hint": "Kleiner Außenbereich am Haus.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Wir frühstücken auf dem ___."
+  },
+  {
+    "w": "FLUR",
+    "en": "hallway",
+    "ar": "رواق",
+    "hint": "Er verbindet die Zimmer in der Wohnung.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Die Jacken hängen im ___."
+  },
+  {
+    "w": "HEIZUNG",
+    "en": "heating",
+    "ar": "تدفئة",
+    "hint": "Sie macht das Zimmer warm.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Im Winter ist die ___ sehr wichtig."
+  },
+  {
+    "w": "STECKDOSE",
+    "en": "socket",
+    "ar": "مقبس كهربائي",
+    "hint": "Man steckt den Stecker hinein.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Steck das Kabel in die ___."
+  },
+  {
+    "w": "BÜHNE",
+    "en": "stage",
+    "ar": "خشبة المسرح",
+    "hint": "Dort spielen die Schauspieler.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die Sängerin steht auf der ___."
+  },
+  {
+    "w": "VEREIN",
+    "en": "club",
+    "ar": "نادٍ",
+    "hint": "Eine Gruppe mit einem gemeinsamen Ziel.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Er ist Mitglied in einem ___."
+  },
+  {
+    "w": "WERKZEUG",
+    "en": "tool",
+    "ar": "أداة",
+    "hint": "Man braucht es zum Reparieren.",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Er braucht das richtige ___."
+  },
+  {
+    "w": "SCHERE",
+    "en": "scissors",
+    "ar": "مقصّ",
+    "hint": "Man schneidet damit Papier.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Kannst du mir die ___ geben?"
+  },
+  {
+    "w": "TASCHE",
+    "en": "bag",
+    "ar": "حقيبة",
+    "hint": "Man trägt Sachen darin.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Meine ___ ist sehr schwer."
+  },
+  {
+    "w": "KASSE",
+    "en": "checkout",
+    "ar": "صندوق دفع",
+    "hint": "Hier bezahlt man im Laden.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Bitte zahlen Sie an der ___."
+  },
+  {
+    "w": "FAHRT",
+    "en": "trip",
+    "ar": "رحلة",
+    "hint": "Eine kurze Reise mit Auto oder Zug.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ zum Bahnhof dauert zehn Minuten."
+  },
+  {
+    "w": "REGAL",
+    "en": "shelf",
+    "ar": "رف",
+    "hint": "Dort stehen Bücher oder Waren.",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das Buch steht im ___."
+  },
+  {
+    "w": "AUSRUHEN",
+    "en": "rest",
+    "ar": "يستريح",
+    "hint": "Man macht eine Pause und entspannt sich.",
+    "type": "verb",
+    "sentence": "Nach der Reise muss ich mich ___."
+  },
+  {
+    "w": "SPAZIEREN",
+    "en": "stroll",
+    "ar": "يتنزّه",
+    "hint": "Man geht langsam draußen.",
+    "type": "verb",
+    "sentence": "Wir ___ jeden Abend im Park."
+  },
+  {
+    "w": "PROBIEREN",
+    "en": "try",
+    "ar": "يجرّب",
+    "hint": "Man testet etwas zum ersten Mal.",
+    "type": "verb",
+    "sentence": "Sie möchte das neue Gericht ___."
+  },
+  {
+    "w": "AUFRÄUMEN",
+    "en": "tidy up",
+    "ar": "يرتّب",
+    "hint": "Man bringt Ordnung ins Zimmer.",
+    "type": "verb",
+    "sentence": "Er muss sein Zimmer ___."
+  },
+  {
+    "w": "BESORGEN",
+    "en": "obtain",
+    "ar": "يحصل على",
+    "hint": "Man kauft oder holt etwas.",
+    "type": "verb",
+    "sentence": "Kannst du das ___ bitte?"
+  },
+  {
+    "w": "EINPACKEN",
+    "en": "pack",
+    "ar": "يعبّئ",
+    "hint": "Man legt Sachen in den Koffer.",
+    "type": "verb",
+    "sentence": "Sie muss die Koffer für die Reise ___."
+  },
+  {
+    "w": "VERPASSEN",
+    "en": "miss",
+    "ar": "يفوّت",
+    "hint": "Man kommt zu spät und ist nicht dabei.",
+    "type": "verb",
+    "sentence": "Er will den Zug nicht ___."
+  },
+  {
+    "w": "WECHSELN",
+    "en": "change",
+    "ar": "يبدّل",
+    "hint": "Man tauscht etwas gegen etwas anderes.",
+    "type": "verb",
+    "sentence": "Ich möchte das Geld ___."
+  },
+  {
+    "w": "SPAREN",
+    "en": "save",
+    "ar": "يوفّر",
+    "hint": "Man gibt weniger Geld aus.",
+    "type": "verb",
+    "sentence": "Wir ___ für einen neuen Computer."
+  },
+  {
+    "w": "TREFFEN",
+    "en": "meet",
+    "ar": "يلتقي",
+    "hint": "Man sieht jemanden an einem Ort.",
+    "type": "verb",
+    "sentence": "Wir ___ uns um fünf Uhr."
+  },
+  {
+    "w": "ERLEDIGEN",
+    "en": "get done",
+    "ar": "ينجز",
+    "hint": "Man macht eine Aufgabe fertig.",
+    "type": "verb",
+    "sentence": "Wir müssen das noch ___."
+  },
+  {
+    "w": "BEENDEN",
+    "en": "finish",
+    "ar": "ينهي",
+    "hint": "Man bringt etwas zu einem Abschluss.",
+    "type": "verb",
+    "sentence": "Er möchte die Arbeit heute ___."
+  },
+  {
+    "w": "MITMACHEN",
+    "en": "join in",
+    "ar": "يشارك",
+    "hint": "Man ist dabei und macht mit.",
+    "type": "verb",
+    "sentence": "Alle Kinder sollen ___."
+  },
+  {
+    "w": "FREI",
+    "en": "free",
+    "ar": "شاغر",
+    "hint": "Nicht besetzt, verfügbar.",
+    "type": "adjective",
+    "sentence": "Der Platz ist noch ___."
+  },
+  {
+    "w": "BESETZT",
+    "en": "occupied",
+    "ar": "مشغول",
+    "hint": "Kein Platz frei, jemand ist schon da.",
+    "type": "adjective",
+    "sentence": "Alle Tische sind ___."
+  },
+  {
+    "w": "KAPUTT",
+    "en": "broken",
+    "ar": "معطوب",
+    "hint": "Es funktioniert nicht mehr.",
+    "type": "adjective",
+    "sentence": "Mein Handy ist ___."
+  },
+  {
+    "w": "ORDENTLICH",
+    "en": "tidy",
+    "ar": "منظّم",
+    "hint": "Alles liegt an seinem Platz.",
+    "type": "adjective",
+    "sentence": "Ihr Zimmer ist immer sehr ___."
+  },
+  {
+    "w": "ÄHNLICH",
+    "en": "similar",
+    "ar": "مشابه",
+    "hint": "Fast gleich, aber nicht identisch.",
+    "type": "adjective",
+    "sentence": "Die zwei Schwestern sehen ___ aus."
+  },
+  {
+    "w": "GÜNSTIG",
+    "en": "affordable",
+    "ar": "مناسب السعر",
+    "hint": "Nicht zu teuer, gutes Preis-Leistungs-Verhältnis.",
+    "type": "adjective",
+    "sentence": "Das Hotel ist ___ und komfortabel."
+  }
+]

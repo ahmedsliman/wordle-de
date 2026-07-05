@@ -9,13 +9,13 @@ npm start          # python3 -m http.server 8080 → http://localhost:8080
 npx serve .        # alternative → http://localhost:3000
 ```
 
-No build step. Edit `index.html` or `words.json` and refresh the browser.
+No build step. Edit `index.html` or `words/*.json` and refresh the browser.
 
 Kill a stuck server: `lsof -ti:8080 | xargs kill -9`
 
 ## Architecture
 
-**Single-file app**: all HTML + CSS + JS lives in `index.html` (~3300 lines). `words.json` is the only external data file. No framework, no bundler, no dependencies.
+**Single-file app**: all HTML + CSS + JS lives in `index.html` (~3500 lines). Word data lives in `words/a1.json`, `words/a2.json`, `words/b1.json`, `words/b2.json` — one file per CEFR level. No framework, no bundler, no dependencies.
 
 ### Game Modes (`gameMode` global)
 
@@ -84,7 +84,11 @@ Dark mode via `@media (prefers-color-scheme: dark)` — all colors go through CS
 
 ## Adding Words
 
-Edit `words.json`. Words must be uppercase, deduplicated across all levels, and include `en`, `ar`, `hint`, `type`. For nouns add `article`. Reload to see the dedup check in console.
+Edit the appropriate `words/<level>.json` file (e.g. `words/a1.json`). Words must be uppercase, deduplicated across all levels, and include `en`, `ar`, `hint`, `sentence`, `type`. For nouns add `article`. Reload to see the dedup check in console.
+
+### Word file loading
+
+`init()` fetches `words/a1.json` eagerly (default level), then loads A2/B1/B2 in parallel in the background. Level files are cached in the `words` object; `loadedLevels` Set tracks what's ready. `ensureLevels(set)` awaits any missing levels before `startCrossword()` runs — safe to call multiple times.
 
 ## Deployment
 

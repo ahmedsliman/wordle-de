@@ -1,0 +1,435 @@
+[
+  {
+    "w": "AUSNAHME",
+    "en": "exception",
+    "ar": "استثناء",
+    "hint": "Ein Fall, der nicht der Regel entspricht.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Das ist eine ___ von der Regel."
+  },
+  {
+    "w": "MENSCHHEIT",
+    "en": "humanity",
+    "ar": "الإنسانية",
+    "hint": "Alle Menschen auf der Welt zusammen.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Der Klimawandel bedroht die ___."
+  },
+  {
+    "w": "PFLEGE",
+    "en": "care",
+    "ar": "رعاية",
+    "hint": "Die Betreuung von kranken oder alten Menschen.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ alter Menschen ist sehr wichtig."
+  },
+  {
+    "w": "BÜRGER",
+    "en": "citizen",
+    "ar": "مواطن",
+    "hint": "Ein Mitglied eines Staates mit Rechten und Pflichten.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Jeder ___ hat Rechte und Pflichten."
+  },
+  {
+    "w": "BEITRAG",
+    "en": "contribution",
+    "ar": "مساهمة",
+    "hint": "Was man zu etwas beiträgt.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Sie leistet einen wichtigen ___ zur Forschung."
+  },
+  {
+    "w": "ZUWACHS",
+    "en": "growth",
+    "ar": "نموّ",
+    "hint": "Eine Zunahme an Größe oder Menge.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Es gibt einen starken ___ an Arbeitsplätzen."
+  },
+  {
+    "w": "RÜCKGANG",
+    "en": "decline",
+    "ar": "تراجع",
+    "hint": "Eine Abnahme oder Verschlechterung.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ der Geburtenrate ist ein Problem."
+  },
+  {
+    "w": "EINLEITUNG",
+    "en": "introduction",
+    "ar": "مقدّمة",
+    "hint": "Der Beginn eines Textes oder einer Rede.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ des Berichts ist sehr präzise."
+  },
+  {
+    "w": "SCHLUSS",
+    "en": "conclusion",
+    "ar": "خاتمة",
+    "hint": "Das Ende eines Textes oder einer Rede.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Im ___ fasst er die Ergebnisse zusammen."
+  },
+  {
+    "w": "STANDPUNKT",
+    "en": "viewpoint",
+    "ar": "موقف",
+    "hint": "Die eigene Meinung zu einem Thema.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Ich vertrete einen anderen ___."
+  },
+  {
+    "w": "ÜBERBLICK",
+    "en": "overview",
+    "ar": "نظرة عامة",
+    "hint": "Ein kurzer Blick auf das Ganze.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Geben Sie einen kurzen ___ über das Thema."
+  },
+  {
+    "w": "AUSWIRKUNG",
+    "en": "impact",
+    "ar": "تأثير",
+    "hint": "Die Folge oder das Ergebnis von etwas.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ des Gesetzes ist noch unklar."
+  },
+  {
+    "w": "BEGRÜNDUNG",
+    "en": "justification",
+    "ar": "تبرير",
+    "hint": "Die Erklärung, warum man etwas tut.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ für die Entscheidung fehlt."
+  },
+  {
+    "w": "VORGEHEN",
+    "en": "approach",
+    "ar": "أسلوب",
+    "hint": "Die Art und Weise, wie man etwas macht.",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das ___ bei der Analyse war sehr präzise."
+  },
+  {
+    "w": "SCHWÄCHE",
+    "en": "weakness",
+    "ar": "ضعف",
+    "hint": "Ein Bereich, in dem man nicht stark ist.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Er kennt seine eigene ___."
+  },
+  {
+    "w": "STÄRKE",
+    "en": "strength",
+    "ar": "قوّة",
+    "hint": "Ein Bereich, in dem man besonders gut ist.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Geduld ist eine ihrer großen ___."
+  },
+  {
+    "w": "ASPEKT",
+    "en": "aspect",
+    "ar": "جانب",
+    "hint": "Ein Teil oder Gesichtspunkt eines Themas.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Ein wichtiger ___ wurde übersehen."
+  },
+  {
+    "w": "TENDENZ",
+    "en": "tendency",
+    "ar": "ميل",
+    "hint": "Eine Richtung, in die sich etwas entwickelt.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Es gibt eine ___ zur Digitalisierung."
+  },
+  {
+    "w": "WIRKUNG",
+    "en": "effect",
+    "ar": "تأثير",
+    "hint": "Das, was etwas bewirkt oder auslöst.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ des Medikaments tritt schnell ein."
+  },
+  {
+    "w": "VERFASSUNG",
+    "en": "constitution",
+    "ar": "دستور",
+    "hint": "Das Grundgesetz eines Landes.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Das Grundgesetz ist die ___ Deutschlands."
+  },
+  {
+    "w": "VORKEHRUNG",
+    "en": "precaution",
+    "ar": "احتياط",
+    "hint": "Man trifft sie, um etwas Schlimmes zu verhindern.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Sie trifft alle nötigen ___ für den Winter."
+  },
+  {
+    "w": "VERFAHREN",
+    "en": "procedure",
+    "ar": "إجراء",
+    "hint": "Ein geregelter Ablauf zur Lösung eines Problems.",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das gerichtliche ___ dauert sehr lange."
+  },
+  {
+    "w": "ANLIEGEN",
+    "en": "concern",
+    "ar": "مطلب",
+    "hint": "Ein wichtiges Thema oder eine Bitte.",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Ihr ___ wird sehr ernst genommen."
+  },
+  {
+    "w": "GRUNDLAGE",
+    "en": "basis",
+    "ar": "أساس",
+    "hint": "Das Fundament, auf dem etwas aufgebaut ist.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Daten sind die ___ guter Entscheidungen."
+  },
+  {
+    "w": "RÜCKHALT",
+    "en": "backing",
+    "ar": "سند",
+    "hint": "Unterstützung von anderen Personen.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Sie findet ___ in ihrer Familie."
+  },
+  {
+    "w": "ERÖRTERN",
+    "en": "discuss",
+    "ar": "يناقش",
+    "hint": "Ein Thema ausführlich und sachlich besprechen.",
+    "type": "verb",
+    "sentence": "Wir ___ die Vor- und Nachteile."
+  },
+  {
+    "w": "BEGRÜNDEN",
+    "en": "justify",
+    "ar": "يبرّر",
+    "hint": "Man erklärt, warum etwas richtig oder nötig ist.",
+    "type": "verb",
+    "sentence": "Er muss seine Entscheidung ausführlich ___."
+  },
+  {
+    "w": "ABWÄGEN",
+    "en": "weigh up",
+    "ar": "يوازن",
+    "hint": "Man vergleicht Vor- und Nachteile sorgfältig.",
+    "type": "verb",
+    "sentence": "Sie möchte alle Optionen sorgfältig ___."
+  },
+  {
+    "w": "BELEGEN",
+    "en": "substantiate",
+    "ar": "يدعم بأدلة",
+    "hint": "Man beweist etwas mit Fakten oder Beispielen.",
+    "type": "verb",
+    "sentence": "Man muss die Aussage mit Quellen ___."
+  },
+  {
+    "w": "ABLEITEN",
+    "en": "derive",
+    "ar": "يستنتج",
+    "hint": "Man zieht einen Schluss aus Informationen.",
+    "type": "verb",
+    "sentence": "Aus den Daten lässt sich eine Regel ___."
+  },
+  {
+    "w": "GESTALTEN",
+    "en": "shape",
+    "ar": "يُشكّل",
+    "hint": "Man formt oder beeinflusst etwas aktiv.",
+    "type": "verb",
+    "sentence": "Sie wollen den Unterricht kreativ ___."
+  },
+  {
+    "w": "UMSETZEN",
+    "en": "implement",
+    "ar": "ينفّذ",
+    "hint": "Man macht eine Idee zur Realität.",
+    "type": "verb",
+    "sentence": "Sie wollen die Idee in die Praxis ___."
+  },
+  {
+    "w": "EINWIRKEN",
+    "en": "influence",
+    "ar": "يؤثّر",
+    "hint": "Etwas hat Auswirkungen auf etwas anderes.",
+    "type": "verb",
+    "sentence": "Stress kann negativ auf die Gesundheit ___."
+  },
+  {
+    "w": "WAHRNEHMEN",
+    "en": "perceive",
+    "ar": "يُدرك",
+    "hint": "Man bemerkt oder erkennt etwas bewusst.",
+    "type": "verb",
+    "sentence": "Er kann die Veränderungen klar ___."
+  },
+  {
+    "w": "VERFASSEN",
+    "en": "compose",
+    "ar": "يؤلّف",
+    "hint": "Man schreibt einen Text oder Artikel.",
+    "type": "verb",
+    "sentence": "Sie muss einen langen Bericht ___."
+  },
+  {
+    "w": "WIDERLEGEN",
+    "en": "refute",
+    "ar": "يدحض",
+    "hint": "Man beweist, dass ein Argument falsch ist.",
+    "type": "verb",
+    "sentence": "Er kann das Argument nicht ___."
+  },
+  {
+    "w": "UMGEHEN",
+    "en": "deal with",
+    "ar": "يتعامل مع",
+    "hint": "Man geht mit einer Situation um.",
+    "type": "verb",
+    "sentence": "Man muss mit Kritik ___ können."
+  },
+  {
+    "w": "ABSTRAKT",
+    "en": "abstract",
+    "ar": "مجرّد",
+    "hint": "Nicht konkret, nur als Idee vorhanden.",
+    "type": "adjective",
+    "sentence": "Das Konzept ist sehr ___."
+  },
+  {
+    "w": "PRÄZISE",
+    "en": "precise",
+    "ar": "دقيق",
+    "hint": "Sehr genau und exakt.",
+    "type": "adjective",
+    "sentence": "Die Antwort muss sehr ___ sein."
+  },
+  {
+    "w": "FUNDIERT",
+    "en": "well-founded",
+    "ar": "مستند",
+    "hint": "Auf soliden Fakten oder Argumenten basierend.",
+    "type": "adjective",
+    "sentence": "Das ist eine sehr ___ Kritik."
+  },
+  {
+    "w": "OBJEKTIV",
+    "en": "objective",
+    "ar": "موضوعي",
+    "hint": "Ohne persönliche Meinung, nur Fakten.",
+    "type": "adjective",
+    "sentence": "Bitte beurteilen Sie die Situation ___."
+  },
+  {
+    "w": "SUBJEKTIV",
+    "en": "subjective",
+    "ar": "ذاتي",
+    "hint": "Aus der persönlichen Sicht einer Person.",
+    "type": "adjective",
+    "sentence": "Das ist eine ___ Einschätzung."
+  },
+  {
+    "w": "RELEVANT",
+    "en": "relevant",
+    "ar": "ذو صلة",
+    "hint": "Wichtig und bezogen auf das Thema.",
+    "type": "adjective",
+    "sentence": "Nur ___ Informationen werden berücksichtigt."
+  },
+  {
+    "w": "KOMPETENT",
+    "en": "competent",
+    "ar": "كفؤ",
+    "hint": "Man kann etwas gut und weiß, wie es geht.",
+    "type": "adjective",
+    "sentence": "Der Arzt ist sehr ___."
+  },
+  {
+    "w": "KONTROVERS",
+    "en": "controversial",
+    "ar": "جدلي",
+    "hint": "Verschiedene Menschen haben sehr gegensätzliche Meinungen dazu.",
+    "type": "adjective",
+    "sentence": "Das Thema wird ___ diskutiert."
+  },
+  {
+    "w": "NUANCIERT",
+    "en": "nuanced",
+    "ar": "دقيق الفروق",
+    "hint": "Mit feinen Unterschieden und Abstufungen.",
+    "type": "adjective",
+    "sentence": "Ihre Analyse ist sehr ___."
+  },
+  {
+    "w": "KONSISTENT",
+    "en": "consistent",
+    "ar": "متسقّ",
+    "hint": "Immer gleich und widerspruchsfrei.",
+    "type": "adjective",
+    "sentence": "Seine Argumentation ist nicht ___."
+  },
+  {
+    "w": "AUSGEWOGEN",
+    "en": "balanced",
+    "ar": "متوازن",
+    "hint": "Alle Seiten werden gleich berücksichtigt.",
+    "type": "adjective",
+    "sentence": "Der Bericht ist ___ und fair."
+  },
+  {
+    "w": "STRITTIG",
+    "en": "contentious",
+    "ar": "مثير للجدل",
+    "hint": "Darüber wird gestritten, keine Einigkeit.",
+    "type": "adjective",
+    "sentence": "Das Thema ist noch ___."
+  },
+  {
+    "w": "TREFFEND",
+    "en": "apt",
+    "ar": "موفّق",
+    "hint": "Genau passend zur Situation oder zum Thema.",
+    "type": "adjective",
+    "sentence": "Das ist eine sehr ___ Formulierung."
+  },
+  {
+    "w": "FRAGWÜRDIG",
+    "en": "questionable",
+    "ar": "مشكوك فيه",
+    "hint": "Man zweifelt, ob es richtig oder sicher ist.",
+    "type": "adjective",
+    "sentence": "Seine Methoden sind ___."
+  }
+]

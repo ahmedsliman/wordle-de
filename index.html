@@ -2138,6 +2138,7 @@ function showMotivation() {
 
 // ─── State ────────────────────────────────────────────
 let words        = {};
+const loadedLevels = new Set();   // tracks which level files are cached
 let currentLevel  = 'A1';          // kept for 2P compat (single level)
 let selectedLevels = new Set(['A1']); // 1P multi-select
 let gameOver     = false;
@@ -3412,8 +3413,9 @@ function showReviewEmpty(eligibleCount) {
   document.getElementById('new-puzzle-btn').classList.add('hidden');
 }
 
-function startCrossword() {
+async function startCrossword() {
   if (gameMode === '2P') return;
+  await ensureLevels(selectedLevels);
   document.getElementById('cw-review-empty').classList.add('hidden');
   let pool;
   if (selectedLevels.has('REVIEW')) {
@@ -4395,23 +4397,32 @@ document.addEventListener('keydown', e => {
 });
 
 // ─── Fetch & init ─────────────────────────────────────
+const LEVEL_FILES = { A1: 'words/a1.json', A2: 'words/a2.json', B1: 'words/b1.json', B2: 'words/b2.json' };
+
+async function loadLevel(lvl) {
+  if (loadedLevels.has(lvl)) return;
+  const res = await fetch(`./${LEVEL_FILES[lvl]}`);
+  if (!res.ok) throw new Error(`HTTP ${res.status} loading ${lvl}`);
+  words[lvl] = await res.json();
+  loadedLevels.add(lvl);
+  words[lvl].forEach(e => { wordLevelIndex[e.w] = lvl; wordEntryIndex[e.w] = e; });
+}
+
+async function ensureLevels(levelSet) {
+  await Promise.all([...levelSet].map(lvl => LEVEL_FILES[lvl] ? loadLevel(lvl) : Promise.resolve()));
+}
+
 async function init() {
   const loading = document.getElementById('loading');
   try {
-    const res  = await fetch('./words.json');
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    words = await res.json();
-
-    const allWords = [...(words.A1||[]), ...(words.A2||[]), ...(words.B1||[])].map(e => e.w);
-    const dupes    = allWords.filter((w, i) => allWords.indexOf(w) !== i);
-    if (dupes.length) console.warn('Duplicate words found:', dupes);
-    else              console.info('Wörtle: no duplicate words found ✓');
-
-    // Index every word by its CEFR level and full entry (for the review deck)
-    ['A1', 'A2', 'B1'].forEach(lvl => (words[lvl] || []).forEach(e => {
-      wordLevelIndex[e.w] = lvl;
-      wordEntryIndex[e.w] = e;
-    }));
+    // Load A1 eagerly (default level), rest in parallel but non-blocking
+    await loadLevel('A1');
+    Promise.all(['A2', 'B1', 'B2'].map(lvl => loadLevel(lvl))).then(() => {
+      const allWords = Object.values(words).flat().map(e => e.w);
+      const dupes = allWords.filter((w, i) => allWords.indexOf(w) !== i);
+      if (dupes.length) console.warn('Duplicate words found:', dupes);
+      else console.info('Wörtle: all levels loaded, no duplicates ✓');
+    });
 
     loadStreak();
     loadDiamonds();
@@ -4419,7 +4430,7 @@ async function init() {
     setMode('1P');
     loading.classList.add('hidden');
   } catch (err) {
-    loading.textContent = 'Failed to load words.json — ' + err.message;
+    loading.textContent = 'Failed to load words — ' + err.message;
     console.error(err);
   }
 }

@@ -1,0 +1,1960 @@
+[
+  {
+    "w": "HAUS",
+    "en": "house",
+    "ar": "بيت",
+    "hint": "Where you live",
+    "type": "noun",
+    "article": "das",
+    "plural": "die Häuser",
+    "example": {
+      "de": "Das Haus ist sehr alt.",
+      "en": "The house is very old.",
+      "ar": "المنزل قديم جدًا."
+    }
+  },
+  {
+    "w": "HUND",
+    "en": "dog",
+    "ar": "كلب",
+    "hint": "Common pet that barks",
+    "type": "noun",
+    "article": "der",
+    "plural": "die Hunde",
+    "example": {
+      "de": "Der Hund schläft im Garten.",
+      "en": "The dog sleeps in the garden.",
+      "ar": "الكلب ينام في الحديقة."
+    }
+  },
+  {
+    "w": "KATZE",
+    "en": "cat",
+    "ar": "قطة",
+    "hint": "Meows and purrs",
+    "type": "noun",
+    "article": "die",
+    "plural": "die Katzen",
+    "example": {
+      "de": "Die Katze trinkt Milch.",
+      "en": "The cat drinks milk.",
+      "ar": "القطة تشرب الحليب."
+    }
+  },
+  {
+    "w": "BUCH",
+    "en": "book",
+    "ar": "كتاب",
+    "hint": "You read it",
+    "type": "noun",
+    "article": "das",
+    "plural": "die Bücher",
+    "example": {
+      "de": "Das Buch ist interessant.",
+      "en": "The book is interesting.",
+      "ar": "الكتاب مثير للاهتمام."
+    }
+  },
+  {
+    "w": "AUTO",
+    "en": "car",
+    "ar": "سيارة",
+    "hint": "Four-wheeled vehicle",
+    "type": "noun",
+    "article": "das",
+    "plural": "die Autos"
+  },
+  {
+    "w": "KIND",
+    "en": "child",
+    "ar": "طفل",
+    "hint": "Young person",
+    "type": "noun",
+    "article": "das",
+    "plural": "die Kinder",
+    "example": {
+      "de": "Das Kind spielt draußen.",
+      "en": "The child plays outside.",
+      "ar": "الطفل يلعب في الخارج."
+    }
+  },
+  {
+    "w": "MANN",
+    "en": "man",
+    "ar": "رجل",
+    "hint": "Adult male person",
+    "type": "noun",
+    "article": "der",
+    "plural": "die Männer"
+  },
+  {
+    "w": "FRAU",
+    "en": "woman",
+    "ar": "امرأة",
+    "hint": "Adult female person",
+    "type": "noun",
+    "article": "die",
+    "plural": "die Frauen"
+  },
+  {
+    "w": "TISCH",
+    "en": "table",
+    "ar": "طاولة",
+    "hint": "Furniture you eat at",
+    "type": "noun",
+    "article": "der",
+    "plural": "die Tische"
+  },
+  {
+    "w": "STUHL",
+    "en": "chair",
+    "ar": "كرسي",
+    "hint": "You sit on it",
+    "type": "noun",
+    "article": "der",
+    "plural": "die Stühle"
+  },
+  {
+    "w": "BETT",
+    "en": "bed",
+    "ar": "سرير",
+    "hint": "You sleep in it",
+    "type": "noun",
+    "article": "das",
+    "plural": "die Betten"
+  },
+  {
+    "w": "BROT",
+    "en": "bread",
+    "ar": "خبز",
+    "hint": "German staple food",
+    "type": "noun",
+    "article": "das",
+    "plural": "die Brote"
+  },
+  {
+    "w": "MILCH",
+    "en": "milk",
+    "ar": "حليب",
+    "hint": "White drink from a cow",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "WASSER",
+    "en": "water",
+    "ar": "ماء",
+    "hint": "H₂O, you drink it",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "APFEL",
+    "en": "apple",
+    "ar": "تفاحة",
+    "hint": "Red or green fruit",
+    "type": "noun",
+    "article": "der",
+    "plural": "die Äpfel"
+  },
+  {
+    "w": "BALL",
+    "en": "ball",
+    "ar": "كرة",
+    "hint": "Round toy you kick or throw",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "BAUM",
+    "en": "tree",
+    "ar": "شجرة",
+    "hint": "Has trunk, branches, leaves",
+    "type": "noun",
+    "article": "der",
+    "plural": "die Bäume"
+  },
+  {
+    "w": "BLUME",
+    "en": "flower",
+    "ar": "زهرة",
+    "hint": "Colorful plant in a garden",
+    "type": "noun",
+    "article": "die",
+    "plural": "die Blumen"
+  },
+  {
+    "w": "BANK",
+    "en": "bank",
+    "ar": "بنك",
+    "hint": "Where you keep money",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "BRIEF",
+    "en": "letter",
+    "ar": "رسالة",
+    "hint": "Written message sent by post",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "GELD",
+    "en": "money",
+    "ar": "مال",
+    "hint": "Coins and banknotes",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "HAND",
+    "en": "hand",
+    "ar": "يد",
+    "hint": "Body part with five fingers",
+    "type": "noun",
+    "article": "die",
+    "plural": "die Hände"
+  },
+  {
+    "w": "KOPF",
+    "en": "head",
+    "ar": "رأس",
+    "hint": "Top of your body",
+    "type": "noun",
+    "article": "der",
+    "plural": "die Köpfe"
+  },
+  {
+    "w": "AUGE",
+    "en": "eye",
+    "ar": "عين",
+    "hint": "You see with it",
+    "type": "noun",
+    "article": "das",
+    "plural": "die Augen"
+  },
+  {
+    "w": "NASE",
+    "en": "nose",
+    "ar": "أنف",
+    "hint": "You smell with it",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "MUND",
+    "en": "mouth",
+    "ar": "فم",
+    "hint": "You eat and talk with it",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "OHR",
+    "en": "ear",
+    "ar": "أذن",
+    "hint": "You hear with it",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "FUSS",
+    "en": "foot",
+    "ar": "قدم",
+    "hint": "Bottom of the leg",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "BEIN",
+    "en": "leg",
+    "ar": "ساق",
+    "hint": "Limb you walk with",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "HERZ",
+    "en": "heart",
+    "ar": "قلب",
+    "hint": "Pumps blood in your chest",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "SCHULE",
+    "en": "school",
+    "ar": "مدرسة",
+    "hint": "Where pupils study",
+    "type": "noun",
+    "article": "die",
+    "plural": "die Schulen"
+  },
+  {
+    "w": "LEHRER",
+    "en": "teacher",
+    "ar": "مدرس",
+    "hint": "Person who teaches",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "KLASSE",
+    "en": "class",
+    "ar": "صف",
+    "hint": "Group of students learning together",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "STIFT",
+    "en": "pen/pencil",
+    "ar": "قلم",
+    "hint": "You write with it",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "HEFT",
+    "en": "notebook",
+    "ar": "دفتر",
+    "hint": "You write notes in it",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "TAFEL",
+    "en": "blackboard",
+    "ar": "لوح",
+    "hint": "Teacher writes on it",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "VATER",
+    "en": "father",
+    "ar": "أب",
+    "hint": "Male parent",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "MUTTER",
+    "en": "mother",
+    "ar": "أم",
+    "hint": "Female parent",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "BRUDER",
+    "en": "brother",
+    "ar": "أخ",
+    "hint": "Male sibling",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "SCHWESTER",
+    "en": "sister",
+    "ar": "أخت",
+    "hint": "Female sibling",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "OMA",
+    "en": "grandma",
+    "ar": "جدة",
+    "hint": "Mother's or father's mother",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "OPA",
+    "en": "grandpa",
+    "ar": "جد",
+    "hint": "Mother's or father's father",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "BABY",
+    "en": "baby",
+    "ar": "رضيع",
+    "hint": "Very young child",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "FREUND",
+    "en": "friend",
+    "ar": "صديق",
+    "hint": "Someone you like and trust",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "FELD",
+    "en": "field",
+    "ar": "حقل",
+    "hint": "Open land for farming",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "FLUSS",
+    "en": "river",
+    "ar": "نهر",
+    "hint": "Large flowing body of water",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "BERG",
+    "en": "mountain",
+    "ar": "جبل",
+    "hint": "Very tall landform",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "SEE",
+    "en": "lake",
+    "ar": "بحيرة",
+    "hint": "Body of water surrounded by land",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "MEER",
+    "en": "sea",
+    "ar": "بحر",
+    "hint": "Large saltwater body",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "LUFT",
+    "en": "air",
+    "ar": "هواء",
+    "hint": "What you breathe",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "FEUER",
+    "en": "fire",
+    "ar": "نار",
+    "hint": "Hot, bright, burning",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "LICHT",
+    "en": "light",
+    "ar": "ضوء",
+    "hint": "Opposite of darkness",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "SONNE",
+    "en": "sun",
+    "ar": "شمس",
+    "hint": "Star at the center of our solar system",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "MOND",
+    "en": "moon",
+    "ar": "قمر",
+    "hint": "Earth's natural satellite",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "STERN",
+    "en": "star",
+    "ar": "نجم",
+    "hint": "Twinkling light in the night sky",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "TAG",
+    "en": "day",
+    "ar": "يوم",
+    "hint": "24 hours",
+    "type": "noun",
+    "article": "der",
+    "plural": "die Tage"
+  },
+  {
+    "w": "NACHT",
+    "en": "night",
+    "ar": "ليل",
+    "hint": "Opposite of day",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "MORGEN",
+    "en": "morning",
+    "ar": "صباح",
+    "hint": "Early part of the day",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "ABEND",
+    "en": "evening",
+    "ar": "مساء",
+    "hint": "Late part of the day",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "WOCHE",
+    "en": "week",
+    "ar": "أسبوع",
+    "hint": "7 days",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "MONAT",
+    "en": "month",
+    "ar": "شهر",
+    "hint": "About 30 days",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "JAHR",
+    "en": "year",
+    "ar": "سنة",
+    "hint": "12 months",
+    "type": "noun",
+    "article": "das",
+    "plural": "die Jahre"
+  },
+  {
+    "w": "STUNDE",
+    "en": "hour",
+    "ar": "ساعة",
+    "hint": "60 minutes",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "MINUTE",
+    "en": "minute",
+    "ar": "دقيقة",
+    "hint": "60 seconds",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "STADT",
+    "en": "city",
+    "ar": "مدينة",
+    "hint": "Large urban settlement",
+    "type": "noun",
+    "article": "die",
+    "plural": "die Städte"
+  },
+  {
+    "w": "STRASSE",
+    "en": "street",
+    "ar": "شارع",
+    "hint": "Road in a city",
+    "type": "noun",
+    "article": "die",
+    "plural": "die Straßen"
+  },
+  {
+    "w": "PLATZ",
+    "en": "square/place",
+    "ar": "ساحة",
+    "hint": "Open public space",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "PARK",
+    "en": "park",
+    "ar": "حديقة عامة",
+    "hint": "Green outdoor area in a city",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "MARKT",
+    "en": "market",
+    "ar": "سوق",
+    "hint": "Where you buy fresh food",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "LADEN",
+    "en": "shop",
+    "ar": "محل",
+    "hint": "Small store",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "PREIS",
+    "en": "price",
+    "ar": "سعر",
+    "hint": "How much something costs",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "EURO",
+    "en": "euro",
+    "ar": "يورو",
+    "hint": "European currency",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "FARBE",
+    "en": "color",
+    "ar": "لون",
+    "hint": "Red, blue, green...",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "ROT",
+    "en": "red",
+    "ar": "أحمر",
+    "hint": "Color of blood",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "BLAU",
+    "en": "blue",
+    "ar": "أزرق",
+    "hint": "Color of the sky",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "GRUEN",
+    "en": "green",
+    "ar": "أخضر",
+    "hint": "Color of grass",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "GELB",
+    "en": "yellow",
+    "ar": "أصفر",
+    "hint": "Color of the sun",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "WEISS",
+    "en": "white",
+    "ar": "أبيض",
+    "hint": "Color of snow",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "SCHWARZ",
+    "en": "black",
+    "ar": "أسود",
+    "hint": "Color of night",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "VOGEL",
+    "en": "bird",
+    "ar": "طائر",
+    "hint": "Has wings and feathers",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "FISCH",
+    "en": "fish",
+    "ar": "سمكة",
+    "hint": "Lives in water, has fins",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "PFERD",
+    "en": "horse",
+    "ar": "حصان",
+    "hint": "Large animal you can ride",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "KUH",
+    "en": "cow",
+    "ar": "بقرة",
+    "hint": "Farm animal that gives milk",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "SCHAF",
+    "en": "sheep",
+    "ar": "خروف",
+    "hint": "Farm animal with wool",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "SCHWEIN",
+    "en": "pig",
+    "ar": "خنزير",
+    "hint": "Pink farm animal",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "HAHN",
+    "en": "rooster",
+    "ar": "ديك",
+    "hint": "Male chicken, crows at dawn",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "MAUS",
+    "en": "mouse",
+    "ar": "فأر",
+    "hint": "Small rodent",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "HEMD",
+    "en": "shirt",
+    "ar": "قميص",
+    "hint": "Upper body garment",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "HOSE",
+    "en": "trousers",
+    "ar": "بنطلون",
+    "hint": "Clothing for legs",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "KLEID",
+    "en": "dress",
+    "ar": "فستان",
+    "hint": "One-piece garment for women",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "MANTEL",
+    "en": "coat",
+    "ar": "معطف",
+    "hint": "Warm outer garment",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "SCHUHE",
+    "en": "shoes",
+    "ar": "حذاء",
+    "hint": "Wear them on your feet",
+    "type": "noun",
+    "article": "die/pl"
+  },
+  {
+    "w": "JACKE",
+    "en": "jacket",
+    "ar": "جاكيت",
+    "hint": "Short outer garment",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "MÜTZE",
+    "en": "hat/beanie",
+    "ar": "قبعة",
+    "hint": "Worn on the head when cold",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "ARZT",
+    "en": "doctor",
+    "ar": "طبيب",
+    "hint": "Treats sick people",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "KRANKENHAUS",
+    "en": "hospital",
+    "ar": "مستشفى",
+    "hint": "Where sick people are treated",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "APOTHEKE",
+    "en": "pharmacy",
+    "ar": "صيدلية",
+    "hint": "Where you buy medicine",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "BUS",
+    "en": "bus",
+    "ar": "حافلة",
+    "hint": "Public road transport",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "ZUG",
+    "en": "train",
+    "ar": "قطار",
+    "hint": "Travels on rails",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "FLUGZEUG",
+    "en": "airplane",
+    "ar": "طائرة",
+    "hint": "Flies in the sky",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "FAHRRAD",
+    "en": "bicycle",
+    "ar": "دراجة",
+    "hint": "Two-wheeled vehicle you pedal",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "NUMMER",
+    "en": "number",
+    "ar": "رقم",
+    "hint": "1, 2, 3...",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "NAME",
+    "en": "name",
+    "ar": "اسم",
+    "hint": "What you are called",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "LAND",
+    "en": "country",
+    "ar": "بلد",
+    "hint": "Nation with borders",
+    "type": "noun",
+    "article": "das"
+  },
+  {
+    "w": "SPRACHE",
+    "en": "language",
+    "ar": "لغة",
+    "hint": "System of communication",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "WORT",
+    "en": "word",
+    "ar": "كلمة",
+    "hint": "Unit of language",
+    "type": "noun",
+    "article": "das",
+    "plural": "die Wörter"
+  },
+  {
+    "w": "FRAGE",
+    "en": "question",
+    "ar": "سؤال",
+    "hint": "You ask it to get an answer",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "ANTWORT",
+    "en": "answer",
+    "ar": "جواب",
+    "hint": "Reply to a question",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "SEIN",
+    "en": "to be",
+    "ar": "يكون",
+    "hint": "Exists, is — most basic verb",
+    "type": "verb",
+    "principal_parts": "sein, war, ist gewesen"
+  },
+  {
+    "w": "HABEN",
+    "en": "to have",
+    "ar": "يملك",
+    "hint": "Possession",
+    "type": "verb",
+    "principal_parts": "haben, hatte, hat gehabt"
+  },
+  {
+    "w": "GEHEN",
+    "en": "to go",
+    "ar": "يذهب",
+    "hint": "Move on foot",
+    "type": "verb",
+    "principal_parts": "gehen, ging, ist gegangen",
+    "example": {
+      "de": "Wir gehen nach Hause.",
+      "en": "We are going home.",
+      "ar": "نحن ذاهبون إلى المنزل."
+    }
+  },
+  {
+    "w": "KOMMEN",
+    "en": "to come",
+    "ar": "يأتي",
+    "hint": "Move toward something",
+    "type": "verb",
+    "principal_parts": "kommen, kam, ist gekommen"
+  },
+  {
+    "w": "ESSEN",
+    "en": "to eat",
+    "ar": "يأكل",
+    "hint": "Put food in your mouth",
+    "type": "verb",
+    "principal_parts": "essen, aß, hat gegessen",
+    "example": {
+      "de": "Ich esse einen Apfel.",
+      "en": "I am eating an apple.",
+      "ar": "أنا آكل تفاحة."
+    }
+  },
+  {
+    "w": "TRINKEN",
+    "en": "to drink",
+    "ar": "يشرب",
+    "hint": "Consume a liquid",
+    "type": "verb",
+    "principal_parts": "trinken, trank, hat getrunken",
+    "example": {
+      "de": "Sie trinkt gern Kaffee.",
+      "en": "She likes to drink coffee.",
+      "ar": "هي تحب شرب القهوة."
+    }
+  },
+  {
+    "w": "SCHLAFEN",
+    "en": "to sleep",
+    "ar": "ينام",
+    "hint": "Rest with eyes closed",
+    "type": "verb",
+    "principal_parts": "schlafen, schlief, hat geschlafen"
+  },
+  {
+    "w": "MACHEN",
+    "en": "to make/do",
+    "ar": "يصنع / يفعل",
+    "hint": "Create or perform",
+    "type": "verb",
+    "principal_parts": "machen, machte, hat gemacht"
+  },
+  {
+    "w": "SEHEN",
+    "en": "to see",
+    "ar": "يرى",
+    "hint": "Perceive with eyes",
+    "type": "verb",
+    "principal_parts": "sehen, sah, hat gesehen"
+  },
+  {
+    "w": "HÖREN",
+    "en": "to hear",
+    "ar": "يسمع",
+    "hint": "Perceive with ears",
+    "type": "verb"
+  },
+  {
+    "w": "SAGEN",
+    "en": "to say",
+    "ar": "يقول",
+    "hint": "Speak words",
+    "type": "verb"
+  },
+  {
+    "w": "LESEN",
+    "en": "to read",
+    "ar": "يقرأ",
+    "hint": "Look at text and understand it",
+    "type": "verb",
+    "principal_parts": "lesen, las, hat gelesen"
+  },
+  {
+    "w": "SCHREIBEN",
+    "en": "to write",
+    "ar": "يكتب",
+    "hint": "Put words on paper",
+    "type": "verb",
+    "principal_parts": "schreiben, schrieb, hat geschrieben"
+  },
+  {
+    "w": "SPIELEN",
+    "en": "to play",
+    "ar": "يلعب",
+    "hint": "Have fun with games",
+    "type": "verb"
+  },
+  {
+    "w": "KAUFEN",
+    "en": "to buy",
+    "ar": "يشتري",
+    "hint": "Pay money for something",
+    "type": "verb"
+  },
+  {
+    "w": "FAHREN",
+    "en": "to drive/travel",
+    "ar": "يقود / يسافر",
+    "hint": "Move in a vehicle",
+    "type": "verb",
+    "principal_parts": "fahren, fuhr, ist gefahren"
+  },
+  {
+    "w": "WOHNEN",
+    "en": "to live (reside)",
+    "ar": "يسكن",
+    "hint": "Have your home somewhere",
+    "type": "verb"
+  },
+  {
+    "w": "ARBEITEN",
+    "en": "to work",
+    "ar": "يعمل",
+    "hint": "Do a job",
+    "type": "verb"
+  },
+  {
+    "w": "HELFEN",
+    "en": "to help",
+    "ar": "يساعد",
+    "hint": "Support someone",
+    "type": "verb"
+  },
+  {
+    "w": "LIEBEN",
+    "en": "to love",
+    "ar": "يحب",
+    "hint": "Have strong affection",
+    "type": "verb"
+  },
+  {
+    "w": "LERNEN",
+    "en": "to learn",
+    "ar": "يتعلم",
+    "hint": "Gain new knowledge",
+    "type": "verb"
+  },
+  {
+    "w": "SPRECHEN",
+    "en": "to speak",
+    "ar": "يتكلم",
+    "hint": "Use your voice to communicate",
+    "type": "verb",
+    "principal_parts": "sprechen, sprach, hat gesprochen"
+  },
+  {
+    "w": "FRAGEN",
+    "en": "to ask",
+    "ar": "يسأل",
+    "hint": "Request information",
+    "type": "verb"
+  },
+  {
+    "w": "ANTWORTEN",
+    "en": "to answer",
+    "ar": "يجيب",
+    "hint": "Reply to a question",
+    "type": "verb"
+  },
+  {
+    "w": "KENNEN",
+    "en": "to know (person)",
+    "ar": "يعرف شخصاً",
+    "hint": "Be acquainted with someone",
+    "type": "verb"
+  },
+  {
+    "w": "WISSEN",
+    "en": "to know (fact)",
+    "ar": "يعرف حقيقة",
+    "hint": "Have information in mind",
+    "type": "verb"
+  },
+  {
+    "w": "DENKEN",
+    "en": "to think",
+    "ar": "يفكر",
+    "hint": "Use your mind",
+    "type": "verb"
+  },
+  {
+    "w": "VERSTEHEN",
+    "en": "to understand",
+    "ar": "يفهم",
+    "hint": "Grasp the meaning",
+    "type": "verb"
+  },
+  {
+    "w": "BRAUCHEN",
+    "en": "to need",
+    "ar": "يحتاج",
+    "hint": "Require something",
+    "type": "verb"
+  },
+  {
+    "w": "WOLLEN",
+    "en": "to want",
+    "ar": "يريد",
+    "hint": "Desire something",
+    "type": "verb"
+  },
+  {
+    "w": "KÖNNEN",
+    "en": "to be able to",
+    "ar": "يستطيع",
+    "hint": "Have the ability",
+    "type": "verb"
+  },
+  {
+    "w": "MÜSSEN",
+    "en": "to have to",
+    "ar": "يجب عليه",
+    "hint": "Be obliged to do something",
+    "type": "verb"
+  },
+  {
+    "w": "HEISSEN",
+    "en": "to be called",
+    "ar": "اسمه / تُسمى",
+    "hint": "What is your name?",
+    "type": "verb"
+  },
+  {
+    "w": "LEBEN",
+    "en": "to live (be alive)",
+    "ar": "يعيش",
+    "hint": "Be alive",
+    "type": "verb"
+  },
+  {
+    "w": "STEHEN",
+    "en": "to stand",
+    "ar": "يقف",
+    "hint": "Be upright on your feet",
+    "type": "verb"
+  },
+  {
+    "w": "SITZEN",
+    "en": "to sit",
+    "ar": "يجلس",
+    "hint": "Be seated",
+    "type": "verb"
+  },
+  {
+    "w": "LAUFEN",
+    "en": "to run/walk",
+    "ar": "يجري / يمشي",
+    "hint": "Move quickly on foot",
+    "type": "verb",
+    "principal_parts": "laufen, lief, ist gelaufen"
+  },
+  {
+    "w": "NEHMEN",
+    "en": "to take",
+    "ar": "يأخذ",
+    "hint": "Grab something",
+    "type": "verb",
+    "principal_parts": "nehmen, nahm, hat genommen"
+  },
+  {
+    "w": "GEBEN",
+    "en": "to give",
+    "ar": "يعطي",
+    "hint": "Hand something to someone",
+    "type": "verb",
+    "principal_parts": "geben, gab, hat gegeben"
+  },
+  {
+    "w": "BRINGEN",
+    "en": "to bring",
+    "ar": "يحضر",
+    "hint": "Carry something here",
+    "type": "verb"
+  },
+  {
+    "w": "FINDEN",
+    "en": "to find",
+    "ar": "يجد",
+    "hint": "Locate something",
+    "type": "verb",
+    "principal_parts": "finden, fand, hat gefunden"
+  },
+  {
+    "w": "ÖFFNEN",
+    "en": "to open",
+    "ar": "يفتح",
+    "hint": "Make accessible",
+    "type": "verb"
+  },
+  {
+    "w": "ZAHLEN",
+    "en": "to pay",
+    "ar": "يدفع",
+    "hint": "Hand over money",
+    "type": "verb"
+  },
+  {
+    "w": "GUT",
+    "en": "good",
+    "ar": "جيد",
+    "hint": "Positive quality",
+    "type": "adjective"
+  },
+  {
+    "w": "SCHLECHT",
+    "en": "bad",
+    "ar": "سيئ",
+    "hint": "Negative quality",
+    "type": "adjective"
+  },
+  {
+    "w": "GROSS",
+    "en": "big/tall",
+    "ar": "كبير / طويل",
+    "hint": "Large in size",
+    "type": "adjective"
+  },
+  {
+    "w": "KLEIN",
+    "en": "small/short",
+    "ar": "صغير / قصير",
+    "hint": "Little in size",
+    "type": "adjective"
+  },
+  {
+    "w": "ALT",
+    "en": "old",
+    "ar": "قديم / عجوز",
+    "hint": "Not young or new",
+    "type": "adjective"
+  },
+  {
+    "w": "NEU",
+    "en": "new",
+    "ar": "جديد",
+    "hint": "Just made or acquired",
+    "type": "adjective"
+  },
+  {
+    "w": "JUNG",
+    "en": "young",
+    "ar": "شاب / صغير",
+    "hint": "Not old",
+    "type": "adjective"
+  },
+  {
+    "w": "SCHÖN",
+    "en": "beautiful",
+    "ar": "جميل",
+    "hint": "Pleasing to the eye",
+    "type": "adjective"
+  },
+  {
+    "w": "HÄSSLICH",
+    "en": "ugly",
+    "ar": "قبيح",
+    "hint": "Not pleasing to look at",
+    "type": "adjective"
+  },
+  {
+    "w": "SCHNELL",
+    "en": "fast",
+    "ar": "سريع",
+    "hint": "Moving quickly",
+    "type": "adjective"
+  },
+  {
+    "w": "LANGSAM",
+    "en": "slow",
+    "ar": "بطيء",
+    "hint": "Moving slowly",
+    "type": "adjective"
+  },
+  {
+    "w": "HEISS",
+    "en": "hot",
+    "ar": "حار",
+    "hint": "High temperature",
+    "type": "adjective"
+  },
+  {
+    "w": "KALT",
+    "en": "cold",
+    "ar": "بارد",
+    "hint": "Low temperature",
+    "type": "adjective"
+  },
+  {
+    "w": "WARM",
+    "en": "warm",
+    "ar": "دافئ",
+    "hint": "Pleasantly hot",
+    "type": "adjective"
+  },
+  {
+    "w": "BILLIG",
+    "en": "cheap",
+    "ar": "رخيص",
+    "hint": "Low price",
+    "type": "adjective"
+  },
+  {
+    "w": "TEUER",
+    "en": "expensive",
+    "ar": "غالي",
+    "hint": "High price",
+    "type": "adjective"
+  },
+  {
+    "w": "LEICHT",
+    "en": "light/easy",
+    "ar": "خفيف / سهل",
+    "hint": "Low weight or easy",
+    "type": "adjective"
+  },
+  {
+    "w": "SCHWER",
+    "en": "heavy/difficult",
+    "ar": "ثقيل / صعب",
+    "hint": "High weight or hard",
+    "type": "adjective"
+  },
+  {
+    "w": "MÜDE",
+    "en": "tired",
+    "ar": "متعب",
+    "hint": "Need rest or sleep",
+    "type": "adjective"
+  },
+  {
+    "w": "FROH",
+    "en": "happy/glad",
+    "ar": "سعيد",
+    "hint": "In a good mood",
+    "type": "adjective"
+  },
+  {
+    "w": "TRAURIG",
+    "en": "sad",
+    "ar": "حزين",
+    "hint": "Unhappy, sorrowful",
+    "type": "adjective"
+  },
+  {
+    "w": "VOLL",
+    "en": "full",
+    "ar": "ممتلئ",
+    "hint": "Has no more space",
+    "type": "adjective"
+  },
+  {
+    "w": "LEER",
+    "en": "empty",
+    "ar": "فارغ",
+    "hint": "Has nothing inside",
+    "type": "adjective"
+  },
+  {
+    "w": "SATT",
+    "en": "full (after eating)",
+    "ar": "شبعان",
+    "hint": "No longer hungry",
+    "type": "adjective"
+  },
+  {
+    "w": "HUNGRIG",
+    "en": "hungry",
+    "ar": "جائع",
+    "hint": "Wanting food",
+    "type": "adjective"
+  },
+  {
+    "w": "KRANK",
+    "en": "sick",
+    "ar": "مريض",
+    "hint": "Not healthy",
+    "type": "adjective"
+  },
+  {
+    "w": "GESUND",
+    "en": "healthy",
+    "ar": "بصحة جيدة",
+    "hint": "Not sick",
+    "type": "adjective"
+  },
+  {
+    "w": "RICHTIG",
+    "en": "correct/right",
+    "ar": "صحيح",
+    "hint": "Without mistakes",
+    "type": "adjective"
+  },
+  {
+    "w": "FALSCH",
+    "en": "wrong/false",
+    "ar": "خاطئ",
+    "hint": "Not correct",
+    "type": "adjective"
+  },
+  {
+    "w": "LAUT",
+    "en": "loud",
+    "ar": "صاخب",
+    "hint": "High volume",
+    "type": "adjective"
+  },
+  {
+    "w": "LEISE",
+    "en": "quiet",
+    "ar": "هادئ",
+    "hint": "Low volume",
+    "type": "adjective"
+  },
+  {
+    "w": "SAUBER",
+    "en": "clean",
+    "ar": "نظيف",
+    "hint": "Not dirty",
+    "type": "adjective"
+  },
+  {
+    "w": "SCHMUTZIG",
+    "en": "dirty",
+    "ar": "وسخ",
+    "hint": "Not clean",
+    "type": "adjective"
+  },
+  {
+    "w": "HELL",
+    "en": "bright/light",
+    "ar": "ساطع / فاتح",
+    "hint": "Full of light",
+    "type": "adjective"
+  },
+  {
+    "w": "DUNKEL",
+    "en": "dark",
+    "ar": "مظلم",
+    "hint": "Lacking light",
+    "type": "adjective"
+  },
+  {
+    "w": "NASS",
+    "en": "wet",
+    "ar": "مبلل",
+    "hint": "Contains water",
+    "type": "adjective"
+  },
+  {
+    "w": "TROCKEN",
+    "en": "dry",
+    "ar": "جاف",
+    "hint": "Free of moisture",
+    "type": "adjective"
+  },
+  {
+    "w": "OFFEN",
+    "en": "open",
+    "ar": "مفتوح",
+    "hint": "Not closed",
+    "type": "adjective"
+  },
+  {
+    "w": "GESCHLOSSEN",
+    "en": "closed",
+    "ar": "مغلق",
+    "hint": "Not open",
+    "type": "adjective"
+  },
+  {
+    "w": "FERTIG",
+    "en": "ready/done",
+    "ar": "جاهز / منتهي",
+    "hint": "Finished or prepared",
+    "type": "adjective"
+  },
+  {
+    "w": "HAAR",
+    "en": "hair",
+    "ar": "شعر",
+    "hint": "Es wächst auf dem Kopf.",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Sie kämmt ihr ___ jeden Morgen."
+  },
+  {
+    "w": "BAUCH",
+    "en": "belly",
+    "ar": "بطن",
+    "hint": "Zwischen Brust und Hüfte.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Mein ___ tut weh."
+  },
+  {
+    "w": "ZAHN",
+    "en": "tooth",
+    "ar": "سنّ",
+    "hint": "Man putzt ihn zweimal täglich.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Mir tut ein ___ weh."
+  },
+  {
+    "w": "RÜCKEN",
+    "en": "back",
+    "ar": "ظهر",
+    "hint": "Die hintere Seite des Körpers.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Sein ___ schmerzt nach dem Sitzen."
+  },
+  {
+    "w": "SOHN",
+    "en": "son",
+    "ar": "ابن",
+    "hint": "Das männliche Kind der Eltern.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Ihr ___ ist fünf Jahre alt."
+  },
+  {
+    "w": "TOCHTER",
+    "en": "daughter",
+    "ar": "ابنة",
+    "hint": "Das weibliche Kind der Eltern.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Meine ___ geht schon zur Schule."
+  },
+  {
+    "w": "ONKEL",
+    "en": "uncle",
+    "ar": "عمّ",
+    "hint": "Der Bruder des Vaters oder der Mutter.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Mein ___ wohnt in München."
+  },
+  {
+    "w": "TANTE",
+    "en": "aunt",
+    "ar": "عمّة",
+    "hint": "Die Schwester des Vaters oder der Mutter.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Meine ___ backt sehr guten Kuchen."
+  },
+  {
+    "w": "WAND",
+    "en": "wall",
+    "ar": "جدار",
+    "hint": "Sie trennt zwei Räume voneinander.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Das Bild hängt an der ___."
+  },
+  {
+    "w": "BODEN",
+    "en": "floor",
+    "ar": "أرضية",
+    "hint": "Man geht auf ihm im Haus.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Die Katze liegt auf dem ___."
+  },
+  {
+    "w": "BANANE",
+    "en": "banana",
+    "ar": "موز",
+    "hint": "Gelbe, gebogene Frucht.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Er isst eine ___ zum Frühstück."
+  },
+  {
+    "w": "TOMATE",
+    "en": "tomato",
+    "ar": "طماطم",
+    "hint": "Rote Frucht für Salat und Soße.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ ist rot und rund."
+  },
+  {
+    "w": "ZUCKER",
+    "en": "sugar",
+    "ar": "سكّر",
+    "hint": "Man gibt ihn in den Kaffee.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Sie gibt ___ in ihren Tee."
+  },
+  {
+    "w": "SALZ",
+    "en": "salt",
+    "ar": "ملح",
+    "hint": "Weißes Gewürz für das Essen.",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das Essen braucht mehr ___."
+  },
+  {
+    "w": "SUPPE",
+    "en": "soup",
+    "ar": "حساء",
+    "hint": "Warme Flüssigkeit im Teller.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Im Winter trinken wir gern ___."
+  },
+  {
+    "w": "PIZZA",
+    "en": "pizza",
+    "ar": "بيتزا",
+    "hint": "Italienisches Gericht mit Belag.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Wir bestellen eine ___ mit Käse."
+  },
+  {
+    "w": "SCHLÜSSEL",
+    "en": "key",
+    "ar": "مفتاح",
+    "hint": "Man öffnet damit die Tür.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Ich finde meinen ___ nicht."
+  },
+  {
+    "w": "BIRNE",
+    "en": "pear",
+    "ar": "كمّثرى",
+    "hint": "Grüne oder gelbe süße Frucht.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ ist süß und saftig."
+  },
+  {
+    "w": "PILZ",
+    "en": "mushroom",
+    "ar": "فطر",
+    "hint": "Er wächst im Wald auf dem Boden.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Im Wald findet man viele ___."
+  },
+  {
+    "w": "DORF",
+    "en": "village",
+    "ar": "قرية",
+    "hint": "Kleiner als eine Stadt.",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Er kommt aus einem kleinen ___."
+  },
+  {
+    "w": "INSEL",
+    "en": "island",
+    "ar": "جزيرة",
+    "hint": "Land, das von Wasser umgeben ist.",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Wir verbringen den Urlaub auf einer ___."
+  },
+  {
+    "w": "TIGER",
+    "en": "tiger",
+    "ar": "نمر",
+    "hint": "Großes Raubtier mit Streifen.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ ist das schnellste Raubtier."
+  },
+  {
+    "w": "LÖWE",
+    "en": "lion",
+    "ar": "أسد",
+    "hint": "Großes Raubtier, König der Tiere.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ schläft in der Sonne."
+  },
+  {
+    "w": "TURM",
+    "en": "tower",
+    "ar": "برج",
+    "hint": "Ein sehr hohes, schmales Gebäude.",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ ist sehr hoch."
+  },
+  {
+    "w": "ROSA",
+    "en": "pink",
+    "ar": "وردي",
+    "hint": "Heller als Rot, wie eine Rose.",
+    "type": "adjective",
+    "sentence": "Sie trägt ein ___ Kleid."
+  },
+  {
+    "w": "GRAU",
+    "en": "gray",
+    "ar": "رمادي",
+    "hint": "Farbe zwischen Weiß und Schwarz.",
+    "type": "adjective",
+    "sentence": "Der Himmel ist heute ___."
+  },
+  {
+    "w": "LILA",
+    "en": "purple",
+    "ar": "بنفسجي",
+    "hint": "Mischung aus Blau und Rot.",
+    "type": "adjective",
+    "sentence": "Die Blume ist ___."
+  },
+  {
+    "w": "ORANGE",
+    "en": "orange",
+    "ar": "برتقالي",
+    "hint": "Farbe wie die gleichnamige Frucht.",
+    "type": "adjective",
+    "sentence": "Das Auto ist ___."
+  },
+  {
+    "w": "RUND",
+    "en": "round",
+    "ar": "مستدير",
+    "hint": "Wie ein Ball oder Kreis geformt.",
+    "type": "adjective",
+    "sentence": "Der Ball ist ___."
+  },
+  {
+    "w": "WEICH",
+    "en": "soft",
+    "ar": "ناعم",
+    "hint": "Nicht hart, angenehm zu berühren.",
+    "type": "adjective",
+    "sentence": "Das Kissen ist sehr ___."
+  },
+  {
+    "w": "HART",
+    "en": "hard",
+    "ar": "صلب",
+    "hint": "Das Gegenteil von weich.",
+    "type": "adjective",
+    "sentence": "Der Stein ist ___."
+  },
+  {
+    "w": "DÜNN",
+    "en": "thin",
+    "ar": "رفيع",
+    "hint": "Nicht dick, wenig Breite.",
+    "type": "adjective",
+    "sentence": "Das Papier ist sehr ___."
+  },
+  {
+    "w": "DICK",
+    "en": "thick",
+    "ar": "سميك",
+    "hint": "Das Gegenteil von dünn.",
+    "type": "adjective",
+    "sentence": "Das Buch ist sehr ___."
+  },
+  {
+    "w": "HÜBSCH",
+    "en": "pretty",
+    "ar": "جميل",
+    "hint": "Schön anzusehen.",
+    "type": "adjective",
+    "sentence": "Sie hat ein ___ Lächeln."
+  },
+  {
+    "w": "TANZEN",
+    "en": "dance",
+    "ar": "يرقص",
+    "hint": "Man bewegt sich zur Musik.",
+    "type": "verb",
+    "sentence": "Wir ___ gern auf Partys."
+  },
+  {
+    "w": "SINGEN",
+    "en": "sing",
+    "ar": "يغني",
+    "hint": "Man macht Musik mit der Stimme.",
+    "type": "verb",
+    "sentence": "Wir ___ ein Lied zusammen."
+  },
+  {
+    "w": "MALEN",
+    "en": "paint",
+    "ar": "يرسم",
+    "hint": "Man macht Bilder mit Farbe.",
+    "type": "verb",
+    "sentence": "Das Kind möchte ein Bild ___."
+  },
+  {
+    "w": "LACHEN",
+    "en": "laugh",
+    "ar": "يضحك",
+    "hint": "Man zeigt Freude mit dem Mund.",
+    "type": "verb",
+    "sentence": "Wir ___ über den lustigen Witz."
+  },
+  {
+    "w": "RUFEN",
+    "en": "call out",
+    "ar": "ينادي",
+    "hint": "Man spricht laut, um jemanden zu rufen.",
+    "type": "verb",
+    "sentence": "Wir ___ nach dem Kellner."
+  },
+  {
+    "w": "SCHICKEN",
+    "en": "send",
+    "ar": "يرسل",
+    "hint": "Man gibt etwas ab, z.B. einen Brief.",
+    "type": "verb",
+    "sentence": "Ich möchte dir eine Nachricht ___."
+  },
+  {
+    "w": "SCHWIMMEN",
+    "en": "swim",
+    "ar": "يسبح",
+    "hint": "Man bewegt sich im Wasser.",
+    "type": "verb",
+    "sentence": "Wir ___ im Sommer im See."
+  },
+  {
+    "w": "WEINEN",
+    "en": "cry",
+    "ar": "يبكي",
+    "hint": "Tränen fließen, wenn man traurig ist.",
+    "type": "verb",
+    "sentence": "Wir ___ manchmal aus Freude."
+  },
+  {
+    "w": "STELLEN",
+    "en": "place",
+    "ar": "يضع",
+    "hint": "Man bringt etwas an einen Ort.",
+    "type": "verb",
+    "sentence": "Bitte ___ die Tasse auf den Tisch."
+  },
+  {
+    "w": "HOLEN",
+    "en": "fetch",
+    "ar": "يجلب",
+    "hint": "Man geht und bringt etwas zurück.",
+    "type": "verb",
+    "sentence": "Kannst du Wasser ___?"
+  },
+  {
+    "w": "WECKEN",
+    "en": "wake up",
+    "ar": "يوقظ",
+    "hint": "Man hilft jemandem aufzustehen.",
+    "type": "verb",
+    "sentence": "Kannst du mich um sieben ___?"
+  },
+  {
+    "w": "ZEICHNEN",
+    "en": "draw",
+    "ar": "يرسم بقلم",
+    "hint": "Man macht Bilder mit einem Stift.",
+    "type": "verb",
+    "sentence": "Wir ___ gern Tiere und Pflanzen."
+  },
+  {
+    "w": "BASTELN",
+    "en": "craft",
+    "ar": "يصنع يدوياً",
+    "hint": "Man baut etwas mit den Händen.",
+    "type": "verb",
+    "sentence": "Die Kinder ___ eine Laterne."
+  },
+  {
+    "w": "TIPPEN",
+    "en": "type",
+    "ar": "يكتب",
+    "hint": "Man schreibt mit der Tastatur.",
+    "type": "verb",
+    "sentence": "Wir ___ schnell auf dem Computer."
+  },
+  {
+    "w": "RETTEN",
+    "en": "rescue",
+    "ar": "ينقذ",
+    "hint": "Man hilft in einer Gefahr.",
+    "type": "verb",
+    "sentence": "Der Arzt kann viele Leben ___."
+  },
+  {
+    "w": "BAUEN",
+    "en": "build",
+    "ar": "يبني",
+    "hint": "Man macht ein Haus oder eine Brücke.",
+    "type": "verb",
+    "sentence": "Sie wollen ein neues Haus ___."
+  },
+  {
+    "w": "FALLEN",
+    "en": "fall",
+    "ar": "يسقط",
+    "hint": "Man verliert das Gleichgewicht.",
+    "type": "verb",
+    "sentence": "Pass auf, du könntest ___!"
+  }
+]
