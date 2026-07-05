@@ -17,7 +17,7 @@
       --color-border:           #E5E1D9;
       --color-text:             #1C1917;
       --color-text-inv:         #FFFFFF;
-      --color-text-muted:       #57534E;
+      --color-text-muted:       #5a6480;
       --color-cell:             #FFFFFF;
       --color-cell-block:       #292524;
       --color-correct:          #1D9E75;
@@ -283,6 +283,10 @@
       border-bottom: 1px solid var(--color-border);
       border-left: 3px solid var(--color-correct);
       min-height: 48px;
+      /* Sticky on mobile to keep clue visible during scrolling */
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
     .hint-en {
@@ -670,7 +674,7 @@
     .streak-pill span {
       font-weight: 700;
       font-size: 1rem;
-      color: var(--color-correct);
+      color: var(--color-correct-text);
     }
 
     /* ─── Loading / Error state ──────────────────────── */
@@ -1055,9 +1059,9 @@
         z-index: 40;
       }
 
-      /* Reserve space so content isn't hidden under the custom keyboard (2P only) */
-      body.has-keyboard:not(:has(#wordle-panel.mode-1p)) {
-        padding-bottom: calc(185px + env(safe-area-inset-bottom, 0px));
+      /* Reserve space for native keyboard on all modes */
+      body.has-keyboard {
+        padding-bottom: max(env(keyboard-inset-height, 0px), calc(185px + env(safe-area-inset-bottom, 0px)));
       }
     }
 
@@ -1499,7 +1503,7 @@
       font-size: clamp(1.4rem, 6vw, 2rem);
       font-weight: 700;
       letter-spacing: 0.2em;
-      color: var(--color-correct);
+      color: var(--color-correct-text);
     }
     .copy-code-btn {
       font-family: 'Inter', system-ui, sans-serif;
@@ -1946,7 +1950,7 @@
   <div class="streak-bar" id="streak-bar">
     <div class="streak-pill">🔥 Serie <span id="streak-current">0</span></div>
     <div class="streak-pill">🏆 Beste <span id="streak-best">0</span></div>
-    <div class="streak-pill" id="streak-bar-diamonds" style="display:none;color:var(--color-correct)">💎 <span id="streak-diamond-count">0</span></div>
+    <div class="streak-pill" id="streak-bar-diamonds" style="display:none;color:var(--color-correct-text)">💎 <span id="streak-diamond-count">0</span></div>
   </div>
 
   </main><!-- /game-main -->
@@ -3341,6 +3345,7 @@ function endCrossword(won) {
   gameOver = true;
   // Restore scrollable layout when puzzle ends
   document.body.classList.remove('cw-active', 'cw-typing');
+  cleanupKeyboardInsetFallback();
   if (won) {
     srAnnounce('Ausgezeichnet! Alle Wörter richtig gelöst!');
 
@@ -3459,6 +3464,33 @@ async function startCrossword() {
   // Select first across word's first cell
   const firstAcross = puzzle.words.find(w => w.dir === 'across');
   if (firstAcross) selectCell(firstAcross.row, firstAcross.col, 'across');
+
+  // Setup visualViewport listener for keyboard inset (fallback for browsers without env() support)
+  if (window.visualViewport && window.innerWidth <= 680) {
+    setupKeyboardInsetFallback();
+  }
+}
+
+let keyboardInsetListener = null;
+function setupKeyboardInsetFallback() {
+  if (keyboardInsetListener) return;
+  keyboardInsetListener = () => {
+    const crosswordArea = document.getElementById('crossword-area');
+    if (crosswordArea && gameMode === '1P') {
+      const keyboardHeight = window.innerHeight - window.visualViewport.height;
+      crosswordArea.style.paddingBottom = keyboardHeight > 0 ? keyboardHeight + 'px' : '';
+    }
+  };
+  window.visualViewport.addEventListener('resize', keyboardInsetListener);
+}
+
+function cleanupKeyboardInsetFallback() {
+  if (keyboardInsetListener && window.visualViewport) {
+    window.visualViewport.removeEventListener('resize', keyboardInsetListener);
+    keyboardInsetListener = null;
+    const crosswordArea = document.getElementById('crossword-area');
+    if (crosswordArea) crosswordArea.style.paddingBottom = '';
+  }
 }
 
 // ─── Key handling ─────────────────────────────────────
