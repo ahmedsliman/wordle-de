@@ -194,6 +194,30 @@
       border-bottom-color: var(--color-correct-text);
     }
 
+    /* ─── Fullscreen button (mobile only) ─────────── */
+    .fullscreen-btn {
+      display: none; /* shown only at ≤680px via media query */
+      background: none;
+      border: 1.5px solid var(--color-border);
+      border-radius: 8px;
+      font-size: 1.1rem;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--color-text-muted);
+      padding: 0;
+      line-height: 1;
+      transition: color 0.15s, border-color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .fullscreen-btn:hover { color: var(--color-text); border-color: var(--color-text-muted); }
+    .fullscreen-btn.active { color: var(--color-correct-text); border-color: var(--color-correct-text); }
+    @media (max-width: 680px) {
+      .fullscreen-btn { display: inline-flex; }
+    }
+
     /* ─── Diamond Counter ──────────────────────────── */
     .diamond-counter {
       display: flex;
@@ -1868,6 +1892,7 @@
       <button class="tab tab-review" data-level="REVIEW" aria-label="Wiederholung — fällige Wörter" aria-pressed="false">★<span class="review-badge" id="review-badge" hidden>0</span></button>
     </div>
     <div style="display:flex;align-items:center;gap:8px;">
+      <button id="fullscreen-btn" class="fullscreen-btn" title="Vollbild" aria-label="Vollbild ein/aus">⛶</button>
       <div class="diamond-counter" id="diamond-counter" title="Gesamt-Diamanten">
         💎 <span id="diamond-count">0</span>
       </div>
@@ -4611,6 +4636,26 @@ function fireConfetti() {
     else ctx.clearRect(0, 0, W, H);
   })(start);
 }
+
+// ─── Fullscreen ──────────────────────────────────────
+(function setupFullscreen() {
+  const btn = document.getElementById('fullscreen-btn');
+  if (!btn || !document.documentElement.requestFullscreen) { btn?.remove(); return; }
+
+  function update() {
+    const on = !!document.fullscreenElement;
+    btn.textContent = on ? '⊠' : '⛶';
+    btn.setAttribute('aria-label', on ? 'Vollbild beenden' : 'Vollbild');
+    btn.classList.toggle('active', on);
+  }
+
+  btn.addEventListener('click', () => {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else document.documentElement.requestFullscreen().catch(() => {});
+  });
+  document.addEventListener('fullscreenchange', update);
+  update();
+})();
 
 // ─── Accessibility: dialog semantics, focus trap, Escape, state mirroring ──
 (function setupA11y() {
