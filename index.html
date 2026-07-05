@@ -1123,6 +1123,8 @@
 
       /* Clue bar stays visible; prevent flex from squishing it */
       body.cw-active #cw-clue-bar { flex-shrink: 0; }
+      /* Wordle panel is empty in 1P mode — stop it claiming flex space */
+      body.cw-active #wordle-panel { flex: none; }
 
       /* Board zone: takes all remaining space */
       body.cw-active #crossword-area {
