@@ -5,7 +5,8 @@
     "ar": "مجتمع",
     "hint": "Group of people living together",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "In einer freien ___ gelten bestimmte Regeln."
   },
   {
     "w": "UMWELT",
@@ -13,7 +14,8 @@
     "ar": "بيئة",
     "hint": "Natural surroundings",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Wir müssen die ___ für künftige Generationen schützen."
   },
   {
     "w": "WIRTSCHAFT",
@@ -21,7 +23,8 @@
     "ar": "اقتصاد",
     "hint": "System of production and trade",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ des Landes wächst seit Jahren."
   },
   {
     "w": "BILDUNG",
@@ -29,7 +32,8 @@
     "ar": "تعليم",
     "hint": "Learning and development",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Gute ___ ist die Grundlage für den Berufserfolg."
   },
   {
     "w": "GESUNDHEIT",
@@ -37,7 +41,8 @@
     "ar": "صحة",
     "hint": "State of being well",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Regelmäßiger Sport fördert die ___."
   },
   {
     "w": "POLITIK",
@@ -45,7 +50,8 @@
     "ar": "سياسة",
     "hint": "System of government",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die aktuelle ___ hat viele Menschen enttäuscht."
   },
   {
     "w": "KULTUR",
@@ -53,7 +59,8 @@
     "ar": "ثقافة",
     "hint": "Art, customs and society",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ eines Landes spiegelt sich in seiner Kunst wider."
   },
   {
     "w": "WISSENSCHAFT",
@@ -61,7 +68,8 @@
     "ar": "علم",
     "hint": "Systematic study of the world",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ macht jeden Tag neue Entdeckungen."
   },
   {
     "w": "TECHNOLOGIE",
@@ -69,7 +77,8 @@
     "ar": "تكنولوجيا",
     "hint": "Application of scientific knowledge",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Neue ___ verändert unsere Arbeitswelt rasant."
   },
   {
     "w": "MEDIEN",
@@ -77,7 +86,8 @@
     "ar": "وسائل الإعلام",
     "hint": "TV, radio, internet, press",
     "type": "noun",
-    "article": "die/pl"
+    "article": "die/pl",
+    "sentence": "Die ___ berichten täglich über aktuelle Ereignisse."
   },
   {
     "w": "DEMOKRATIE",
@@ -85,7 +95,8 @@
     "ar": "ديمقراطية",
     "hint": "Government by the people",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "In einer ___ haben alle Bürger das Recht zu wählen."
   },
   {
     "w": "REGIERUNG",
@@ -93,7 +104,8 @@
     "ar": "حكومة",
     "hint": "Those who rule a country",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ plant neue Maßnahmen gegen den Klimawandel."
   },
   {
     "w": "GESETZ",
@@ -101,7 +113,8 @@
     "ar": "قانون",
     "hint": "Legal rule of society",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Das ___ schützt die Rechte aller Bürger."
   },
   {
     "w": "RECHT",
@@ -109,7 +122,8 @@
     "ar": "حق / قانون",
     "hint": "Legal entitlement",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Jeder Mensch hat das ___ auf Bildung."
   },
   {
     "w": "PFLICHT",
@@ -117,7 +131,8 @@
     "ar": "واجب",
     "hint": "What you are obliged to do",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Es ist unsere ___, die Umwelt zu schützen."
   },
   {
     "w": "FREIHEIT",
@@ -125,7 +140,8 @@
     "ar": "حرية",
     "hint": "Ability to act without restraint",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ der Meinungsäußerung ist ein Grundrecht."
   },
   {
     "w": "GERECHTIGKEIT",
@@ -133,7 +149,8 @@
     "ar": "عدالة",
     "hint": "Fairness in society",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ im Rechtssystem ist sehr wichtig."
   },
   {
     "w": "VERANTWORTUNG",
@@ -141,7 +158,8 @@
     "ar": "مسؤولية",
     "hint": "Duty to account for your actions",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Jeder trägt ___ für sein eigenes Handeln."
   },
   {
     "w": "MEINUNG",
@@ -149,7 +167,8 @@
     "ar": "رأي",
     "hint": "Your view on a topic",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Jeder hat das Recht, seine ___ zu äußern."
   },
   {
     "w": "DISKUSSION",
@@ -157,7 +176,8 @@
     "ar": "نقاش",
     "hint": "Exchange of views",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ über das neue Gesetz war sehr lebhaft."
   },
   {
     "w": "ARGUMENT",
@@ -165,7 +185,8 @@
     "ar": "حجة",
     "hint": "Reasoning to support a view",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Sein ___ für den Klimaschutz war sehr überzeugend."
   },
   {
     "w": "KRITIK",
@@ -173,7 +194,8 @@
     "ar": "نقد",
     "hint": "Analysis of faults",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ an der neuen Politik ist berechtigt."
   },
   {
     "w": "LÖSUNG",
@@ -181,7 +203,8 @@
     "ar": "حل",
     "hint": "Answer to a problem",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Wir suchen gemeinsam nach einer guten ___."
   },
   {
     "w": "PROBLEM",
@@ -189,7 +212,8 @@
     "ar": "مشكلة",
     "hint": "Difficulty to be solved",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Das ___ der Armut betrifft viele Menschen weltweit."
   },
   {
     "w": "URSACHE",
@@ -197,7 +221,8 @@
     "ar": "سبب",
     "hint": "Reason something happens",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ des Problems muss zuerst gefunden werden."
   },
   {
     "w": "FOLGE",
@@ -205,7 +230,8 @@
     "ar": "عاقبة",
     "hint": "Result of an action",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ dieser Entscheidung war sehr schwerwiegend."
   },
   {
     "w": "EINFLUSS",
@@ -213,7 +239,8 @@
     "ar": "تأثير",
     "hint": "Effect on something or someone",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Der ___ der Medien auf die öffentliche Meinung ist groß."
   },
   {
     "w": "ENTWICKLUNG",
@@ -221,7 +248,8 @@
     "ar": "تطور",
     "hint": "Process of growing or changing",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die technische ___ geht sehr schnell voran."
   },
   {
     "w": "VERÄNDERUNG",
@@ -229,7 +257,8 @@
     "ar": "تغيير",
     "hint": "Something becoming different",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die gesellschaftliche ___ der letzten Jahre ist enorm."
   },
   {
     "w": "VERBESSERUNG",
@@ -237,7 +266,8 @@
     "ar": "تحسين",
     "hint": "Making something better",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Eine ___ der Lebensbedingungen ist dringend nötig."
   },
   {
     "w": "GEFAHR",
@@ -245,7 +275,8 @@
     "ar": "خطر",
     "hint": "Risk of harm",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Der Klimawandel ist eine große ___ für alle."
   },
   {
     "w": "RISIKO",
@@ -253,7 +284,8 @@
     "ar": "مخاطرة",
     "hint": "Possibility of something bad",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Das ___ eines Unfalls kann durch Vorsicht gesenkt werden."
   },
   {
     "w": "CHANCE",
@@ -261,7 +293,8 @@
     "ar": "فرصة",
     "hint": "Good moment to do something",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Jede Krise bietet auch eine neue ___."
   },
   {
     "w": "VORTEIL",
@@ -269,7 +302,8 @@
     "ar": "ميزة",
     "hint": "A benefit over others",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Der ___ dieser Methode liegt in ihrer Einfachheit."
   },
   {
     "w": "NACHTEIL",
@@ -277,7 +311,8 @@
     "ar": "عيب",
     "hint": "A drawback",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Der ___ der Lösung ist der hohe Preis."
   },
   {
     "w": "ZIEL",
@@ -285,7 +320,8 @@
     "ar": "هدف",
     "hint": "What you are trying to achieve",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Das ___ der Organisation ist die Förderung von Bildung."
   },
   {
     "w": "ERGEBNIS",
@@ -293,7 +329,8 @@
     "ar": "نتيجة",
     "hint": "Outcome of something",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Das ___ der Studie überraschte alle Forscher."
   },
   {
     "w": "ERFOLG",
@@ -301,7 +338,8 @@
     "ar": "نجاح",
     "hint": "Achieving a goal",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Der ___ des Projekts hängt von allen Beteiligten ab."
   },
   {
     "w": "MISSERFOLG",
@@ -309,7 +347,8 @@
     "ar": "فشل",
     "hint": "Not achieving a goal",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Nach dem ___ analysiert man, was schiefgelaufen ist."
   },
   {
     "w": "ERFAHRUNG",
@@ -317,7 +356,8 @@
     "ar": "تجربة",
     "hint": "Knowledge from doing things",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ aus diesem Projekt war sehr wertvoll."
   },
   {
     "w": "FÄHIGKEIT",
@@ -325,7 +365,8 @@
     "ar": "قدرة / مهارة",
     "hint": "Capacity to do something",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___, kritisch zu denken, ist sehr wichtig."
   },
   {
     "w": "TALENT",
@@ -333,7 +374,8 @@
     "ar": "موهبة",
     "hint": "Natural ability",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Ihr ___ für Musik wurde früh entdeckt."
   },
   {
     "w": "INTERESSE",
@@ -341,7 +383,8 @@
     "ar": "اهتمام",
     "hint": "Wanting to know more about something",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Ihr ___ an der Wissenschaft wurde schon als Kind geweckt."
   },
   {
     "w": "LEIDENSCHAFT",
@@ -349,7 +392,8 @@
     "ar": "شغف",
     "hint": "Strong enthusiasm",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Seine ___ für die Musik war von klein auf spürbar."
   },
   {
     "w": "TRAUM",
@@ -357,7 +401,8 @@
     "ar": "حلم",
     "hint": "Images during sleep or a wish",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Ihr ___ ist es, einmal Ärztin zu werden."
   },
   {
     "w": "ZUKUNFT",
@@ -365,7 +410,8 @@
     "ar": "مستقبل",
     "hint": "Time that is yet to come",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Wir müssen gemeinsam an einer besseren ___ arbeiten."
   },
   {
     "w": "VERGANGENHEIT",
@@ -373,7 +419,8 @@
     "ar": "ماضي",
     "hint": "Time that has already gone",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Aus der ___ können wir viel lernen."
   },
   {
     "w": "GEGENWART",
@@ -381,7 +428,8 @@
     "ar": "حاضر",
     "hint": "Time happening now",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Wir sollten mehr in der ___ leben."
   },
   {
     "w": "TRADITION",
@@ -389,7 +437,8 @@
     "ar": "تقليد",
     "hint": "Custom passed down generations",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Diese ___ wird seit Jahrhunderten weitergegeben."
   },
   {
     "w": "WERT",
@@ -397,7 +446,8 @@
     "ar": "قيمة",
     "hint": "Importance or worth",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Der ___ der Bildung wird oft unterschätzt."
   },
   {
     "w": "MORAL",
@@ -405,7 +455,8 @@
     "ar": "أخلاق",
     "hint": "Principles of right and wrong",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Gute ___ ist die Grundlage einer stabilen Gesellschaft."
   },
   {
     "w": "ETHIK",
@@ -413,7 +464,8 @@
     "ar": "أخلاقيات",
     "hint": "Study of moral principles",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "In der Medizin spielt die ___ eine entscheidende Rolle."
   },
   {
     "w": "VERTRAUEN",
@@ -421,7 +473,8 @@
     "ar": "ثقة",
     "hint": "Belief in someone's reliability",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Ohne ___ kann keine Beziehung funktionieren."
   },
   {
     "w": "RESPEKT",
@@ -429,7 +482,8 @@
     "ar": "احترام",
     "hint": "Admiration for someone",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Gegenseitiger ___ ist die Basis guter Zusammenarbeit."
   },
   {
     "w": "TOLERANZ",
@@ -437,7 +491,8 @@
     "ar": "تسامح",
     "hint": "Accepting differences",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "In einer vielfältigen Gesellschaft ist ___ unerlässlich."
   },
   {
     "w": "VORURTEIL",
@@ -445,7 +500,8 @@
     "ar": "تحيز",
     "hint": "Unfair opinion formed in advance",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Ein ___ ist eine vorschnelle Meinung ohne Fakten."
   },
   {
     "w": "INTEGRATION",
@@ -453,7 +509,8 @@
     "ar": "اندماج",
     "hint": "Inclusion into a group",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ von Einwanderern ist eine gesellschaftliche Aufgabe."
   },
   {
     "w": "MIGRATION",
@@ -461,7 +518,8 @@
     "ar": "هجرة",
     "hint": "Moving to another country",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ von Menschen hat die Welt stark verändert."
   },
   {
     "w": "GLOBALISIERUNG",
@@ -469,7 +527,8 @@
     "ar": "عولمة",
     "hint": "World becoming more connected",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ hat die Wirtschaft weltweit vernetzt."
   },
   {
     "w": "KLIMAWANDEL",
@@ -477,7 +536,8 @@
     "ar": "تغير المناخ",
     "hint": "Long-term shift in global temperatures",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Der ___ bedroht die Lebensräume vieler Tierarten."
   },
   {
     "w": "NACHHALTIGKEIT",
@@ -485,7 +545,8 @@
     "ar": "استدامة",
     "hint": "Meeting needs without harming the future",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "___ bedeutet, Ressourcen verantwortungsvoll zu nutzen."
   },
   {
     "w": "ENERGIE",
@@ -493,7 +554,8 @@
     "ar": "طاقة",
     "hint": "Power from fuel or renewables",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Erneuerbare ___ ist die Zukunft der Stromversorgung."
   },
   {
     "w": "RESSOURCE",
@@ -501,7 +563,8 @@
     "ar": "مورد",
     "hint": "Useful material from nature",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Wasser ist eine wichtige ___ für alle Lebewesen."
   },
   {
     "w": "RECYCLING",
@@ -509,7 +572,8 @@
     "ar": "إعادة تدوير",
     "hint": "Reusing waste materials",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "___ hilft dabei, Abfall zu reduzieren und Umwelt zu schonen."
   },
   {
     "w": "VERSCHMUTZUNG",
@@ -517,7 +581,8 @@
     "ar": "تلوث",
     "hint": "Contamination of air, water, soil",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ der Luft ist ein ernstes Problem in Großstädten."
   },
   {
     "w": "ARMUT",
@@ -525,7 +590,8 @@
     "ar": "فقر",
     "hint": "State of being very poor",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "___ ist eines der größten sozialen Probleme weltweit."
   },
   {
     "w": "REICHTUM",
@@ -533,7 +599,8 @@
     "ar": "ثروة",
     "hint": "State of being very rich",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Großer ___ verteilt sich sehr ungleich in der Gesellschaft."
   },
   {
     "w": "UNGLEICHHEIT",
@@ -541,7 +608,8 @@
     "ar": "عدم المساواة",
     "hint": "Unfair difference in wealth or rights",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ zwischen Arm und Reich wächst weltweit."
   },
   {
     "w": "SOLIDARITÄT",
@@ -549,7 +617,8 @@
     "ar": "تضامن",
     "hint": "Supporting others as a group",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "___ bedeutet, füreinander einzustehen in schwierigen Zeiten."
   },
   {
     "w": "GEMEINSCHAFT",
@@ -557,7 +626,8 @@
     "ar": "مجتمع محلي",
     "hint": "Group of people in one place",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Eine starke ___ hält auch in Krisen zusammen."
   },
   {
     "w": "ZUSAMMENARBEIT",
@@ -565,7 +635,8 @@
     "ar": "تعاون",
     "hint": "Working together",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ zwischen den Ländern ist entscheidend für den Frieden."
   },
   {
     "w": "KONFLIKT",
@@ -573,7 +644,8 @@
     "ar": "صراع",
     "hint": "Serious disagreement",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Der ___ zwischen den Nachbarn dauert schon Monate an."
   },
   {
     "w": "FRIEDEN",
@@ -581,7 +653,8 @@
     "ar": "سلام",
     "hint": "Absence of war or conflict",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "___ ist das höchste Gut einer Gesellschaft."
   },
   {
     "w": "KRIEG",
@@ -589,7 +662,8 @@
     "ar": "حرب",
     "hint": "Armed conflict between nations",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Ein ___ hinterlässt tiefe Wunden in einer Gesellschaft."
   },
   {
     "w": "GRENZE",
@@ -597,7 +671,8 @@
     "ar": "حدود",
     "hint": "Line separating two countries",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ zwischen Deutschland und Frankreich ist offen."
   },
   {
     "w": "VERTRAG",
@@ -605,7 +680,8 @@
     "ar": "عقد / معاهدة",
     "hint": "Formal written agreement",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Die Parteien haben einen ___ über die Zusammenarbeit geschlossen."
   },
   {
     "w": "BEDARF",
@@ -613,7 +689,8 @@
     "ar": "حاجة",
     "hint": "What is required",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Der ___ an qualifizierten Fachkräften wächst stetig."
   },
   {
     "w": "ANGEBOT",
@@ -621,7 +698,8 @@
     "ar": "عرض",
     "hint": "What is available or proposed",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Das ___ an Wohnungen in der Stadt ist sehr begrenzt."
   },
   {
     "w": "NACHFRAGE",
@@ -629,7 +707,8 @@
     "ar": "طلب",
     "hint": "Consumer desire for goods",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ nach erneuerbarer Energie steigt jedes Jahr."
   },
   {
     "w": "INVESTITION",
@@ -637,7 +716,8 @@
     "ar": "استثمار",
     "hint": "Putting money to work",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Eine ___ in Bildung zahlt sich langfristig aus."
   },
   {
     "w": "SCHULDEN",
@@ -645,7 +725,8 @@
     "ar": "ديون",
     "hint": "Money owed to others",
     "type": "noun",
-    "article": "die/pl"
+    "article": "die/pl",
+    "sentence": "Hohe ___ können die wirtschaftliche Entwicklung hemmen."
   },
   {
     "w": "STEUER",
@@ -653,7 +734,8 @@
     "ar": "ضريبة",
     "hint": "Money paid to the government",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ wird zur Finanzierung öffentlicher Dienste genutzt."
   },
   {
     "w": "GEHALT",
@@ -661,7 +743,8 @@
     "ar": "راتب",
     "hint": "Monthly payment for work",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Das ___ hängt oft von der Qualifikation und Erfahrung ab."
   },
   {
     "w": "ARBEITSLOSIGKEIT",
@@ -669,7 +752,8 @@
     "ar": "بطالة",
     "hint": "State of having no job",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ stieg während der Wirtschaftskrise stark an."
   },
   {
     "w": "AUSBILDUNG",
@@ -677,7 +761,8 @@
     "ar": "تدريب",
     "hint": "Vocational education",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Eine gute ___ eröffnet viele berufliche Möglichkeiten."
   },
   {
     "w": "STUDIUM",
@@ -685,7 +770,8 @@
     "ar": "دراسة جامعية",
     "hint": "University-level learning",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Das ___ an der Universität dauert in der Regel vier Jahre."
   },
   {
     "w": "ABSCHLUSS",
@@ -693,7 +779,8 @@
     "ar": "شهادة / إتمام",
     "hint": "End of education or degree",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Nach dem ___ sucht sie eine Stelle in ihrem Fachbereich."
   },
   {
     "w": "PRÜFUNG",
@@ -701,7 +788,8 @@
     "ar": "امتحان",
     "hint": "Test of knowledge",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ am Ende des Semesters war sehr schwierig."
   },
   {
     "w": "BEWERBUNG",
@@ -709,7 +797,8 @@
     "ar": "طلب توظيف",
     "hint": "Formal request for a job",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Er schickt morgen seine ___ für die neue Stelle ab."
   },
   {
     "w": "LEBENSLAUF",
@@ -717,7 +806,8 @@
     "ar": "سيرة ذاتية",
     "hint": "Summary of your life and work",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Ein guter ___ zeigt klar die beruflichen Erfahrungen."
   },
   {
     "w": "INTERVIEW",
@@ -725,7 +815,8 @@
     "ar": "مقابلة عمل",
     "hint": "Meeting to assess a candidate",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Das ___ für die Stelle findet morgen statt."
   },
   {
     "w": "KOLLEGE",
@@ -733,7 +824,8 @@
     "ar": "زميل",
     "hint": "Person you work with",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Mein ___ erklärt mir die neuen Aufgaben."
   },
   {
     "w": "VORGESETZTE",
@@ -741,735 +833,840 @@
     "ar": "مشرف",
     "hint": "Person above you at work",
     "type": "noun",
-    "article": "die/der"
+    "article": "die/der",
+    "sentence": "Die ___ gibt regelmäßig Feedback zur Arbeitsleistung."
   },
   {
     "w": "ANALYSIEREN",
     "en": "to analyse",
     "ar": "يحلل",
     "hint": "Examine in detail",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Wir müssen die Situation genau ___."
   },
   {
     "w": "BESCHREIBEN",
     "en": "to describe",
     "ar": "يصف",
     "hint": "Give details about something",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Kannst du das Problem mit eigenen Worten ___?"
   },
   {
     "w": "VERGLEICHEN",
     "en": "to compare",
     "ar": "يقارن",
     "hint": "Look at similarities and differences",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Wir sollen die beiden Texte miteinander ___."
   },
   {
     "w": "BEURTEILEN",
     "en": "to assess/judge",
     "ar": "يحكم / يقيّم",
     "hint": "Form an opinion about quality",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Der Lehrer muss die Leistungen der Schüler ___."
   },
   {
     "w": "KRITISIEREN",
     "en": "to criticise",
     "ar": "ينتقد",
     "hint": "Point out faults",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Es ist wichtig, konstruktiv ___ zu können."
   },
   {
     "w": "DISKUTIEREN",
     "en": "to discuss",
     "ar": "يناقش",
     "hint": "Talk about a topic in depth",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Wir wollen das Thema in der Gruppe ___."
   },
   {
     "w": "ARGUMENTIEREN",
     "en": "to argue (a point)",
     "ar": "يحتج / يجادل",
     "hint": "Give reasons for a view",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "In der Debatte muss man klar ___ können."
   },
   {
     "w": "ENTSCHEIDEN",
     "en": "to decide",
     "ar": "يقرر",
     "hint": "Make a choice",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Die Gruppe muss sich bald für eine Lösung ___."
   },
   {
     "w": "ÜBERZEUGEN",
     "en": "to convince",
     "ar": "يقنع",
     "hint": "Persuade someone to believe",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Er möchte alle von seiner Idee ___."
   },
   {
     "w": "PLANEN",
     "en": "to plan",
     "ar": "يخطط",
     "hint": "Organise in advance",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Wir müssen die nächsten Schritte sorgfältig ___."
   },
   {
     "w": "ORGANISIEREN",
     "en": "to organise",
     "ar": "ينظم",
     "hint": "Arrange things systematically",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Wer soll die Veranstaltung ___?"
   },
   {
     "w": "VORBEREITEN",
     "en": "to prepare",
     "ar": "يستعد",
     "hint": "Get ready for something",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Ich muss mich gut auf die Prüfung ___."
   },
   {
     "w": "ENTWICKELN",
     "en": "to develop",
     "ar": "يطور",
     "hint": "Grow or advance",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Das Unternehmen will neue Produkte ___."
   },
   {
     "w": "VERBESSERN",
     "en": "to improve",
     "ar": "يحسن",
     "hint": "Make better",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Wir müssen die Situation für alle ___."
   },
   {
     "w": "VERÄNDERN",
     "en": "to change",
     "ar": "يغير",
     "hint": "Make different",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Technologie kann die Gesellschaft grundlegend ___."
   },
   {
     "w": "ERREICHEN",
     "en": "to achieve/reach",
     "ar": "يحقق / يصل إلى",
     "hint": "Attain a goal",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Mit harter Arbeit kann man seine Ziele ___."
   },
   {
     "w": "UNTERSTÜTZEN",
     "en": "to support",
     "ar": "يدعم",
     "hint": "Give help or backing",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Wir wollen die Benachteiligten finanziell ___."
   },
   {
     "w": "FÖRDERN",
     "en": "to promote/support",
     "ar": "يعزز / يشجع",
     "hint": "Encourage growth",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Die Regierung will die Forschung stärker ___."
   },
   {
     "w": "VERHINDERN",
     "en": "to prevent",
     "ar": "يمنع",
     "hint": "Stop something from happening",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Wie können wir den Klimawandel noch ___?"
   },
   {
     "w": "LÖSEN",
     "en": "to solve",
     "ar": "يحل",
     "hint": "Find an answer to a problem",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Wir müssen dieses Problem gemeinsam ___."
   },
   {
     "w": "UNTERSUCHEN",
     "en": "to investigate",
     "ar": "يحقق / يدرس",
     "hint": "Examine carefully",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Die Wissenschaftler wollen das Phänomen genauer ___."
   },
   {
     "w": "FORSCHEN",
     "en": "to research",
     "ar": "يبحث علمياً",
     "hint": "Conduct scientific study",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Sie möchte über den Klimawandel ___."
   },
   {
     "w": "BEWEISEN",
     "en": "to prove",
     "ar": "يثبت",
     "hint": "Show something is true",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Er muss seine Theorie noch wissenschaftlich ___."
   },
   {
     "w": "WIDERSPRECHEN",
     "en": "to contradict",
     "ar": "يعارض",
     "hint": "Say the opposite",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Ich muss deiner Meinung hier ausdrücklich ___."
   },
   {
     "w": "ZUSTIMMEN",
     "en": "to agree",
     "ar": "يوافق",
     "hint": "Share the same opinion",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Ich kann deinem Argument vollständig ___."
   },
   {
     "w": "ABLEHNEN",
     "en": "to reject/decline",
     "ar": "يرفض",
     "hint": "Say no to something",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Das Gericht wird den Antrag wahrscheinlich ___."
   },
   {
     "w": "AKZEPTIEREN",
     "en": "to accept",
     "ar": "يقبل",
     "hint": "Agree to something offered",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Wir müssen die Entscheidung ___."
   },
   {
     "w": "VORSCHLAGEN",
     "en": "to suggest",
     "ar": "يقترح",
     "hint": "Offer an idea",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Was würdest du als nächsten Schritt ___?"
   },
   {
     "w": "ERMÖGLICHEN",
     "en": "to enable",
     "ar": "يمكّن",
     "hint": "Make something possible",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Technologie kann viele neue Dinge ___."
   },
   {
     "w": "BEEINFLUSSEN",
     "en": "to influence",
     "ar": "يؤثر على",
     "hint": "Have an effect on",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Medien können die öffentliche Meinung stark ___."
   },
   {
     "w": "BETONEN",
     "en": "to emphasise",
     "ar": "يؤكد / يشدد",
     "hint": "Stress importance",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Der Bericht möchte die Bedeutung der Bildung ___."
   },
   {
     "w": "ERWÄHNEN",
     "en": "to mention",
     "ar": "يذكر",
     "hint": "Refer to briefly",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Ich möchte noch einen wichtigen Punkt ___."
   },
   {
     "w": "ZUSAMMENFASSEN",
     "en": "to summarise",
     "ar": "يلخص",
     "hint": "Give a brief overview",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Kannst du den Text kurz für uns ___?"
   },
   {
     "w": "DARSTELLEN",
     "en": "to represent/present",
     "ar": "يمثل / يعرض",
     "hint": "Show or portray",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Das Diagramm soll die Daten klar ___."
   },
   {
     "w": "EINSETZEN",
     "en": "to deploy/use",
     "ar": "يستخدم / يوظف",
     "hint": "Put into use",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Wir wollen neue Technologien in der Produktion ___."
   },
   {
     "w": "ANWENDEN",
     "en": "to apply",
     "ar": "يطبق",
     "hint": "Use in practice",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Kannst du die Regel hier direkt ___?"
   },
   {
     "w": "KOMMUNIZIEREN",
     "en": "to communicate",
     "ar": "يتواصل",
     "hint": "Exchange information",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Es ist wichtig, klar und deutlich ___."
   },
   {
     "w": "REAGIEREN",
     "en": "to react",
     "ar": "يتفاعل / يرد",
     "hint": "Respond to something",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Wie soll man auf solche Provokationen ___?"
   },
   {
     "w": "INTEGRIEREN",
     "en": "to integrate",
     "ar": "يدمج",
     "hint": "Combine into a whole",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Die Stadt will neue Bürger besser ___."
   },
   {
     "w": "ENGAGIEREN",
     "en": "to engage/commit",
     "ar": "ينخرط / يلتزم",
     "hint": "Get involved",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Viele wollen sich stärker im Verein ___."
   },
   {
     "w": "TEILNEHMEN",
     "en": "to participate",
     "ar": "يشارك",
     "hint": "Take part in something",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Ich möchte gerne an der Konferenz ___."
   },
   {
     "w": "BEITRAGEN",
     "en": "to contribute",
     "ar": "يساهم",
     "hint": "Add to a shared effort",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Jeder kann etwas zur Gemeinschaft ___."
   },
   {
     "w": "GELINGEN",
     "en": "to succeed",
     "ar": "ينجح",
     "hint": "Turn out well",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Das Projekt muss auf jeden Fall ___."
   },
   {
     "w": "SCHEITERN",
     "en": "to fail",
     "ar": "يفشل",
     "hint": "Not succeed",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Ohne Teamarbeit wird das Projekt ___."
   },
   {
     "w": "RISKIEREN",
     "en": "to risk",
     "ar": "يخاطر",
     "hint": "Take a chance",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Er möchte seine Karriere nicht ___."
   },
   {
     "w": "SCHÜTZEN",
     "en": "to protect",
     "ar": "يحمي",
     "hint": "Keep safe from harm",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Wir müssen die Umwelt für unsere Kinder ___."
   },
   {
     "w": "GARANTIEREN",
     "en": "to guarantee",
     "ar": "يضمن",
     "hint": "Promise with certainty",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Niemand kann den Erfolg ___."
   },
   {
     "w": "FINANZIEREN",
     "en": "to finance",
     "ar": "يموّل",
     "hint": "Provide money for something",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Wer soll das neue Projekt ___?"
   },
   {
     "w": "POLITISCH",
     "en": "political",
     "ar": "سياسي",
     "hint": "Related to government or politics",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die ___ Lage im Land ist sehr angespannt."
   },
   {
     "w": "WIRTSCHAFTLICH",
     "en": "economic",
     "ar": "اقتصادي",
     "hint": "Related to the economy",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die ___ Krise trifft viele Familien hart."
   },
   {
     "w": "SOZIAL",
     "en": "social",
     "ar": "اجتماعي",
     "hint": "Related to society",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Armut ist ein ernstes ___ Problem."
   },
   {
     "w": "KULTURELL",
     "en": "cultural",
     "ar": "ثقافي",
     "hint": "Related to culture",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Der ___ Austausch zwischen Ländern ist sehr wertvoll."
   },
   {
     "w": "TECHNISCH",
     "en": "technical",
     "ar": "تقني",
     "hint": "Related to technology",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die ___ Probleme wurden schnell behoben."
   },
   {
     "w": "WISSENSCHAFTLICH",
     "en": "scientific",
     "ar": "علمي",
     "hint": "Based on science",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Der Bericht basiert auf ___ Erkenntnissen."
   },
   {
     "w": "ÖFFENTLICH",
     "en": "public",
     "ar": "عام",
     "hint": "For everyone",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das ___ Verkehrssystem muss verbessert werden."
   },
   {
     "w": "PRIVAT",
     "en": "private",
     "ar": "خاص",
     "hint": "Not for general use",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das ist eine ___ Angelegenheit und geht niemanden etwas an."
   },
   {
     "w": "NACHHALTIG",
     "en": "sustainable",
     "ar": "مستدام",
     "hint": "Able to continue long-term",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Wir brauchen eine ___ Energiepolitik für die Zukunft."
   },
   {
     "w": "ÖKOLOGISCH",
     "en": "ecological",
     "ar": "بيئي",
     "hint": "Relating to the natural environment",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das Unternehmen setzt auf ___ Produktion."
   },
   {
     "w": "GLOBAL",
     "en": "global",
     "ar": "عالمي",
     "hint": "Concerning the whole world",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Der Klimawandel ist ein ___ Problem."
   },
   {
     "w": "LOKAL",
     "en": "local",
     "ar": "محلي",
     "hint": "Concerning a small area",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Wir kaufen am liebsten ___ produzierte Lebensmittel."
   },
   {
     "w": "NATIONAL",
     "en": "national",
     "ar": "وطني",
     "hint": "Concerning one country",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das Thema wurde auf ___ Ebene diskutiert."
   },
   {
     "w": "INTERNATIONAL",
     "en": "international",
     "ar": "دولي",
     "hint": "Between or among nations",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die ___ Gemeinschaft reagierte auf die Krise."
   },
   {
     "w": "DIGITAL",
     "en": "digital",
     "ar": "رقمي",
     "hint": "Using computers or the internet",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die ___ Transformation verändert alle Branchen."
   },
   {
     "w": "ANALOG",
     "en": "analogue",
     "ar": "تماثلي",
     "hint": "Non-digital, traditional",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Viele bevorzugen noch die ___ Uhr am Handgelenk."
   },
   {
     "w": "KREATIV",
     "en": "creative",
     "ar": "مبدع",
     "hint": "Good at coming up with ideas",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Sie ist sehr ___ und hat immer neue Ideen."
   },
   {
     "w": "INNOVATIV",
     "en": "innovative",
     "ar": "مبتكر",
     "hint": "Introducing new ideas",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das Unternehmen ist bekannt für seine ___ Produkte."
   },
   {
     "w": "EFFIZIENT",
     "en": "efficient",
     "ar": "فعّال",
     "hint": "Achieving goals without waste",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die neue Methode ist viel ___ als die alte."
   },
   {
     "w": "EFFEKTIV",
     "en": "effective",
     "ar": "مؤثر",
     "hint": "Producing the desired result",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die Kampagne war sehr ___ und erreichte viele Menschen."
   },
   {
     "w": "FLEXIBEL",
     "en": "flexible",
     "ar": "مرن",
     "hint": "Able to adapt easily",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "In diesem Job muss man sehr ___ sein."
   },
   {
     "w": "KRITISCH",
     "en": "critical",
     "ar": "نقدي",
     "hint": "Examining faults or implications",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Ein ___ Denken ist in der Wissenschaft unerlässlich."
   },
   {
     "w": "KOMPLEX",
     "en": "complex",
     "ar": "معقد",
     "hint": "Having many interrelated parts",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das Problem ist sehr ___ und hat viele Ursachen."
   },
   {
     "w": "VIELFÄLTIG",
     "en": "diverse",
     "ar": "متنوع",
     "hint": "Having great variety",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die ___ Kultur Deutschlands spiegelt sich in vielen Bereichen wider."
   },
   {
     "w": "EINHEITLICH",
     "en": "uniform",
     "ar": "موحد",
     "hint": "All the same",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Eine ___ Lösung für alle Länder ist schwer zu finden."
   },
   {
     "w": "GRUNDLEGEND",
     "en": "fundamental",
     "ar": "أساسي",
     "hint": "Forming the base or foundation",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das ist eine ___ Veränderung in der Bildungspolitik."
   },
   {
     "w": "WESENTLICH",
     "en": "essential",
     "ar": "جوهري",
     "hint": "Absolutely necessary",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Der ___ Unterschied liegt in der Qualität."
   },
   {
     "w": "AUSREICHEND",
     "en": "sufficient",
     "ar": "كافٍ",
     "hint": "Enough for the purpose",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die Ressourcen sind nicht ___ für alle Projekte."
   },
   {
     "w": "UNZUREICHEND",
     "en": "insufficient",
     "ar": "غير كافٍ",
     "hint": "Not enough",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die Maßnahmen waren ___ und lösten das Problem nicht."
   },
   {
     "w": "ERHEBLICH",
     "en": "considerable",
     "ar": "ملحوظ",
     "hint": "Notably large in amount",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die Kosten sind ___ gestiegen in den letzten Jahren."
   },
   {
     "w": "GERING",
     "en": "low/small",
     "ar": "ضئيل",
     "hint": "Small in amount or degree",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das Risiko ist sehr ___, wenn man vorsichtig ist."
   },
   {
     "w": "ZUNEHMEND",
     "en": "increasing",
     "ar": "متزايد",
     "hint": "Growing more and more",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die Zahl der Studierenden ist ___ gestiegen."
   },
   {
     "w": "ABNEHMEND",
     "en": "decreasing",
     "ar": "متناقص",
     "hint": "Getting less and less",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die Zahl der Nutzer ist seit Jahren ___."
   },
   {
     "w": "BERUFLICH",
     "en": "professional",
     "ar": "مهني",
     "hint": "Related to work or career",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Sie hat große ___ Ambitionen und will Chefin werden."
   },
   {
     "w": "PERSÖNLICH",
     "en": "personal",
     "ar": "شخصي",
     "hint": "Relating to oneself",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das ist eine sehr ___ Entscheidung für mich."
   },
   {
     "w": "GEGENSEITIG",
     "en": "mutual",
     "ar": "متبادل",
     "hint": "Felt by both sides equally",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Sie haben ___ Respekt füreinander."
   },
   {
     "w": "FREIWILLIG",
     "en": "voluntary",
     "ar": "طوعي",
     "hint": "Done by choice, not obligation",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die Teilnahme an dem Kurs ist vollkommen ___."
   },
   {
     "w": "GESETZLICH",
     "en": "legal",
     "ar": "قانوني",
     "hint": "Permitted or required by law",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das Tragen von Sicherheitsgurten ist ___ vorgeschrieben."
   },
   {
     "w": "ILLEGAL",
     "en": "illegal",
     "ar": "غير قانوني",
     "hint": "Against the law",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das Parken hier ist ___ und kann zu einer Strafe führen."
   },
   {
     "w": "DEMOKRATISCH",
     "en": "democratic",
     "ar": "ديمقراطي",
     "hint": "Based on equal rights and votes",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die Entscheidungen werden ___ getroffen."
   },
   {
     "w": "AUTORITÄR",
     "en": "authoritarian",
     "ar": "استبدادي",
     "hint": "Demanding strict obedience",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das ___ Regime schränkt die Redefreiheit stark ein."
   },
   {
     "w": "AKTUELL",
     "en": "current",
     "ar": "حالي / راهن",
     "hint": "Happening right now",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das ist ein sehr ___ Thema in der öffentlichen Diskussion."
   },
   {
     "w": "ZUKÜNFTIG",
     "en": "future (adj)",
     "ar": "مستقبلي",
     "hint": "Yet to come",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die ___ Generationen werden die Folgen unserer Entscheidungen tragen."
   },
   {
     "w": "HISTORISCH",
     "en": "historical",
     "ar": "تاريخي",
     "hint": "Relating to history",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das ist ein ___ Moment in der Geschichte des Landes."
   },
   {
     "w": "TYPISCH",
     "en": "typical",
     "ar": "نموذجي",
     "hint": "Characteristic of a type",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das ist ___ deutsch: Pünktlichkeit und Ordnung."
   },
   {
     "w": "URSPRÜNGLICH",
     "en": "original",
     "ar": "أصلي",
     "hint": "From the beginning",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Der ___ Plan sah keine zusätzlichen Kosten vor."
   },
   {
     "w": "VERGLEICHBAR",
     "en": "comparable",
     "ar": "قابل للمقارنة",
     "hint": "Can be compared",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die Situation ist nicht ___ mit der von vor zehn Jahren."
   },
   {
     "w": "UNABHÄNGIG",
     "en": "independent",
     "ar": "مستقل",
     "hint": "Not controlled by others",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Er trifft seine Entscheidungen ___ von anderen."
   },
   {
     "w": "ABHÄNGIG",
     "en": "dependent",
     "ar": "تابع / مدمن",
     "hint": "Relying on something else",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das Ergebnis ist stark von der Mitarbeit aller ___."
   },
   {
     "w": "VERANTWORTLICH",
     "en": "responsible",
     "ar": "مسؤول",
     "hint": "Accountable for something",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Sie ist ___ für die gesamte Abteilung."
   },
   {
     "w": "BEWUSST",
     "en": "conscious/aware",
     "ar": "واعٍ",
     "hint": "Aware of something",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Sie trifft ihre Entscheidungen sehr ___ und überlegt."
   },
   {
     "w": "UNBEWUSST",
     "en": "unconscious",
     "ar": "غير واعٍ",
     "hint": "Not aware, done without thinking",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Viele Fehler passieren ___ und ohne Absicht."
   },
   {
     "w": "ÜBERZEUGEND",
     "en": "convincing",
     "ar": "مقنع",
     "hint": "Able to persuade",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Seine Argumentation war sehr ___ für das Gremium."
   },
   {
     "w": "GLAUBWÜRDIG",
     "en": "credible",
     "ar": "موثوق به",
     "hint": "Able to be believed",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Der Zeuge wirkte sehr ___ vor Gericht."
   },
   {
     "w": "VERSTÄNDLICH",
     "en": "understandable",
     "ar": "مفهوم",
     "hint": "Easy to understand",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die Erklärung war sehr ___ für alle Teilnehmer."
   },
   {
     "w": "UNVERSTÄNDLICH",
     "en": "incomprehensible",
     "ar": "غير مفهوم",
     "hint": "Hard to understand",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Sein Verhalten war für alle ___ und rätselhaft."
   },
   {
     "w": "STREIK",

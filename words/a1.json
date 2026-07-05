@@ -11,7 +11,8 @@
       "de": "Das Haus ist sehr alt.",
       "en": "The house is very old.",
       "ar": "المنزل قديم جدًا."
-    }
+    },
+    "sentence": "Wir wohnen in einem kleinen ___."
   },
   {
     "w": "HUND",
@@ -25,7 +26,8 @@
       "de": "Der Hund schläft im Garten.",
       "en": "The dog sleeps in the garden.",
       "ar": "الكلب ينام في الحديقة."
-    }
+    },
+    "sentence": "Der ___ bellt laut im Garten."
   },
   {
     "w": "KATZE",
@@ -39,7 +41,8 @@
       "de": "Die Katze trinkt Milch.",
       "en": "The cat drinks milk.",
       "ar": "القطة تشرب الحليب."
-    }
+    },
+    "sentence": "Die ___ schläft auf dem warmen Sofa."
   },
   {
     "w": "BUCH",
@@ -53,7 +56,8 @@
       "de": "Das Buch ist interessant.",
       "en": "The book is interesting.",
       "ar": "الكتاب مثير للاهتمام."
-    }
+    },
+    "sentence": "Ich lese gerade ein interessantes ___."
   },
   {
     "w": "AUTO",
@@ -62,7 +66,8 @@
     "hint": "Four-wheeled vehicle",
     "type": "noun",
     "article": "das",
-    "plural": "die Autos"
+    "plural": "die Autos",
+    "sentence": "Mein ___ ist rot und noch neu."
   },
   {
     "w": "KIND",
@@ -76,7 +81,8 @@
       "de": "Das Kind spielt draußen.",
       "en": "The child plays outside.",
       "ar": "الطفل يلعب في الخارج."
-    }
+    },
+    "sentence": "Das ___ spielt gerne im Park."
   },
   {
     "w": "MANN",
@@ -85,7 +91,8 @@
     "hint": "Adult male person",
     "type": "noun",
     "article": "der",
-    "plural": "die Männer"
+    "plural": "die Männer",
+    "sentence": "Der ___ trägt heute eine blaue Jacke."
   },
   {
     "w": "FRAU",
@@ -94,7 +101,8 @@
     "hint": "Adult female person",
     "type": "noun",
     "article": "die",
-    "plural": "die Frauen"
+    "plural": "die Frauen",
+    "sentence": "Die ___ kauft frisches Brot beim Bäcker."
   },
   {
     "w": "TISCH",
@@ -103,7 +111,8 @@
     "hint": "Furniture you eat at",
     "type": "noun",
     "article": "der",
-    "plural": "die Tische"
+    "plural": "die Tische",
+    "sentence": "Wir essen alle zusammen am großen ___."
   },
   {
     "w": "STUHL",
@@ -112,7 +121,8 @@
     "hint": "You sit on it",
     "type": "noun",
     "article": "der",
-    "plural": "die Stühle"
+    "plural": "die Stühle",
+    "sentence": "Setz dich bitte auf den ___."
   },
   {
     "w": "BETT",
@@ -121,7 +131,8 @@
     "hint": "You sleep in it",
     "type": "noun",
     "article": "das",
-    "plural": "die Betten"
+    "plural": "die Betten",
+    "sentence": "Ich schlafe in einem bequemen ___."
   },
   {
     "w": "BROT",
@@ -130,7 +141,8 @@
     "hint": "German staple food",
     "type": "noun",
     "article": "das",
-    "plural": "die Brote"
+    "plural": "die Brote",
+    "sentence": "Ich esse morgens gerne frisches ___."
   },
   {
     "w": "MILCH",
@@ -138,7 +150,8 @@
     "ar": "حليب",
     "hint": "White drink from a cow",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die Kinder trinken jeden Morgen ___."
   },
   {
     "w": "WASSER",
@@ -146,7 +159,8 @@
     "ar": "ماء",
     "hint": "H₂O, you drink it",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Bitte gib mir ein Glas ___."
   },
   {
     "w": "APFEL",
@@ -155,7 +169,8 @@
     "hint": "Red or green fruit",
     "type": "noun",
     "article": "der",
-    "plural": "die Äpfel"
+    "plural": "die Äpfel",
+    "sentence": "Ich esse jeden Tag einen roten ___."
   },
   {
     "w": "BALL",
@@ -163,7 +178,8 @@
     "ar": "كرة",
     "hint": "Round toy you kick or throw",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Der Junge wirft den ___ in den Garten."
   },
   {
     "w": "BAUM",
@@ -172,7 +188,8 @@
     "hint": "Has trunk, branches, leaves",
     "type": "noun",
     "article": "der",
-    "plural": "die Bäume"
+    "plural": "die Bäume",
+    "sentence": "Der große ___ im Garten ist sehr alt."
   },
   {
     "w": "BLUME",
@@ -181,7 +198,8 @@
     "hint": "Colorful plant in a garden",
     "type": "noun",
     "article": "die",
-    "plural": "die Blumen"
+    "plural": "die Blumen",
+    "sentence": "Die rote ___ in der Vase duftet schön."
   },
   {
     "w": "BANK",
@@ -189,7 +207,8 @@
     "ar": "بنك",
     "hint": "Where you keep money",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Ich hole Geld von der ___ ab."
   },
   {
     "w": "BRIEF",
@@ -197,7 +216,8 @@
     "ar": "رسالة",
     "hint": "Written message sent by post",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Sie schreibt einen langen ___ an ihre Freundin."
   },
   {
     "w": "GELD",
@@ -205,7 +225,8 @@
     "ar": "مال",
     "hint": "Coins and banknotes",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Ich habe kein ___ mehr in der Tasche."
   },
   {
     "w": "HAND",
@@ -214,7 +235,8 @@
     "hint": "Body part with five fingers",
     "type": "noun",
     "article": "die",
-    "plural": "die Hände"
+    "plural": "die Hände",
+    "sentence": "Er gibt mir die ___ zur Begrüßung."
   },
   {
     "w": "KOPF",
@@ -223,7 +245,8 @@
     "hint": "Top of your body",
     "type": "noun",
     "article": "der",
-    "plural": "die Köpfe"
+    "plural": "die Köpfe",
+    "sentence": "Mein ___ tut mir heute sehr weh."
   },
   {
     "w": "AUGE",
@@ -232,7 +255,8 @@
     "hint": "You see with it",
     "type": "noun",
     "article": "das",
-    "plural": "die Augen"
+    "plural": "die Augen",
+    "sentence": "Sie hat ein blaues ___ nach dem Sturz."
   },
   {
     "w": "NASE",
@@ -240,7 +264,8 @@
     "ar": "أنف",
     "hint": "You smell with it",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Im Winter läuft die ___ oft."
   },
   {
     "w": "MUND",
@@ -248,7 +273,8 @@
     "ar": "فم",
     "hint": "You eat and talk with it",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Beim Zahnarzt muss man den ___ weit öffnen."
   },
   {
     "w": "OHR",
@@ -256,7 +282,8 @@
     "ar": "أذن",
     "hint": "You hear with it",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Er hält sich das ___ wegen des Lärms zu."
   },
   {
     "w": "FUSS",
@@ -264,7 +291,8 @@
     "ar": "قدم",
     "hint": "Bottom of the leg",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Mein ___ tut nach dem langen Spaziergang weh."
   },
   {
     "w": "BEIN",
@@ -272,7 +300,8 @@
     "ar": "ساق",
     "hint": "Limb you walk with",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Das ___ tut mir nach dem Laufen weh."
   },
   {
     "w": "HERZ",
@@ -280,7 +309,8 @@
     "ar": "قلب",
     "hint": "Pumps blood in your chest",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Das ___ schlägt beim Sport schneller."
   },
   {
     "w": "SCHULE",
@@ -289,7 +319,8 @@
     "hint": "Where pupils study",
     "type": "noun",
     "article": "die",
-    "plural": "die Schulen"
+    "plural": "die Schulen",
+    "sentence": "Die Kinder gehen jeden Morgen in die ___."
   },
   {
     "w": "LEHRER",
@@ -297,7 +328,8 @@
     "ar": "مدرس",
     "hint": "Person who teaches",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Der ___ erklärt die Grammatik sehr gut."
   },
   {
     "w": "KLASSE",
@@ -305,7 +337,8 @@
     "ar": "صف",
     "hint": "Group of students learning together",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "In unserer ___ sind zwanzig Schüler."
   },
   {
     "w": "STIFT",
@@ -313,7 +346,8 @@
     "ar": "قلم",
     "hint": "You write with it",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Ich brauche einen ___ zum Schreiben."
   },
   {
     "w": "HEFT",
@@ -321,7 +355,8 @@
     "ar": "دفتر",
     "hint": "You write notes in it",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Schreib die Antwort bitte in dein ___."
   },
   {
     "w": "TAFEL",
@@ -329,7 +364,8 @@
     "ar": "لوح",
     "hint": "Teacher writes on it",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Der Lehrer schreibt das Wort an die ___."
   },
   {
     "w": "VATER",
@@ -337,7 +373,8 @@
     "ar": "أب",
     "hint": "Male parent",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Mein ___ arbeitet jeden Tag bis sechs Uhr."
   },
   {
     "w": "MUTTER",
@@ -345,7 +382,8 @@
     "ar": "أم",
     "hint": "Female parent",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Meine ___ kocht sehr leckeres Essen."
   },
   {
     "w": "BRUDER",
@@ -353,7 +391,8 @@
     "ar": "أخ",
     "hint": "Male sibling",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Mein ___ ist zwei Jahre jünger als ich."
   },
   {
     "w": "SCHWESTER",
@@ -361,7 +400,8 @@
     "ar": "أخت",
     "hint": "Female sibling",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Meine ___ wohnt in einer anderen Stadt."
   },
   {
     "w": "OMA",
@@ -369,7 +409,8 @@
     "ar": "جدة",
     "hint": "Mother's or father's mother",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Meine ___ backt den besten Kuchen der Welt."
   },
   {
     "w": "OPA",
@@ -377,7 +418,8 @@
     "ar": "جد",
     "hint": "Mother's or father's father",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Mein ___ erzählt gerne alte Geschichten."
   },
   {
     "w": "BABY",
@@ -385,7 +427,8 @@
     "ar": "رضيع",
     "hint": "Very young child",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Das ___ schläft den ganzen Nachmittag."
   },
   {
     "w": "FREUND",
@@ -393,7 +436,8 @@
     "ar": "صديق",
     "hint": "Someone you like and trust",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Mein ___ kommt heute zum Spielen."
   },
   {
     "w": "FELD",
@@ -401,7 +445,8 @@
     "ar": "حقل",
     "hint": "Open land for farming",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Die Kühe stehen auf dem grünen ___."
   },
   {
     "w": "FLUSS",
@@ -409,7 +454,8 @@
     "ar": "نهر",
     "hint": "Large flowing body of water",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Der ___ fließt durch die ganze Stadt."
   },
   {
     "w": "BERG",
@@ -417,7 +463,8 @@
     "ar": "جبل",
     "hint": "Very tall landform",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Wir wandern morgen auf den hohen ___."
   },
   {
     "w": "SEE",
@@ -425,7 +472,8 @@
     "ar": "بحيرة",
     "hint": "Body of water surrounded by land",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Im Sommer schwimmen wir im kühlen ___."
   },
   {
     "w": "MEER",
@@ -433,7 +481,8 @@
     "ar": "بحر",
     "hint": "Large saltwater body",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Im Urlaub spielen die Kinder am ___ im Sand."
   },
   {
     "w": "LUFT",
@@ -441,7 +490,8 @@
     "ar": "هواء",
     "hint": "What you breathe",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ in den Bergen ist sehr frisch."
   },
   {
     "w": "FEUER",
@@ -449,7 +499,8 @@
     "ar": "نار",
     "hint": "Hot, bright, burning",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Das ___ im Kamin wärmt das Zimmer."
   },
   {
     "w": "LICHT",
@@ -457,7 +508,8 @@
     "ar": "ضوء",
     "hint": "Opposite of darkness",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Bitte mach das ___ im Zimmer aus."
   },
   {
     "w": "SONNE",
@@ -465,7 +517,8 @@
     "ar": "شمس",
     "hint": "Star at the center of our solar system",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ scheint heute sehr hell."
   },
   {
     "w": "MOND",
@@ -473,7 +526,8 @@
     "ar": "قمر",
     "hint": "Earth's natural satellite",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Der ___ leuchtet hell in der dunklen Nacht."
   },
   {
     "w": "STERN",
@@ -481,7 +535,8 @@
     "ar": "نجم",
     "hint": "Twinkling light in the night sky",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Nachts sieht man einen hellen ___ am Himmel."
   },
   {
     "w": "TAG",
@@ -490,7 +545,8 @@
     "hint": "24 hours",
     "type": "noun",
     "article": "der",
-    "plural": "die Tage"
+    "plural": "die Tage",
+    "sentence": "Heute war ein langer und anstrengender ___."
   },
   {
     "w": "NACHT",
@@ -498,7 +554,8 @@
     "ar": "ليل",
     "hint": "Opposite of day",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "In der ___ schlafen alle Menschen."
   },
   {
     "w": "MORGEN",
@@ -506,7 +563,8 @@
     "ar": "صباح",
     "hint": "Early part of the day",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Am ___ trinke ich immer Kaffee."
   },
   {
     "w": "ABEND",
@@ -514,7 +572,8 @@
     "ar": "مساء",
     "hint": "Late part of the day",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Am ___ sehen wir zusammen fern."
   },
   {
     "w": "WOCHE",
@@ -522,7 +581,8 @@
     "ar": "أسبوع",
     "hint": "7 days",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Nächste ___ habe ich keine Schule."
   },
   {
     "w": "MONAT",
@@ -530,7 +590,8 @@
     "ar": "شهر",
     "hint": "About 30 days",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Im nächsten ___ fahren wir in den Urlaub."
   },
   {
     "w": "JAHR",
@@ -539,7 +600,8 @@
     "hint": "12 months",
     "type": "noun",
     "article": "das",
-    "plural": "die Jahre"
+    "plural": "die Jahre",
+    "sentence": "Das neue ___ beginnt am ersten Januar."
   },
   {
     "w": "STUNDE",
@@ -547,7 +609,8 @@
     "ar": "ساعة",
     "hint": "60 minutes",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Eine ___ hat sechzig Minuten."
   },
   {
     "w": "MINUTE",
@@ -555,7 +618,8 @@
     "ar": "دقيقة",
     "hint": "60 seconds",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Bitte warte noch eine ___."
   },
   {
     "w": "STADT",
@@ -564,7 +628,8 @@
     "hint": "Large urban settlement",
     "type": "noun",
     "article": "die",
-    "plural": "die Städte"
+    "plural": "die Städte",
+    "sentence": "Berlin ist eine große und schöne ___."
   },
   {
     "w": "STRASSE",
@@ -573,7 +638,8 @@
     "hint": "Road in a city",
     "type": "noun",
     "article": "die",
-    "plural": "die Straßen"
+    "plural": "die Straßen",
+    "sentence": "Die ___ vor unserem Haus ist sehr laut."
   },
   {
     "w": "PLATZ",
@@ -581,7 +647,8 @@
     "ar": "ساحة",
     "hint": "Open public space",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Der ___ vor dem Rathaus ist sehr groß."
   },
   {
     "w": "PARK",
@@ -589,7 +656,8 @@
     "ar": "حديقة عامة",
     "hint": "Green outdoor area in a city",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Wir gehen am Sonntag in den ___."
   },
   {
     "w": "MARKT",
@@ -597,7 +665,8 @@
     "ar": "سوق",
     "hint": "Where you buy fresh food",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Auf dem ___ kaufen wir frisches Gemüse."
   },
   {
     "w": "LADEN",
@@ -605,7 +674,8 @@
     "ar": "محل",
     "hint": "Small store",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Der kleine ___ um die Ecke verkauft Süßigkeiten."
   },
   {
     "w": "PREIS",
@@ -613,7 +683,8 @@
     "ar": "سعر",
     "hint": "How much something costs",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Der ___ für das Ticket ist sehr hoch."
   },
   {
     "w": "EURO",
@@ -621,7 +692,8 @@
     "ar": "يورو",
     "hint": "European currency",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Das Buch kostet zehn ___."
   },
   {
     "w": "FARBE",
@@ -629,7 +701,8 @@
     "ar": "لون",
     "hint": "Red, blue, green...",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Das Kleid hat eine sehr schöne ___."
   },
   {
     "w": "ROT",
@@ -637,7 +710,8 @@
     "ar": "أحمر",
     "hint": "Color of blood",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Das ___ ist die Farbe des Feuers."
   },
   {
     "w": "BLAU",
@@ -645,7 +719,8 @@
     "ar": "أزرق",
     "hint": "Color of the sky",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Das ___ ist die Farbe des Himmels."
   },
   {
     "w": "GRUEN",
@@ -653,7 +728,8 @@
     "ar": "أخضر",
     "hint": "Color of grass",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Das ___ ist die Farbe der Natur."
   },
   {
     "w": "GELB",
@@ -661,7 +737,8 @@
     "ar": "أصفر",
     "hint": "Color of the sun",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Das ___ ist die Farbe der Banane."
   },
   {
     "w": "WEISS",
@@ -669,7 +746,8 @@
     "ar": "أبيض",
     "hint": "Color of snow",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Das ___ ist die Farbe des Schnees."
   },
   {
     "w": "SCHWARZ",
@@ -677,7 +755,8 @@
     "ar": "أسود",
     "hint": "Color of night",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Das ___ ist die Farbe der Nacht."
   },
   {
     "w": "VOGEL",
@@ -685,7 +764,8 @@
     "ar": "طائر",
     "hint": "Has wings and feathers",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Der ___ singt morgens schön im Baum."
   },
   {
     "w": "FISCH",
@@ -693,7 +773,8 @@
     "ar": "سمكة",
     "hint": "Lives in water, has fins",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Der ___ schwimmt im klaren Wasser des Sees."
   },
   {
     "w": "PFERD",
@@ -701,7 +782,8 @@
     "ar": "حصان",
     "hint": "Large animal you can ride",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Das ___ galoppiert über das grüne Feld."
   },
   {
     "w": "KUH",
@@ -709,7 +791,8 @@
     "ar": "بقرة",
     "hint": "Farm animal that gives milk",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die ___ gibt jeden Morgen frische Milch."
   },
   {
     "w": "SCHAF",
@@ -717,7 +800,8 @@
     "ar": "خروف",
     "hint": "Farm animal with wool",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Das ___ hat sehr weiche weiße Wolle."
   },
   {
     "w": "SCHWEIN",
@@ -725,7 +809,8 @@
     "ar": "خنزير",
     "hint": "Pink farm animal",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Das ___ lebt auf dem Bauernhof."
   },
   {
     "w": "HAHN",
@@ -733,7 +818,8 @@
     "ar": "ديك",
     "hint": "Male chicken, crows at dawn",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Der ___ kräht jeden Morgen laut."
   },
   {
     "w": "MAUS",
@@ -741,7 +827,8 @@
     "ar": "فأر",
     "hint": "Small rodent",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Die kleine ___ stiehlt Käse aus der Küche."
   },
   {
     "w": "HEMD",
@@ -749,7 +836,8 @@
     "ar": "قميص",
     "hint": "Upper body garment",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Er trägt heute ein weißes ___."
   },
   {
     "w": "HOSE",
@@ -757,7 +845,8 @@
     "ar": "بنطلون",
     "hint": "Clothing for legs",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Ich kaufe mir morgen eine neue ___."
   },
   {
     "w": "KLEID",
@@ -765,7 +854,8 @@
     "ar": "فستان",
     "hint": "One-piece garment for women",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Sie trägt ein schönes rotes ___ zur Feier."
   },
   {
     "w": "MANTEL",
@@ -773,7 +863,8 @@
     "ar": "معطف",
     "hint": "Warm outer garment",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Im Winter braucht man immer einen warmen ___."
   },
   {
     "w": "SCHUHE",
@@ -781,7 +872,8 @@
     "ar": "حذاء",
     "hint": "Wear them on your feet",
     "type": "noun",
-    "article": "die/pl"
+    "article": "die/pl",
+    "sentence": "Meine neuen ___ sind schön, aber unbequem."
   },
   {
     "w": "JACKE",
@@ -789,7 +881,8 @@
     "ar": "جاكيت",
     "hint": "Short outer garment",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Vergiss nicht deine ___ mitzunehmen."
   },
   {
     "w": "MÜTZE",
@@ -797,7 +890,8 @@
     "ar": "قبعة",
     "hint": "Worn on the head when cold",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Im Winter trage ich immer eine warme ___."
   },
   {
     "w": "ARZT",
@@ -805,7 +899,8 @@
     "ar": "طبيب",
     "hint": "Treats sick people",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Der ___ untersucht den kranken Patienten."
   },
   {
     "w": "KRANKENHAUS",
@@ -813,7 +908,8 @@
     "ar": "مستشفى",
     "hint": "Where sick people are treated",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Sie wurde nach dem Unfall ins ___ gebracht."
   },
   {
     "w": "APOTHEKE",
@@ -821,7 +917,8 @@
     "ar": "صيدلية",
     "hint": "Where you buy medicine",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Ich hole das Medikament in der ___ ab."
   },
   {
     "w": "BUS",
@@ -829,7 +926,8 @@
     "ar": "حافلة",
     "hint": "Public road transport",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Der ___ kommt alle zehn Minuten."
   },
   {
     "w": "ZUG",
@@ -837,7 +935,8 @@
     "ar": "قطار",
     "hint": "Travels on rails",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Der ___ fährt um acht Uhr morgens ab."
   },
   {
     "w": "FLUGZEUG",
@@ -845,7 +944,8 @@
     "ar": "طائرة",
     "hint": "Flies in the sky",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Das ___ landet in zwei Stunden in Frankfurt."
   },
   {
     "w": "FAHRRAD",
@@ -853,7 +953,8 @@
     "ar": "دراجة",
     "hint": "Two-wheeled vehicle you pedal",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Ich fahre jeden Tag mit dem ___ zur Schule."
   },
   {
     "w": "NUMMER",
@@ -861,7 +962,8 @@
     "ar": "رقم",
     "hint": "1, 2, 3...",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Schreib bitte deine ___ auf den Zettel."
   },
   {
     "w": "NAME",
@@ -869,7 +971,8 @@
     "ar": "اسم",
     "hint": "What you are called",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Wie ist dein ___?"
   },
   {
     "w": "LAND",
@@ -877,7 +980,8 @@
     "ar": "بلد",
     "hint": "Nation with borders",
     "type": "noun",
-    "article": "das"
+    "article": "das",
+    "sentence": "Deutschland ist ein schönes ___."
   },
   {
     "w": "SPRACHE",
@@ -885,7 +989,8 @@
     "ar": "لغة",
     "hint": "System of communication",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Deutsch ist meine erste ___."
   },
   {
     "w": "WORT",
@@ -894,7 +999,8 @@
     "hint": "Unit of language",
     "type": "noun",
     "article": "das",
-    "plural": "die Wörter"
+    "plural": "die Wörter",
+    "sentence": "Ich lerne jeden Tag ein neues ___ auf Deutsch."
   },
   {
     "w": "FRAGE",
@@ -902,7 +1008,8 @@
     "ar": "سؤال",
     "hint": "You ask it to get an answer",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Der Schüler stellt dem Lehrer eine gute ___."
   },
   {
     "w": "ANTWORT",
@@ -910,7 +1017,8 @@
     "ar": "جواب",
     "hint": "Reply to a question",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Ich weiß die ___ auf diese Frage nicht."
   },
   {
     "w": "SEIN",
@@ -918,7 +1026,8 @@
     "ar": "يكون",
     "hint": "Exists, is — most basic verb",
     "type": "verb",
-    "principal_parts": "sein, war, ist gewesen"
+    "principal_parts": "sein, war, ist gewesen",
+    "sentence": "Ich möchte immer ehrlich ___."
   },
   {
     "w": "HABEN",
@@ -926,7 +1035,8 @@
     "ar": "يملك",
     "hint": "Possession",
     "type": "verb",
-    "principal_parts": "haben, hatte, hat gehabt"
+    "principal_parts": "haben, hatte, hat gehabt",
+    "sentence": "Er möchte ein neues Fahrrad ___."
   },
   {
     "w": "GEHEN",
@@ -939,7 +1049,8 @@
       "de": "Wir gehen nach Hause.",
       "en": "We are going home.",
       "ar": "نحن ذاهبون إلى المنزل."
-    }
+    },
+    "sentence": "Wir wollen heute in den Park ___."
   },
   {
     "w": "KOMMEN",
@@ -947,7 +1058,8 @@
     "ar": "يأتي",
     "hint": "Move toward something",
     "type": "verb",
-    "principal_parts": "kommen, kam, ist gekommen"
+    "principal_parts": "kommen, kam, ist gekommen",
+    "sentence": "Kannst du morgen zu meiner Feier ___?"
   },
   {
     "w": "ESSEN",
@@ -960,7 +1072,8 @@
       "de": "Ich esse einen Apfel.",
       "en": "I am eating an apple.",
       "ar": "أنا آكل تفاحة."
-    }
+    },
+    "sentence": "Was möchtest du zum Mittagessen ___?"
   },
   {
     "w": "TRINKEN",
@@ -973,7 +1086,8 @@
       "de": "Sie trinkt gern Kaffee.",
       "en": "She likes to drink coffee.",
       "ar": "هي تحب شرب القهوة."
-    }
+    },
+    "sentence": "Willst du eine Tasse Tee ___?"
   },
   {
     "w": "SCHLAFEN",
@@ -981,7 +1095,8 @@
     "ar": "ينام",
     "hint": "Rest with eyes closed",
     "type": "verb",
-    "principal_parts": "schlafen, schlief, hat geschlafen"
+    "principal_parts": "schlafen, schlief, hat geschlafen",
+    "sentence": "Die Kinder wollen jetzt noch nicht ___."
   },
   {
     "w": "MACHEN",
@@ -989,7 +1104,8 @@
     "ar": "يصنع / يفعل",
     "hint": "Create or perform",
     "type": "verb",
-    "principal_parts": "machen, machte, hat gemacht"
+    "principal_parts": "machen, machte, hat gemacht",
+    "sentence": "Was willst du heute Nachmittag ___?"
   },
   {
     "w": "SEHEN",
@@ -997,21 +1113,24 @@
     "ar": "يرى",
     "hint": "Perceive with eyes",
     "type": "verb",
-    "principal_parts": "sehen, sah, hat gesehen"
+    "principal_parts": "sehen, sah, hat gesehen",
+    "sentence": "Ich kann die hohen Berge von hier ___."
   },
   {
     "w": "HÖREN",
     "en": "to hear",
     "ar": "يسمع",
     "hint": "Perceive with ears",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Ich kann die Musik durch die Wand ___."
   },
   {
     "w": "SAGEN",
     "en": "to say",
     "ar": "يقول",
     "hint": "Speak words",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Was willst du ihr zum Geburtstag ___?"
   },
   {
     "w": "LESEN",
@@ -1019,7 +1138,8 @@
     "ar": "يقرأ",
     "hint": "Look at text and understand it",
     "type": "verb",
-    "principal_parts": "lesen, las, hat gelesen"
+    "principal_parts": "lesen, las, hat gelesen",
+    "sentence": "Ich will dieses Buch bis Ende der Woche ___."
   },
   {
     "w": "SCHREIBEN",
@@ -1027,21 +1147,24 @@
     "ar": "يكتب",
     "hint": "Put words on paper",
     "type": "verb",
-    "principal_parts": "schreiben, schrieb, hat geschrieben"
+    "principal_parts": "schreiben, schrieb, hat geschrieben",
+    "sentence": "Er muss heute noch einen Brief an die Schule ___."
   },
   {
     "w": "SPIELEN",
     "en": "to play",
     "ar": "يلعب",
     "hint": "Have fun with games",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Die Kinder wollen draußen im Garten ___."
   },
   {
     "w": "KAUFEN",
     "en": "to buy",
     "ar": "يشتري",
     "hint": "Pay money for something",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Ich muss noch frisches Brot beim Bäcker ___."
   },
   {
     "w": "FAHREN",
@@ -1049,42 +1172,48 @@
     "ar": "يقود / يسافر",
     "hint": "Move in a vehicle",
     "type": "verb",
-    "principal_parts": "fahren, fuhr, ist gefahren"
+    "principal_parts": "fahren, fuhr, ist gefahren",
+    "sentence": "Wir wollen nächste Woche nach Hamburg ___."
   },
   {
     "w": "WOHNEN",
     "en": "to live (reside)",
     "ar": "يسكن",
     "hint": "Have your home somewhere",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Ich möchte gerne in einer großen Stadt ___."
   },
   {
     "w": "ARBEITEN",
     "en": "to work",
     "ar": "يعمل",
     "hint": "Do a job",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Er muss morgen früh wieder in der Fabrik ___."
   },
   {
     "w": "HELFEN",
     "en": "to help",
     "ar": "يساعد",
     "hint": "Support someone",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Kannst du mir bitte bei der Hausaufgabe ___?"
   },
   {
     "w": "LIEBEN",
     "en": "to love",
     "ar": "يحب",
     "hint": "Have strong affection",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Ich werde meine Familie immer ___."
   },
   {
     "w": "LERNEN",
     "en": "to learn",
     "ar": "يتعلم",
     "hint": "Gain new knowledge",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Ich will Deutsch besser ___."
   },
   {
     "w": "SPRECHEN",
@@ -1092,105 +1221,120 @@
     "ar": "يتكلم",
     "hint": "Use your voice to communicate",
     "type": "verb",
-    "principal_parts": "sprechen, sprach, hat gesprochen"
+    "principal_parts": "sprechen, sprach, hat gesprochen",
+    "sentence": "Sie will Englisch fließend ___."
   },
   {
     "w": "FRAGEN",
     "en": "to ask",
     "ar": "يسأل",
     "hint": "Request information",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Ich muss den Lehrer noch etwas ___."
   },
   {
     "w": "ANTWORTEN",
     "en": "to answer",
     "ar": "يجيب",
     "hint": "Reply to a question",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Du musst auf die Frage des Lehrers ___."
   },
   {
     "w": "KENNEN",
     "en": "to know (person)",
     "ar": "يعرف شخصاً",
     "hint": "Be acquainted with someone",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Ich möchte dich besser ___."
   },
   {
     "w": "WISSEN",
     "en": "to know (fact)",
     "ar": "يعرف حقيقة",
     "hint": "Have information in mind",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Ich möchte immer die Wahrheit ___."
   },
   {
     "w": "DENKEN",
     "en": "to think",
     "ar": "يفكر",
     "hint": "Use your mind",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Ich muss erst einmal richtig ___."
   },
   {
     "w": "VERSTEHEN",
     "en": "to understand",
     "ar": "يفهم",
     "hint": "Grasp the meaning",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Ich kann den Dialekt nicht gut ___."
   },
   {
     "w": "BRAUCHEN",
     "en": "to need",
     "ar": "يحتاج",
     "hint": "Require something",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Was wirst du morgen ___?"
   },
   {
     "w": "WOLLEN",
     "en": "to want",
     "ar": "يريد",
     "hint": "Desire something",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Ich weiß nicht, was er wirklich ___ soll."
   },
   {
     "w": "KÖNNEN",
     "en": "to be able to",
     "ar": "يستطيع",
     "hint": "Have the ability",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Das wirst du auch noch ___."
   },
   {
     "w": "MÜSSEN",
     "en": "to have to",
     "ar": "يجب عليه",
     "hint": "Be obliged to do something",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Du wirst das bald alleine ___."
   },
   {
     "w": "HEISSEN",
     "en": "to be called",
     "ar": "اسمه / تُسمى",
     "hint": "What is your name?",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Wie soll der neue Hund ___?"
   },
   {
     "w": "LEBEN",
     "en": "to live (be alive)",
     "ar": "يعيش",
     "hint": "Be alive",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Ich möchte gerne auf dem Land ___."
   },
   {
     "w": "STEHEN",
     "en": "to stand",
     "ar": "يقف",
     "hint": "Be upright on your feet",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Das Regal soll neben dem Fenster ___."
   },
   {
     "w": "SITZEN",
     "en": "to sit",
     "ar": "يجلس",
     "hint": "Be seated",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Darf ich hier neben dir ___?"
   },
   {
     "w": "LAUFEN",
@@ -1198,7 +1342,8 @@
     "ar": "يجري / يمشي",
     "hint": "Move quickly on foot",
     "type": "verb",
-    "principal_parts": "laufen, lief, ist gelaufen"
+    "principal_parts": "laufen, lief, ist gelaufen",
+    "sentence": "Ich möchte jeden Morgen eine Stunde ___."
   },
   {
     "w": "NEHMEN",
@@ -1206,7 +1351,8 @@
     "ar": "يأخذ",
     "hint": "Grab something",
     "type": "verb",
-    "principal_parts": "nehmen, nahm, hat genommen"
+    "principal_parts": "nehmen, nahm, hat genommen",
+    "sentence": "Kannst du meine Tasche ___?"
   },
   {
     "w": "GEBEN",
@@ -1214,14 +1360,16 @@
     "ar": "يعطي",
     "hint": "Hand something to someone",
     "type": "verb",
-    "principal_parts": "geben, gab, hat gegeben"
+    "principal_parts": "geben, gab, hat gegeben",
+    "sentence": "Kannst du mir bitte das Salz ___?"
   },
   {
     "w": "BRINGEN",
     "en": "to bring",
     "ar": "يحضر",
     "hint": "Carry something here",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Kannst du mir ein Glas Wasser ___?"
   },
   {
     "w": "FINDEN",
@@ -1229,301 +1377,344 @@
     "ar": "يجد",
     "hint": "Locate something",
     "type": "verb",
-    "principal_parts": "finden, fand, hat gefunden"
+    "principal_parts": "finden, fand, hat gefunden",
+    "sentence": "Kannst du meine Schlüssel ___?"
   },
   {
     "w": "ÖFFNEN",
     "en": "to open",
     "ar": "يفتح",
     "hint": "Make accessible",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Kannst du bitte die Tür ___?"
   },
   {
     "w": "ZAHLEN",
     "en": "to pay",
     "ar": "يدفع",
     "hint": "Hand over money",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Ich muss noch die Rechnung ___."
   },
   {
     "w": "GUT",
     "en": "good",
     "ar": "جيد",
     "hint": "Positive quality",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das Essen hier ist wirklich sehr ___."
   },
   {
     "w": "SCHLECHT",
     "en": "bad",
     "ar": "سيئ",
     "hint": "Negative quality",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das Wetter heute ist wirklich ___."
   },
   {
     "w": "GROSS",
     "en": "big/tall",
     "ar": "كبير / طويل",
     "hint": "Large in size",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das Haus ist sehr ___ und hat viele Zimmer."
   },
   {
     "w": "KLEIN",
     "en": "small/short",
     "ar": "صغير / قصير",
     "hint": "Little in size",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das Kind ist noch sehr ___."
   },
   {
     "w": "ALT",
     "en": "old",
     "ar": "قديم / عجوز",
     "hint": "Not young or new",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das Gebäude ist sehr ___ und historisch."
   },
   {
     "w": "NEU",
     "en": "new",
     "ar": "جديد",
     "hint": "Just made or acquired",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Ich habe ein ___ Fahrrad bekommen."
   },
   {
     "w": "JUNG",
     "en": "young",
     "ar": "شاب / صغير",
     "hint": "Not old",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Der Lehrer ist noch sehr ___."
   },
   {
     "w": "SCHÖN",
     "en": "beautiful",
     "ar": "جميل",
     "hint": "Pleasing to the eye",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die Landschaft hier ist wirklich ___."
   },
   {
     "w": "HÄSSLICH",
     "en": "ugly",
     "ar": "قبيح",
     "hint": "Not pleasing to look at",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das neue Gebäude sieht leider ziemlich ___ aus."
   },
   {
     "w": "SCHNELL",
     "en": "fast",
     "ar": "سريع",
     "hint": "Moving quickly",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Der neue Zug ist sehr ___."
   },
   {
     "w": "LANGSAM",
     "en": "slow",
     "ar": "بطيء",
     "hint": "Moving slowly",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die Schildkröte bewegt sich sehr ___."
   },
   {
     "w": "HEISS",
     "en": "hot",
     "ar": "حار",
     "hint": "High temperature",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Im Sommer ist es hier sehr ___."
   },
   {
     "w": "KALT",
     "en": "cold",
     "ar": "بارد",
     "hint": "Low temperature",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Im Winter ist es draußen sehr ___."
   },
   {
     "w": "WARM",
     "en": "warm",
     "ar": "دافئ",
     "hint": "Pleasantly hot",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das Wasser in der Badewanne ist schön ___."
   },
   {
     "w": "BILLIG",
     "en": "cheap",
     "ar": "رخيص",
     "hint": "Low price",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das Ticket ist sehr ___, nur fünf Euro."
   },
   {
     "w": "TEUER",
     "en": "expensive",
     "ar": "غالي",
     "hint": "High price",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das neue Handy ist leider sehr ___."
   },
   {
     "w": "LEICHT",
     "en": "light/easy",
     "ar": "خفيف / سهل",
     "hint": "Low weight or easy",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die Aufgabe ist ganz ___ für mich."
   },
   {
     "w": "SCHWER",
     "en": "heavy/difficult",
     "ar": "ثقيل / صعب",
     "hint": "High weight or hard",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die Tasche ist zu ___ für mich alleine."
   },
   {
     "w": "MÜDE",
     "en": "tired",
     "ar": "متعب",
     "hint": "Need rest or sleep",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Ich bin heute sehr ___, weil ich wenig geschlafen habe."
   },
   {
     "w": "FROH",
     "en": "happy/glad",
     "ar": "سعيد",
     "hint": "In a good mood",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Ich bin sehr ___, dass du heute hier bist."
   },
   {
     "w": "TRAURIG",
     "en": "sad",
     "ar": "حزين",
     "hint": "Unhappy, sorrowful",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das Kind ist ___, weil sein Hund krank ist."
   },
   {
     "w": "VOLL",
     "en": "full",
     "ar": "ممتلئ",
     "hint": "Has no more space",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das Glas ist ___ mit frischem Wasser."
   },
   {
     "w": "LEER",
     "en": "empty",
     "ar": "فارغ",
     "hint": "Has nothing inside",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die Flasche ist schon ___."
   },
   {
     "w": "SATT",
     "en": "full (after eating)",
     "ar": "شبعان",
     "hint": "No longer hungry",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Ich bin sehr ___, das Essen war lecker."
   },
   {
     "w": "HUNGRIG",
     "en": "hungry",
     "ar": "جائع",
     "hint": "Wanting food",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die Kinder sind nach dem Sport sehr ___."
   },
   {
     "w": "KRANK",
     "en": "sick",
     "ar": "مريض",
     "hint": "Not healthy",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Ich bin heute ___ und bleibe im Bett."
   },
   {
     "w": "GESUND",
     "en": "healthy",
     "ar": "بصحة جيدة",
     "hint": "Not sick",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Nach der Krankheit bin ich wieder ___."
   },
   {
     "w": "RICHTIG",
     "en": "correct/right",
     "ar": "صحيح",
     "hint": "Without mistakes",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Deine Antwort ist ___."
   },
   {
     "w": "FALSCH",
     "en": "wrong/false",
     "ar": "خاطئ",
     "hint": "Not correct",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Diese Antwort ist leider ___."
   },
   {
     "w": "LAUT",
     "en": "loud",
     "ar": "صاخب",
     "hint": "High volume",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die Musik aus dem Zimmer ist zu ___."
   },
   {
     "w": "LEISE",
     "en": "quiet",
     "ar": "هادئ",
     "hint": "Low volume",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das Baby schläft, bitte sei ___."
   },
   {
     "w": "SAUBER",
     "en": "clean",
     "ar": "نظيف",
     "hint": "Not dirty",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das Zimmer ist nach dem Putzen sehr ___."
   },
   {
     "w": "SCHMUTZIG",
     "en": "dirty",
     "ar": "وسخ",
     "hint": "Not clean",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Meine Hände sind nach dem Gärtnern ___."
   },
   {
     "w": "HELL",
     "en": "bright/light",
     "ar": "ساطع / فاتح",
     "hint": "Full of light",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das Zimmer ist sehr ___, weil die Sonne scheint."
   },
   {
     "w": "DUNKEL",
     "en": "dark",
     "ar": "مظلم",
     "hint": "Lacking light",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "In der Nacht ist es draußen sehr ___."
   },
   {
     "w": "NASS",
     "en": "wet",
     "ar": "مبلل",
     "hint": "Contains water",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Ich bin total ___, weil es geregnet hat."
   },
   {
     "w": "TROCKEN",
     "en": "dry",
     "ar": "جاف",
     "hint": "Free of moisture",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die Wäsche ist nach einem Tag ___."
   },
   {
     "w": "OFFEN",
     "en": "open",
     "ar": "مفتوح",
     "hint": "Not closed",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das Fenster ist den ganzen Tag ___."
   },
   {
     "w": "GESCHLOSSEN",
     "en": "closed",
     "ar": "مغلق",
     "hint": "Not open",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Das Geschäft ist sonntags ___."
   },
   {
     "w": "FERTIG",
     "en": "ready/done",
     "ar": "جاهز / منتهي",
     "hint": "Finished or prepared",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Bist du mit der Hausaufgabe ___?"
   },
   {
     "w": "HAAR",
