@@ -4,39 +4,40 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Wörtle — lerne deutsche Wörter (A1/A2/B1) mit einem Kreuzworträtsel-Spiel: Aussprache, Grammatik-Gender, und Wiederholung mit Spaced Repetition." />
-  <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#121213" media="(prefers-color-scheme: dark)" />
+  <meta name="color-scheme" content="light" />
+  <meta name="theme-color" content="#FAFAF8" />
   <title>Wörtle — German Wordle</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,700;1,9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     /* ─── CSS Variables ─────────────────────────────── */
     :root {
-      --color-bg:               #eef1f6;
-      --color-surface:          #e4e9f2;
-      --color-border:           #d4dbea;
-      --color-text:             #1b2233;
-      --color-text-inv:         #ffffff;
-      --color-text-muted:       #616d87;
-      --color-cell:             #ffffff;
-      --color-cell-block:       #2b3350;
+      --color-bg:               #FAFAF8;
+      --color-surface:          #F2F0EB;
+      --color-border:           #E5E1D9;
+      --color-text:             #1C1917;
+      --color-text-inv:         #FFFFFF;
+      --color-text-muted:       #57534E;
+      --color-cell:             #FFFFFF;
+      --color-cell-block:       #292524;
       --color-correct:          #1D9E75;
+      --color-correct-text:     #156D4C;
       --color-present:          #EF9F27;
-      --color-absent:           #787c7e;
-      --color-absent-bg:        #787c7e;
-      --color-key-bg:           #d3d6da;
-      --color-key-text:         #1a1a2e;
-      --color-tile-border:      #d3d6da;
-      --color-tile-filled:      #878a8c;
-      --color-header-bg:        #eef1f6;
-      --color-header-border:    #d4dbea;
+      --color-absent:           #79716B;
+      --color-absent-bg:        #79716B;
+      --color-key-bg:           #E7E5E4;
+      --color-key-text:         #1C1917;
+      --color-tile-border:      #D6D3D1;
+      --color-tile-filled:      #A8A29E;
+      --color-header-bg:        #FAFAF8;
+      --color-header-border:    #E5E1D9;
       --color-badge-noun:       #3b82f6;
       --color-badge-verb:       #1D9E75;
       --color-badge-adj:        #EF9F27;
-      --color-tab-active-bg:    #1a1a2e;
-      --color-tab-active-text:  #ffffff;
-      --color-streak-bg:        #f0fdf4;
-      --color-streak-border:    #bbf7d0;
+      --color-tab-active-bg:    #1C1917;
+      --color-tab-active-text:  #FFFFFF;
+      --color-streak-bg:        #F0FDF4;
+      --color-streak-border:    #BBF7D0;
       --tile-size:              62px;
       --word-len:               5;
       --color-p1:               #3b82f6;
@@ -49,29 +50,6 @@
       --gender-neutral:         #8b7cf6;
     }
 
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --color-bg:              #121213;
-        --color-surface:         #1a1a1b;
-        --color-border:          #3a3a3c;
-        --color-text:            #ffffff;
-        --color-text-muted:      #9aa0b0;
-        --color-cell:            #1e1f24;
-        --color-cell-block:      #2b3350;
-        --color-absent:          #3a3a3c;
-        --color-absent-bg:       #3a3a3c;
-        --color-key-bg:          #818384;
-        --color-key-text:        #ffffff;
-        --color-tile-border:     #3a3a3c;
-        --color-tile-filled:     #565758;
-        --color-header-bg:       #121213;
-        --color-header-border:   #3a3a3c;
-        --color-tab-active-bg:   #ffffff;
-        --color-tab-active-text: #121213;
-        --color-streak-bg:       #052e16;
-        --color-streak-border:   #166534;
-      }
-    }
 
     /* ─── Reset & Base ─────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -101,8 +79,8 @@
     /* Desktop: body gets a warm canvas, game floats as a card */
     @media (min-width: 681px) {
       :root {
-        --color-canvas: #dce1ec;
-        --color-header-bg: #eef1f6;
+        --color-canvas: #EBE8E1;
+        --color-header-bg: #FAFAF8;
       }
 
       body {
@@ -114,29 +92,13 @@
 
     }
 
-    @media (min-width: 681px) and (prefers-color-scheme: dark) {
-      body { background: #0a0a0b; }
-      #game-main {
-        box-shadow:
-          0 4px 6px rgba(0,0,0,0.2),
-          0 10px 60px rgba(0,0,0,0.5),
-          0 0 0 1px rgba(255,255,255,0.05);
-      }
-
-      header {
-        max-width: 600px;
-        border-radius: 0;
-        box-shadow: none;
-        border-left: 1px solid var(--color-header-border);
-        border-right: 1px solid var(--color-header-border);
-      }
-
+    @media (min-width: 681px) {
       #game-main {
         background: var(--color-bg);
         box-shadow:
-          0 4px 6px rgba(0,0,0,0.04),
-          0 10px 40px rgba(0,0,0,0.10),
-          0 0 0 1px rgba(0,0,0,0.04);
+          0 4px 6px rgba(28,25,23,0.04),
+          0 10px 40px rgba(28,25,23,0.08),
+          0 0 0 1px rgba(28,25,23,0.04);
         border-radius: 0 0 20px 20px;
         min-height: calc(100dvh - 52px);
       }
@@ -228,8 +190,8 @@
     .tab:focus-visible, .type-tab:focus-visible { outline: 2px solid var(--color-correct); outline-offset: -2px; }
 
     .tab.active, .type-tab.active {
-      color: var(--color-correct);
-      border-bottom-color: var(--color-correct);
+      color: var(--color-correct-text);
+      border-bottom-color: var(--color-correct-text);
     }
 
     /* ─── Diamond Counter ──────────────────────────── */
@@ -240,7 +202,7 @@
       font-family: 'DM Mono', monospace;
       font-size: 0.8rem;
       font-weight: 500;
-      color: var(--color-correct);
+      color: var(--color-correct-text);
       background: rgba(29,158,117,0.08);
       border: 1.5px solid rgba(29,158,117,0.3);
       border-radius: 999px;
@@ -353,7 +315,7 @@
     .hint-article {
       font-size: 0.78rem;
       font-weight: 700;
-      color: var(--color-correct);
+      color: var(--color-correct-text);
       font-family: 'Inter', system-ui, sans-serif;
       font-style: normal;
     }
@@ -364,6 +326,11 @@
       font-size: 1rem;
       cursor: pointer;
       padding: 2px 4px;
+      min-width: 44px;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       border-radius: 6px;
       line-height: 1;
       opacity: 0.7;
@@ -1103,8 +1070,8 @@
       .mode-btn { font-size: 0.7rem; padding: 4px 9px; }
       /* Streak bar wraps to 2 rows */
       .streak-bar { flex-wrap: wrap; }
-      /* Clue bar: hide Arabic on small screens to prevent wrapping */
-      .hint-ar { display: none; }
+      /* Clue bar: Arabic wraps to its own line on small screens */
+      .hint-ar { flex-basis: 100%; font-size: 0.82rem; }
     }
 
     /* Very small screens — shrink keys, hide diamond counter from header */
@@ -1228,7 +1195,7 @@
     #check-btn, #reveal-btn, #new-puzzle-btn {
       font-family: 'Inter', system-ui, sans-serif;
       font-size: 0.88rem; font-weight: 600;
-      padding: 10px 22px; border-radius: 999px;
+      padding: 12px 22px; border-radius: 999px; min-height: 44px;
       cursor: pointer;
       transition: opacity 0.2s, transform 0.1s, box-shadow 0.2s;
       letter-spacing: 0.01em;
@@ -1380,12 +1347,6 @@
       }
     }
 
-    @media (prefers-color-scheme: dark) {
-      .cw-cell.cell-hl { background: rgba(29, 158, 117, 0.25); border-color: var(--color-correct); }
-      .board-cell.owned-p1 { background: rgba(59,130,246,0.22); }
-      .board-cell.owned-p2 { background: rgba(239,68,68,0.22); }
-    }
-
     /* ─── Online Lobby ───────────────────────────────────── */
     .mode-choice-row {
       display: flex;
@@ -1522,24 +1483,14 @@
       --space-1: 4px;  --space-2: 8px;  --space-3: 12px;
       --space-4: 16px; --space-5: 24px; --space-6: 32px;
       --radius-sm: 10px; --radius-md: 14px; --radius-lg: 20px; --radius-xl: 28px;
-      --shadow-sm: 0 1px 3px rgba(17,24,39,0.08), 0 1px 2px rgba(17,24,39,0.04);
-      --shadow-md: 0 6px 18px rgba(17,24,39,0.10), 0 2px 6px rgba(17,24,39,0.06);
-      --shadow-lg: 0 18px 50px rgba(17,24,39,0.20), 0 6px 16px rgba(17,24,39,0.10);
+      --shadow-sm: 0 1px 3px rgba(28,25,23,0.08), 0 1px 2px rgba(28,25,23,0.04);
+      --shadow-md: 0 6px 18px rgba(28,25,23,0.10), 0 2px 6px rgba(28,25,23,0.06);
+      --shadow-lg: 0 18px 50px rgba(28,25,23,0.18), 0 6px 16px rgba(28,25,23,0.08);
       --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
       --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
       --grad-accent: linear-gradient(135deg, #23b184 0%, var(--color-correct) 55%, #17845f 100%);
-      --grad-header: linear-gradient(180deg, rgba(238,241,246,0.9), rgba(238,241,246,0.72));
-      --hairline: rgba(27,34,51,0.09);
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
-        --shadow-md: 0 6px 20px rgba(0,0,0,0.55);
-        --shadow-lg: 0 20px 60px rgba(0,0,0,0.7);
-        --grad-header: linear-gradient(180deg, rgba(26,26,27,0.9), rgba(18,18,19,0.72));
-        --hairline: rgba(255,255,255,0.08);
-        --gender-die: #f26d6d;   /* lift red for dark-bg legibility */
-      }
+      --grad-header: linear-gradient(180deg, rgba(250,250,248,0.92), rgba(250,250,248,0.76));
+      --hairline: rgba(28,25,23,0.08);
     }
 
     /* ── Header: frosted, gradient ── */
@@ -1583,7 +1534,7 @@
     .overlay-title { letter-spacing: -0.4px; }
 
     /* ── Chips: tabs active pill glow, diamond counter depth ── */
-    .tab.active, .type-tab.active { color: var(--color-correct); }
+    .tab.active, .type-tab.active { color: var(--color-correct-text); }
     .diamond-counter { box-shadow: var(--shadow-sm); transition: transform 0.15s var(--ease-spring); }
     .diamond-counter:hover { transform: translateY(-1px); }
 
@@ -2648,6 +2599,10 @@ function renderClues(puzzle) {
       li.className = 'clue-item';
       li.dataset.num = pw.number;
       li.dataset.dir = pw.dir;
+      li.setAttribute('role', 'button');
+      li.setAttribute('tabindex', '0');
+      li.setAttribute('aria-label',
+        `Hinweis ${pw.number}${pw.dir === 'across' ? 'A waagerecht' : 'D senkrecht'}: ${pw.entry.en}`);
       const numSpan = document.createElement('span');
       numSpan.className   = 'clue-num';
       numSpan.textContent = pw.number + (pw.dir === 'across' ? 'A' : 'D');
@@ -2656,7 +2611,6 @@ function renderClues(puzzle) {
       txtSpan.textContent = `${pw.entry.en} · ${pw.entry.ar}`;
       li.appendChild(numSpan);
       li.appendChild(txtSpan);
-      li.setAttribute('tabindex', '0');
       li.addEventListener('click', () => { selectCell(pw.row, pw.col, pw.dir); });
       li.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectCell(pw.row, pw.col, pw.dir); }
@@ -4069,7 +4023,25 @@ document.getElementById('back-1p-btn').addEventListener('click', () => {
 
 // ─── Native mobile keyboard for crossword ─────────────
 (function() {
-  const inp = document.getElementById('cw-native-input');
+  const inp    = document.getElementById('cw-native-input');
+  const gameEl = document.getElementById('game-main');
+
+  // Push content above the native keyboard so action buttons stay reachable
+  function applyKbInset() {
+    if (!window.visualViewport) return;
+    const inset = Math.max(0, window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop);
+    gameEl.style.paddingBottom = inset > 50 ? inset + 'px' : '';
+  }
+  function clearKbInset() {
+    gameEl.style.paddingBottom = '';
+    if (window.visualViewport) window.visualViewport.removeEventListener('resize', applyKbInset);
+  }
+
+  inp.addEventListener('focus', () => {
+    if (window.visualViewport) window.visualViewport.addEventListener('resize', applyKbInset);
+    applyKbInset();
+  });
+  inp.addEventListener('blur', clearKbInset);
 
   inp.addEventListener('keydown', e => {
     if (gameMode !== '1P') return;
