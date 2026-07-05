@@ -1165,8 +1165,17 @@
         box-shadow: 0 -2px 8px rgba(28,25,23,0.06);
         padding: 5px 4px calc(5px + env(safe-area-inset-bottom, 0px));
       }
-      /* Crossword keyboard keys: slightly shorter than 2P keys (48px) */
-      body.cw-active #cw-keyboard .key { height: 42px; }
+      /* Crossword keyboard keys: taller + larger text for clarity */
+      body.cw-active #cw-keyboard .key {
+        height: 46px;
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+      }
+      body.cw-active #cw-keyboard .key.wide {
+        font-size: 0.72rem;
+        font-weight: 600;
+      }
     }
 
     /* Hidden input that captures native keyboard events (physical keyboard) in crossword mode */
@@ -2770,6 +2779,21 @@ function selectCell(r, c, forceDir) {
   // On mobile: custom keyboard handles input — just show the focus ring on the cell.
   // On desktop: focus the cell for the keyboard event target.
   cwCellEl(r, c)?.focus({ preventScroll: true });
+  // Smoothly scroll the active cell to the center of the grid container
+  scrollCwCellIntoView(r, c);
+}
+
+function scrollCwCellIntoView(r, c) {
+  const cellEl = cwCellEl(r, c);
+  const container = document.getElementById('crossword-grid-container');
+  if (!cellEl || !container) return;
+  // Use scrollIntoView with 'center' on desktop; on mobile manually center
+  // inside the constrained grid container (scrollIntoView targets the viewport).
+  const cRect = container.getBoundingClientRect();
+  const eRect = cellEl.getBoundingClientRect();
+  const scrollLeft = container.scrollLeft + (eRect.left - cRect.left) - (cRect.width  - eRect.width)  / 2;
+  const scrollTop  = container.scrollTop  + (eRect.top  - cRect.top)  - (cRect.height - eRect.height) / 2;
+  container.scrollTo({ left: scrollLeft, top: scrollTop, behavior: 'smooth' });
 }
 
 function highlightWord() {
