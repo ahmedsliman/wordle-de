@@ -1,0 +1,4352 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="Wörtle — lerne deutsche Wörter (A1/A2/B1) mit einem Kreuzworträtsel-Spiel: Aussprache, Grammatik-Gender, und Wiederholung mit Spaced Repetition." />
+  <meta name="color-scheme" content="light" />
+  <meta name="theme-color" content="#FAFAF8" />
+  <title>Wörtle — German Wordle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,700;1,9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── CSS Variables ─────────────────────────────── */
+    :root {
+      --color-bg:               #FAFAF8;
+      --color-surface:          #F2F0EB;
+      --color-border:           #E5E1D9;
+      --color-text:             #1C1917;
+      --color-text-inv:         #FFFFFF;
+      --color-text-muted:       #57534E;
+      --color-cell:             #FFFFFF;
+      --color-cell-block:       #292524;
+      --color-correct:          #1D9E75;
+      --color-correct-text:     #156D4C;
+      --color-present:          #EF9F27;
+      --color-absent:           #79716B;
+      --color-absent-bg:        #79716B;
+      --color-key-bg:           #E7E5E4;
+      --color-key-text:         #1C1917;
+      --color-tile-border:      #D6D3D1;
+      --color-tile-filled:      #A8A29E;
+      --color-header-bg:        #FAFAF8;
+      --color-header-border:    #E5E1D9;
+      --color-badge-noun:       #3b82f6;
+      --color-badge-verb:       #1D9E75;
+      --color-badge-adj:        #EF9F27;
+      --color-tab-active-bg:    #1C1917;
+      --color-tab-active-text:  #FFFFFF;
+      --color-streak-bg:        #F0FDF4;
+      --color-streak-border:    #BBF7D0;
+      --tile-size:              62px;
+      --word-len:               5;
+      --color-p1:               #3b82f6;
+      --color-p2:               #ef4444;
+      --cell-size:              120px;
+      --cw-cell:                36px;
+      --gender-der:             #3b82f6;
+      --gender-die:             #ef4444;
+      --gender-das:             #1D9E75;
+      --gender-neutral:         #8b7cf6;
+    }
+
+
+    /* ─── Reset & Base ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100dvh;
+      overflow-x: hidden;
+    }
+
+    /* ─── Game main card ─────────────────────────────── */
+    #game-main {
+      width: 100%;
+      max-width: 600px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Desktop: body gets a warm canvas, game floats as a card */
+    @media (min-width: 681px) {
+      :root {
+        --color-canvas: #EBE8E1;
+        --color-header-bg: #FAFAF8;
+      }
+
+      body {
+        background: var(--color-canvas);
+        background-image:
+          radial-gradient(ellipse at 15% 40%, rgba(29,158,117,0.07) 0%, transparent 55%),
+          radial-gradient(ellipse at 85% 20%, rgba(239,159,39,0.06) 0%, transparent 45%);
+      }
+
+    }
+
+    @media (min-width: 681px) {
+      #game-main {
+        background: var(--color-bg);
+        box-shadow:
+          0 4px 6px rgba(28,25,23,0.04),
+          0 10px 40px rgba(28,25,23,0.08),
+          0 0 0 1px rgba(28,25,23,0.04);
+        border-radius: 0 0 20px 20px;
+        min-height: calc(100dvh - 52px);
+      }
+    }
+
+    /* ─── Hidden utility ─────────────────────────────── */
+    .hidden { display: none !important; }
+
+    /* ─── Header ────────────────────────────────────── */
+    header {
+      width: 100%;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: stretch;
+      padding: 0 16px;
+      padding-top: env(safe-area-inset-top, 0px);
+      min-height: 52px;
+      border-bottom: 1px solid var(--color-header-border);
+      background: var(--color-header-bg);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 1px 16px rgba(0,0,0,0.07);
+    }
+
+    .logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--color-text);
+      user-select: none;
+      display: flex;
+      align-items: center;
+      padding-right: 12px;
+      white-space: nowrap;
+    }
+
+    .logo-dot { color: var(--color-correct); }
+
+    /* ─── Skip link (visible on keyboard focus) ──────── */
+    .skip-link {
+      position: absolute; left: 8px; top: -48px; z-index: 1000;
+      background: var(--color-correct); color: #fff;
+      padding: 10px 16px; border-radius: 0 0 10px 10px;
+      font-family: 'Inter', system-ui, sans-serif; font-weight: 600; font-size: 0.9rem;
+      text-decoration: none; transition: top 0.15s ease;
+    }
+    .skip-link:focus { top: 0; outline: 3px solid var(--color-present); outline-offset: 2px; }
+
+    /* Keyboard-only focus ring fallback for any interactive element
+       that doesn't define its own (mouse users are unaffected). */
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    [tabindex]:focus-visible {
+      outline: 2.5px solid var(--color-correct);
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
+    #game-main:focus { outline: none; }
+
+    /* ─── Level Tabs (inside header, underline style) ── */
+    .level-tabs {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .tab, .type-tab {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0 14px;
+      border: none;
+      border-bottom: 2.5px solid transparent;
+      background: transparent;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      min-height: 52px;
+    }
+
+    .tab:hover { color: var(--color-text); }
+    .tab:focus-visible, .type-tab:focus-visible { outline: 2px solid var(--color-correct); outline-offset: -2px; }
+
+    .tab.active, .type-tab.active {
+      color: var(--color-correct-text);
+      border-bottom-color: var(--color-correct-text);
+    }
+
+    /* ─── Diamond Counter ──────────────────────────── */
+    .diamond-counter {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--color-correct-text);
+      background: rgba(29,158,117,0.08);
+      border: 1.5px solid rgba(29,158,117,0.3);
+      border-radius: 999px;
+      padding: 3px 8px 3px 7px;
+      cursor: default;
+      user-select: none;
+      transition: transform 0.15s;
+      white-space: nowrap;
+    }
+
+    @keyframes diamond-pulse {
+      0%   { transform: scale(1); }
+      40%  { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
+    .diamond-counter.pulse { animation: diamond-pulse 0.4s ease; }
+
+    /* ─── Earn Toast ────────────────────────────────── */
+    @keyframes float-up {
+      0%   { opacity: 1; transform: translateY(0) scale(1); }
+      20%  { opacity: 1; transform: translateY(-10px) scale(1.1); }
+      100% { opacity: 0; transform: translateY(-60px) scale(0.9); }
+    }
+    .earn-toast {
+      position: fixed;
+      pointer-events: none;
+      z-index: 200;
+      font-family: 'DM Mono', monospace;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-correct);
+      text-shadow: 0 1px 4px rgba(0,0,0,0.15);
+      animation: float-up 1.3s ease forwards;
+      white-space: nowrap;
+    }
+
+    /* ─── Mode Toggle ───────────────────────────────── */
+    .mode-toggle {
+      display: flex;
+      align-items: center;
+      align-self: center;
+      gap: 2px;
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      border-radius: 999px;
+      padding: 3px;
+    }
+
+    .mode-btn {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border: none;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      letter-spacing: 0.01em;
+    }
+
+    .mode-btn.active {
+      background: var(--color-correct);
+      color: #fff;
+    }
+
+    /* ─── Hint bar ──────────────────────────────────── */
+    .hint-bar {
+      width: 100%;
+      max-width: 600px;
+      padding: 10px 16px 10px 19px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px 10px;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      border-left: 3px solid var(--color-correct);
+      min-height: 48px;
+    }
+
+    .hint-en {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .hint-sep {
+      color: var(--color-text-muted);
+      font-size: 0.8rem;
+    }
+
+    .hint-ar {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--color-text);
+      direction: rtl;
+      unicode-bidi: isolate;
+    }
+
+    .hint-sentence {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+      font-style: italic;
+      flex-basis: 100%;
+      line-height: 1.4;
+    }
+
+    .hint-article {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--color-correct-text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-style: normal;
+    }
+
+    .audio-btn {
+      background: none;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 2px 4px;
+      min-width: 44px;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      line-height: 1;
+      opacity: 0.7;
+      transition: opacity 0.15s, transform 0.1s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .audio-btn:hover { opacity: 1; }
+    .audio-btn:active { transform: scale(0.9); }
+    .audio-btn:focus-visible { outline: 2px solid var(--color-correct); outline-offset: 3px; border-radius: 6px; }
+    .audio-btn.speaking { opacity: 1; animation: pulse-audio 0.6s ease infinite alternate; }
+    @keyframes pulse-audio { from { transform: scale(1); } to { transform: scale(1.2); } }
+
+    .type-badge {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 999px;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-left: auto;
+    }
+
+    .type-badge.noun      { background: var(--color-badge-noun); }
+    .type-badge.verb      { background: var(--color-badge-verb); }
+    .type-badge.adjective { background: var(--color-badge-adj); color: #1a1a2e; }
+
+    /* ─── Wordle Panel ───────────────────────────────── */
+    #wordle-panel {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+    }
+
+    /* Slide-up modal in 2P mode */
+    #wordle-panel:not(.inline-mode) {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 100%;
+      max-height: 92dvh;
+      background: var(--color-bg);
+      border-radius: 20px 20px 0 0;
+      box-shadow: 0 -4px 24px rgba(0,0,0,0.25);
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+      z-index: 50;
+      overflow-y: auto;
+    }
+
+    #wordle-panel:not(.inline-mode).visible {
+      transform: translateY(0);
+    }
+
+    /* ─── Panel Header (2P) ──────────────────────────── */
+    .panel-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px 8px;
+      position: sticky;
+      top: 0;
+      background: var(--color-bg);
+      z-index: 1;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .panel-player-badge {
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 6px 16px;
+      border-radius: 999px;
+      color: #fff;
+    }
+
+    .panel-close-btn {
+      font-size: 1rem;
+      width: 32px;
+      height: 32px;
+      border: none;
+      border-radius: 50%;
+      background: var(--color-surface);
+      color: var(--color-text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+
+    .panel-close-btn:hover { background: var(--color-border); }
+
+    /* Panel backdrop */
+    #panel-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 49;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s;
+    }
+
+    #panel-backdrop.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ─── Grid container ─────────────────────────────── */
+    .grid-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 8px 8px;
+      width: 100%;
+    }
+
+    #grid {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .grid-row {
+      display: flex;
+      gap: 4px;
+      border-left: 3px solid transparent;
+      padding-left: 5px;
+      border-radius: 3px 0 0 3px;
+      transition: border-color 0.2s;
+    }
+
+    .grid-row.row-owner-p1 { border-left-color: var(--color-p1); }
+    .grid-row.row-owner-p2 { border-left-color: var(--color-p2); }
+    .grid-row.active-row .tile:not(.correct):not(.present):not(.absent):not(.skipped) {
+      border-color: var(--color-text-muted);
+    }
+    .grid-row.active-row {
+      border-left-width: 5px;
+    }
+
+    .handoff-card { text-align: center; }
+    .handoff-icon { font-size: 3rem; margin-bottom: 0.5rem; }
+    .handoff-sub  { color: var(--color-text-muted); font-size: 0.95rem; margin: 0.5rem 0 1.2rem; }
+
+    .tile.skipped {
+      color: var(--color-text-muted);
+      border-color: var(--color-border);
+      font-size: calc(var(--tile-size) * 0.35);
+    }
+
+    .skip-btn {
+      align-self: center;
+      padding: 8px 22px;
+      border-radius: 999px;
+      border: 2px solid var(--color-border);
+      background: transparent;
+      color: var(--color-text);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .skip-btn:hover { background: var(--color-surface); border-color: var(--color-text-muted); }
+
+    /* ─── Tile ───────────────────────────────────────── */
+    .tile {
+      width: var(--tile-size);
+      height: var(--tile-size);
+      border: 2px solid var(--color-tile-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: calc(var(--tile-size) * 0.5);
+      font-weight: 500;
+      font-family: 'DM Mono', monospace;
+      color: var(--color-text);
+      background: transparent;
+      text-transform: uppercase;
+      user-select: none;
+      transition: border-color 0.1s;
+      transform-style: preserve-3d;
+      position: relative;
+    }
+
+    .tile[data-letter] { border-color: var(--color-tile-filled); }
+
+    .tile.correct { background: var(--color-correct); border-color: var(--color-correct); color: #fff; }
+    .tile.present { background: var(--color-present); border-color: var(--color-present); color: #fff; }
+    .tile.absent  { background: var(--color-absent-bg); border-color: var(--color-absent-bg); color: #fff; }
+
+    /* ─── Animations ─────────────────────────────────── */
+    @keyframes pop {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.12); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      15%       { transform: translateX(-5px); }
+      30%       { transform: translateX(5px); }
+      45%       { transform: translateX(-4px); }
+      60%       { transform: translateX(4px); }
+      75%       { transform: translateX(-2px); }
+      90%       { transform: translateX(2px); }
+    }
+
+    @keyframes flipIn {
+      0%   { transform: rotateX(0deg); }
+      50%  { transform: rotateX(-90deg); }
+    }
+
+    @keyframes flipOut {
+      50%  { transform: rotateX(-90deg); }
+      100% { transform: rotateX(0deg); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      40%      { transform: translateY(-20px); }
+      60%      { transform: translateY(-10px); }
+    }
+
+    .tile.pop      { animation: pop 0.1s ease; }
+    .tile.flipping { animation: flipIn 0.25s ease forwards; }
+    .tile.flipped  { animation: flipOut 0.25s ease forwards; }
+    .tile.bounce   { animation: bounce 0.5s ease; }
+
+    .row-shake { animation: shake 0.5s ease; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .tile.pop, .tile.flipping, .tile.flipped, .tile.bounce, .row-shake,
+      .diamond-counter.pulse, .audio-btn.speaking, .cw-cell.letter-pop { animation: none; }
+      .earn-toast { animation: none; opacity: 0; }
+    }
+
+    /* ─── Message ─────────────────────────────────────── */
+    #message {
+      min-height: 36px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 6px 16px;
+      text-align: center;
+      border-radius: 8px;
+      transition: opacity 0.3s;
+      background: var(--color-surface);
+    }
+
+    #message.win  { color: var(--color-correct); }
+    #message.lose { color: #ef4444; }
+
+    /* ─── Keyboard ───────────────────────────────────── */
+    #keyboard {
+      width: 100%;
+      max-width: 580px;
+      padding: 8px 6px 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .kb-row {
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .key {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 500;
+      height: 56px;
+      min-width: 34px;
+      flex: 1;
+      max-width: 42px;
+      border: none;
+      border-radius: 6px;
+      background: var(--color-key-bg);
+      color: var(--color-key-text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      transition: background 0.2s, color 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .key.wide {
+      font-size: 0.7rem;
+      min-width: 52px;
+      max-width: 64px;
+    }
+
+    .key.correct { background: var(--color-correct); color: #fff; }
+    .key.present { background: var(--color-present); color: #fff; }
+    .key.absent  { background: var(--color-absent);  color: #fff; }
+    .key:hover:not(.correct):not(.present):not(.absent) { filter: brightness(0.9); }
+    .key:focus-visible { outline: 2px solid var(--color-correct); outline-offset: 2px; }
+
+    /* ─── Streak bar ─────────────────────────────────── */
+    .streak-bar {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      padding: 10px 16px calc(14px + env(safe-area-inset-bottom, 0px));
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      background: var(--color-streak-bg);
+      border-top: 1px solid var(--color-streak-border);
+      margin-top: auto;
+    }
+
+    .streak-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--color-bg);
+      border: 1px solid var(--color-streak-border);
+      border-radius: 999px;
+      padding: 4px 14px;
+    }
+
+    .streak-pill span {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--color-correct);
+    }
+
+    /* ─── Loading / Error state ──────────────────────── */
+    #loading {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      background: var(--color-bg);
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+      z-index: 100;
+    }
+
+    #loading.hidden { display: none; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-spinner {
+      width: 32px; height: 32px;
+      border: 3px solid var(--color-border);
+      border-top-color: var(--color-correct);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    /* ─── 2P Board ───────────────────────────────────── */
+    #board-2p {
+      width: 100%;
+      max-width: 600px;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .turn-banner {
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 8px 20px;
+      border-radius: 999px;
+      color: #fff;
+      align-self: center;
+      min-width: 160px;
+      transition: background 0.3s;
+    }
+
+    .turn-banner.p1 { background: var(--color-p1); }
+    .turn-banner.p2 { background: var(--color-p2); }
+
+    .score-strip {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .score-label {
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 6px 16px;
+      border-radius: 999px;
+      color: #fff;
+      flex: 1;
+      text-align: center;
+    }
+
+    .score-label.p1 { background: var(--color-p1); }
+    .score-label.p2 { background: var(--color-p2); }
+
+    /* ─── Cell Grid ──────────────────────────────────── */
+    #cell-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: var(--cell-size);
+      gap: 8px;
+      width: 100%;
+    }
+
+    .board-cell {
+      border-radius: 12px;
+      padding: 10px;
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      transition: background 0.2s, border-color 0.2s, transform 0.1s, box-shadow 0.3s;
+      cursor: default;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .board-cell.win-line-p1 { box-shadow: 0 0 0 3px var(--color-p1), 0 0 12px rgba(59,130,246,0.4); }
+    .board-cell.win-line-p2 { box-shadow: 0 0 0 3px var(--color-p2), 0 0 12px rgba(239,68,68,0.4); }
+
+    .board-cell.playable { cursor: pointer; }
+
+    .board-cell.playable:hover {
+      border-color: var(--color-text-muted);
+      transform: translateY(-2px);
+    }
+
+    .board-cell.playable:active { transform: translateY(0); }
+
+    .board-cell.owned-p1 {
+      background: rgba(59, 130, 246, 0.12);
+      border-color: var(--color-p1);
+    }
+
+    .board-cell.owned-p2 {
+      background: rgba(239, 68, 68, 0.12);
+      border-color: var(--color-p2);
+    }
+
+    .board-cell.failed {
+      background: var(--color-surface);
+      border-color: var(--color-border);
+      opacity: 0.45;
+    }
+
+    .cell-length-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .cell-hint-text {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--color-text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .cell-word-reveal {
+      font-size: 0.72rem;
+      color: var(--color-text-muted);
+      font-style: italic;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .cell-owner-badge {
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 999px;
+      align-self: flex-start;
+      margin-top: 4px;
+    }
+
+    .cell-owner-badge.p1 { background: var(--color-p1); }
+    .cell-owner-badge.p2 { background: var(--color-p2); }
+
+    /* Hide fixed keyboard when any overlay is open */
+    body:has(.overlay:not(.hidden)) #keyboard { display: none !important; }
+
+    /* ─── Overlays ───────────────────────────────────── */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.6);
+      z-index: 60;
+      padding: 16px;
+    }
+
+    .overlay-card {
+      background: var(--color-bg);
+      border-radius: 20px;
+      padding: 28px 24px;
+      width: 100%;
+      max-width: 380px;
+      max-height: 90dvh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .overlay-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      text-align: center;
+      color: var(--color-text);
+    }
+
+    /* ─── Gender color-coding (post-round only) ──────── */
+    .g-der     { color: var(--gender-der); }
+    .g-die     { color: var(--gender-die); }
+    .g-das     { color: var(--gender-das); }
+    .g-neutral { color: var(--gender-neutral); }
+
+    /* ─── Post-round review panel ────────────────────── */
+    .cw-review-panel {
+      display: flex; flex-direction: column; gap: 10px;
+      text-align: left; margin-top: 4px;
+    }
+    .cw-review-title {
+      font-size: 0.82rem; font-weight: 700; color: var(--color-text-muted);
+      text-transform: uppercase; letter-spacing: 0.04em; text-align: left;
+    }
+    .rev-card {
+      background: var(--color-surface); border-radius: 12px; padding: 12px 14px;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .rev-word-row { display: flex; align-items: center; gap: 8px; }
+    .rev-word {
+      font-family: 'DM Mono', monospace; font-size: 1.05rem; font-weight: 600;
+      color: var(--color-text);
+    }
+    .rev-word .rev-article { font-weight: 700; }
+    .rev-audio { margin-left: auto; }
+    .rev-meta { font-size: 0.9rem; color: var(--color-text); }
+    .rev-meta .rev-ar { color: var(--color-text-muted); }
+    .rev-ar { direction: rtl; unicode-bidi: isolate; }
+    .rev-grammar {
+      font-size: 0.82rem; color: var(--color-text-muted);
+      font-family: 'DM Mono', monospace;
+    }
+    .rev-example { font-size: 0.82rem; color: var(--color-text-muted); font-style: italic; }
+    .rev-example .rev-ex-ar { direction: rtl; unicode-bidi: isolate; display: block; font-style: normal; }
+    .rev-add {
+      display: flex; align-items: center; gap: 6px; margin-top: 2px;
+      font-size: 0.8rem; color: var(--color-text-muted); cursor: pointer; user-select: none;
+    }
+    .rev-add input { accent-color: var(--color-correct); width: 15px; height: 15px; }
+
+    /* ─── Review level tab + due badge ───────────────── */
+    .tab-review { gap: 4px; }
+    .review-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px;
+      background: var(--color-present); color: #1a1a2e;
+      font-size: 0.66rem; font-weight: 700; line-height: 1;
+    }
+    .review-badge[hidden] { display: none; }
+    .cw-empty-review {
+      text-align: center; color: var(--color-text-muted); font-size: 0.95rem;
+      padding: 40px 20px; line-height: 1.6;
+    }
+
+    /* ─── Setup Overlay ──────────────────────────────── */
+    .setup-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .setup-fields label {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .player-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .p1-label { color: var(--color-p1); }
+    .p2-label { color: var(--color-p2); }
+
+    .setup-fields input {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.95rem;
+      padding: 10px 14px;
+      border: 1.5px solid var(--color-border);
+      border-radius: 10px;
+      background: var(--color-surface);
+      color: var(--color-text);
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .setup-fields input:focus {
+      border-color: var(--color-correct);
+      box-shadow: 0 0 0 3px rgba(29,158,117,0.15);
+    }
+    .setup-fields input::placeholder { color: var(--color-text-muted); opacity: 0.6; }
+
+    .start-btn {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 999px;
+      background: var(--color-correct);
+      color: #fff;
+      cursor: pointer;
+      letter-spacing: 0.01em;
+      box-shadow: 0 2px 8px rgba(29,158,117,0.3);
+      transition: opacity 0.15s, transform 0.1s, box-shadow 0.2s;
+    }
+
+    .start-btn:hover  { opacity: 0.9; box-shadow: 0 4px 14px rgba(29,158,117,0.45); }
+    .start-btn:active { transform: scale(0.97); }
+
+    .cancel-btn {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 10px 24px;
+      border: 1.5px solid var(--color-border);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .cancel-btn:hover { border-color: var(--color-text-muted); color: var(--color-text); }
+
+    /* ─── Results Overlay ────────────────────────────── */
+    .results-winner {
+      font-family: 'Fraunces', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .results-breakdown {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      background: var(--color-surface);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      gap: 8px;
+    }
+
+    .breakdown-name { font-weight: 500; }
+
+    .breakdown-score {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .results-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* ─── Mobile ─────────────────────────────────────── */
+    @media (max-width: 680px) {
+      /* Reduce key height so keyboard fits on screen */
+      .key { height: 48px; }
+
+      /* Fixed keyboard at bottom of viewport */
+      #keyboard:not(:empty) {
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        background: var(--color-bg);
+        border-top: 1px solid var(--color-border);
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+        padding: 6px 4px calc(4px + env(safe-area-inset-bottom, 0px));
+        z-index: 40;
+      }
+
+      /* Reserve space so content isn't hidden under the custom keyboard (2P only) */
+      body.has-keyboard:not(:has(#wordle-panel.mode-1p)) {
+        padding-bottom: calc(185px + env(safe-area-inset-bottom, 0px));
+      }
+    }
+
+    /* ─── Mobile header compaction ─────────────────── */
+    @media (max-width: 480px) {
+      header { padding: 0 10px; }
+      .logo { font-size: 1.25rem; padding-right: 6px; }
+      .tab, .type-tab { padding: 0 10px; font-size: 0.76rem; min-height: 48px; }
+      .diamond-counter { font-size: 0.72rem; padding: 3px 6px; gap: 2px; }
+      .mode-btn { font-size: 0.7rem; padding: 4px 9px; }
+      /* Streak bar wraps to 2 rows */
+      .streak-bar { flex-wrap: wrap; }
+      /* Clue bar: Arabic wraps to its own line on small screens */
+      .hint-ar { flex-basis: 100%; font-size: 0.82rem; }
+    }
+
+    /* Very small screens — shrink keys, hide diamond counter from header */
+    @media (max-width: 400px) {
+      :root { --cell-size: 88px; }
+      .logo { font-size: 1.1rem; }
+      .tab, .type-tab { padding: 0 8px; font-size: 0.72rem; }
+      .key { min-width: 28px; max-width: 36px; font-size: 0.7rem; }
+      .key.wide { min-width: 44px; max-width: 54px; font-size: 0.62rem; }
+      .cell-hint-text { font-size: 0.72rem; }
+      .diamond-counter { display: none; }
+    }
+
+    /* Show diamond total in streak bar on small screens */
+    @media (max-width: 400px) {
+      #streak-bar-diamonds { display: flex !important; }
+    }
+
+    /* Hide custom keyboard in 1P crossword mode — custom #cw-keyboard used instead */
+    #wordle-panel.mode-1p #keyboard { display: none; }
+
+    /* ─── 1P Crossword: mobile viewport lock + three-zone layout ── */
+    /* body.cw-active is set by startCrossword() on mobile */
+    @media (max-width: 680px) {
+      body.cw-active {
+        height: 100dvh;
+        overflow: hidden;
+      }
+      body.cw-active #game-main {
+        /* Let the flex item shrink below its content's natural height */
+        min-height: 0;
+        overflow: hidden;
+      }
+      /* Streak bar has no space in locked viewport */
+      body.cw-active #streak-bar { display: none; }
+
+      /* Collapsible chrome: collapse chips + progress when a cell is selected */
+      body.cw-active #cw-progress,
+      body.cw-active #clue-chips {
+        overflow: hidden;
+        transition: max-height 0.22s ease, opacity 0.22s ease;
+        max-height: 72px;
+      }
+      body.cw-active.cw-typing #cw-progress,
+      body.cw-active.cw-typing #clue-chips {
+        max-height: 0;
+        opacity: 0;
+      }
+
+      /* Clue bar stays visible; prevent flex from squishing it */
+      body.cw-active #cw-clue-bar { flex-shrink: 0; }
+
+      /* Board zone: takes all remaining space */
+      body.cw-active #crossword-area {
+        flex: 1;
+        min-height: 0;
+        overflow: hidden;
+        /* override the overflow-x:auto set by the mobile media query above */
+        overflow-x: hidden;
+        align-items: center;
+        justify-content: center;
+        padding: 4px 8px;
+        gap: 0;
+      }
+      body.cw-active #crossword-grid-container {
+        overflow: auto;
+        height: 100%;
+        max-height: 100%;
+        max-width: 100%;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /* Actions: compact, above keyboard */
+      body.cw-active #cw-actions {
+        flex-shrink: 0;
+        padding: 4px 12px;
+        margin: 0;
+      }
+
+      /* Custom crossword keyboard — hidden on desktop, shown in cw-active mobile */
+      #cw-keyboard { display: none; }
+      body.cw-active #cw-keyboard {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        align-items: center;
+        flex-shrink: 0;
+        width: 100%;
+        background: var(--color-bg);
+        border-top: 1px solid var(--color-border);
+        box-shadow: 0 -2px 8px rgba(28,25,23,0.06);
+        padding: 5px 4px calc(5px + env(safe-area-inset-bottom, 0px));
+      }
+      /* Crossword keyboard keys: slightly shorter than 2P keys (48px) */
+      body.cw-active #cw-keyboard .key { height: 42px; }
+    }
+
+    /* Hidden input that captures native keyboard events (physical keyboard) in crossword mode */
+    #cw-native-input {
+      position: fixed;
+      top: -200px;
+      left: 0;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 16px; /* prevents iOS auto-zoom */
+    }
+
+    /* ─── Crossword ──────────────────────────────────── */
+    #crossword-area {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      max-width: 900px;
+      width: 100%;
+      padding: 12px 16px;
+      margin: 0 auto;
+    }
+
+    #crossword-grid-container { overflow: auto; flex-shrink: 0; }
+
+    #crossword-grid { display: grid; gap: 2px; }
+
+    .cw-cell {
+      width: var(--cw-cell); height: var(--cw-cell);
+      position: relative;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; user-select: none;
+      touch-action: manipulation;
+    }
+
+    .cw-cell:focus { outline: none; }
+    .cw-cell:focus-visible { outline: 2px solid var(--color-correct); outline-offset: -2px; z-index: 1; }
+    .cw-cell.black { background: #2a2a2a; border-color: #2a2a2a; cursor: default; }
+    .cw-cell.word-hl { background: var(--color-surface); }
+    .cw-cell.cell-hl { background: rgba(29, 158, 117, 0.2); border-color: var(--color-correct); }
+    .cw-cell.correct { background: var(--color-correct); }
+    .cw-cell.wrong   { background: #ef4444; }
+    .cw-cell.wrong .cw-letter { color: #fff; }
+    .cw-cell.revealed { opacity: 0.7; }
+
+    .cw-number {
+      position: absolute; top: 1px; left: 2px;
+      font-size: calc(var(--cw-cell) * 0.28);
+      font-family: 'DM Mono', monospace;
+      color: var(--color-text-muted);
+      line-height: 1; pointer-events: none;
+    }
+
+    .cw-letter {
+      font-size: calc(var(--cw-cell) * 0.55);
+      font-weight: 500; font-family: 'DM Mono', monospace;
+      color: var(--color-text); text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    .cw-cell.correct .cw-letter,
+    .cw-cell.correct .cw-number { color: #fff; }
+
+    /* Clues panel */
+    #clues-panel {
+      flex: 1; min-width: 180px; max-width: 260px;
+      max-height: 60vh; overflow-y: auto;
+    }
+
+    .clues-heading {
+      font-size: 0.8rem; font-weight: 600;
+      text-transform: uppercase; color: var(--color-text-muted);
+      margin: 8px 0 4px;
+    }
+
+    .clue-item {
+      font-size: 0.82rem; padding: 5px 8px;
+      border-radius: 6px; cursor: pointer;
+      display: flex; gap: 6px; line-height: 1.4;
+    }
+
+    .clue-item:hover, .clue-item:focus-visible { background: var(--color-surface); outline: none; }
+    .clue-item.active { background: var(--color-tab-active-bg); color: var(--color-tab-active-text); }
+    .clue-item.solved { color: var(--color-text-muted); text-decoration: line-through; }
+    .clue-num { font-weight: 600; min-width: 22px; }
+    .clue-text { flex: 1; }
+
+    /* CW action buttons */
+    #cw-actions {
+      display: flex; gap: 8px; justify-content: center;
+      flex-wrap: wrap; margin: 4px 0 8px;
+      width: 100%; max-width: 900px; padding: 0 16px;
+    }
+
+    #check-btn, #reveal-btn, #new-puzzle-btn {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.88rem; font-weight: 600;
+      padding: 12px 22px; border-radius: 999px; min-height: 44px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s, box-shadow 0.2s;
+      letter-spacing: 0.01em;
+    }
+
+    /* Primary action */
+    #new-puzzle-btn {
+      background: var(--color-correct);
+      color: #fff;
+      border: none;
+      box-shadow: 0 2px 8px rgba(29,158,117,0.35);
+    }
+
+    /* Secondary action */
+    #check-btn {
+      background: transparent;
+      color: var(--color-text);
+      border: 1.5px solid var(--color-border);
+    }
+
+    /* Ghost action */
+    #reveal-btn {
+      background: transparent;
+      color: var(--color-present);
+      border: 1.5px solid var(--color-present);
+    }
+
+    #check-btn:hover   { background: var(--color-surface); border-color: var(--color-text-muted); }
+    #reveal-btn:hover  { background: rgba(239,159,39,0.08); }
+    #new-puzzle-btn:hover { opacity: 0.9; box-shadow: 0 4px 12px rgba(29,158,117,0.45); }
+    #check-btn:active, #reveal-btn:active, #new-puzzle-btn:active { transform: scale(0.97); }
+    #check-btn:focus-visible, #reveal-btn:focus-visible, #new-puzzle-btn:focus-visible,
+    .start-btn:focus-visible { outline: 2px solid var(--color-correct); outline-offset: 3px; }
+
+    #cw-clue-bar .cw-clue-num { font-size: 0.85rem; font-weight: 600; color: var(--color-text-muted); }
+
+    .cw-word-len {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      background: var(--color-border);
+      border-radius: 999px;
+      padding: 2px 8px;
+      white-space: nowrap;
+    }
+
+    /* ─── Crossword progress bar ─────────────────────── */
+    #cw-progress {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 14px 6px;
+      background: var(--color-bg);
+    }
+    #cw-progress-fill {
+      flex: 1;
+      height: 4px;
+      background: var(--color-border);
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+    #cw-progress-fill::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--color-correct);
+      transform-origin: left;
+      transform: scaleX(var(--cw-progress, 0));
+      transition: transform 0.4s ease;
+      border-radius: 999px;
+    }
+    #cw-progress-text {
+      font-size: 0.72rem;
+      font-weight: 600;
+      font-family: 'DM Mono', monospace;
+      color: var(--color-text-muted);
+      white-space: nowrap;
+    }
+
+    /* Cell pop on letter entry */
+    @keyframes cw-pop {
+      0%   { transform: scale(1); }
+      40%  { transform: scale(1.18); }
+      100% { transform: scale(1); }
+    }
+    .cw-cell.letter-pop { animation: cw-pop 0.12s ease; }
+
+    /* ─── Word chip strip (mobile) ──────────────────── */
+    #clue-chips {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      overflow-x: auto;
+      overflow-y: hidden;
+      gap: 6px;
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--color-border);
+      background: var(--color-bg);
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    #clue-chips::-webkit-scrollbar { display: none; }
+
+    .clue-chip {
+      flex-shrink: 0;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 5px 11px;
+      border-radius: 999px;
+      border: 1.5px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .clue-chip:hover { border-color: var(--color-text-muted); }
+    .clue-chip.active {
+      background: var(--color-correct);
+      border-color: var(--color-correct);
+      color: #fff;
+    }
+    .clue-chip.solved {
+      opacity: 0.4;
+      text-decoration: line-through;
+    }
+
+    @media (max-width: 680px) {
+      /* Show chip strip, hide the side clue panel */
+      #clue-chips { display: flex; }
+      #clues-panel { display: none; }
+      /* Grid no longer stacks with the panel */
+      #crossword-area { overflow-x: auto; }
+    }
+
+    @media (min-width: 681px) {
+      /* Desktop: side panel visible, chip strip hidden */
+      #clue-chips { display: none; }
+      #crossword-area { flex-direction: row; }
+      #clues-panel {
+        flex: 1; min-width: 180px; max-width: 260px;
+        max-height: 60vh; overflow-y: auto;
+        display: block;
+      }
+    }
+
+    /* ─── Online Lobby ───────────────────────────────────── */
+    .mode-choice-row {
+      display: flex;
+      gap: 12px;
+    }
+    .mode-choice-btn {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      flex: 1;
+      padding: 16px 12px;
+      border: 2px solid var(--color-border);
+      border-radius: 12px;
+      background: var(--color-surface);
+      color: var(--color-text);
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .mode-choice-btn:hover:not(:disabled) {
+      border-color: var(--color-text-muted);
+      background: var(--color-bg);
+    }
+    .mode-choice-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .mode-choice-icon { font-size: 1.8rem; }
+    .mode-choice-sub  { font-size: 0.72rem; color: var(--color-text-muted); }
+
+    .lobby-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--color-text-muted);
+      font-size: 0.8rem;
+    }
+    .lobby-divider::before, .lobby-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--color-border);
+    }
+
+    .room-code-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 16px;
+      background: var(--color-surface);
+      border-radius: 12px;
+      border: 2px solid var(--color-border);
+    }
+    .room-code-label {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .room-code-value {
+      font-family: 'DM Mono', monospace;
+      font-size: clamp(1.4rem, 6vw, 2rem);
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--color-correct);
+    }
+    .copy-code-btn {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.8rem;
+      padding: 6px 16px;
+      border: 1px solid var(--color-border);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .copy-code-btn:hover { border-color: var(--color-text-muted); color: var(--color-text); }
+
+    @keyframes dots {
+      0%   { content: ''; }
+      25%  { content: '.'; }
+      50%  { content: '..'; }
+      75%  { content: '...'; }
+      100% { content: ''; }
+    }
+    .waiting-dots::after {
+      content: '';
+      animation: dots 1.5s steps(4, end) infinite;
+    }
+
+    .join-row {
+      display: flex;
+      gap: 8px;
+    }
+    .join-row input {
+      flex: 1;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.95rem;
+      padding: 10px 14px;
+      border: 1.5px solid var(--color-border);
+      border-radius: 10px;
+      background: var(--color-surface);
+      color: var(--color-text);
+      outline: none;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .join-row input:focus {
+      border-color: var(--color-correct);
+      box-shadow: 0 0 0 3px rgba(29,158,117,0.15);
+    }
+    .join-btn {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      background: var(--color-correct);
+      color: #fff;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      white-space: nowrap;
+    }
+    .join-btn:hover { opacity: 0.88; }
+    /* ══════════════════════════════════════════════════════════════
+       REDESIGN LAYER — depth, motion, review polish (open redesign).
+       Appended last so it refines existing components via the cascade.
+       ══════════════════════════════════════════════════════════════ */
+    :root {
+      --space-1: 4px;  --space-2: 8px;  --space-3: 12px;
+      --space-4: 16px; --space-5: 24px; --space-6: 32px;
+      --radius-sm: 10px; --radius-md: 14px; --radius-lg: 20px; --radius-xl: 28px;
+      --shadow-sm: 0 1px 3px rgba(28,25,23,0.08), 0 1px 2px rgba(28,25,23,0.04);
+      --shadow-md: 0 6px 18px rgba(28,25,23,0.10), 0 2px 6px rgba(28,25,23,0.06);
+      --shadow-lg: 0 18px 50px rgba(28,25,23,0.18), 0 6px 16px rgba(28,25,23,0.08);
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --grad-accent: linear-gradient(135deg, #23b184 0%, var(--color-correct) 55%, #17845f 100%);
+      --grad-header: linear-gradient(180deg, rgba(250,250,248,0.92), rgba(250,250,248,0.76));
+      --hairline: rgba(28,25,23,0.08);
+    }
+
+    /* ── Header: frosted, gradient ── */
+    header {
+      background: var(--grad-header);
+      -webkit-backdrop-filter: saturate(1.4) blur(12px);
+      backdrop-filter: saturate(1.4) blur(12px);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .logo { letter-spacing: -0.8px; }
+
+    /* ── Primary buttons: gradient + spring press ── */
+    .start-btn {
+      background: var(--grad-accent);
+      box-shadow: 0 4px 14px rgba(29,158,117,0.35), inset 0 1px 0 rgba(255,255,255,0.25);
+      transition: transform 0.14s var(--ease-spring), box-shadow 0.2s ease, filter 0.2s ease;
+      padding: 13px 26px;
+    }
+    .start-btn:hover  { opacity: 1; filter: brightness(1.05); box-shadow: 0 8px 22px rgba(29,158,117,0.5), inset 0 1px 0 rgba(255,255,255,0.3); transform: translateY(-1px); }
+    .start-btn:active { transform: translateY(0) scale(0.96); }
+    button { -webkit-tap-highlight-color: transparent; }
+    .mode-choice-btn, .cancel-btn { transition: transform 0.14s var(--ease-spring), border-color 0.15s, color 0.15s, box-shadow 0.2s; }
+    .mode-choice-btn:active, .cancel-btn:active { transform: scale(0.97); }
+
+    /* ── Overlays: blurred backdrop + spring pop-in ── */
+    .overlay {
+      background: rgba(12,14,20,0.55);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+    }
+    .overlay-card {
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--hairline);
+      animation: overlay-pop 0.34s var(--ease-spring) both;
+    }
+    @keyframes overlay-pop {
+      from { opacity: 0; transform: translateY(12px) scale(0.96); }
+      to   { opacity: 1; transform: translateY(0)    scale(1); }
+    }
+    .overlay-title { letter-spacing: -0.4px; }
+
+    /* ── Chips: tabs active pill glow, diamond counter depth ── */
+    .tab.active, .type-tab.active { color: var(--color-correct-text); }
+    .diamond-counter { box-shadow: var(--shadow-sm); transition: transform 0.15s var(--ease-spring); }
+    .diamond-counter:hover { transform: translateY(-1px); }
+
+    /* ── Summary stats rows: subtle depth ── */
+    #cw-summary-stats > div { box-shadow: var(--shadow-sm); border: 1px solid var(--hairline); }
+
+    /* ── Review panel polish ── */
+    .cw-review-title { display: flex; align-items: center; gap: var(--space-2); }
+    .gender-legend {
+      display: flex; flex-wrap: wrap; gap: var(--space-2);
+      justify-content: center; margin: var(--space-1) 0 var(--space-2);
+    }
+    .gender-legend span {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.72rem; font-weight: 600; color: var(--color-text-muted);
+      background: var(--color-surface); border: 1px solid var(--hairline);
+      padding: 3px 9px; border-radius: 999px;
+    }
+    .gender-legend .dot { width: 9px; height: 9px; border-radius: 50%; }
+    .gender-legend .dot.g-der { background: var(--gender-der); }
+    .gender-legend .dot.g-die { background: var(--gender-die); }
+    .gender-legend .dot.g-das { background: var(--gender-das); }
+
+    .rev-card {
+      position: relative; overflow: hidden;
+      border: 1px solid var(--hairline); box-shadow: var(--shadow-sm);
+      border-radius: var(--radius-md); padding-left: 16px;
+      transition: transform 0.16s var(--ease-out), box-shadow 0.2s ease;
+      animation: rev-in 0.3s var(--ease-out) both;
+    }
+    .rev-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    @keyframes rev-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    /* gender accent bar on the card edge */
+    .rev-card::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+      background: var(--color-border);
+    }
+    .rev-card.g-der::before     { background: var(--gender-der); }
+    .rev-card.g-die::before     { background: var(--gender-die); }
+    .rev-card.g-das::before     { background: var(--gender-das); }
+    .rev-card.g-neutral::before { background: var(--gender-neutral); }
+    .rev-audio {
+      background: var(--color-surface); border: 1px solid var(--hairline);
+      border-radius: 50%; width: 34px; height: 34px; display: grid; place-items: center;
+      box-shadow: var(--shadow-sm); transition: transform 0.14s var(--ease-spring), background 0.2s;
+    }
+    .rev-audio:hover  { transform: scale(1.08); }
+    .rev-audio:active { transform: scale(0.92); }
+    .rev-add {
+      background: var(--color-surface); border: 1px solid var(--hairline);
+      border-radius: 999px; padding: 6px 12px; align-self: flex-start; margin-top: var(--space-1);
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .rev-add:hover { color: var(--color-text); }
+    .rev-add:has(input:checked) {
+      color: var(--color-correct); border-color: rgba(29,158,117,0.4);
+      background: rgba(29,158,117,0.08);
+    }
+
+    /* ── Due-count badge: pop when it appears ── */
+    .review-badge {
+      box-shadow: 0 2px 6px rgba(239,159,39,0.5);
+      animation: badge-pop 0.4s var(--ease-spring);
+    }
+    @keyframes badge-pop { from { transform: scale(0); } to { transform: scale(1); } }
+    .tab-review.active { color: var(--color-present); border-bottom-color: var(--color-present); }
+
+    /* ── Crossword cells: white playable, indigo blocks (Cool Indigo) ── */
+    .cw-cell       { background: var(--color-cell); border-color: var(--color-border); }
+    .cw-cell.black { background: var(--color-cell-block); border-color: var(--color-cell-block); }
+
+    /* ── Confetti canvas (win celebration) ── */
+    #confetti-canvas {
+      position: fixed; inset: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 80;
+    }
+
+    /* ── Solved crossword word: celebratory settle ── */
+    @keyframes cell-settle {
+      0% { transform: scale(1); } 45% { transform: scale(1.12); } 100% { transform: scale(1); }
+    }
+    .cw-cell.correct.just-solved { animation: cell-settle 0.4s var(--ease-spring); }
+
+    /* Respect reduced motion for all new animations */
+    @media (prefers-reduced-motion: reduce) {
+      .overlay-card, .rev-card, .review-badge, .cw-cell.correct.just-solved { animation: none; }
+      .start-btn:hover, .diamond-counter:hover, .rev-card:hover,
+      .rev-audio:hover, .mode-choice-btn:active, .cancel-btn:active { transform: none; }
+    }
+  </style>
+</head>
+
+<!-- Firebase Realtime Database SDK (ES module) -->
+<script type="module" id="firebase-module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js';
+  import { getDatabase, ref, set, get, update, onValue, remove, onDisconnect }
+    from 'https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js';
+
+  const firebaseConfig = {
+    apiKey:            "AIzaSyA84SBX0pC7BaLHAiwDdo6sRMCk9XhuLPM",
+    authDomain:        "wortle-de.firebaseapp.com",
+    databaseURL:       "https://wortle-de-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId:         "wortle-de",
+    storageBucket:     "wortle-de.firebasestorage.app",
+    messagingSenderId: "983732035600",
+    appId:             "1:983732035600:web:ab615bcf7083878343aa95",
+    measurementId:     "G-ZLHCN2FTM6"
+  };
+
+  try {
+    const app = initializeApp(firebaseConfig);
+    const db  = getDatabase(app);
+    window._fb = { db, ref, set, get, update, onValue, remove, onDisconnect };
+    window.dispatchEvent(new Event('firebase-ready'));
+  } catch (err) {
+    console.warn('Firebase init failed — Online mode disabled:', err.message);
+  }
+</script>
+<body>
+
+  <a href="#game-main" class="skip-link">Zum Spiel springen</a>
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <div id="loading">
+    <div class="loading-spinner"></div>
+    Wörter werden geladen…
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">Wörtle<span class="logo-dot">.</span></div>
+    <div class="level-tabs" id="level-tabs">
+      <button class="tab active" data-level="A1" aria-label="Schwierigkeitsstufe A1">A1</button>
+      <button class="tab"        data-level="A2" aria-label="Schwierigkeitsstufe A2">A2</button>
+      <button class="tab"        data-level="B1" aria-label="Schwierigkeitsstufe B1">B1</button>
+      <button class="tab tab-review" data-level="REVIEW" aria-label="Wiederholung — fällige Wörter">★<span class="review-badge" id="review-badge" hidden>0</span></button>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="diamond-counter" id="diamond-counter" title="Gesamt-Diamanten">
+        💎 <span id="diamond-count">0</span>
+      </div>
+      <div class="mode-toggle" style="display:none">
+        <button class="mode-btn active" data-mode="1P">Solo</button>
+        <button class="mode-btn"        data-mode="2P">Duo</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="game-main" tabindex="-1">
+
+  <!-- Hidden input captures physical keyboard events in crossword mode (OS keyboard suppressed via inputmode=none) -->
+  <input id="cw-native-input" type="text" inputmode="none" autocomplete="off"
+         autocorrect="off" autocapitalize="characters" spellcheck="false" aria-hidden="true" />
+
+  <!-- Crossword clue bar (1P) -->
+  <div class="hint-bar hidden" id="cw-clue-bar" aria-live="polite" aria-atomic="true">
+    <span class="cw-clue-num" id="cw-clue-num"></span>
+    <span class="hint-sep">·</span>
+    <span class="hint-en" id="cw-clue-en"></span>
+    <span class="hint-article" id="cw-article"></span>
+    <span class="hint-sep">·</span>
+    <span class="hint-ar" id="cw-clue-ar"></span>
+    <button class="audio-btn" id="cw-audio-btn" aria-label="Aussprache" title="Aussprache hören">🔊</button>
+    <span class="cw-word-len" id="cw-word-len"></span>
+    <span class="type-badge" id="cw-type-badge"></span>
+  </div>
+
+  <!-- Progress bar (1P) -->
+  <div id="cw-progress" class="hidden">
+    <div id="cw-progress-fill"></div>
+    <span id="cw-progress-text"></span>
+  </div>
+  <!-- Screen-reader announcements (word solved, game over) -->
+  <div id="sr-announce" aria-live="assertive" aria-atomic="true"
+       style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap"></div>
+
+  <!-- Word chip strip — mobile navigation (replaces side clue panel on small screens) -->
+  <div id="clue-chips" class="hidden" aria-label="Wörter" role="group"></div>
+
+  <!-- Crossword area (1P) -->
+  <div id="crossword-area" class="hidden">
+    <div id="crossword-grid-container">
+      <div id="crossword-grid" role="grid" aria-label="Kreuzworträtsel"></div>
+    </div>
+    <div id="clues-panel">
+      <div class="clues-section">
+        <h3 class="clues-heading">Waagerecht</h3>
+        <ul id="across-clues"></ul>
+      </div>
+      <div class="clues-section">
+        <h3 class="clues-heading">Senkrecht</h3>
+        <ul id="down-clues"></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Crossword actions (1P) -->
+  <div id="cw-actions" class="hidden">
+    <button id="check-btn">Prüfen</button>
+    <button id="reveal-btn">Wort aufdecken</button>
+    <button id="new-puzzle-btn" class="hidden">Neues Rätsel</button>
+  </div>
+
+  <!-- Custom crossword keyboard (mobile only, replaces OS keyboard in 1P mode) -->
+  <div id="cw-keyboard" aria-label="Tastatur" role="group"></div>
+
+  <!-- 2P Board -->
+  <div id="board-2p" class="hidden">
+    <div class="turn-banner p1" id="turn-banner">Player 1 ist dran</div>
+    <div class="score-strip">
+      <div class="score-label p1" id="p1-score-label">Player 1: 0</div>
+      <div class="score-label p2" id="p2-score-label">Player 2: 0</div>
+    </div>
+    <button id="skip-turn-btn" class="skip-btn">Zug überspringen</button>
+  </div>
+
+  <!-- Panel backdrop -->
+  <div id="panel-backdrop"></div>
+
+  <!-- Wordle Panel (shared between 1P and 2P) -->
+  <div id="wordle-panel" class="inline-mode">
+    <!-- Panel header — visible in 2P only -->
+    <div class="panel-header hidden" id="panel-header">
+      <div class="panel-player-badge" id="panel-player-badge">Player 1</div>
+      <button class="panel-close-btn" id="panel-close-btn" aria-label="Spiel beenden">✕</button>
+    </div>
+    <!-- Hint bar inside panel (2P) -->
+    <div class="hint-bar hidden" id="hint-bar-panel">
+      <span class="hint-en" id="panel-hint-en"></span>
+      <span class="hint-sep">·</span>
+      <span class="hint-ar" id="panel-hint-ar"></span>
+      <span class="type-badge" id="panel-type-badge"></span>
+      <span class="hint-sentence" id="panel-hint-sentence"></span>
+    </div>
+    <!-- Grid -->
+    <div class="grid-wrap">
+      <div id="grid"></div>
+    </div>
+    <div id="message" role="status"></div>
+    <div id="keyboard"></div>
+  </div>
+
+  <!-- Streak bar (1P) -->
+  <div class="streak-bar" id="streak-bar">
+    <div class="streak-pill">🔥 Serie <span id="streak-current">0</span></div>
+    <div class="streak-pill">🏆 Beste <span id="streak-best">0</span></div>
+    <div class="streak-pill" id="streak-bar-diamonds" style="display:none;color:var(--color-correct)">💎 <span id="streak-diamond-count">0</span></div>
+  </div>
+
+  </main><!-- /game-main -->
+
+  <!-- Mode Picker Overlay (Hot Seat vs Online) -->
+  <div id="mode-picker-overlay" class="overlay hidden">
+    <div class="overlay-card">
+      <h2 class="overlay-title">2-Spieler-Modus</h2>
+      <div class="mode-choice-row">
+        <button class="mode-choice-btn" id="hotseat-mode-btn">
+          <span class="mode-choice-icon">📱</span>
+          <span>Lokal</span>
+          <span class="mode-choice-sub">1 Gerät, abwechselnd</span>
+        </button>
+        <button class="mode-choice-btn" id="online-mode-btn" disabled>
+          <span class="mode-choice-icon">🌐</span>
+          <span>Online</span>
+          <span class="mode-choice-sub">2 Geräte</span>
+        </button>
+      </div>
+      <button class="cancel-btn" id="cancel-mode-picker-btn">Abbrechen</button>
+    </div>
+  </div>
+
+  <!-- Setup Overlay (Hot Seat) -->
+  <div id="setup-overlay" class="overlay hidden">
+    <div class="overlay-card">
+      <h2 class="overlay-title">Lokal spielen</h2>
+      <div class="setup-fields">
+        <label>
+          <span class="player-label p1-label">Player 1</span>
+          <input type="text" id="p1-name-input" value="Player 1" maxlength="16" />
+        </label>
+        <label>
+          <span class="player-label p2-label">Player 2</span>
+          <input type="text" id="p2-name-input" value="Player 2" maxlength="16" />
+        </label>
+      </div>
+      <button id="start-2p-btn" class="start-btn">Spiel starten</button>
+      <button id="cancel-setup-btn" class="cancel-btn">Abbrechen</button>
+    </div>
+  </div>
+
+  <!-- Online Lobby Overlay -->
+  <div id="online-lobby-overlay" class="overlay hidden">
+    <div class="overlay-card">
+      <h2 class="overlay-title">Online spielen</h2>
+
+      <!-- Screen A: Create / Join -->
+      <div id="lobby-screen-main">
+        <div class="setup-fields">
+          <label>
+            <span class="player-label">Dein Name</span>
+            <input type="text" id="online-name-input" value="Player 1" maxlength="16" />
+          </label>
+        </div>
+        <button class="start-btn" id="create-room-btn">Raum erstellen</button>
+        <div class="lobby-divider">oder beitreten</div>
+        <div class="join-row">
+          <input type="text" id="room-code-input" placeholder="RAUMCODE" maxlength="6" />
+          <button class="join-btn" id="join-room-btn">Beitreten</button>
+        </div>
+      </div>
+
+      <!-- Screen B: Waiting for opponent -->
+      <div id="lobby-screen-waiting" class="hidden">
+        <div class="room-code-box">
+          <span class="room-code-label">Dein Raumcode</span>
+          <span class="room-code-value" id="room-code-display">------</span>
+          <button class="copy-code-btn" id="copy-code-btn">Kopieren</button>
+        </div>
+        <p style="text-align:center;color:var(--color-text-muted);font-size:0.9rem;margin-top:8px">
+          Warte auf Mitspieler<span class="waiting-dots"></span>
+        </p>
+      </div>
+
+      <button class="cancel-btn" id="cancel-lobby-btn">Abbrechen</button>
+    </div>
+  </div>
+
+  <!-- Handoff Overlay -->
+  <div id="handoff-overlay" class="overlay hidden">
+    <div class="overlay-card handoff-card">
+      <div class="handoff-icon" id="handoff-icon">👤</div>
+      <h2 class="overlay-title" id="handoff-title">Player 2 ist dran!</h2>
+      <p class="handoff-sub" id="handoff-sub">Gib das Gerät an Player 2 weiter.</p>
+      <button id="handoff-ready-btn" class="start-btn">Bereit!</button>
+    </div>
+  </div>
+
+  <!-- Results Overlay -->
+  <div id="results-overlay" class="overlay hidden">
+    <div class="overlay-card">
+      <div class="results-winner" id="results-winner"></div>
+      <div class="results-breakdown" id="results-breakdown"></div>
+      <div class="results-actions">
+        <button id="play-again-btn" class="start-btn">Nochmal spielen</button>
+        <button id="back-1p-btn"    class="cancel-btn">Zurück zu Solo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Crossword summary overlay (1P end-of-puzzle) -->
+  <div id="cw-summary-overlay" class="overlay hidden">
+    <div class="overlay-card" style="text-align:center;gap:20px;">
+      <div style="font-size:3rem;line-height:1;">🎉</div>
+      <div class="overlay-title">Ausgezeichnet!</div>
+      <div id="cw-summary-stats" style="display:flex;flex-direction:column;gap:10px;"></div>
+      <div id="cw-review-panel" class="cw-review-panel"></div>
+      <button id="cw-new-puzzle-btn" class="start-btn" style="width:100%;">Neues Rätsel</button>
+    </div>
+  </div>
+
+  <!-- Review mode: nothing due -->
+  <div id="cw-review-empty" class="overlay hidden">
+    <div class="overlay-card" style="text-align:center;gap:16px;">
+      <div style="font-size:3rem;line-height:1;">✅</div>
+      <div class="overlay-title">Wiederholung</div>
+      <div class="cw-empty-review" id="cw-review-empty-msg"></div>
+      <button id="cw-review-empty-btn" class="start-btn" style="width:100%;">Zurück zu A1</button>
+    </div>
+  </div>
+
+<script>
+// ─── Audio ────────────────────────────────────────────
+// ─── Pronunciation (Web Speech API, de-DE) ────────────
+let deVoice          = null;   // preferred German voice, if any
+let deVoiceAvailable = null;   // null = unknown, true/false once resolved
+
+function refreshVoices() {
+  if (!window.speechSynthesis) { deVoiceAvailable = false; applyVoiceAvailability(); return; }
+  const voices = window.speechSynthesis.getVoices();
+  if (!voices.length) return;   // not ready yet; voiceschanged will re-fire
+  deVoice = voices.find(v => /^de[-_]de/i.test(v.lang))
+         || voices.find(v => /^de([-_]|$)/i.test(v.lang)) || null;
+  deVoiceAvailable = !!deVoice;
+  applyVoiceAvailability();
+}
+
+function applyVoiceAvailability() {
+  if (deVoiceAvailable !== false) return;   // only act on a definitive "no voice"
+  document.querySelectorAll('.audio-btn').forEach(b => {
+    b.disabled = true;
+    b.title    = 'Keine deutsche Stimme auf diesem Gerät verfügbar';
+    b.style.opacity = '0.35';
+  });
+}
+
+if (window.speechSynthesis) {
+  refreshVoices();
+  window.speechSynthesis.onvoiceschanged = refreshVoices;
+}
+
+function speakWord(word, btn) {
+  if (!window.speechSynthesis || deVoiceAvailable === false) return;
+  window.speechSynthesis.cancel();
+  const utt  = new SpeechSynthesisUtterance(word.toLowerCase());
+  utt.lang   = 'de-DE';
+  utt.rate   = 0.85;
+  if (deVoice) utt.voice = deVoice;
+  const b = btn || document.getElementById('cw-audio-btn');
+  if (b) {
+    b.classList.add('speaking');
+    utt.onend   = () => b.classList.remove('speaking');
+    utt.onerror = () => b.classList.remove('speaking');
+  }
+  window.speechSynthesis.speak(utt);
+}
+
+// ─── State ────────────────────────────────────────────
+let words        = {};
+let currentLevel = 'A1';
+let gameOver     = false;
+let streak       = { current: 0, best: 0 };
+let animating    = false;
+
+// ─── 1P Crossword state ───────────────────────────────
+let currentPuzzle = null;   // { grid, words, bbox }
+let selectedCell  = null;   // { r, c }
+let selectedDir   = 'across';
+let usedReveal      = false;
+let puzzleStartTime = 0;
+let cwCellMap       = {};     // "r,c" → DOM element, O(1) lookup
+
+// ─── 2P Wordle state (kept for 2P mode) ───────────────
+let currentWord  = null;
+let currentRow   = 0;
+let board        = [];
+let keyColors    = {};
+
+// ─── 2P State ─────────────────────────────────────────
+const WIN_SCORE_2P = 3;
+let gameMode         = '1P';
+let players          = [
+  { name: 'Player 1', color: '#3b82f6', score: 0 },
+  { name: 'Player 2', color: '#ef4444', score: 0 },
+];
+let activePlayer     = 0;
+let roundStartPlayer = 0;
+let rowOwner         = [];
+let playerWords      = [null, null];
+
+// ─── Online 2P State ──────────────────────────────────
+let onlineMode    = false;
+let myPlayerIdx   = null;   // 0 or 1
+let roomId        = null;   // 6-char room code
+let fbListeners   = [];     // unsubscribe functions
+let onlineRoundNum = 0;
+let lastRoundNum  = -1;
+
+// ─── Firebase helpers ─────────────────────────────────
+function fbRef(path) {
+  return window._fb.ref(window._fb.db, path);
+}
+function fbOnValue(r, cb) {
+  const unsub = window._fb.onValue(r, cb);
+  fbListeners.push(unsub);
+  return unsub;
+}
+
+window.addEventListener('firebase-ready', () => {
+  document.getElementById('online-mode-btn').disabled = false;
+});
+
+// ─── Keyboard layout ──────────────────────────────────
+const KB_ROWS = [
+  ['Q','W','E','R','T','Z','U','I','O','P','Ü'],
+  ['A','S','D','F','G','H','J','K','L','Ö','Ä'],
+  ['ENTER','Y','X','C','V','B','N','M','⌫'],
+];
+
+// ─── Utils ────────────────────────────────────────────
+function norm(ch) {
+  const map = { 'ä':'Ä','ö':'Ö','ü':'Ü','ß':'ß' };
+  return map[ch] || ch.toUpperCase();
+}
+
+function computeTileSize(wordLen) {
+  const vw  = Math.min(window.innerWidth, 580);
+  const gap = 4;
+  const pad = 16;
+  const avail = vw - 2 * pad - (wordLen - 1) * gap;
+  return Math.min(Math.floor(avail / wordLen), 62);
+}
+
+function setTileSize(wordLen) {
+  const size = computeTileSize(wordLen);
+  document.documentElement.style.setProperty('--tile-size', size + 'px');
+  document.documentElement.style.setProperty('--word-len', wordLen);
+}
+
+// ─── Streak persistence ───────────────────────────────
+function loadStreak() {
+  try {
+    const s = JSON.parse(localStorage.getItem('wortle-streak') || '{}');
+    streak.current = s.current || 0;
+    streak.best    = s.best    || 0;
+  } catch {}
+  renderStreak();
+}
+
+function saveStreak() {
+  localStorage.setItem('wortle-streak', JSON.stringify(streak));
+  renderStreak();
+}
+
+function renderStreak() {
+  document.getElementById('streak-current').textContent = streak.current;
+  document.getElementById('streak-best').textContent    = streak.best;
+}
+
+// ─── Diamond persistence ───────────────────────────────
+let diamonds = { total: 0, log: [], milestones: [] };
+
+function loadDiamonds() {
+  try {
+    const d = JSON.parse(localStorage.getItem('wortle-diamonds') || '{}');
+    diamonds.total      = d.total      || 0;
+    diamonds.log        = d.log        || [];
+    diamonds.milestones = d.milestones || [];
+  } catch {}
+  updateDiamondDisplay();
+}
+
+function saveDiamonds() {
+  // Cap log at 100 entries
+  if (diamonds.log.length > 100) diamonds.log = diamonds.log.slice(-100);
+  localStorage.setItem('wortle-diamonds', JSON.stringify(diamonds));
+}
+
+function earnDiamonds(amount, reason, anchorEl) {
+  if (amount <= 0) return;
+  const today = new Date().toISOString().slice(0, 10);
+  diamonds.total += amount;
+  diamonds.log.push({ date: today, amount, reason });
+  saveDiamonds();
+  updateDiamondDisplay(true);
+  if (anchorEl) showEarnToast(amount, anchorEl);
+}
+
+function updateDiamondDisplay(pulse) {
+  const counter = document.getElementById('diamond-counter');
+  const count   = document.getElementById('diamond-count');
+  const countSm = document.getElementById('streak-diamond-count');
+  if (count)   count.textContent   = diamonds.total;
+  if (countSm) countSm.textContent = diamonds.total;
+  if (pulse && counter) {
+    counter.classList.remove('pulse');
+    void counter.offsetWidth;
+    counter.classList.add('pulse');
+    counter.addEventListener('animationend', () => counter.classList.remove('pulse'), { once: true });
+  }
+}
+
+function showEarnToast(amount, anchorEl) {
+  const toast = document.createElement('div');
+  toast.className   = 'earn-toast';
+  toast.textContent = `+${amount} 💎`;
+  document.body.appendChild(toast);
+
+  // Position near the anchor element
+  const rect = anchorEl
+    ? anchorEl.getBoundingClientRect()
+    : { left: window.innerWidth / 2, top: window.innerHeight / 2, width: 0 };
+  toast.style.left = (rect.left + rect.width / 2 - 30) + 'px';
+  toast.style.top  = (rect.top - 10 + window.scrollY) + 'px';
+
+  toast.addEventListener('animationend', () => toast.remove(), { once: true });
+}
+
+function checkStreakMilestones() {
+  const milestones = [
+    { days: 7,  reward: 20  },
+    { days: 30, reward: 50  },
+    { days: 100,reward: 200 },
+  ];
+  for (const m of milestones) {
+    const key = `streak_${m.days}`;
+    if (streak.current >= m.days && !diamonds.milestones.includes(key)) {
+      diamonds.milestones.push(key);
+      earnDiamonds(m.reward, key, document.getElementById('diamond-counter'));
+    }
+  }
+}
+
+// ─── Word picking ─────────────────────────────────────
+// ─── Gender helper (post-round color-coding) ──────────
+function genderClass(article) {
+  if (article === 'der') return 'g-der';
+  if (article === 'die') return 'g-die';
+  if (article === 'das') return 'g-das';
+  return 'g-neutral';   // die/pl, die/der, or unknown
+}
+
+// ─── Spaced-repetition review deck (Leitner) ──────────
+// localStorage `wortle-review`: { version, cards: { WORD: {box,due,seen,correct,level,type,lastSeen} } }
+const REVIEW_KEY        = 'wortle-review';
+const LEITNER_INTERVALS = [0, 1, 2, 4, 7];   // days until next due, indexed by box (0–4)
+let reviewDeck      = { version: 1, cards: {} };
+let wordLevelIndex  = {};   // WORD -> original CEFR level, built at load
+let wordEntryIndex  = {};   // WORD -> full entry, built at load
+
+function loadReview() {
+  try {
+    const d = JSON.parse(localStorage.getItem(REVIEW_KEY) || '{}');
+    if (d && d.cards) reviewDeck = { version: 1, cards: d.cards };
+  } catch {}
+  updateReviewBadge();
+}
+function saveReview() {
+  localStorage.setItem(REVIEW_KEY, JSON.stringify(reviewDeck));
+  updateReviewBadge();
+}
+function dayStr(offset = 0) {
+  const d = new Date();
+  d.setDate(d.getDate() + offset);
+  return d.toISOString().slice(0, 10);
+}
+function isDue(card)   { return card && card.due <= dayStr(); }
+function dueWords()    { return Object.keys(reviewDeck.cards).filter(w => isDue(reviewDeck.cards[w])); }
+function inDeck(word)  { return !!reviewDeck.cards[word]; }
+
+// Record a review outcome. `correct` advances the box; wrong resets to box 0.
+function gradeReview(word, correct) {
+  let c = reviewDeck.cards[word];
+  if (!c) c = { box: 0, due: dayStr(), seen: 0, correct: 0,
+                level: wordLevelIndex[word] || currentLevel, type: (wordEntryIndex[word] || {}).type };
+  c.seen++;
+  if (correct) {
+    c.correct++;
+    c.box = Math.min((c.box || 0) + 1, 4);
+    c.due = dayStr(LEITNER_INTERVALS[c.box]);
+  } else {
+    c.box = 0;
+    c.due = dayStr(1);   // review again tomorrow
+  }
+  c.lastSeen = dayStr();
+  reviewDeck.cards[word] = c;
+  saveReview();
+}
+
+function updateReviewBadge() {
+  const badge = document.getElementById('review-badge');
+  if (!badge) return;
+  const n = dueWords().length;
+  badge.textContent = n;
+  badge.hidden = n === 0;
+}
+
+function pickWord(level, type) {
+  let pool = words[level] || [];
+  if (type !== 'all') pool = pool.filter(e => e.type === type);
+  if (!pool.length) return null;
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+function pickWordSameLength(level, len, excludeWord) {
+  let pool = (words[level] || []).filter(e => e.w.length === len && e.w !== excludeWord);
+  if (!pool.length) pool = (words[level] || []).filter(e => e.w.length === len);
+  if (!pool.length) return null;
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+// ─── Crossword generator ──────────────────────────────
+const CW_GRID  = 11;
+const CW_MIN   = 3;
+const CW_MAX   = 7;
+const CW_COUNT = 6;
+
+function cwShuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function cwMakeGrid() {
+  return Array.from({ length: CW_GRID }, () => Array(CW_GRID).fill(null));
+}
+
+function cwCanPlace(grid, wordStr, r, c, dir) {
+  const len = wordStr.length;
+  const dr = dir === 'down' ? 1 : 0;
+  const dc = dir === 'across' ? 1 : 0;
+
+  // pre-cell must be empty
+  const pr = r - dr, pc = c - dc;
+  if (pr >= 0 && pc >= 0 && grid[pr][pc] !== null) return false;
+  // post-cell must be empty
+  const er = r + dr * len, ec = c + dc * len;
+  if (er < CW_GRID && ec < CW_GRID && grid[er][ec] !== null) return false;
+
+  let hasIntersect = false;
+  for (let i = 0; i < len; i++) {
+    const rr = r + dr * i, cc = c + dc * i;
+    if (rr < 0 || rr >= CW_GRID || cc < 0 || cc >= CW_GRID) return false;
+
+    const cell = grid[rr][cc];
+    if (cell !== null) {
+      // Must match existing letter
+      if (cell.letter !== wordStr[i]) return false;
+      hasIntersect = true;
+    } else {
+      // Adjacent parallel cells must be empty (no side-by-side words)
+      const s1r = rr - dc, s1c = cc - dr;
+      const s2r = rr + dc, s2c = cc + dr;
+      if (s1r >= 0 && s1r < CW_GRID && s1c >= 0 && s1c < CW_GRID && grid[s1r][s1c] !== null) return false;
+      if (s2r >= 0 && s2r < CW_GRID && s2c >= 0 && s2c < CW_GRID && grid[s2r][s2c] !== null) return false;
+    }
+  }
+  return hasIntersect;
+}
+
+function cwPlace(grid, wordStr, r, c, dir) {
+  const dr = dir === 'down' ? 1 : 0;
+  const dc = dir === 'across' ? 1 : 0;
+  for (let i = 0; i < wordStr.length; i++) {
+    const rr = r + dr * i, cc = c + dc * i;
+    if (grid[rr][cc] === null) {
+      grid[rr][cc] = { letter: wordStr[i], filled: '', acrossId: null, downId: null, number: null };
+    }
+  }
+}
+
+function cwBbox(grid) {
+  let minR = CW_GRID, maxR = -1, minC = CW_GRID, maxC = -1;
+  for (let r = 0; r < CW_GRID; r++)
+    for (let c = 0; c < CW_GRID; c++)
+      if (grid[r][c] !== null) {
+        minR = Math.min(minR, r); maxR = Math.max(maxR, r);
+        minC = Math.min(minC, c); maxC = Math.max(maxC, c);
+      }
+  return { minR, maxR, minC, maxC };
+}
+
+function generateCrossword(pool) {
+  const eligible = pool.filter(e => e.w.length >= CW_MIN && e.w.length <= CW_MAX);
+  if (eligible.length < 5) return null;
+
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const shuffled = cwShuffle(eligible);
+    const grid     = cwMakeGrid();
+    const placed   = [];
+
+    // Place first word horizontally at center
+    const first = shuffled[0];
+    const startC = Math.floor((CW_GRID - first.w.length) / 2);
+    const startR = Math.floor(CW_GRID / 2);
+    cwPlace(grid, first.w, startR, startC, 'across');
+    placed.push({ entry: first, dir: 'across', row: startR, col: startC, number: null, solved: false });
+
+    // Try to add remaining words
+    for (let wi = 1; wi < shuffled.length && placed.length < CW_COUNT; wi++) {
+      const entry  = shuffled[wi];
+      const word   = entry.w;
+      const oppDir = placed.length % 2 === 0 ? 'across' : 'down';
+      let found    = false;
+
+      for (let i = 0; i < word.length && !found; i++) {
+        for (let r = 0; r < CW_GRID && !found; r++) {
+          for (let c = 0; c < CW_GRID && !found; c++) {
+            if (grid[r][c] === null || grid[r][c].letter !== word[i]) continue;
+            // Try perpendicular placement through this cell
+            for (const dir of [oppDir, oppDir === 'across' ? 'down' : 'across']) {
+              const dr = dir === 'down' ? 1 : 0;
+              const dc = dir === 'across' ? 1 : 0;
+              const pr = r - dr * i, pc = c - dc * i;
+              if (pr < 0 || pc < 0) continue;
+              if (cwCanPlace(grid, word, pr, pc, dir)) {
+                cwPlace(grid, word, pr, pc, dir);
+                placed.push({ entry, dir, row: pr, col: pc, number: null, solved: false });
+                found = true;
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    if (placed.length < 4) continue;
+
+    // Number cells in reading order
+    // First assign word starts then number them
+    const bbox = cwBbox(grid);
+    // Renumber based on bbox-adjusted reading order
+    let num = 1;
+    for (let r = 0; r < CW_GRID; r++) {
+      for (let c = 0; c < CW_GRID; c++) {
+        if (grid[r][c] === null) continue;
+        const startsAcross = (c === 0 || grid[r][c-1] === null) &&
+                              c + 1 < CW_GRID && grid[r][c+1] !== null;
+        const startsDown   = (r === 0 || grid[r-1][c] === null) &&
+                              r + 1 < CW_GRID && grid[r+1][c] !== null;
+        if (startsAcross || startsDown) {
+          grid[r][c].number = num;
+          placed
+            .filter(pw => pw.row === r && pw.col === c)
+            .forEach(pw => { pw.number = num; });
+          num++;
+        }
+      }
+    }
+
+    // Tag each cell with its word IDs
+    for (const pw of placed) {
+      const dr = pw.dir === 'down' ? 1 : 0;
+      const dc = pw.dir === 'across' ? 1 : 0;
+      for (let i = 0; i < pw.entry.w.length; i++) {
+        const rr = pw.row + dr * i, cc = pw.col + dc * i;
+        if (pw.dir === 'across') grid[rr][cc].acrossId = pw.number;
+        else                      grid[rr][cc].downId   = pw.number;
+      }
+    }
+
+    return { grid, words: placed, bbox };
+  }
+  return null;
+}
+
+// ─── Render hint bar ──────────────────────────────────
+function renderHint(entry) {
+  document.getElementById('panel-hint-en').textContent       = entry.en;
+  document.getElementById('panel-hint-ar').textContent       = entry.ar;
+  document.getElementById('panel-hint-sentence').textContent = entry.hint;
+  const badge = document.getElementById('panel-type-badge');
+  badge.textContent = entry.type;
+  badge.className   = 'type-badge ' + entry.type;
+}
+
+// ─── Build grid ───────────────────────────────────────
+function buildGrid(wordLen) {
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  board = Array.from({ length: 6 }, () => []);
+
+  for (let r = 0; r < 6; r++) {
+    const rowEl = document.createElement('div');
+    rowEl.className = 'grid-row';
+    rowEl.id = `grid-row-${r}`;
+    for (let c = 0; c < wordLen; c++) {
+      const tile = document.createElement('div');
+      tile.className = 'tile';
+      tile.id = `tile-${r}-${c}`;
+      rowEl.appendChild(tile);
+    }
+    grid.appendChild(rowEl);
+  }
+}
+
+// ─── Build keyboard ───────────────────────────────────
+function buildKeyboard() {
+  const kb = document.getElementById('keyboard');
+  kb.innerHTML = '';
+
+  for (const row of KB_ROWS) {
+    const rowEl = document.createElement('div');
+    rowEl.className = 'kb-row';
+
+    for (const key of row) {
+      const btn = document.createElement('button');
+      btn.className = 'key' + (key.length > 1 ? ' wide' : '');
+      btn.textContent = key;
+      btn.dataset.key = key;
+      if (key === '⌫') btn.setAttribute('aria-label', 'Löschen');
+      else if (key === 'ENTER') btn.setAttribute('aria-label', 'Eingabe');
+      btn.addEventListener('click', () => handleKey(key));
+      rowEl.appendChild(btn);
+    }
+
+    kb.appendChild(rowEl);
+  }
+  document.body.classList.add('has-keyboard');
+}
+
+// ─── Custom crossword keyboard (mobile, 1P mode) ──────
+function buildCwKeyboard() {
+  const kb = document.getElementById('cw-keyboard');
+  if (!kb) return;
+  kb.innerHTML = '';
+  for (const row of KB_ROWS) {
+    const rowEl = document.createElement('div');
+    rowEl.className = 'kb-row';
+    for (const key of row) {
+      const btn = document.createElement('button');
+      btn.className = 'key' + (key.length > 1 ? ' wide' : '');
+      btn.textContent = key;
+      btn.dataset.key = key;
+      if (key === '⌫') btn.setAttribute('aria-label', 'Löschen');
+      else if (key === 'ENTER') btn.setAttribute('aria-label', 'Prüfen');
+      // pointerdown + preventDefault keeps focus on grid, not button
+      btn.addEventListener('pointerdown', e => { e.preventDefault(); handleKey(key); });
+      rowEl.appendChild(btn);
+    }
+    kb.appendChild(rowEl);
+  }
+}
+
+// ─── Update key colors ────────────────────────────────
+const PRIORITY = { correct: 3, present: 2, absent: 1 };
+
+function updateKeyColors(guess, results) {
+  for (let i = 0; i < guess.length; i++) {
+    const letter  = guess[i];
+    const result  = results[i];
+    const current = keyColors[letter];
+    if (!current || PRIORITY[result] > PRIORITY[current]) {
+      keyColors[letter] = result;
+    }
+  }
+  renderKeyboard();
+}
+
+function renderKeyboard() {
+  document.querySelectorAll('.key').forEach(btn => {
+    const key   = btn.dataset.key;
+    const state = keyColors[key];
+    btn.classList.remove('correct', 'present', 'absent');
+    if (state) btn.classList.add(state);
+  });
+}
+
+// ─── Wordle evaluation ────────────────────────────────
+function evaluateGuess(guess, answer) {
+  const len      = answer.length;
+  const result   = Array(len).fill('absent');
+  const remAns   = [];
+  const remGuess = [];
+
+  for (let i = 0; i < len; i++) {
+    if (guess[i] === answer[i]) {
+      result[i] = 'correct';
+    } else {
+      remAns.push(answer[i]);
+      remGuess.push({ letter: guess[i], index: i });
+    }
+  }
+
+  for (const { letter, index } of remGuess) {
+    const found = remAns.indexOf(letter);
+    if (found !== -1) {
+      result[index] = 'present';
+      remAns.splice(found, 1);
+    }
+  }
+
+  return result;
+}
+
+// ─── Animations ───────────────────────────────────────
+function animateShake(row) {
+  const tiles = getTileRow(row);
+  tiles.forEach(t => {
+    t.classList.remove('row-shake');
+    void t.offsetWidth;
+    t.classList.add('row-shake');
+    t.addEventListener('animationend', () => t.classList.remove('row-shake'), { once: true });
+  });
+}
+
+function getTileRow(row) {
+  const wordLen = currentWord.w.length;
+  return Array.from({ length: wordLen }, (_, c) => document.getElementById(`tile-${row}-${c}`));
+}
+
+function animateFlip(row, results, onDone) {
+  const tiles   = getTileRow(row);
+  const wordLen = currentWord.w.length;
+  const delay   = 80;
+
+  tiles.forEach((tile, i) => {
+    setTimeout(() => {
+      tile.classList.add('flipping');
+      setTimeout(() => {
+        tile.classList.remove('flipping');
+        tile.classList.add(results[i]);
+        tile.classList.add('flipped');
+        tile.addEventListener('animationend', () => {
+          tile.classList.remove('flipped');
+        }, { once: true });
+
+        if (i === wordLen - 1) {
+          setTimeout(onDone, 200);
+        }
+      }, 250);
+    }, i * delay);
+  });
+}
+
+function animateBounce(row) {
+  const tiles = getTileRow(row);
+  const delay = 60;
+  tiles.forEach((tile, i) => {
+    setTimeout(() => {
+      tile.classList.add('bounce');
+      tile.addEventListener('animationend', () => tile.classList.remove('bounce'), { once: true });
+    }, i * delay);
+  });
+}
+
+// ─── Message ──────────────────────────────────────────
+function showMessage(text, type) {
+  const el = document.getElementById('message');
+  el.textContent = text;
+  el.className   = type || '';
+}
+
+// ─── Crossword UI ─────────────────────────────────────
+function computeCwCellSize(cols, rows) {
+  const vw = Math.min(window.innerWidth, 600);
+  const isMobile = window.innerWidth <= 680;
+  const pad = 32;
+  const availW = (vw - pad) * (isMobile ? 1 : 0.62);
+  const byWidth = Math.floor(availW / cols);
+
+  let byHeight = 999;
+  if (isMobile && rows) {
+    // Reserve: header(52) + clue-bar(44) + actions(48) + kb(3 rows × 47px + 10px padding ≈ 151) + cushion(16)
+    const availH = window.innerHeight - 52 - 44 - 48 - 161 - 16;
+    if (availH > 0) byHeight = Math.floor(availH / rows);
+  }
+
+  const maxSize = isMobile ? 44 : 40;
+  return Math.max(20, Math.min(maxSize, byWidth, byHeight));
+}
+
+function buildCrosswordGrid(puzzle) {
+  const { grid, bbox } = puzzle;
+  const rows = bbox.maxR - bbox.minR + 1;
+  const cols = bbox.maxC - bbox.minC + 1;
+  const cellSz = computeCwCellSize(cols, rows);
+  document.documentElement.style.setProperty('--cw-cell', cellSz + 'px');
+
+  const container = document.getElementById('crossword-grid');
+  container.innerHTML = '';
+  container.style.gridTemplateColumns = `repeat(${cols}, var(--cw-cell))`;
+  container.style.gridTemplateRows    = `repeat(${rows}, var(--cw-cell))`;
+
+  cwCellMap = {};
+  for (let r = bbox.minR; r <= bbox.maxR; r++) {
+    for (let c = bbox.minC; c <= bbox.maxC; c++) {
+      const div = document.createElement('div');
+      const cell = grid[r][c];
+      if (cell === null) {
+        div.className = 'cw-cell black';
+        div.setAttribute('aria-hidden', 'true');
+      } else {
+        div.className = 'cw-cell';
+        div.setAttribute('role', 'gridcell');
+        div.setAttribute('tabindex', '-1');
+        div.dataset.r = r;
+        div.dataset.c = c;
+        cwCellMap[`${r},${c}`] = div;
+        const ariaLabel = cell.number !== null ? `Feld ${cell.number}` : 'Feld';
+        div.setAttribute('aria-label', ariaLabel);
+        if (cell.number !== null) {
+          const num = document.createElement('span');
+          num.className   = 'cw-number';
+          num.textContent = cell.number;
+          num.setAttribute('aria-hidden', 'true');
+          div.appendChild(num);
+        }
+        const letter = document.createElement('span');
+        letter.className = 'cw-letter';
+        letter.id        = `cwl-${r}-${c}`;
+        letter.setAttribute('aria-hidden', 'true');
+        div.appendChild(letter);
+        div.addEventListener('click', () => selectCell(r, c));
+      }
+      container.appendChild(div);
+    }
+  }
+}
+
+function renderClues(puzzle) {
+  const acrossList = document.getElementById('across-clues');
+  const downList   = document.getElementById('down-clues');
+  const chipsEl    = document.getElementById('clue-chips');
+  acrossList.innerHTML = '';
+  downList.innerHTML   = '';
+  chipsEl.innerHTML    = '';
+
+  puzzle.words
+    .filter(pw => pw.number !== null)
+    .slice()
+    .sort((a, b) => a.number - b.number || (pw => pw.dir === 'across' ? 0 : 1)(a))
+    .forEach(pw => {
+      // ── Side panel list item (desktop) ──
+      const li  = document.createElement('li');
+      li.className = 'clue-item';
+      li.dataset.num = pw.number;
+      li.dataset.dir = pw.dir;
+      li.setAttribute('role', 'button');
+      li.setAttribute('tabindex', '0');
+      li.setAttribute('aria-label',
+        `Hinweis ${pw.number}${pw.dir === 'across' ? 'A waagerecht' : 'D senkrecht'}: ${pw.entry.en}`);
+      const numSpan = document.createElement('span');
+      numSpan.className   = 'clue-num';
+      numSpan.textContent = pw.number + (pw.dir === 'across' ? 'A' : 'D');
+      const txtSpan = document.createElement('span');
+      txtSpan.className   = 'clue-text';
+      txtSpan.textContent = `${pw.entry.en} · ${pw.entry.ar}`;
+      li.appendChild(numSpan);
+      li.appendChild(txtSpan);
+      li.addEventListener('click', () => { selectCell(pw.row, pw.col, pw.dir); });
+      li.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectCell(pw.row, pw.col, pw.dir); }
+      });
+      (pw.dir === 'across' ? acrossList : downList).appendChild(li);
+
+      // ── Chip (mobile) ──
+      const chip = document.createElement('button');
+      chip.className = 'clue-chip';
+      chip.dataset.num = pw.number;
+      chip.dataset.dir = pw.dir;
+      chip.textContent = pw.number + (pw.dir === 'across' ? ' →' : ' ↓');
+      chip.setAttribute('aria-label', `Wort ${pw.number} ${pw.dir === 'across' ? 'waagerecht' : 'senkrecht'}: ${pw.entry.en}`);
+      chip.addEventListener('click', () => selectCell(pw.row, pw.col, pw.dir));
+      chipsEl.appendChild(chip);
+    });
+}
+
+function selectCell(r, c, forceDir) {
+  const { grid } = currentPuzzle;
+  if (grid[r][c] === null) return;
+
+  const cell = grid[r][c];
+  // Toggle direction if same cell clicked
+  if (!forceDir && selectedCell && selectedCell.r === r && selectedCell.c === c) {
+    selectedDir = selectedDir === 'across' ? 'down' : 'across';
+  } else if (forceDir) {
+    selectedDir = forceDir;
+  } else {
+    // Prefer direction that has a word
+    if (cell.acrossId && !cell.downId) selectedDir = 'across';
+    else if (cell.downId && !cell.acrossId) selectedDir = 'down';
+    else selectedDir = selectedDir; // keep current
+  }
+  // If chosen dir has no word here, switch
+  if (selectedDir === 'across' && !cell.acrossId && cell.downId) selectedDir = 'down';
+  if (selectedDir === 'down'   && !cell.downId   && cell.acrossId) selectedDir = 'across';
+
+  selectedCell = { r, c };
+  highlightWord();
+  updateClueBar();
+  // Collapse non-essential chrome (chips/progress) once user starts interacting
+  document.body.classList.add('cw-typing');
+  // On mobile: custom keyboard handles input — just show the focus ring on the cell.
+  // On desktop: focus the cell for the keyboard event target.
+  cwCellEl(r, c)?.focus({ preventScroll: true });
+}
+
+function highlightWord() {
+  if (!selectedCell || !currentPuzzle) return;
+  const { grid, bbox } = currentPuzzle;
+  // Remove all highlights
+  document.querySelectorAll('.cw-cell.word-hl, .cw-cell.cell-hl').forEach(el => {
+    el.classList.remove('word-hl', 'cell-hl');
+  });
+  // Find word bounds
+  const wordNum = selectedDir === 'across'
+    ? grid[selectedCell.r][selectedCell.c].acrossId
+    : grid[selectedCell.r][selectedCell.c].downId;
+  if (!wordNum) return;
+
+  const dr = selectedDir === 'down' ? 1 : 0;
+  const dc = selectedDir === 'across' ? 1 : 0;
+  // Find word start
+  const pw = currentPuzzle.words.find(w => w.number === wordNum && w.dir === selectedDir);
+  if (!pw) return;
+
+  for (let i = 0; i < pw.entry.w.length; i++) {
+    const rr = pw.row + dr * i, cc = pw.col + dc * i;
+    const el = cwCellEl(rr, cc);
+    if (el) el.classList.add('word-hl');
+  }
+  // Selected cell
+  const selEl = cwCellEl(selectedCell.r, selectedCell.c);
+  if (selEl) { selEl.classList.remove('word-hl'); selEl.classList.add('cell-hl'); }
+
+  // Update active clue in side panel list
+  document.querySelectorAll('.clue-item').forEach(li => li.classList.remove('active'));
+  const activeLi = document.querySelector(`.clue-item[data-num="${wordNum}"][data-dir="${selectedDir}"]`);
+  if (activeLi) {
+    activeLi.classList.add('active');
+    activeLi.scrollIntoView({ block: 'nearest' });
+  }
+
+  // Update active chip in mobile chip strip
+  document.querySelectorAll('.clue-chip').forEach(ch => ch.classList.remove('active'));
+  const activeChip = document.querySelector(`.clue-chip[data-num="${wordNum}"][data-dir="${selectedDir}"]`);
+  if (activeChip) {
+    activeChip.classList.add('active');
+    activeChip.scrollIntoView({ inline: 'nearest', block: 'nearest' });
+  }
+}
+
+function cwCellEl(r, c) {
+  return cwCellMap[`${r},${c}`] || null;
+}
+
+function srAnnounce(msg) {
+  const el = document.getElementById('sr-announce');
+  if (!el) return;
+  el.textContent = '';
+  // Force DOM update so re-announcing same message also fires
+  requestAnimationFrame(() => { el.textContent = msg; });
+}
+
+function updateClueBar() {
+  if (!selectedCell || !currentPuzzle) return;
+  const { grid } = currentPuzzle;
+  const cell     = grid[selectedCell.r][selectedCell.c];
+  const wordNum  = selectedDir === 'across' ? cell.acrossId : cell.downId;
+  if (!wordNum) return;
+  const pw = currentPuzzle.words.find(w => w.number === wordNum && w.dir === selectedDir);
+  if (!pw) return;
+
+  document.getElementById('cw-clue-num').textContent = wordNum + ' ' + (selectedDir === 'across' ? '→' : '↓');
+  document.getElementById('cw-word-len').textContent = pw.entry.w.length + ' Buchst.';
+  document.getElementById('cw-clue-en').textContent  = pw.entry.en;
+  document.getElementById('cw-clue-ar').textContent  = pw.entry.ar;
+
+  const articleEl = document.getElementById('cw-article');
+  if (pw.entry.article && pw.entry.type === 'noun') {
+    articleEl.textContent = '(' + pw.entry.article + ')';
+    articleEl.hidden = false;
+  } else {
+    articleEl.textContent = '';
+    articleEl.hidden = true;
+  }
+
+  // Wire audio button to speak the German word
+  const audioBtn = document.getElementById('cw-audio-btn');
+  audioBtn.onclick = () => speakWord(pw.entry.w);
+
+  const badge = document.getElementById('cw-type-badge');
+  badge.textContent = pw.entry.type;
+  badge.className   = 'type-badge ' + pw.entry.type;
+}
+
+function updateCwProgress() {
+  if (!currentPuzzle) return;
+  const total  = currentPuzzle.words.length;
+  const solved = currentPuzzle.words.filter(w => w.solved).length;
+  document.getElementById('cw-progress-text').textContent = solved + ' / ' + total;
+  document.getElementById('cw-progress-fill').style.setProperty('--cw-progress', solved / total);
+}
+
+function getSelectedWord() {
+  if (!selectedCell || !currentPuzzle) return null;
+  const { grid } = currentPuzzle;
+  const cell     = grid[selectedCell.r][selectedCell.c];
+  const wordNum  = selectedDir === 'across' ? cell.acrossId : cell.downId;
+  if (!wordNum) return null;
+  return currentPuzzle.words.find(w => w.number === wordNum && w.dir === selectedDir) || null;
+}
+
+function fillCrosswordLetter(letter) {
+  if (!selectedCell || !currentPuzzle) return;
+  const { grid } = currentPuzzle;
+  const { r: fr, c: fc } = selectedCell;
+  grid[fr][fc].filled = letter;
+  const letterEl = document.getElementById(`cwl-${fr}-${fc}`);
+  if (letterEl) letterEl.textContent = letter;
+  const cellEl = cwCellEl(fr, fc);
+  cellEl?.setAttribute('aria-label', `Feld ${letter}`);
+  // Pop animation feedback
+  if (cellEl) {
+    cellEl.classList.remove('letter-pop');
+    void cellEl.offsetWidth;
+    cellEl.classList.add('letter-pop');
+  }
+  checkWordComplete();
+  advanceCursor();
+}
+
+function advanceCursor() {
+  const pw = getSelectedWord();
+  if (!pw) return;
+  const dr = selectedDir === 'down' ? 1 : 0;
+  const dc = selectedDir === 'across' ? 1 : 0;
+  const { grid } = currentPuzzle;
+
+  // Try to find next unfilled cell in word
+  const wordLen = pw.entry.w.length;
+  const curOffset = selectedDir === 'down' ? selectedCell.r - pw.row : selectedCell.c - pw.col;
+
+  for (let i = curOffset + 1; i < wordLen; i++) {
+    const rr = pw.row + dr * i, cc = pw.col + dc * i;
+    if (!grid[rr][cc].filled) {
+      selectCell(rr, cc, pw.dir); // use selectCell to keep direction consistent
+      return;
+    }
+  }
+  // If no empty cells ahead, just move forward anyway (overwrites)
+  if (curOffset + 1 < wordLen) {
+    selectCell(pw.row + dr * (curOffset + 1), pw.col + dc * (curOffset + 1), pw.dir);
+  } else {
+    // At end of word — jump to next unsolved word
+    jumpToNextWord();
+  }
+}
+
+function jumpToNextWord() {
+  if (!currentPuzzle) return;
+  const unsolved = currentPuzzle.words
+    .filter(w => !w.solved)
+    .sort((a, b) => a.number - b.number || (a.dir === 'across' ? -1 : 1));
+  if (!unsolved.length) return;
+  const cur = getSelectedWord();
+  const after = cur
+    ? unsolved.find(w => w.number > cur.number || (w.number === cur.number && w.dir !== cur.dir && w.dir === 'down'))
+    : null;
+  const target = after || unsolved[0];
+  // Jump to first unfilled cell in that word
+  const dr = target.dir === 'down' ? 1 : 0;
+  const dc = target.dir === 'across' ? 1 : 0;
+  const { grid } = currentPuzzle;
+  for (let i = 0; i < target.entry.w.length; i++) {
+    const rr = target.row + dr * i, cc = target.col + dc * i;
+    if (!grid[rr][cc].filled) {
+      selectCell(rr, cc, target.dir);
+      return;
+    }
+  }
+  selectCell(target.row, target.col, target.dir);
+}
+
+function backspaceCrossword() {
+  if (!selectedCell || !currentPuzzle) return;
+  const { grid } = currentPuzzle;
+  const cell = grid[selectedCell.r][selectedCell.c];
+
+  if (cell.filled) {
+    cell.filled = '';
+    const letterEl = document.getElementById(`cwl-${selectedCell.r}-${selectedCell.c}`);
+    if (letterEl) letterEl.textContent = '';
+    cwCellEl(selectedCell.r, selectedCell.c)?.setAttribute('aria-label', 'Feld leer');
+  } else {
+    // Retreat cursor
+    const pw = getSelectedWord();
+    if (!pw) return;
+    const dr = selectedDir === 'down' ? 1 : 0;
+    const dc = selectedDir === 'across' ? 1 : 0;
+    const curOffset = selectedDir === 'down' ? selectedCell.r - pw.row : selectedCell.c - pw.col;
+    if (curOffset > 0) {
+      const rr = pw.row + dr * (curOffset - 1), cc = pw.col + dc * (curOffset - 1);
+      grid[rr][cc].filled = '';
+      const letterEl = document.getElementById(`cwl-${rr}-${cc}`);
+      if (letterEl) letterEl.textContent = '';
+      cwCellEl(rr, cc)?.setAttribute('aria-label', 'Feld leer');
+      selectedCell = { r: rr, c: cc };
+      highlightWord();
+      updateClueBar();
+      cwCellEl(rr, cc)?.focus({ preventScroll: true });
+    }
+  }
+}
+
+function moveCursor(dr, dc) {
+  if (!selectedCell || !currentPuzzle) return;
+  const { grid, bbox } = currentPuzzle;
+  const nr = selectedCell.r + dr, nc = selectedCell.c + dc;
+  if (nr < bbox.minR || nr > bbox.maxR || nc < bbox.minC || nc > bbox.maxC) return;
+  if (grid[nr][nc] !== null) {
+    selectedCell = { r: nr, c: nc };
+    highlightWord();
+    updateClueBar();
+  }
+}
+
+function checkWordComplete() {
+  const pw = getSelectedWord();
+  if (!pw || pw.solved) return;
+  const { grid } = currentPuzzle;
+  const dr = pw.dir === 'down' ? 1 : 0;
+  const dc = pw.dir === 'across' ? 1 : 0;
+  const wordStr = pw.entry.w;
+  const allCorrect = wordStr.split('').every((ch, i) => {
+    const rr = pw.row + dr * i, cc = pw.col + dc * i;
+    return grid[rr][cc].filled === ch;
+  });
+  if (allCorrect) {
+    pw.solved = true;
+    // Mark cells green
+    const firstCellEl = cwCellEl(pw.row, pw.col);
+    wordStr.split('').forEach((_, i) => {
+      const rr = pw.row + dr * i, cc = pw.col + dc * i;
+      const el = cwCellEl(rr, cc);
+      if (el) {
+        el.classList.remove('word-hl', 'cell-hl', 'wrong');
+        el.classList.add('correct');
+        // Celebratory settle-pop cascade along the word
+        el.style.animationDelay = (i * 45) + 'ms';
+        el.classList.add('just-solved');
+        el.addEventListener('animationend', () => {
+          el.classList.remove('just-solved');
+          el.style.animationDelay = '';
+        }, { once: true });
+      }
+    });
+    // Haptic feedback: short double-tap for success
+    navigator.vibrate?.([40, 30, 40]);
+    // Auto-play pronunciation on solve (reinforces the sound↔spelling link)
+    speakWord(wordStr);
+    // Earn diamonds
+    earnDiamonds(5, 'word_solved', firstCellEl);
+    // Strikethrough clue (panel + chip)
+    const li = document.querySelector(`.clue-item[data-num="${pw.number}"][data-dir="${pw.dir}"]`);
+    if (li) li.classList.add('solved');
+    const chip = document.querySelector(`.clue-chip[data-num="${pw.number}"][data-dir="${pw.dir}"]`);
+    if (chip) chip.classList.add('solved');
+    updateCwProgress();
+    // Announce to screen reader
+    srAnnounce(`${pw.number} ${pw.dir === 'across' ? 'Waagerecht' : 'Senkrecht'}: richtig!`);
+    // Check if all solved
+    if (currentPuzzle.words.every(w => w.solved)) endCrossword(true);
+  }
+}
+
+function checkAllWords() {
+  if (!currentPuzzle) return;
+  const { grid, words } = currentPuzzle;
+  let anyWrong = false;
+  words.forEach(pw => {
+    if (pw.solved) return;
+    const dr = pw.dir === 'down' ? 1 : 0;
+    const dc = pw.dir === 'across' ? 1 : 0;
+    pw.entry.w.split('').forEach((ch, i) => {
+      const rr = pw.row + dr * i, cc = pw.col + dc * i;
+      const cell = grid[rr][cc];
+      if (!cell.filled) return;
+      const el = cwCellEl(rr, cc);
+      if (!el || el.classList.contains('correct')) return;
+      if (cell.filled !== ch) {
+        pw._hadWrong = true;
+        anyWrong = true;
+        el.classList.add('wrong');
+        navigator.vibrate?.(80);
+        setTimeout(() => el.classList.remove('wrong'), 1500);
+      }
+    });
+  });
+  if (!anyWrong) {
+    showMessage('Alles korrekt so weit! ✓', 'win');
+    setTimeout(() => { if (!gameOver) showMessage('', ''); }, 2200);
+  }
+}
+
+function revealWord() {
+  const pw = getSelectedWord();
+  if (!pw) return;
+  const { grid } = currentPuzzle;
+  const dr = pw.dir === 'down' ? 1 : 0;
+  const dc = pw.dir === 'across' ? 1 : 0;
+  pw.entry.w.split('').forEach((ch, i) => {
+    const rr = pw.row + dr * i, cc = pw.col + dc * i;
+    grid[rr][cc].filled = ch;
+    const letterEl = document.getElementById(`cwl-${rr}-${cc}`);
+    if (letterEl) letterEl.textContent = ch;
+    const el = cwCellEl(rr, cc);
+    if (el) { el.classList.remove('word-hl', 'cell-hl', 'wrong'); el.classList.add('correct', 'revealed'); }
+  });
+  usedReveal = true;
+  pw.solved = true;
+  pw._revealed = true;   // graded as "wrong" for the review deck
+  speakWord(pw.entry.w);
+  earnDiamonds(1, 'word_revealed', cwCellEl(pw.row, pw.col));
+  const li = document.querySelector(`.clue-item[data-num="${pw.number}"][data-dir="${pw.dir}"]`);
+  if (li) li.classList.add('solved');
+  const chip2 = document.querySelector(`.clue-chip[data-num="${pw.number}"][data-dir="${pw.dir}"]`);
+  if (chip2) chip2.classList.add('solved');
+  updateCwProgress();
+  if (currentPuzzle.words.every(w => w.solved)) endCrossword(true);
+}
+
+// Build the post-round review card for one puzzle word.
+function renderReviewCard(pw, autoAdded) {
+  const e   = pw.entry;
+  const isNoun = e.type === 'noun';
+  const gc  = isNoun ? genderClass(e.article) : '';
+  const wordDisplay = isNoun && e.article
+    ? `<span class="${gc}"><span class="rev-article">${e.article}</span> ${e.w}</span>`
+    : `<span>${e.w}</span>`;
+
+  let grammar = '';
+  if (isNoun && e.plural)          grammar = `Plural: ${e.plural}`;
+  else if (e.type === 'verb' && e.principal_parts) grammar = e.principal_parts;
+  const grammarHtml = grammar ? `<div class="rev-grammar">${grammar}</div>` : '';
+
+  let exampleHtml = '';
+  if (e.example && e.example.de) {
+    const en = e.example.en ? ` — ${e.example.en}` : '';
+    const ar = e.example.ar ? `<span class="rev-ex-ar">${e.example.ar}</span>` : '';
+    exampleHtml = `<div class="rev-example">„${e.example.de}"${en}${ar}</div>`;
+  }
+
+  const already = autoAdded || inDeck(e.w);
+  const addHtml = already
+    ? `<label class="rev-add"><input type="checkbox" checked disabled> Zur Wiederholung hinzugefügt</label>`
+    : `<label class="rev-add"><input type="checkbox" class="rev-add-chk" data-word="${e.w}"> Zur Wiederholung</label>`;
+
+  return `<div class="rev-card ${gc}">
+    <div class="rev-word-row">
+      <span class="rev-word ${gc}">${wordDisplay}</span>
+      <button class="audio-btn rev-audio" data-word="${e.w}" aria-label="Aussprache" title="Aussprache hören">🔊</button>
+    </div>
+    <div class="rev-meta">${e.en} · <span class="rev-ar">${e.ar}</span></div>
+    ${grammarHtml}
+    ${exampleHtml}
+    ${addHtml}
+  </div>`;
+}
+
+// Grade every puzzle word into the Leitner deck and render the review panel.
+function buildReviewPanel() {
+  const panel = document.getElementById('cw-review-panel');
+  if (!panel || !currentPuzzle) return;
+  panel.innerHTML = '<div class="cw-review-title">Wörter dieser Runde</div>';
+
+  // Gender legend — only when the puzzle contains nouns
+  if (currentPuzzle.words.some(pw => pw.entry.type === 'noun' && pw.entry.article)) {
+    panel.insertAdjacentHTML('beforeend',
+      `<div class="gender-legend" aria-label="Farben für grammatisches Geschlecht">
+         <span><span class="dot g-der"></span>der</span>
+         <span><span class="dot g-die"></span>die</span>
+         <span><span class="dot g-das"></span>das</span>
+       </div>`);
+  }
+
+  currentPuzzle.words.forEach(pw => {
+    const word     = pw.entry.w;
+    const fumbled  = !!pw._hadWrong || !!pw._revealed;
+    let autoAdded  = false;
+    if (fumbled)          { gradeReview(word, false); autoAdded = true; }  // auto-add on loss
+    else if (inDeck(word)) { gradeReview(word, true);  autoAdded = true; }  // due word solved cleanly → advance
+    panel.insertAdjacentHTML('beforeend', renderReviewCard(pw, autoAdded));
+  });
+
+  // Wire per-card audio + opt-in checkboxes
+  panel.querySelectorAll('.rev-audio').forEach(btn => {
+    btn.onclick = () => speakWord(btn.dataset.word, btn);
+  });
+  panel.querySelectorAll('.rev-add-chk').forEach(chk => {
+    chk.onchange = () => {
+      if (!chk.checked) return;
+      gradeReview(chk.dataset.word, true);   // clean solve, user opted in
+      chk.disabled = true;
+      chk.parentElement.lastChild.textContent = ' Zur Wiederholung hinzugefügt';
+    };
+  });
+}
+
+function endCrossword(won) {
+  gameOver = true;
+  // Restore scrollable layout when puzzle ends
+  document.body.classList.remove('cw-active', 'cw-typing');
+  if (won) {
+    srAnnounce('Ausgezeichnet! Alle Wörter richtig gelöst!');
+
+    // Time taken
+    const secs    = Math.round((Date.now() - puzzleStartTime) / 1000);
+    const timeStr = secs < 60 ? secs + 's' : Math.floor(secs / 60) + 'm ' + (secs % 60) + 's';
+
+    // Calculate bonuses
+    const bonuses = [];
+    const counterEl = document.getElementById('diamond-counter');
+    if (!usedReveal) {
+      bonuses.push({ amount: 10, label: 'Rätsel abgeschlossen' });
+      const hadWrong = currentPuzzle.words.some(pw => pw._hadWrong);
+      if (!hadWrong) bonuses.push({ amount: 5, label: 'Kein Fehler!' });
+    }
+
+    // Award diamonds with stagger
+    bonuses.forEach((b, i) => {
+      setTimeout(() => earnDiamonds(b.amount, 'puzzle_bonus', counterEl), 400 + i * 600);
+    });
+
+    // Update streak
+    if (!usedReveal) {
+      streak.current++;
+      if (streak.current > streak.best) streak.best = streak.current;
+      saveStreak();
+      renderStreak();
+      checkStreakMilestones();
+    }
+
+    // Build summary overlay
+    const stats = document.getElementById('cw-summary-stats');
+    stats.innerHTML = '';
+    const rows = [
+      { icon: '⏱️', label: 'Zeit',    value: timeStr },
+      { icon: '✅', label: 'Wörter',  value: currentPuzzle.words.length + ' / ' + currentPuzzle.words.length },
+      { icon: '🔥', label: 'Serie',   value: streak.current + ' Tag' + (streak.current !== 1 ? 'e' : '') },
+    ];
+    if (bonuses.length) {
+      rows.push({ icon: '💎', label: 'Verdient', value: '+' + bonuses.reduce((s, b) => s + b.amount, 0) + ' Diamanten' });
+    }
+    rows.forEach(({ icon, label, value }) => {
+      const row = document.createElement('div');
+      row.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--color-surface);border-radius:10px;font-size:0.9rem;';
+      row.innerHTML = `<span style="color:var(--color-text-muted)">${icon} ${label}</span><strong>${value}</strong>`;
+      stats.appendChild(row);
+    });
+
+    // Grade words into the review deck + build the review panel
+    buildReviewPanel();
+
+    // Show overlay after a short delay so the last word's green flash is visible
+    setTimeout(() => {
+      document.getElementById('cw-summary-overlay').classList.remove('hidden');
+      document.getElementById('cw-new-puzzle-btn').focus();
+      if (!usedReveal) fireConfetti();   // celebrate a clean solve
+    }, 700);
+  }
+  document.getElementById('new-puzzle-btn').classList.remove('hidden');
+}
+
+function showReviewEmpty(eligibleCount) {
+  const msg   = document.getElementById('cw-review-empty-msg');
+  const total = Object.keys(reviewDeck.cards).length;
+  msg.innerHTML = total === 0
+    ? 'Du hast noch keine Wörter zum Wiederholen.<br>Löse ein Rätsel in A1–B1, um deine Wiederholungsliste aufzubauen.'
+    : `Aktuell sind nur <strong>${eligibleCount}</strong> passende Wörter fällig — für ein Rätsel werden mindestens 5 gebraucht.<br>Komm später wieder oder übe eine Stufe.`;
+  document.getElementById('cw-summary-overlay').classList.add('hidden');
+  document.getElementById('cw-review-empty').classList.remove('hidden');
+  document.getElementById('new-puzzle-btn').classList.add('hidden');
+}
+
+function startCrossword() {
+  if (gameMode === '2P') return;
+  document.getElementById('cw-review-empty').classList.add('hidden');
+  let pool;
+  if (currentLevel === 'REVIEW') {
+    pool = dueWords().map(w => wordEntryIndex[w]).filter(Boolean);
+    const eligible = pool.filter(e => e.w.length >= CW_MIN && e.w.length <= CW_MAX);
+    if (eligible.length < 5) { showReviewEmpty(eligible.length); return; }
+  } else {
+    pool = words[currentLevel] || [];
+  }
+  let puzzle = null;
+  for (let i = 0; i < 3 && !puzzle; i++) puzzle = generateCrossword(pool);
+  if (!puzzle) { showMessage('Rätsel konnte nicht erstellt werden.', 'lose'); return; }
+
+  currentPuzzle = puzzle;
+  gameOver      = false;
+  usedReveal    = false;
+  animating     = false;
+  keyColors     = {};
+  puzzleStartTime = Date.now();
+  buildKeyboard();
+
+  // On mobile: activate custom crossword keyboard + lock layout to viewport
+  if (window.innerWidth <= 680) {
+    buildCwKeyboard();
+    document.body.classList.add('cw-active');
+  }
+
+  document.getElementById('cw-summary-overlay').classList.add('hidden');
+  buildCrosswordGrid(puzzle);
+  renderClues(puzzle);
+  updateCwProgress();
+  showMessage('', '');
+  document.getElementById('new-puzzle-btn').classList.add('hidden');
+
+  // Select first across word's first cell
+  const firstAcross = puzzle.words.find(w => w.dir === 'across');
+  if (firstAcross) selectCell(firstAcross.row, firstAcross.col, 'across');
+}
+
+// ─── Key handling ─────────────────────────────────────
+function handleKey(key) {
+  if (gameMode === '2P') {
+    // 2P path
+    if (gameOver || animating || !currentWord) return;
+    // Online: block input when it's the opponent's row
+    if (onlineMode && rowOwner[currentRow] !== myPlayerIdx) return;
+    if (key === '⌫' || key === 'Backspace') { deleteLetter(); }
+    else if (key === 'ENTER' || key === 'Enter') { submitGuess(); }
+    else if (/^[A-ZÄÖÜa-zäöüß]$/.test(key)) { addLetter(norm(key)); }
+    return;
+  }
+  // 1P crossword path
+  if (gameOver || !currentPuzzle) return;
+  if (key === '⌫' || key === 'Backspace') { backspaceCrossword(); }
+  else if (key === 'ENTER' || key === 'Enter') { jumpToNextWord(); }
+  else if (key === ' ') { if (selectedCell) selectCell(selectedCell.r, selectedCell.c); } // toggle direction
+  else if (key === 'ArrowRight') { moveCursor(0, 1); }
+  else if (key === 'ArrowLeft')  { moveCursor(0, -1); }
+  else if (key === 'ArrowDown')  { moveCursor(1, 0); }
+  else if (key === 'ArrowUp')    { moveCursor(-1, 0); }
+  else if (/^[A-ZÄÖÜa-zäöüß]$/.test(key)) { fillCrosswordLetter(norm(key)); }
+}
+
+function addLetter(letter) {
+  const wordLen = currentWord.w.length;
+  const row     = board[currentRow];
+  if (row.length >= wordLen) return;
+
+  row.push(letter);
+  const col  = row.length - 1;
+  const tile = document.getElementById(`tile-${currentRow}-${col}`);
+  tile.textContent    = letter;
+  tile.dataset.letter = letter;
+
+  tile.classList.remove('pop');
+  void tile.offsetWidth;
+  tile.classList.add('pop');
+  tile.addEventListener('animationend', () => tile.classList.remove('pop'), { once: true });
+}
+
+function deleteLetter() {
+  const row = board[currentRow];
+  if (!row.length) return;
+
+  const col  = row.length - 1;
+  const tile = document.getElementById(`tile-${currentRow}-${col}`);
+  tile.textContent = '';
+  delete tile.dataset.letter;
+  row.pop();
+}
+
+function submitGuess() {
+  const wordLen = currentWord.w.length;
+  const row     = board[currentRow];
+
+  if (row.length < wordLen) {
+    animateShake(currentRow);
+    showMessage('Zu wenig Buchstaben', '');
+    setTimeout(() => showMessage('', ''), 1200);
+    return;
+  }
+
+  const guess   = row.join('');
+  const answer  = currentWord.w;
+  const results = evaluateGuess(guess, answer);
+
+  animating = true;
+  animateFlip(currentRow, results, () => {
+    animating = false;
+    updateKeyColors(guess, results);
+
+    const won  = results.every(r => r === 'correct');
+    const last = currentRow === 5;
+
+    if (onlineMode) {
+      // ── Online path: push result to Firebase ──────────
+      const resultNums = results.map(r => r === 'correct' ? 0 : r === 'present' ? 1 : 2);
+      const updates = {
+        [`guesses/${currentRow}`]: resultNums,
+        currentRow:   currentRow + 1,
+        activePlayer: 1 - activePlayer,
+      };
+      if (won || last) {
+        gameOver = true; // prevent onRoundUpdate from double-handling
+        updates.gameOver     = true;
+        updates.roundWinner  = won ? myPlayerIdx : null;
+        if (won) {
+          animateBounce(currentRow);
+          players[myPlayerIdx].score++;
+          updateScoreStrip();
+          showMessage(players[myPlayerIdx].name + ' punktet! 🎉', 'win');
+          window._fb.update(fbRef(`rooms/${roomId}/players/${myPlayerIdx}`),
+            { score: players[myPlayerIdx].score });
+          if (players[myPlayerIdx].score >= WIN_SCORE_2P) {
+            window._fb.update(fbRef(`rooms/${roomId}`),
+              { winner: myPlayerIdx, status: 'finished' });
+          } else if (myPlayerIdx === 0) {
+            // Host drives next round (non-host waits for Firebase)
+            roundStartPlayer = 1 - myPlayerIdx;
+            onlineRoundNum++;
+            setTimeout(startOnlineRound, 1800);
+          }
+        } else {
+          showMessage('Das Wort war: ' + answer, 'lose');
+          if (myPlayerIdx === 0) {
+            roundStartPlayer = 1 - roundStartPlayer;
+            onlineRoundNum++;
+            setTimeout(startOnlineRound, 2000);
+          }
+        }
+      }
+      window._fb.update(fbRef(`rooms/${roomId}/round`), updates);
+      return; // skip hot-seat path below
+    }
+
+    // ── Hot-seat path (unchanged) ─────────────────────
+    if (won) {
+      animateBounce(currentRow);
+      gameOver = true;
+      players[activePlayer].score++;
+      updateScoreStrip();
+      showMessage(players[activePlayer].name + ' punktet! 🎉', 'win');
+      if (players[activePlayer].score >= WIN_SCORE_2P) {
+        setTimeout(() => end2PGame(activePlayer), 1200);
+      } else {
+        roundStartPlayer = 1 - activePlayer;
+        setTimeout(startRound2P, 1600);
+      }
+    } else if (last) {
+      gameOver = true;
+      showMessage('Das Wort war: ' + answer, 'lose');
+      roundStartPlayer = 1 - roundStartPlayer;
+      setTimeout(startRound2P, 1800);
+    } else {
+      currentRow++;
+      activePlayer = 1 - activePlayer;
+      currentWord  = playerWords[activePlayer];
+      keyColors    = {};
+      updateTurnBanner();
+      updateRowOwnerVisuals();
+      buildKeyboard();
+      renderHint(currentWord);
+      showHandoff(activePlayer);
+    }
+  });
+}
+
+// ─── Mode switching ───────────────────────────────────
+function setMode(mode) {
+  gameMode = mode;
+
+  const panel       = document.getElementById('wordle-panel');
+  const cwClueBar   = document.getElementById('cw-clue-bar');
+  const cwArea      = document.getElementById('crossword-area');
+  const cwActions   = document.getElementById('cw-actions');
+  const streakBar   = document.getElementById('streak-bar');
+  const board2p     = document.getElementById('board-2p');
+  const panelHdr    = document.getElementById('panel-header');
+  const panelHint   = document.getElementById('hint-bar-panel');
+
+  document.querySelectorAll('.mode-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.mode === mode);
+  });
+
+  if (mode === '1P') {
+    panel.classList.add('inline-mode', 'mode-1p');
+    panel.classList.remove('visible', 'mode-2p');
+    document.getElementById('panel-backdrop').classList.remove('visible');
+    cwClueBar.classList.remove('hidden');
+    cwArea.classList.remove('hidden');
+    cwActions.classList.remove('hidden');
+    streakBar.classList.remove('hidden');
+    board2p.classList.add('hidden');
+    document.getElementById('clue-chips').classList.remove('hidden');
+    document.getElementById('cw-progress').classList.remove('hidden');
+    panelHdr.classList.add('hidden');
+    panelHint.classList.add('hidden');
+    // Hide the Wordle grid — only keyboard is needed
+    document.querySelector('.grid-wrap').classList.add('hidden');
+    startCrossword();
+  } else {
+    // Clear 1P viewport lock when switching to 2P
+    document.body.classList.remove('cw-active', 'cw-typing');
+    panel.classList.add('inline-mode', 'mode-2p');
+    panel.classList.remove('mode-1p');
+    cwClueBar.classList.add('hidden');
+    cwArea.classList.add('hidden');
+    cwActions.classList.add('hidden');
+    streakBar.classList.add('hidden');
+    board2p.classList.remove('hidden');
+    document.getElementById('clue-chips').classList.add('hidden');
+    document.getElementById('cw-progress').classList.add('hidden');
+    panelHdr.classList.remove('hidden');
+    panelHint.classList.remove('hidden');
+    document.getElementById('panel-close-btn').classList.remove('hidden');
+    document.querySelector('.grid-wrap').classList.remove('hidden');
+    showModePickerOverlay();
+  }
+}
+
+function showModePickerOverlay() {
+  document.getElementById('mode-picker-overlay').classList.remove('hidden');
+}
+
+function hideModePickerOverlay() {
+  document.getElementById('mode-picker-overlay').classList.add('hidden');
+}
+
+// ─── Overlay helpers ──────────────────────────────────
+function openOverlay(id) {
+  const el = document.getElementById(id);
+  el.classList.remove('hidden');
+  // Move focus to first interactive element for keyboard / screen-reader users
+  requestAnimationFrame(() => {
+    const first = el.querySelector('button, input, [tabindex="0"]');
+    if (first) first.focus();
+  });
+}
+
+// ─── Setup Overlay ────────────────────────────────────
+function showSetupOverlay() {
+  openOverlay('setup-overlay');
+}
+
+function hideSetupOverlay() {
+  document.getElementById('setup-overlay').classList.add('hidden');
+}
+
+// ─── 2P Game ──────────────────────────────────────────
+function startGame2P() {
+  players[0].name  = document.getElementById('p1-name-input').value.trim() || 'Player 1';
+  players[1].name  = document.getElementById('p2-name-input').value.trim() || 'Player 2';
+  players[0].score = 0;
+  players[1].score = 0;
+  activePlayer     = 0;
+  roundStartPlayer = 0;
+
+  hideSetupOverlay();
+  updateTurnBanner();
+  updateScoreStrip();
+  startRound2P();
+}
+
+function startRound2P() {
+  const w0 = pickWord(currentLevel, 'all');
+  if (!w0) return;
+  const w1 = pickWordSameLength(currentLevel, w0.w.length, w0.w) || w0;
+
+  // Assign words: roundStartPlayer gets w0, the other gets w1
+  playerWords[roundStartPlayer]     = w0;
+  playerWords[1 - roundStartPlayer] = w1;
+
+  currentRow   = 0;
+  board        = Array.from({ length: 6 }, () => []);
+  gameOver     = false;
+  animating    = false;
+  keyColors    = {};
+  activePlayer = roundStartPlayer;
+  currentWord  = playerWords[activePlayer];
+
+  // Assign each row to a player: P0 gets even rows, P1 gets odd (relative to start)
+  rowOwner = Array.from({ length: 6 }, (_, i) => (roundStartPlayer + i) % 2);
+
+  setTileSize(currentWord.w.length);
+  buildGrid(currentWord.w.length);
+  buildKeyboard();
+  renderHint(currentWord);
+  showMessage('', '');
+
+  updateTurnBanner();
+  updateRowOwnerVisuals();
+}
+
+function updateTurnBanner() {
+  const banner = document.getElementById('turn-banner');
+  const badge  = document.getElementById('panel-player-badge');
+  const p      = players[activePlayer];
+  const cls    = activePlayer === 0 ? 'p1' : 'p2';
+  if (onlineMode) {
+    const isMyTurn = activePlayer === myPlayerIdx;
+    banner.textContent = isMyTurn ? 'Du bist dran!' : (p.name + ' ist dran');
+    banner.className   = 'turn-banner ' + cls;
+    badge.textContent  = players[myPlayerIdx].name;
+    badge.style.background = players[myPlayerIdx].color;
+  } else {
+    banner.textContent = p.name + ' ist dran';
+    banner.className   = 'turn-banner ' + cls;
+    badge.textContent  = p.name;
+    badge.style.background = p.color;
+  }
+}
+
+function updateScoreStrip() {
+  document.getElementById('p1-score-label').textContent = players[0].name + ': ' + players[0].score;
+  document.getElementById('p2-score-label').textContent = players[1].name + ': ' + players[1].score;
+}
+
+function updateRowOwnerVisuals() {
+  for (let r = 0; r < 6; r++) {
+    const rowEl = document.getElementById(`grid-row-${r}`);
+    if (!rowEl) continue;
+    rowEl.classList.remove('row-owner-p1', 'row-owner-p2', 'active-row');
+    rowEl.classList.add(rowOwner[r] === 0 ? 'row-owner-p1' : 'row-owner-p2');
+  }
+  if (!gameOver) {
+    const active = document.getElementById(`grid-row-${currentRow}`);
+    if (active) active.classList.add('active-row');
+  }
+  // Online: hide skip button on opponent's turns
+  if (onlineMode) {
+    const skipBtn = document.getElementById('skip-turn-btn');
+    const myTurn  = !gameOver && rowOwner[currentRow] === myPlayerIdx;
+    skipBtn.classList.toggle('hidden', !myTurn);
+  }
+}
+
+function showHandoff(nextPlayerIndex) {
+  const p = players[nextPlayerIndex];
+  document.getElementById('handoff-title').textContent = p.name + ' ist dran!';
+  document.getElementById('handoff-sub').textContent   = 'Gib das Gerät an ' + p.name + ' weiter.';
+  document.getElementById('handoff-icon').textContent  = nextPlayerIndex === 0 ? '🔵' : '🔴';
+  document.getElementById('handoff-overlay').classList.remove('hidden');
+}
+
+function skipTurn2P() {
+  if (gameOver || animating) return;
+  if (onlineMode && rowOwner[currentRow] !== myPlayerIdx) return;
+
+  const wordLen = currentWord.w.length;
+  for (let c = 0; c < wordLen; c++) {
+    const tile = document.getElementById(`tile-${currentRow}-${c}`);
+    if (tile) { tile.textContent = '–'; tile.classList.add('skipped'); }
+  }
+
+  if (onlineMode) {
+    const nextRow = currentRow + 1;
+    const updates = {
+      [`skipped/${currentRow}`]: true,
+      currentRow:   nextRow,
+      activePlayer: 1 - activePlayer,
+    };
+    if (nextRow > 5) {
+      gameOver = true;
+      updates.gameOver    = true;
+      updates.roundWinner = null;
+      showMessage('Das Wort war: ' + currentWord.w, 'lose');
+      if (myPlayerIdx === 0) {
+        roundStartPlayer = 1 - roundStartPlayer;
+        onlineRoundNum++;
+        setTimeout(startOnlineRound, 2000);
+      }
+    }
+    window._fb.update(fbRef(`rooms/${roomId}/round`), updates);
+    return;
+  }
+
+  // Hot-seat path
+  board[currentRow] = [];
+  currentRow++;
+  if (currentRow > 5) {
+    gameOver = true;
+    showMessage('Das Wort war: ' + currentWord.w, 'lose');
+    roundStartPlayer = 1 - roundStartPlayer;
+    setTimeout(startRound2P, 1800);
+    return;
+  }
+  activePlayer = 1 - activePlayer;
+  currentWord  = playerWords[activePlayer];
+  keyColors    = {};
+  updateTurnBanner();
+  updateRowOwnerVisuals();
+  buildKeyboard();
+  renderHint(currentWord);
+  showHandoff(activePlayer);
+}
+
+function end2PGame(winnerIndex) {
+  gameOver = true;
+  document.getElementById('results-winner').textContent =
+    players[winnerIndex].name + ' gewinnt!';
+
+  const breakdown = document.getElementById('results-breakdown');
+  breakdown.innerHTML = '';
+  players.forEach(p => {
+    const row       = document.createElement('div');
+    row.className   = 'breakdown-row';
+    const nameSpan  = document.createElement('span');
+    nameSpan.className   = 'breakdown-name';
+    nameSpan.style.color = p.color;
+    nameSpan.textContent = p.name;
+    const scoreSpan = document.createElement('span');
+    scoreSpan.className   = 'breakdown-score';
+    scoreSpan.textContent = `${p.score} / ${WIN_SCORE_2P} Punkte`;
+    row.appendChild(nameSpan);
+    row.appendChild(scoreSpan);
+    breakdown.appendChild(row);
+  });
+
+  document.getElementById('results-overlay').classList.remove('hidden');
+}
+
+// ─── Online: Room helpers ─────────────────────────────
+function genRoomCode() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  return Array.from({ length: 6 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+}
+
+async function createRoom() {
+  if (!window._fb) return;
+  const name = document.getElementById('online-name-input').value.trim() || 'Player 1';
+  const createBtn = document.getElementById('create-room-btn');
+  createBtn.disabled = true;
+  createBtn.textContent = '…';
+
+  try {
+    // Find a unique 6-char code
+    let code;
+    for (let i = 0; i < 10; i++) {
+      code = genRoomCode();
+      const snap = await window._fb.get(fbRef(`rooms/${code}`));
+      if (!snap.exists()) break;
+    }
+
+    roomId       = code;
+    myPlayerIdx  = 0;
+    players[0]   = { name, score: 0, color: '#3b82f6' };
+    players[1]   = { name: 'Player 2', score: 0, color: '#ef4444' };
+
+    await window._fb.set(fbRef(`rooms/${code}`), {
+      status: 'waiting',
+      level:  currentLevel,
+      createdAt: Date.now(),
+      players: { 0: { name, score: 0, connected: true } },
+      winner: null,
+    });
+
+    // Register onDisconnect cleanup
+    window._fb.onDisconnect(fbRef(`rooms/${code}/players/0/connected`)).set(false);
+
+    // Show waiting screen
+    document.getElementById('lobby-screen-main').classList.add('hidden');
+    document.getElementById('lobby-screen-waiting').classList.remove('hidden');
+    document.getElementById('room-code-display').textContent = code;
+
+    // Wait for Player 2 to join
+    const p2Unsub = window._fb.onValue(fbRef(`rooms/${code}/players/1`), snap => {
+      if (!snap.exists()) return;
+      players[1].name = snap.val().name || 'Player 2';
+      try { p2Unsub(); } catch (e) {}
+      startOnlineGame();
+      startOnlineRound();
+    });
+    fbListeners.push(p2Unsub);
+  } catch (err) {
+    console.error('createRoom failed:', err);
+    showMessage('Verbindungsfehler. Bitte Firebase konfigurieren.', 'lose');
+    roomId = null; myPlayerIdx = null;
+    createBtn.disabled = false;
+    createBtn.textContent = 'Raum erstellen';
+  }
+}
+
+async function joinRoom(code) {
+  if (!window._fb) return;
+  code = code.toUpperCase().trim();
+  if (code.length !== 6) { showMessage('Bitte einen 6-stelligen Raumcode eingeben.', 'lose'); return; }
+
+  const joinBtn = document.getElementById('join-room-btn');
+  joinBtn.disabled = true;
+  joinBtn.textContent = '…';
+
+  try {
+    const snap = await window._fb.get(fbRef(`rooms/${code}`));
+    if (!snap.exists()) { showMessage('Raum nicht gefunden.', 'lose'); joinBtn.disabled = false; joinBtn.textContent = 'Beitreten'; return; }
+    const roomData = snap.val();
+    if (roomData.status !== 'waiting') { showMessage('Raum nicht mehr verfügbar.', 'lose'); joinBtn.disabled = false; joinBtn.textContent = 'Beitreten'; return; }
+
+    const name = document.getElementById('online-name-input').value.trim() || 'Player 2';
+
+    roomId       = code;
+    myPlayerIdx  = 1;
+    players[0]   = { name: roomData.players[0].name, score: 0, color: '#3b82f6' };
+    players[1]   = { name, score: 0, color: '#ef4444' };
+    currentLevel = roomData.level;
+
+    await window._fb.update(fbRef(`rooms/${code}`), {
+      status: 'active',
+      'players/1': { name, score: 0, connected: true },
+    });
+
+    window._fb.onDisconnect(fbRef(`rooms/${code}/players/1/connected`)).set(false);
+
+    startOnlineGame();
+    // Player 2 waits — host's startOnlineRound() will push round data via Firebase
+  } catch (err) {
+    console.error('joinRoom failed:', err);
+    showMessage('Verbindungsfehler. Prüfe den Raumcode.', 'lose');
+    roomId = null; myPlayerIdx = null;
+    joinBtn.disabled = false;
+    joinBtn.textContent = 'Beitreten';
+  }
+}
+
+function startOnlineGame() {
+  document.getElementById('online-lobby-overlay').classList.add('hidden');
+  document.getElementById('lobby-screen-main').classList.remove('hidden');
+  document.getElementById('lobby-screen-waiting').classList.add('hidden');
+
+  onlineMode = true;
+  onlineRoundNum = 0;
+  roundStartPlayer = 0;
+  lastRoundNum = -1;
+
+  updateScoreStrip();
+
+  // Subscribe: round data (all game state)
+  fbOnValue(fbRef(`rooms/${roomId}/round`), onRoundUpdate);
+
+  // Subscribe: player scores + disconnect detection
+  fbOnValue(fbRef(`rooms/${roomId}/players`), snap => {
+    if (!snap.exists()) return;
+    const data = snap.val();
+    if (data[0]) players[0].score = data[0].score || 0;
+    if (data[1]) players[1].score = data[1].score || 0;
+    updateScoreStrip();
+    const oppIdx = 1 - myPlayerIdx;
+    if (data[oppIdx] && data[oppIdx].connected === false) {
+      showMessage(players[oppIdx].name + ' hat das Spiel verlassen', 'lose');
+    }
+  });
+
+  // Subscribe: game winner
+  fbOnValue(fbRef(`rooms/${roomId}/winner`), snap => {
+    if (snap.exists() && snap.val() !== null) {
+      end2PGame(snap.val());
+    }
+  });
+
+  // Host backup: if onValue for players/1 never fired (stale WebSocket),
+  // start the round via HTTP get() after 4 seconds
+  if (myPlayerIdx === 0) {
+    const backupTimer = setTimeout(async () => {
+      if (lastRoundNum !== -1) return; // round already started via onValue
+      const snap = await window._fb.get(fbRef(`rooms/${roomId}/players/1`)).catch(() => null);
+      if (snap && snap.exists()) {
+        players[1].name = snap.val().name || 'Player 2';
+        updateScoreStrip();
+        startOnlineRound();
+      }
+    }, 4000);
+    fbListeners.push(() => clearTimeout(backupTimer));
+  }
+
+  // Joiner: show loading hint while waiting for round data
+  if (myPlayerIdx === 1) {
+    showMessage('Warte auf Spielstart…', '');
+  }
+}
+
+function startOnlineRound() {
+  if (myPlayerIdx !== 0) return; // only host picks words
+
+  const w0 = pickWord(currentLevel, 'all');
+  if (!w0) return;
+  const w1 = pickWordSameLength(currentLevel, w0.w.length, w0.w) || w0;
+
+  const pool = words[currentLevel] || [];
+  const i0   = pool.findIndex(e => e.w === w0.w);
+  const i1   = pool.findIndex(e => e.w === w1.w);
+
+  window._fb.set(fbRef(`rooms/${roomId}/round`), {
+    roundNum:         onlineRoundNum,
+    roundStartPlayer: roundStartPlayer,
+    activePlayer:     roundStartPlayer,
+    currentRow:       0,
+    wordLen:          w0.w.length,
+    wordIndices:      { 0: i0, 1: i1 },
+    guesses:          {},
+    skipped:          {},
+    gameOver:         false,
+    roundWinner:      null,
+  });
+}
+
+function onRoundUpdate(snap) {
+  if (!snap.exists()) return;
+  const d = snap.val();
+
+  // ── New round: full rebuild ───────────────────────────
+  if (d.roundNum !== lastRoundNum) {
+    lastRoundNum     = d.roundNum;
+    onlineRoundNum   = d.roundNum;
+    currentRow       = d.currentRow;
+    activePlayer     = d.activePlayer;
+    roundStartPlayer = d.roundStartPlayer;
+    rowOwner         = Array.from({ length: 6 }, (_, i) => (d.roundStartPlayer + i) % 2);
+    gameOver         = false;
+    animating        = false;
+    keyColors        = {};
+    board            = Array.from({ length: 6 }, () => []);
+
+    const pool = words[currentLevel] || [];
+    const myEntry  = pool[d.wordIndices[myPlayerIdx]];
+    const oppEntry = pool[d.wordIndices[1 - myPlayerIdx]];
+    if (!myEntry) return;
+
+    playerWords[myPlayerIdx]     = myEntry;
+    playerWords[1 - myPlayerIdx] = oppEntry || myEntry;
+    currentWord = myEntry;
+
+    setTileSize(d.wordLen);
+    buildGrid(d.wordLen);
+    buildKeyboard();
+    renderHint(currentWord);
+    showMessage('', '');
+    updateTurnBanner();
+    updateRowOwnerVisuals();
+
+    // Re-render any existing guesses (reconnect or late-join)
+    if (d.guesses) {
+      Object.entries(d.guesses).forEach(([ri, nums]) =>
+        renderOpponentTiles(parseInt(ri), nums));
+    }
+    if (d.skipped) {
+      Object.keys(d.skipped).forEach(ri => markSkippedRow(parseInt(ri)));
+    }
+    return;
+  }
+
+  // ── Same round: sync incremental changes ─────────────
+  currentRow   = d.currentRow;
+  activePlayer = d.activePlayer;
+
+  if (d.guesses) {
+    Object.entries(d.guesses).forEach(([ri, nums]) =>
+      renderOpponentTiles(parseInt(ri), nums));
+  }
+  if (d.skipped) {
+    Object.keys(d.skipped).forEach(ri => markSkippedRow(parseInt(ri)));
+  }
+
+  updateTurnBanner();
+  updateRowOwnerVisuals();
+
+  // Round ended by the OTHER device
+  if (d.gameOver && !gameOver) {
+    gameOver = true;
+    if (d.roundWinner === myPlayerIdx) {
+      // My score was already shown locally — do nothing extra
+    } else if (d.roundWinner !== null) {
+      showMessage(players[d.roundWinner].name + ' punktet! Das Wort war: ' + currentWord.w, 'lose');
+    } else {
+      showMessage('Das Wort war: ' + currentWord.w, 'lose');
+    }
+    // Host drives next round
+    if (myPlayerIdx === 0 && players[0].score < WIN_SCORE_2P && players[1].score < WIN_SCORE_2P) {
+      roundStartPlayer = d.roundWinner !== null ? 1 - d.roundWinner : 1 - d.roundStartPlayer;
+      onlineRoundNum++;
+      setTimeout(startOnlineRound, 2000);
+    }
+  }
+}
+
+function renderOpponentTiles(rowIdx, resultNums) {
+  if (rowOwner[rowIdx] === myPlayerIdx) return; // skip my own rows
+  for (let c = 0; c < resultNums.length; c++) {
+    const tile = document.getElementById(`tile-${rowIdx}-${c}`);
+    if (!tile) continue;
+    const cls = ['correct', 'present', 'absent'][resultNums[c]];
+    tile.textContent = '';
+    tile.removeAttribute('data-letter');
+    tile.className = 'tile ' + cls;
+  }
+}
+
+function markSkippedRow(rowIdx) {
+  const len = currentWord ? currentWord.w.length : 5;
+  for (let c = 0; c < len; c++) {
+    const tile = document.getElementById(`tile-${rowIdx}-${c}`);
+    if (tile && !tile.classList.contains('correct') &&
+        !tile.classList.contains('present') && !tile.classList.contains('absent')) {
+      tile.textContent = '–';
+      tile.classList.add('skipped');
+    }
+  }
+}
+
+function cleanupOnline() {
+  fbListeners.forEach(unsub => { try { unsub(); } catch (e) {} });
+  fbListeners = [];
+  // Host removes room if still waiting
+  if (roomId && myPlayerIdx === 0 && window._fb) {
+    window._fb.get(fbRef(`rooms/${roomId}/status`)).then(snap => {
+      if (snap.exists() && snap.val() === 'waiting') {
+        window._fb.remove(fbRef(`rooms/${roomId}`));
+      }
+    }).catch(() => {});
+  }
+  onlineMode     = false;
+  roomId         = null;
+  myPlayerIdx    = null;
+  lastRoundNum   = -1;
+  onlineRoundNum = 0;
+}
+
+// ─── Tab switching ────────────────────────────────────
+document.getElementById('level-tabs').addEventListener('click', e => {
+  const btn = e.target.closest('[data-level]');
+  if (!btn) return;
+  // Review mode is a 1P-only feature
+  if (btn.dataset.level === 'REVIEW' && gameMode === '2P') {
+    showMessage('Wiederholung nur im Solo-Modus', '');
+    setTimeout(() => showMessage('', ''), 1800);
+    return;
+  }
+  document.querySelectorAll('#level-tabs .tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  currentLevel = btn.dataset.level;
+  if (gameMode === '1P') startCrossword();
+  else { showMessage('Niveau ab nächster Runde: ' + currentLevel, ''); setTimeout(() => showMessage('', ''), 1800); }
+});
+
+document.getElementById('cw-review-empty-btn').addEventListener('click', () => {
+  document.getElementById('cw-review-empty').classList.add('hidden');
+  const a1 = document.querySelector('#level-tabs [data-level="A1"]');
+  document.querySelectorAll('#level-tabs .tab').forEach(t => t.classList.remove('active'));
+  a1.classList.add('active');
+  currentLevel = 'A1';
+  startCrossword();
+});
+
+document.getElementById('new-puzzle-btn').addEventListener('click', startCrossword);
+document.getElementById('cw-new-puzzle-btn').addEventListener('click', () => {
+  document.getElementById('cw-summary-overlay').classList.add('hidden');
+  startCrossword();
+});
+document.getElementById('check-btn').addEventListener('click', checkAllWords);
+document.getElementById('reveal-btn').addEventListener('click', () => {
+  const btn = document.getElementById('reveal-btn');
+  if (btn.dataset.confirm === '1') {
+    btn.dataset.confirm = '0';
+    btn.textContent = 'Wort aufdecken';
+    revealWord();
+  } else {
+    btn.dataset.confirm = '1';
+    btn.textContent = 'Sicher? Tippen zum Bestätigen';
+    clearTimeout(btn._confirmTimer);
+    btn._confirmTimer = setTimeout(() => {
+      btn.dataset.confirm = '0';
+      btn.textContent = 'Wort aufdecken';
+    }, 3000);
+  }
+});
+
+// ─── Mode toggle ──────────────────────────────────────
+document.querySelector('.mode-toggle').addEventListener('click', e => {
+  const btn = e.target.closest('[data-mode]');
+  if (!btn || btn.dataset.mode === gameMode) return;
+  setMode(btn.dataset.mode);
+});
+
+// ─── Mode picker overlay ──────────────────────────────
+document.getElementById('hotseat-mode-btn').addEventListener('click', () => {
+  hideModePickerOverlay();
+  showSetupOverlay();
+});
+
+document.getElementById('online-mode-btn').addEventListener('click', () => {
+  hideModePickerOverlay();
+  openOverlay('online-lobby-overlay');
+});
+
+document.getElementById('cancel-mode-picker-btn').addEventListener('click', () => {
+  hideModePickerOverlay();
+  setMode('1P');
+});
+
+// ─── Online lobby overlay ─────────────────────────────
+document.getElementById('create-room-btn').addEventListener('click', createRoom);
+
+document.getElementById('join-room-btn').addEventListener('click', () => {
+  joinRoom(document.getElementById('room-code-input').value);
+});
+
+document.getElementById('room-code-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') joinRoom(e.target.value);
+});
+
+document.getElementById('copy-code-btn').addEventListener('click', () => {
+  const code = document.getElementById('room-code-display').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = document.getElementById('copy-code-btn');
+    btn.textContent = 'Kopiert!';
+    setTimeout(() => { btn.textContent = 'Kopieren'; }, 1500);
+  }).catch(() => {});
+});
+
+document.getElementById('cancel-lobby-btn').addEventListener('click', () => {
+  cleanupOnline();
+  document.getElementById('online-lobby-overlay').classList.add('hidden');
+  document.getElementById('lobby-screen-main').classList.remove('hidden');
+  document.getElementById('lobby-screen-waiting').classList.add('hidden');
+  setMode('1P');
+});
+
+// ─── Setup overlay (hot seat) ─────────────────────────
+document.getElementById('start-2p-btn').addEventListener('click', startGame2P);
+
+document.getElementById('cancel-setup-btn').addEventListener('click', () => {
+  hideSetupOverlay();
+  setMode('1P');
+});
+
+// ─── Skip turn button (2P) ────────────────────────────
+document.getElementById('skip-turn-btn').addEventListener('click', skipTurn2P);
+
+// ─── Panel close button (2P → exit to 1P) ─────────────
+document.getElementById('panel-close-btn').addEventListener('click', () => {
+  if (onlineMode) cleanupOnline();
+  setMode('1P');
+});
+
+// ─── Handoff overlay ──────────────────────────────────
+document.getElementById('handoff-ready-btn').addEventListener('click', () => {
+  document.getElementById('handoff-overlay').classList.add('hidden');
+});
+
+// ─── Results overlay ──────────────────────────────────
+document.getElementById('play-again-btn').addEventListener('click', () => {
+  document.getElementById('results-overlay').classList.add('hidden');
+  if (onlineMode) {
+    players[0].score = 0;
+    players[1].score = 0;
+    onlineRoundNum   = 0;
+    roundStartPlayer = 0;
+    updateScoreStrip();
+    if (myPlayerIdx === 0) startOnlineRound();
+  } else {
+    startGame2P();
+  }
+});
+
+document.getElementById('back-1p-btn').addEventListener('click', () => {
+  document.getElementById('results-overlay').classList.add('hidden');
+  if (onlineMode) cleanupOnline();
+  setMode('1P');
+});
+
+// ─── Physical keyboard input for crossword (Bluetooth/desktop) ───
+// The OS virtual keyboard is suppressed via inputmode="none" on #cw-native-input.
+// Mobile input is handled by #cw-keyboard (custom keys). Physical keyboards
+// (desktop + Bluetooth) are handled by the document keydown listener below.
+(function() {
+  const inp = document.getElementById('cw-native-input');
+  // Keep input events as fallback for edge-case browsers that ignore inputmode=none
+  inp.addEventListener('input', e => {
+    if (gameMode !== '1P') return;
+    const val = inp.value;
+    inp.value = '';
+    if (!val) return;
+    const ch = val[val.length - 1].toUpperCase();
+    if (/^[A-ZÜÖÄSS]$/.test(ch) || ch === 'ß') handleKey(ch);
+  });
+})();
+
+// ─── Physical keyboard ────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+  if (e.key === 'Escape') {
+    const overlayIds = ['setup-overlay', 'mode-picker-overlay', 'online-lobby-overlay', 'handoff-overlay', 'results-overlay'];
+    for (const id of overlayIds) {
+      const el = document.getElementById(id);
+      if (el && !el.classList.contains('hidden')) {
+        el.classList.add('hidden');
+        e.preventDefault();
+        return;
+      }
+    }
+    return;
+  }
+
+  if (!document.getElementById('setup-overlay').classList.contains('hidden')) return;
+  if (!document.getElementById('mode-picker-overlay').classList.contains('hidden')) return;
+  if (!document.getElementById('online-lobby-overlay').classList.contains('hidden')) return;
+  if (!document.getElementById('handoff-overlay').classList.contains('hidden')) return;
+
+  // Tab = jump to next unsolved word (crossword only)
+  if (e.key === 'Tab' && gameMode === '1P' && !gameOver && currentPuzzle) {
+    e.preventDefault();
+    jumpToNextWord();
+    return;
+  }
+
+  handleKey(e.key);
+});
+
+// ─── Fetch & init ─────────────────────────────────────
+async function init() {
+  const loading = document.getElementById('loading');
+  try {
+    const res  = await fetch('./words.json');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    words = await res.json();
+
+    const allWords = [...(words.A1||[]), ...(words.A2||[]), ...(words.B1||[])].map(e => e.w);
+    const dupes    = allWords.filter((w, i) => allWords.indexOf(w) !== i);
+    if (dupes.length) console.warn('Duplicate words found:', dupes);
+    else              console.info('Wörtle: no duplicate words found ✓');
+
+    // Index every word by its CEFR level and full entry (for the review deck)
+    ['A1', 'A2', 'B1'].forEach(lvl => (words[lvl] || []).forEach(e => {
+      wordLevelIndex[e.w] = lvl;
+      wordEntryIndex[e.w] = e;
+    }));
+
+    loadStreak();
+    loadDiamonds();
+    loadReview();
+    setMode('1P');
+    loading.classList.add('hidden');
+  } catch (err) {
+    loading.textContent = 'Failed to load words.json — ' + err.message;
+    console.error(err);
+  }
+}
+
+// Handle resize
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    if (gameMode === '1P' && currentPuzzle) {
+      const cols = currentPuzzle.bbox.maxC - currentPuzzle.bbox.minC + 1;
+      const rows = currentPuzzle.bbox.maxR - currentPuzzle.bbox.minR + 1;
+      document.documentElement.style.setProperty('--cw-cell', computeCwCellSize(cols, rows) + 'px');
+    } else if (gameMode === '2P' && currentWord) {
+      setTileSize(currentWord.w.length);
+    }
+  }, 150);
+});
+
+// ─── Backdrop click-to-close ──────────────────────────
+document.addEventListener('click', e => {
+  if (!e.target.classList.contains('overlay')) return;
+  e.target.classList.add('hidden');
+});
+
+// ─── Win celebration: lightweight canvas confetti ─────
+function fireConfetti() {
+  if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+  const canvas = document.getElementById('confetti-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width  = window.innerWidth  * dpr;
+  canvas.height = window.innerHeight * dpr;
+  ctx.scale(dpr, dpr);
+  const W = window.innerWidth, H = window.innerHeight;
+  const colors = ['#1D9E75', '#EF9F27', '#3b82f6', '#ef4444', '#8b7cf6'];
+  const N = window.innerWidth < 480 ? 90 : 150;
+  const parts = Array.from({ length: N }, () => ({
+    x: W / 2 + (Math.random() - 0.5) * 120,
+    y: H * 0.32 + (Math.random() - 0.5) * 40,
+    vx: (Math.random() - 0.5) * 12,
+    vy: Math.random() * -13 - 5,
+    size: Math.random() * 6 + 4,
+    rot: Math.random() * Math.PI,
+    vr: (Math.random() - 0.5) * 0.4,
+    color: colors[(Math.random() * colors.length) | 0],
+    shape: Math.random() < 0.5 ? 'rect' : 'circle',
+  }));
+  const start = performance.now();
+  const DURATION = 2600;
+  (function frame(now) {
+    const t = now - start;
+    ctx.clearRect(0, 0, W, H);
+    parts.forEach(p => {
+      p.vy += 0.32;             // gravity
+      p.vx *= 0.99;             // air drag
+      p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.globalAlpha = Math.max(0, 1 - t / DURATION);
+      ctx.fillStyle = p.color;
+      if (p.shape === 'rect') ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+      else { ctx.beginPath(); ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2); ctx.fill(); }
+      ctx.restore();
+    });
+    if (t < DURATION) requestAnimationFrame(frame);
+    else ctx.clearRect(0, 0, W, H);
+  })(start);
+}
+
+// ─── Accessibility: dialog semantics, focus trap, Escape, state mirroring ──
+(function setupA11y() {
+  const FOCUSABLE = 'button:not([disabled]), input:not([disabled]), select, textarea, a[href], [tabindex]:not([tabindex="-1"])';
+  let lastFocused = null;
+
+  // 1) Mark every overlay as a modal dialog labelled by its title.
+  document.querySelectorAll('.overlay').forEach((ov, i) => {
+    ov.setAttribute('role', 'dialog');
+    ov.setAttribute('aria-modal', 'true');
+    const title = ov.querySelector('.overlay-title');
+    if (title) {
+      if (!title.id) title.id = 'overlay-title-' + i;
+      ov.setAttribute('aria-labelledby', title.id);
+    }
+    // Observe show/hide to manage focus (works no matter how it's toggled).
+    let wasHidden = ov.classList.contains('hidden');
+    new MutationObserver(() => {
+      const hidden = ov.classList.contains('hidden');
+      if (hidden === wasHidden) return;
+      wasHidden = hidden;
+      if (!hidden) {
+        lastFocused = document.activeElement;
+        requestAnimationFrame(() => { ov.querySelector(FOCUSABLE)?.focus(); });
+      } else if (lastFocused && document.contains(lastFocused)) {
+        try { lastFocused.focus(); } catch {}
+        lastFocused = null;
+      }
+    }).observe(ov, { attributes: true, attributeFilter: ['class'] });
+  });
+
+  const topOverlay = () => {
+    const open = document.querySelectorAll('.overlay:not(.hidden)');
+    return open.length ? open[open.length - 1] : null;
+  };
+
+  // 2) Escape closes the topmost overlay; Tab is trapped inside it.
+  document.addEventListener('keydown', e => {
+    const ov = topOverlay();
+    if (!ov) return;
+    if (e.key === 'Escape') {
+      ov.classList.add('hidden');
+      e.stopPropagation();
+    } else if (e.key === 'Tab') {
+      const f = [...ov.querySelectorAll(FOCUSABLE)].filter(el => el.offsetParent !== null);
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { last.focus(); e.preventDefault(); }
+      else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
+    }
+  }, true);
+
+  // 3) Mirror `.active` visual state to `aria-pressed` on the toggle groups.
+  document.querySelectorAll('#level-tabs .tab, .mode-toggle .mode-btn').forEach(btn => {
+    const sync = () => btn.setAttribute('aria-pressed', btn.classList.contains('active') ? 'true' : 'false');
+    sync();
+    new MutationObserver(sync).observe(btn, { attributes: true, attributeFilter: ['class'] });
+  });
+})();
+
+init();
+</script>
+</body>
+</html>
