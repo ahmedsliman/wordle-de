@@ -2100,5 +2100,279 @@
     "hint": "Nicht zu teuer, gutes Preis-Leistungs-Verhältnis.",
     "type": "adjective",
     "sentence": "Das Hotel ist ___ und komfortabel."
+  },
+  {
+    "w": "JOB",
+    "en": "job",
+    "ar": "وظيفة",
+    "hint": "Paid work",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Kann ich sagen, dass ich noch keinen ___ habe?"
+  },
+  {
+    "w": "KÜMMERN",
+    "en": "to take care of",
+    "ar": "يهتم بـ / يعتني بـ",
+    "hint": "To look after someone or something",
+    "type": "verb",
+    "sentence": "Du musst dich jetzt um vieles ___."
+  },
+  {
+    "w": "KONTO",
+    "en": "bank account",
+    "ar": "حساب بنكي",
+    "hint": "Where the bank keeps your money",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Ich muss zur Bank gehen, weil ich ein ___ eröffnen will."
+  },
+  {
+    "w": "ERÖFFNEN",
+    "en": "to open (an account)",
+    "ar": "يفتح (حساباً)",
+    "hint": "To start a bank account",
+    "type": "verb",
+    "sentence": "Ich möchte bitte ein Konto ___."
+  },
+  {
+    "w": "EINKOMMEN",
+    "en": "income",
+    "ar": "دخل",
+    "hint": "Money you earn regularly",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Die Bank findet es natürlich besser, wenn du ein festes ___ hast."
+  },
+  {
+    "w": "BESSER",
+    "en": "better",
+    "ar": "أفضل",
+    "hint": "Comparative of good",
+    "type": "adjective",
+    "sentence": "Es wird nicht ___, wenn du länger wartest."
+  },
+  {
+    "w": "BLEIBEN",
+    "en": "to stay",
+    "ar": "يبقى",
+    "hint": "To remain in one place",
+    "type": "verb"
+  },
+  {
+    "w": "SPRACHKURS",
+    "en": "language course",
+    "ar": "دورة لغة",
+    "hint": "Classes to learn a language",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Ich geh gleich zum ___."
+  },
+  {
+    "w": "ÜBEN",
+    "en": "to practise",
+    "ar": "يتمرّن / يتدرّب",
+    "hint": "To repeat something to get better",
+    "type": "verb"
+  },
+  {
+    "w": "SCHAFFEN",
+    "en": "to manage, to achieve",
+    "ar": "ينجح في / يتمكن من",
+    "hint": "To succeed in doing something",
+    "type": "verb"
+  },
+  {
+    "w": "ÜBERWEISEN",
+    "en": "to transfer (money)",
+    "ar": "يحوّل (مبلغاً مالياً)",
+    "hint": "To send money to an account",
+    "type": "verb",
+    "sentence": "Ich hab total vergessen, die Miete zu ___."
+  },
+  {
+    "w": "WOHNUNG",
+    "en": "apartment, flat",
+    "ar": "شقة",
+    "hint": "A home inside a building",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Auf Nicos neue ___!"
+  },
+  {
+    "w": "UMZUG",
+    "en": "move, relocation",
+    "ar": "انتقال (السكن)",
+    "hint": "Changing where you live",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Ich wollte dir gerne ein paar Sachen für den ___ mitbringen."
+  },
+  {
+    "w": "VERDIENEN",
+    "en": "to earn",
+    "ar": "يكسب (المال)",
+    "hint": "To get money for work",
+    "type": "verb",
+    "sentence": "Wie möchtest du Geld ___ und leben?"
+  },
+  {
+    "w": "FAMILIE",
+    "en": "family",
+    "ar": "عائلة",
+    "hint": "Your parents, siblings and relatives",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Ich würde meine ___ nie verlassen."
+  },
+  {
+    "w": "VERLASSEN",
+    "en": "to leave",
+    "ar": "يترك / يغادر",
+    "hint": "To go away from a place or person",
+    "type": "verb",
+    "sentence": "Ich würde meine Familie nie ___."
+  },
+  {
+    "w": "ARBEIT",
+    "en": "work, job",
+    "ar": "عمل",
+    "hint": "What you do to earn money",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Du hast keine ___."
+  },
+  {
+    "w": "GLÜCK",
+    "en": "luck, happiness",
+    "ar": "حظ / سعادة",
+    "hint": "Good fortune or joy",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Ich hatte ___."
+  },
+  {
+    "w": "KLEINIGKEIT",
+    "en": "small thing, trifle",
+    "ar": "شيء بسيط / تفصيل صغير",
+    "hint": "A little thing of no importance",
+    "type": "noun",
+    "article": "die"
+  },
+  {
+    "w": "SERIE",
+    "en": "series, show",
+    "ar": "مسلسل",
+    "hint": "TV episodes with the same story",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ ist ziemlich lustig."
+  },
+  {
+    "w": "SCHENKEN",
+    "en": "to give (a gift)",
+    "ar": "يهدي",
+    "hint": "To give something as a present",
+    "type": "verb"
+  },
+  {
+    "w": "ORDNUNG",
+    "en": "order, tidiness",
+    "ar": "نظام / ترتيب",
+    "hint": "Everything in its right place",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Alles in ___?"
+  },
+  {
+    "w": "ANDERE",
+    "en": "other",
+    "ar": "آخر / أخرى",
+    "hint": "Different from this one",
+    "type": "adjective",
+    "sentence": "___ Mütter schaffen das doch auch."
+  },
+  {
+    "w": "NACHBAR",
+    "en": "neighbour",
+    "ar": "جار",
+    "hint": "Someone who lives next to you",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___, Herr Murz, stellt sie immer wieder genau vor mein Fenster!"
+  },
+  {
+    "w": "HERR",
+    "en": "Mr, gentleman",
+    "ar": "سيد",
+    "hint": "Polite word for a man",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Mein Vermieter, ___ Friese."
+  },
+  {
+    "w": "LEUTE",
+    "en": "people",
+    "ar": "الناس",
+    "hint": "Persons in general",
+    "type": "noun",
+    "article": "die/pl",
+    "sentence": "Die meisten ___ ziehen heute nach der Schule für die Ausbildung oder das Studium in andere Städte."
+  },
+  {
+    "w": "ZEIT",
+    "en": "time",
+    "ar": "وقت",
+    "hint": "Hours, minutes and moments",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Wir hatten keine ___."
+  },
+  {
+    "w": "WEITERSTUDIEREN",
+    "en": "to keep studying",
+    "ar": "يواصل الدراسة",
+    "hint": "To continue your studies",
+    "type": "verb",
+    "sentence": "Ich will nicht ___."
+  },
+  {
+    "w": "ANRUF",
+    "en": "phone call",
+    "ar": "مكالمة هاتفية",
+    "hint": "When someone rings you on the phone",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Vor ein paar Wochen habe ich einen ___ von Sarah bekommen."
+  },
+  {
+    "w": "HIERHERKOMMEN",
+    "en": "to come here",
+    "ar": "يأتي إلى هنا",
+    "hint": "To arrive at this place",
+    "type": "verb"
+  },
+  {
+    "w": "WEGGEHEN",
+    "en": "to leave, to go away",
+    "ar": "يرحل / يبتعد",
+    "hint": "To move away from a place",
+    "type": "verb"
+  },
+  {
+    "w": "HEIMWEH",
+    "en": "homesickness",
+    "ar": "الحنين إلى الوطن",
+    "hint": "Missing your home when away",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Ich hatte fast ein bisschen ___."
+  },
+  {
+    "w": "VERMISSEN",
+    "en": "to miss",
+    "ar": "يفتقد / يشتاق",
+    "hint": "To feel sad someone is away",
+    "type": "verb"
   }
 ]
