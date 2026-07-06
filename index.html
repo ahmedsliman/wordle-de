@@ -4,8 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="description" content="Wörtle — lerne deutsche Wörter (A1/A2/B1) mit einem Kreuzworträtsel-Spiel: Aussprache, Grammatik-Gender, und Wiederholung mit Spaced Repetition." />
-  <meta name="color-scheme" content="light" />
-  <meta name="theme-color" content="#FAFAF8" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#FAFAF8" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#14161A" media="(prefers-color-scheme: dark)" />
   <title>Wörtle — German Wordle</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,700;1,9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -48,6 +49,40 @@
       --gender-die:             #ef4444;
       --gender-das:             #1D9E75;
       --gender-neutral:         #8b7cf6;
+    }
+
+    /* ─── Dark mode ──────────────────────────────────────
+       All surfaces flow through these tokens, so overriding
+       them here flips the whole app. Saturated accent fills
+       (teal/orange/gender) stay put; only text-weight teal
+       is brightened via --color-correct-text. */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-bg:               #14161A;
+        --color-surface:          #1E2128;
+        --color-border:           #2C313B;
+        --color-text:             #E8E6E3;
+        --color-text-inv:         #14161A;
+        --color-text-muted:       #9AA4B8;
+        --color-cell:             #262A32;
+        --color-cell-block:       #0C0D10;
+        --color-correct:          #1D9E75;
+        --color-correct-text:     #3DD0A0;
+        --color-present:          #EF9F27;
+        --color-absent:           #52525B;
+        --color-absent-bg:        #52525B;
+        --color-key-bg:           #2C313B;
+        --color-key-text:         #E8E6E3;
+        --color-tile-border:      #3A3F4B;
+        --color-tile-filled:      #5B6472;
+        --color-header-bg:        #14161A;
+        --color-header-border:    #2C313B;
+        --color-tab-active-bg:    #E8E6E3;
+        --color-tab-active-text:  #14161A;
+        --color-streak-bg:        #14261C;
+        --color-streak-border:    #1F5137;
+        --color-canvas:           #0E0F12;
+      }
     }
 
 
@@ -218,6 +253,34 @@
       .fullscreen-btn { display: inline-flex; }
     }
 
+    /* Help button — same chrome as fullscreen but always visible. */
+    .help-btn {
+      display: inline-flex;
+      background: none;
+      border: 1.5px solid var(--color-border);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--color-text-muted);
+      padding: 0;
+      line-height: 1;
+      transition: color 0.15s, border-color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .help-btn:hover { color: var(--color-text); border-color: var(--color-text-muted); }
+    .help-btn:focus-visible { outline: 2px solid var(--color-correct); outline-offset: 2px; }
+
+    /* Onboarding "How to play" card */
+    .howto-card { max-width: 440px; text-align: left; gap: 6px; }
+    .howto-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 8px 0 4px; }
+    .howto-list li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.9rem; line-height: 1.42; color: var(--color-text); }
+    .howto-ic { flex: 0 0 auto; width: 1.5em; text-align: center; }
+
     /* ─── Diamond Counter ──────────────────────────── */
     .diamond-counter {
       display: flex;
@@ -352,6 +415,23 @@
       font-family: 'Inter', system-ui, sans-serif;
       font-style: normal;
     }
+
+    .hint-more-btn {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--color-correct-text);
+      background: rgba(29,158,117,0.08);
+      border: 1.5px solid rgba(29,158,117,0.3);
+      border-radius: 999px;
+      padding: 4px 10px;
+      min-height: 32px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .hint-more-btn:hover { background: rgba(29,158,117,0.15); }
+    .hint-more-btn:focus-visible { outline: 2px solid var(--color-correct); outline-offset: 2px; }
 
     .audio-btn {
       background: none;
@@ -562,6 +642,24 @@
     .tile.present { background: var(--color-present); border-color: var(--color-present); color: #fff; }
     .tile.absent  { background: var(--color-absent-bg); border-color: var(--color-absent-bg); color: #fff; }
 
+    /* Colorblind-safe cue: a distinct corner glyph per state so meaning
+       is never carried by hue alone (✓ correct · ◐ present · ✕ absent). */
+    .tile.correct::after,
+    .tile.present::after,
+    .tile.absent::after {
+      position: absolute;
+      top: 1px;
+      right: 3px;
+      font-size: calc(var(--tile-size) * 0.24);
+      line-height: 1;
+      font-family: 'Inter', system-ui, sans-serif;
+      opacity: 0.85;
+      pointer-events: none;
+    }
+    .tile.correct::after { content: '✓'; }
+    .tile.present::after { content: '◐'; }
+    .tile.absent::after  { content: '✕'; }
+
     /* ─── Animations ─────────────────────────────────── */
     @keyframes pop {
       0%   { transform: scale(1); }
@@ -620,7 +718,7 @@
       background: var(--color-surface);
     }
 
-    #message.win  { color: var(--color-correct); }
+    #message.win  { color: var(--color-correct-text); }
     #message.lose { color: #ef4444; }
 
     /* ─── Keyboard ───────────────────────────────────── */
@@ -674,6 +772,30 @@
     .key.absent  { background: var(--color-absent);  color: #fff; }
     .key:hover:not(.correct):not(.present):not(.absent) { filter: brightness(0.9); }
     .key:focus-visible { outline: 2px solid var(--color-correct); outline-offset: 2px; }
+
+    /* Colorblind-safe cue mirrors the tile glyphs on the letter keys. */
+    .key.correct, .key.present, .key.absent { position: relative; }
+    .key.correct::after,
+    .key.present::after,
+    .key.absent::after {
+      position: absolute;
+      top: 2px;
+      right: 3px;
+      font-size: 0.6rem;
+      line-height: 1;
+      opacity: 0.85;
+      pointer-events: none;
+    }
+    .key.correct::after { content: '✓'; }
+    .key.present::after { content: '◐'; }
+    .key.absent::after  { content: '✕'; }
+
+    /* Stronger borders when the user asks for more contrast. */
+    @media (prefers-contrast: more) {
+      .tile.correct, .tile.present, .tile.absent { border-width: 3px; border-color: var(--color-text); }
+      .tile.correct::after, .tile.present::after, .tile.absent::after,
+      .key.correct::after, .key.present::after, .key.absent::after { opacity: 1; }
+    }
 
     /* ─── Streak bar ─────────────────────────────────── */
     .streak-bar {
@@ -731,6 +853,9 @@
       border-top-color: var(--color-correct);
       border-radius: 50%;
       animation: spin 0.7s linear infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .loading-spinner { animation: none; border-top-color: var(--color-correct); opacity: 0.7; }
     }
 
     /* ─── 2P Board ───────────────────────────────────── */
@@ -1733,7 +1858,7 @@
     }
     .rev-add:hover { color: var(--color-text); }
     .rev-add:has(input:checked) {
-      color: var(--color-correct); border-color: rgba(29,158,117,0.4);
+      color: var(--color-correct-text); border-color: rgba(29,158,117,0.4);
       background: rgba(29,158,117,0.08);
     }
 
@@ -2162,6 +2287,7 @@
       <button class="tab tab-review" data-level="REVIEW" aria-label="Wiederholung — fällige Wörter" aria-pressed="false">★<span class="review-badge" id="review-badge" hidden>0</span></button>
     </div>
     <div style="display:flex;align-items:center;gap:8px;">
+      <button id="help-btn" class="help-btn" title="Anleitung" aria-label="Spielanleitung öffnen">?</button>
       <button id="fullscreen-btn" class="fullscreen-btn" title="Vollbild" aria-label="Vollbild ein/aus">⛶</button>
       <div class="diamond-counter" id="diamond-counter" title="Gesamt-Diamanten">
         💎 <span id="diamond-count">0</span>
@@ -2201,6 +2327,8 @@
     <button class="audio-btn" id="cw-audio-btn" aria-label="Aussprache" title="Aussprache hören">🔊</button>
     <span class="cw-word-len" id="cw-word-len"></span>
     <span class="type-badge" id="cw-type-badge"></span>
+    <!-- Progressive hints: reveals type → gender → example one tap at a time -->
+    <button class="hint-more-btn" id="cw-hint-more" type="button" hidden>💡 Hinweis</button>
     <!-- Example sentence: shown with ___ while unsolved, word revealed after solve -->
     <span class="cw-sentence" id="cw-sentence" hidden></span>
   </div>
@@ -2305,6 +2433,7 @@
       </div>
       <span class="satz-level-pip" id="satz-level-pip">A1</span>
       <span class="satz-badge" id="satz-type-badge"></span>
+      <button class="audio-btn" id="satz-audio-btn" aria-label="Aussprache anhören" title="Aussprache anhören">🔊</button>
     </div>
     <!-- Sentence display (shown in both modes) -->
     <div class="satz-sentence" id="satz-sentence"></div>
@@ -2400,7 +2529,7 @@
         <button class="start-btn" id="create-room-btn">Raum erstellen</button>
         <div class="lobby-divider">oder beitreten</div>
         <div class="join-row">
-          <input type="text" id="room-code-input" placeholder="RAUMCODE" maxlength="6" />
+          <input type="text" id="room-code-input" placeholder="RAUMCODE" maxlength="6" aria-label="Raumcode" autocomplete="off" autocapitalize="characters" />
           <button class="join-btn" id="join-room-btn">Beitreten</button>
         </div>
       </div>
@@ -2461,6 +2590,24 @@
       <div class="overlay-title">Wiederholung</div>
       <div class="cw-empty-review" id="cw-review-empty-msg"></div>
       <button id="cw-review-empty-btn" class="start-btn" style="width:100%;">Zurück zu A1</button>
+    </div>
+  </div>
+
+  <!-- First-run onboarding (also reopened via the header ? button) -->
+  <div id="howto-overlay" class="overlay hidden">
+    <div class="overlay-card howto-card">
+      <div class="overlay-title">So spielst du Wörtle</div>
+      <ul class="howto-list">
+        <li><span class="howto-ic">🎯</span> <span><b>Ziel:</b> deutsche Wörter (A1–B2) durch Rätsel lernen.</span></li>
+        <li><span class="howto-ic">⌨️</span> <span>Wähle oben eine Stufe, tippe eine Zelle an und schreibe das Wort.</span></li>
+        <li><span class="howto-ic">🟩</span> <span>Kachel-Farben: <b>✓</b> grün = richtig · <b>◐</b> orange = im Wort, falsche Stelle · <b>✕</b> grau = nicht im Wort.</span></li>
+        <li><span class="howto-ic">🎨</span> <span>Artikel-Farben: <b style="color:var(--gender-der)">der</b> · <b style="color:var(--gender-die)">die</b> · <b style="color:var(--gender-das)">das</b>.</span></li>
+        <li><span class="howto-ic">💡</span> <span>Steckst du fest? <b>Hinweis</b> zeigt Schritt für Schritt mehr Hilfe.</span></li>
+        <li><span class="howto-ic">🔊</span> <span>Höre die Aussprache jederzeit an.</span></li>
+        <li><span class="howto-ic">★</span> <span><b>Wiederholung:</b> fällige Wörter üben (Spaced Repetition).</span></li>
+        <li><span class="howto-ic">🔥</span> <span><b>Serie</b> & <b>💎 Diamanten:</b> Belohnungen fürs regelmäßige Üben.</span></li>
+      </ul>
+      <button id="howto-close-btn" class="start-btn" style="width:100%;">Los geht's!</button>
     </div>
   </div>
 
@@ -2990,6 +3137,7 @@ function buildKeyboard() {
       btn.dataset.key = key;
       if (key === '⌫') btn.setAttribute('aria-label', 'Löschen');
       else if (key === 'ENTER') btn.setAttribute('aria-label', 'Eingabe');
+      else btn.setAttribute('aria-label', 'Buchstabe ' + key);
       btn.addEventListener('click', () => handleKey(key));
       rowEl.appendChild(btn);
     }
@@ -3014,6 +3162,7 @@ function buildCwKeyboard() {
       btn.dataset.key = key;
       if (key === '⌫') btn.setAttribute('aria-label', 'Löschen');
       else if (key === 'ENTER') btn.setAttribute('aria-label', 'Prüfen');
+      else btn.setAttribute('aria-label', 'Buchstabe ' + key);
       // pointerdown + preventDefault keeps focus on grid, not button
       btn.addEventListener('pointerdown', e => { e.preventDefault(); handleKey(key); });
       rowEl.appendChild(btn);
@@ -3043,6 +3192,10 @@ function renderKeyboard() {
     const state = keyColors[key];
     btn.classList.remove('correct', 'present', 'absent');
     if (state) btn.classList.add(state);
+    // Keep accessible name in sync with the learned state (letter keys only).
+    if (key && key.length === 1) {
+      btn.setAttribute('aria-label', 'Buchstabe ' + key + (state ? ', ' + stateLabelDe(state) : ''));
+    }
   });
 }
 
@@ -3101,12 +3254,17 @@ function animateFlip(row, results, onDone) {
         tile.classList.remove('flipping');
         tile.classList.add(results[i]);
         tile.classList.add('flipped');
+        // Accessible name so screen readers can read the board state,
+        // which is otherwise conveyed by colour alone.
+        const letter = (tile.dataset.letter || tile.textContent || '').trim();
+        tile.setAttribute('role', 'img');
+        tile.setAttribute('aria-label', letter + ': ' + stateLabelDe(results[i]));
         tile.addEventListener('animationend', () => {
           tile.classList.remove('flipped');
         }, { once: true });
 
         if (i === wordLen - 1) {
-          setTimeout(onDone, 200);
+          setTimeout(() => { announceRow(row, results); onDone(); }, 200);
         }
       }, 250);
     }, i * delay);
@@ -3353,6 +3511,25 @@ function srAnnounce(msg) {
   requestAnimationFrame(() => { el.textContent = msg; });
 }
 
+// German label for a Wordle tile/key state — used for accessible names
+// and for screen-reader row summaries in 2P mode.
+function stateLabelDe(state) {
+  return state === 'correct' ? 'richtig'
+       : state === 'present' ? 'im Wort, falsche Position'
+       : 'nicht im Wort';
+}
+
+// Announce a completed 2P guess row so screen-reader users get the
+// same feedback the coloured tiles give sighted players.
+function announceRow(row, results) {
+  const tiles = getTileRow(row);
+  const parts = results.map((r, i) => {
+    const l = (tiles[i]?.dataset.letter || tiles[i]?.textContent || '').trim();
+    return l + ' ' + stateLabelDe(r);
+  });
+  srAnnounce('Zeile ' + (row + 1) + ': ' + parts.join(', '));
+}
+
 function updateClueBar() {
   if (!selectedCell || !currentPuzzle) return;
   const { grid } = currentPuzzle;
@@ -3367,15 +3544,6 @@ function updateClueBar() {
   document.getElementById('cw-clue-en').textContent  = pw.entry.en;
   document.getElementById('cw-clue-ar').textContent  = pw.entry.ar;
 
-  const articleEl = document.getElementById('cw-article');
-  if (pw.entry.article && pw.entry.type === 'noun') {
-    articleEl.textContent = '(' + pw.entry.article + ')';
-    articleEl.hidden = false;
-  } else {
-    articleEl.textContent = '';
-    articleEl.hidden = true;
-  }
-
   // Wire audio button to speak the German word
   const audioBtn = document.getElementById('cw-audio-btn');
   audioBtn.onclick = () => speakWord(pw.entry.w);
@@ -3384,8 +3552,44 @@ function updateClueBar() {
   badge.textContent = pw.entry.type;
   badge.className   = 'type-badge ' + pw.entry.type;
 
-  // Example sentence: use `sentence` field if present, fall back to `hint`
-  renderClueSentence(pw);
+  renderClueTiers(pw);
+}
+
+// Progressive hint disclosure: the translation (en/ar) is always the core
+// clue; the stronger scaffolds — word type, gender, then the example
+// sentence — are revealed one tap at a time via the "Hinweis" button,
+// turning a static crutch into a graded scaffold. A solved word shows all.
+function renderClueTiers(pw) {
+  const hasArticle  = pw.entry.article && pw.entry.type === 'noun';
+  const hasSentence = !!(pw.entry.sentence || pw.entry.hint);
+  const tiers = ['type', ...(hasArticle ? ['article'] : []), ...(hasSentence ? ['sentence'] : [])];
+
+  if (pw._hintTier === undefined) pw._hintTier = 0;
+  if (pw.solved) pw._hintTier = tiers.length; // solved → everything visible
+  const revealed = new Set(tiers.slice(0, pw._hintTier));
+
+  const badge     = document.getElementById('cw-type-badge');
+  const articleEl = document.getElementById('cw-article');
+  const sentEl    = document.getElementById('cw-sentence');
+  const moreBtn   = document.getElementById('cw-hint-more');
+
+  badge.hidden = !revealed.has('type');
+
+  if (revealed.has('article')) {
+    articleEl.textContent = '(' + pw.entry.article + ')';
+    articleEl.hidden = false;
+  } else {
+    articleEl.textContent = '';
+    articleEl.hidden = true;
+  }
+
+  if (revealed.has('sentence') || pw.solved) renderClueSentence(pw);
+  else                                       sentEl.hidden = true;
+
+  const remaining = tiers.length - pw._hintTier;
+  moreBtn.hidden = remaining <= 0;
+  moreBtn.textContent = '💡 Hinweis' + (remaining > 1 ? ' (' + remaining + ')' : '');
+  moreBtn.onclick = () => { pw._hintTier = Math.min(pw._hintTier + 1, tiers.length); renderClueTiers(pw); };
 }
 
 function renderClueSentence(pw) {
@@ -3650,6 +3854,7 @@ function revealWord() {
   usedReveal = true;
   pw.solved = true;
   pw._revealed = true;   // graded as "wrong" for the review deck
+  renderClueSentence(pw); // reinforce meaning-in-context immediately, not just post-game
   speakWord(pw.entry.w);
   earnDiamonds(1, 'word_revealed', cwCellEl(pw.row, pw.col));
   const li = document.querySelector(`.clue-item[data-num="${pw.number}"][data-dir="${pw.dir}"]`);
@@ -4159,6 +4364,9 @@ function updateTurnBanner() {
     badge.textContent  = p.name;
     badge.style.background = p.color;
   }
+  // The banner isn't a live region, so mirror the turn change to the
+  // screen-reader announcer for switch/blind players.
+  srAnnounce(banner.textContent);
 }
 
 function updateScoreStrip() {
@@ -5054,6 +5262,11 @@ function renderSatzRound() {
                     : entry.type === 'verb' ? 'Verb' : 'Adj.';
   badge.className = 'satz-badge ' + (entry.type || 'noun');
 
+  // Pronunciation aid — like the crossword hint bar, the learner can
+  // choose to hear the target word. Also seeds a future listening mode.
+  const satzAudio = document.getElementById('satz-audio-btn');
+  if (satzAudio) satzAudio.onclick = () => speakWord(entry.w, satzAudio);
+
   // Level pip — show which level this word is from
   const levelPip = document.getElementById('satz-level-pip');
   if (levelPip) {
@@ -5143,12 +5356,13 @@ function checkSatzFill() {
     navigator.vibrate?.([40, 30, 40]);
     earnDiamonds(2, 'satz_fill_correct', document.getElementById('diamond-counter'));
   } else {
-    fb.textContent = '✗ ' + entry.w;
+    fb.textContent = '✗ ' + entry.w + (entry.en ? ' — ' + entry.en : '');
     fb.className = 'satz-feedback wrong';
     navigator.vibrate?.([80]);
     // Reveal correct word in sentence
     document.getElementById('satz-sentence').innerHTML =
       entry.sentence.replace('___', '<span class="satz-revealed">' + entry.w + '</span>');
+    speakWord(entry.w); // hear the correct pronunciation right after a miss
   }
 
   satzResults.push({ entry, mode: 'fill', correct });
@@ -5186,6 +5400,7 @@ function renderOrderMode(entry) {
     chip.className = 'satz-chip';
     chip.textContent = word;
     chip.dataset.origIdx = origIdx;
+    chip.setAttribute('aria-label', 'Wort einsetzen: ' + word);
     chip.addEventListener('click', () => satzChipTap(chip, word));
     chipPool.appendChild(chip);
     return { word, origIdx, el: chip };
@@ -5201,6 +5416,7 @@ function satzChipTap(chipEl, word) {
   const placed = document.createElement('button');
   placed.className = 'satz-chip placed';
   placed.textContent = word;
+  placed.setAttribute('aria-label', 'Wort entfernen: ' + word);
   placed.addEventListener('click', () => {
     placed.remove();
     // Remove one occurrence of word from satzOrderPlaced
@@ -5237,6 +5453,7 @@ function checkSatzOrder() {
     fb.textContent = '✗ Richtige Reihenfolge: ' + correctWords.join(' ');
     fb.className = 'satz-feedback wrong';
     navigator.vibrate?.([80]);
+    speakWord(entry.w); // reinforce the target word's pronunciation after a miss
   }
 
   satzResults.push({ entry, mode: 'order', correct });
@@ -5402,6 +5619,29 @@ document.getElementById('switch-crossword').addEventListener('click', () => {
     sync();
     new MutationObserver(sync).observe(btn, { attributes: true, attributeFilter: ['class'] });
   });
+})();
+
+// ─── Onboarding: show the "How to play" card on first visit ──
+// setupA11y (above) already tagged #howto-overlay as a modal dialog and
+// wired focus-trap + Escape-close, so we only manage open/first-run here.
+(function setupOnboarding() {
+  const overlay  = document.getElementById('howto-overlay');
+  const closeBtn = document.getElementById('howto-close-btn');
+  const helpBtn  = document.getElementById('help-btn');
+  const KEY = 'wortle-onboarded';
+  if (!overlay) return;
+  const open  = () => overlay.classList.remove('hidden');
+  const close = () => overlay.classList.add('hidden');
+  closeBtn?.addEventListener('click', close);
+  helpBtn?.addEventListener('click', open);
+  let seen = false;
+  try { seen = localStorage.getItem(KEY) === '1'; } catch {}
+  if (!seen) {
+    open();
+    // Mark seen immediately so it shows exactly once, however it's dismissed
+    // (button, Escape, or backdrop). The ? button reopens it on demand.
+    try { localStorage.setItem(KEY, '1'); } catch {}
+  }
 })();
 
 init();
