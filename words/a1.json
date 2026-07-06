@@ -2147,5 +2147,125 @@
     "hint": "Man verliert das Gleichgewicht.",
     "type": "verb",
     "sentence": "Pass auf, du könntest ___!"
+  },
+  {
+    "w": "ZIMMER",
+    "en": "room",
+    "ar": "غرفة",
+    "hint": "A space inside a house",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Vielleicht haben sie ein ___ frei."
+  },
+  {
+    "w": "SUPER",
+    "en": "super, great",
+    "ar": "رائع",
+    "hint": "Really good, excellent",
+    "type": "adjective",
+    "sentence": "___, danke!"
+  },
+  {
+    "w": "WEG",
+    "en": "gone, away",
+    "ar": "مفقود / بعيد",
+    "hint": "No longer there; missing",
+    "type": "adjective",
+    "sentence": "Er hat ein Problem: Seine Tasche ist ___."
+  },
+  {
+    "w": "ADRESSE",
+    "en": "address",
+    "ar": "عنوان",
+    "hint": "Where someone lives; street and number",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Aber er hat die ___ nicht."
+  },
+  {
+    "w": "COOL",
+    "en": "cool",
+    "ar": "رائع (عامية)",
+    "hint": "Relaxed or great (slang)",
+    "type": "adjective",
+    "sentence": "Ja, ___."
+  },
+  {
+    "w": "DEUTSCH",
+    "en": "German",
+    "ar": "ألماني",
+    "hint": "Relating to Germany or its language",
+    "type": "adjective",
+    "sentence": "Nico spricht nicht so gut ___."
+  },
+  {
+    "w": "PULLOVER",
+    "en": "pullover, sweater",
+    "ar": "كنزة صوفية",
+    "hint": "Warm knitted top you wear",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ ist von Sebastian."
+  },
+  {
+    "w": "ENTSCHULDIGUNG",
+    "en": "apology, excuse me",
+    "ar": "عذراً / اعتذار",
+    "hint": "You say it when you are sorry",
+    "type": "noun",
+    "article": "die",
+    "sentence": "___!"
+  },
+  {
+    "w": "ELTERN",
+    "en": "parents",
+    "ar": "الوالدان",
+    "hint": "Your mother and father",
+    "type": "noun",
+    "article": "die/pl",
+    "sentence": "Meine ___ sagen, Ingenieur ist gut."
+  },
+  {
+    "w": "FAHRRADLADEN",
+    "en": "bike shop",
+    "ar": "محل دراجات",
+    "hint": "A store that sells bicycles",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Kennt ihr Yaras ___?"
+  },
+  {
+    "w": "MÖCHTEN",
+    "en": "would like",
+    "ar": "يريد (بأدب)",
+    "hint": "Polite way to say you want something",
+    "type": "verb"
+  },
+  {
+    "w": "UHR",
+    "en": "clock, watch",
+    "ar": "ساعة",
+    "hint": "It tells the time",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Es ist zwölf ___."
+  },
+  {
+    "w": "MOMENT",
+    "en": "moment",
+    "ar": "لحظة",
+    "hint": "A very short period of time",
+    "type": "noun",
+    "article": "der",
+    "sentence": "___ bitte."
+  },
+  {
+    "w": "HILFE",
+    "en": "help",
+    "ar": "مساعدة",
+    "hint": "Assistance you give someone",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Danke, Nico, für deine ___!"
   }
 ]

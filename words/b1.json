@@ -2006,5 +2006,327 @@
     "hint": "Man macht etwas sehr genau und aufmerksam.",
     "type": "adjective",
     "sentence": "Er prüft alles ___ nach."
+  },
+  {
+    "w": "SPRACHPRÜFUNG",
+    "en": "language exam",
+    "ar": "اختبار اللغة",
+    "hint": "A test of your language skills",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Dafür müssen Sie eine ___ machen."
+  },
+  {
+    "w": "DEUTSCHKENNTNISSE",
+    "en": "German skills",
+    "ar": "معرفة اللغة الألمانية",
+    "hint": "How well you know German",
+    "type": "noun",
+    "article": "die/pl",
+    "sentence": "Ohne gute bis sehr gute ___ geht das nicht."
+  },
+  {
+    "w": "STUDIEREN",
+    "en": "to study (at university)",
+    "ar": "يدرس (بالجامعة)",
+    "hint": "To take a degree course",
+    "type": "verb",
+    "sentence": "Ich möchte auf jeden Fall ___!"
+  },
+  {
+    "w": "BERUF",
+    "en": "profession, job",
+    "ar": "مهنة",
+    "hint": "The work you are trained for",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Welchen ___ möchten Sie denn lernen?"
+  },
+  {
+    "w": "SCHAUSPIELER",
+    "en": "actor",
+    "ar": "ممثل",
+    "hint": "Someone who performs in films or plays",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Die Situation auf dem Arbeitsmarkt ist für ___ sehr schwierig."
+  },
+  {
+    "w": "FIRMA",
+    "en": "company, firm",
+    "ar": "شركة",
+    "hint": "A business that employs people",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Meiner ___ geht es schlecht."
+  },
+  {
+    "w": "PRAKTIKUM",
+    "en": "internship",
+    "ar": "تدريب عملي",
+    "hint": "Work experience to learn a job",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Bewerben Sie sich für ein ___ in einer Firma."
+  },
+  {
+    "w": "BEWERBEN",
+    "en": "to apply (for a job)",
+    "ar": "يتقدم بطلب (وظيفة)",
+    "hint": "To send an application for work",
+    "type": "verb",
+    "sentence": "Du kannst dich ja auch noch bei mir ___."
+  },
+  {
+    "w": "VORSCHLAG",
+    "en": "suggestion, proposal",
+    "ar": "اقتراح",
+    "hint": "An idea you offer to others",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Ich will dir einen ___ machen."
+  },
+  {
+    "w": "WAHRHEIT",
+    "en": "truth",
+    "ar": "الحقيقة",
+    "hint": "What is really true",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Du wirst die ___ sagen."
+  },
+  {
+    "w": "VERLANGEN",
+    "en": "to demand, to require",
+    "ar": "يطلب / يشترط",
+    "hint": "To ask for something firmly",
+    "type": "verb",
+    "sentence": "die meisten Betriebe einen Nachweis über Ihre Deutschkenntnisse ___."
+  },
+  {
+    "w": "NACHWEIS",
+    "en": "proof, certificate",
+    "ar": "إثبات / شهادة",
+    "hint": "Document that proves something",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Hier steht noch, dass ich einen ___ über meine Deutschkenntnisse brauche."
+  },
+  {
+    "w": "GRUND",
+    "en": "reason",
+    "ar": "سبب",
+    "hint": "Why something happens",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ ist, dass ich ihn nie unterstützt hab."
+  },
+  {
+    "w": "ENTTÄUSCHT",
+    "en": "disappointed",
+    "ar": "خائب الأمل",
+    "hint": "Sad because hopes were not met",
+    "type": "adjective",
+    "sentence": "Selmas Eltern sind mehr als ___."
+  },
+  {
+    "w": "PERFEKTIONISTISCH",
+    "en": "perfectionist",
+    "ar": "كمالي / مثالي (شخصية)",
+    "hint": "Wanting everything flawless",
+    "type": "adjective",
+    "sentence": "Meine Schwäche ist, dass ich manchmal zu ___ bin."
+  },
+  {
+    "w": "ANLÜGEN",
+    "en": "to lie to",
+    "ar": "يكذب على",
+    "hint": "To tell someone something untrue",
+    "type": "verb"
+  },
+  {
+    "w": "ENTSCHEIDUNG",
+    "en": "decision",
+    "ar": "قرار",
+    "hint": "A choice you make",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Es war ganz sicher die richtige ___."
+  },
+  {
+    "w": "RISKANT",
+    "en": "risky",
+    "ar": "محفوف بالمخاطر",
+    "hint": "Involving danger or risk",
+    "type": "adjective",
+    "sentence": "Mir war die ganze Sache sowieso viel zu ___!"
+  },
+  {
+    "w": "FLIEHEN",
+    "en": "to flee",
+    "ar": "يهرب / يفر",
+    "hint": "To run away from danger",
+    "type": "verb",
+    "sentence": "Beide Familien mussten aus ihrer Heimat ___."
+  },
+  {
+    "w": "HEIMAT",
+    "en": "homeland",
+    "ar": "الوطن",
+    "hint": "The place you come from",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Meine Eltern mussten unsere ___ verlassen."
+  },
+  {
+    "w": "TOURIST",
+    "en": "tourist",
+    "ar": "سائح",
+    "hint": "Someone travelling for pleasure",
+    "type": "noun",
+    "article": "der"
+  },
+  {
+    "w": "PERSONAL",
+    "en": "staff, personnel",
+    "ar": "الموظفون / الطاقم",
+    "hint": "The people who work somewhere",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Wir brauchen noch ein paar Wochen, um neues ___ einzustellen."
+  },
+  {
+    "w": "WEITERSUCHEN",
+    "en": "to keep searching",
+    "ar": "يواصل البحث",
+    "hint": "To continue looking for something",
+    "type": "verb",
+    "sentence": "Ich kann ___, während ich telefoniere."
+  },
+  {
+    "w": "IDEE",
+    "en": "idea",
+    "ar": "فكرة",
+    "hint": "A thought or plan in your mind",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Ich weiß auch nicht, ob das 'ne gute ___ ist."
+  },
+  {
+    "w": "WEIBLICH",
+    "en": "female, feminine",
+    "ar": "أنثوي",
+    "hint": "Relating to women",
+    "type": "adjective",
+    "sentence": "Ich finde nicht, dass das typisch ___ ist."
+  },
+  {
+    "w": "CHEF",
+    "en": "boss",
+    "ar": "رئيس (العمل)",
+    "hint": "The person in charge at work",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Mit Herrn Müller hat es solche Probleme nie gegeben, obwohl er der ___ war!"
+  },
+  {
+    "w": "ARTIKEL",
+    "en": "article",
+    "ar": "مقال",
+    "hint": "A piece of writing in a newspaper",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Ich hab neulich einen ___ über intelligente Häuser gelesen."
+  },
+  {
+    "w": "ERSCHEINEN",
+    "en": "to appear, to be published",
+    "ar": "يُنشر / يظهر",
+    "hint": "To come out or become visible",
+    "type": "verb",
+    "sentence": "Die Annonce würde wahrscheinlich im Lokalteil ___."
+  },
+  {
+    "w": "AKTION",
+    "en": "campaign, action",
+    "ar": "حملة / فعالية",
+    "hint": "An organised activity or event",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die Zeitung, in der der Artikel über Yaras ___ erscheinen wird."
+  },
+  {
+    "w": "ÜBERRASCHT",
+    "en": "surprised",
+    "ar": "مندهش / متفاجئ",
+    "hint": "Not expecting something",
+    "type": "adjective",
+    "sentence": "Da wären sie bestimmt ___."
+  },
+  {
+    "w": "PEINLICH",
+    "en": "embarrassing",
+    "ar": "محرج",
+    "hint": "Makes you feel ashamed",
+    "type": "adjective",
+    "sentence": "Das ist so ___."
+  },
+  {
+    "w": "ECHT",
+    "en": "real, really",
+    "ar": "حقاً / فعلاً",
+    "hint": "Genuine; truly",
+    "type": "adjective",
+    "sentence": "Das ist ___ sehr nett, vielen Dank!"
+  },
+  {
+    "w": "TERMINPLAN",
+    "en": "schedule",
+    "ar": "جدول المواعيد",
+    "hint": "A plan of appointments and dates",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Ich habe meinen ___ verlegt."
+  },
+  {
+    "w": "VERLEGEN",
+    "en": "to misplace",
+    "ar": "يضع في مكان خاطئ / يُضيّع",
+    "hint": "To lose something by forgetting where you put it",
+    "type": "verb"
+  },
+  {
+    "w": "DATUM",
+    "en": "date",
+    "ar": "تاريخ",
+    "hint": "Day, month and year",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das ___ aber hab ich jetzt nicht im Kopf."
+  },
+  {
+    "w": "PROZENT",
+    "en": "percent",
+    "ar": "نسبة مئوية",
+    "hint": "A part out of a hundred",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Der will für sein Geld 50 ___ von unserem Geschäft haben!"
+  },
+  {
+    "w": "UNTERSCHIEDLICH",
+    "en": "different, varied",
+    "ar": "مختلف",
+    "hint": "Not the same as each other",
+    "type": "adjective"
+  },
+  {
+    "w": "SYSTEM",
+    "en": "system",
+    "ar": "نظام",
+    "hint": "An organised set of parts or rules",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Ich kann das ___ nun mal nicht ändern."
   }
 ]
