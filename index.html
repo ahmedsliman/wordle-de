@@ -2282,6 +2282,40 @@
     .artikel-reveal .artikel-sentence { color: var(--color-text-muted); font-style: italic; }
     .artikel-kbd-hint { font-size: 0.72rem; color: var(--color-text-muted); text-align: center; }
     @media (max-width: 680px), (pointer: coarse) { .artikel-kbd-hint { display: none; } }
+
+    /* ── Wortschatz dashboard ── */
+    .vocab-chip { cursor: pointer; font: inherit; color: inherit; -webkit-tap-highlight-color: transparent; }
+    .vocab-chip:hover { border-color: var(--color-text-muted); }
+    .vocab-card { max-width: 420px; }
+    .vocab-boxes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; width: 100%; }
+    .vocab-box {
+      display: flex; flex-direction: column; align-items: center; gap: 2px;
+      padding: 8px 2px; border-radius: 10px;
+      background: var(--color-surface); border: 1px solid var(--hairline);
+    }
+    .vocab-box strong { font-size: 1.05rem; }
+    .vocab-box span {
+      font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.03em;
+      color: var(--color-text-muted);
+    }
+    .vocab-due { font-size: 0.82rem; color: var(--color-text-muted); text-align: center; }
+    .vocab-list { width: 100%; display: flex; flex-direction: column; gap: 6px; }
+    .vocab-row {
+      display: flex; align-items: center; gap: 8px; padding: 7px 10px;
+      background: var(--color-surface); border-radius: 10px; font-size: 0.85rem;
+    }
+    .vocab-row .vocab-word {
+      font-weight: 700; flex: 1; min-width: 0; text-align: left;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .vocab-row .vocab-en {
+      color: var(--color-text-muted); max-width: 38%;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .vocab-bar { display: flex; gap: 2px; flex-shrink: 0; }
+    .vocab-bar i { width: 7px; height: 14px; border-radius: 2px; background: var(--hairline); }
+    .vocab-bar i.on { background: var(--color-correct); }
+    .vocab-empty { font-size: 0.85rem; color: var(--color-text-muted); padding: 16px 0; text-align: center; }
   </style>
 </head>
 
@@ -2462,6 +2496,7 @@
     <div class="streak-pill">🔥 Serie <span id="streak-current">0</span></div>
     <div class="streak-pill">🏆 Beste <span id="streak-best">0</span></div>
     <div class="streak-pill" id="streak-bar-diamonds" style="display:none;color:var(--color-correct-text)">💎 <span id="streak-diamond-count">0</span></div>
+    <button class="streak-pill vocab-chip" id="vocab-chip" aria-label="Mein Wortschatz öffnen" title="Mein Wortschatz">📚 <span id="streak-vocab-count">0</span></button>
   </div>
 
   <!-- ── Satz-Modus (sentence exercises) ─────────── -->
@@ -2665,6 +2700,17 @@
       <div id="cw-summary-stats" style="display:flex;flex-direction:column;gap:10px;"></div>
       <div id="cw-review-panel" class="cw-review-panel"></div>
       <button id="cw-new-puzzle-btn" class="start-btn" style="width:100%;">Neues Rätsel</button>
+    </div>
+  </div>
+
+  <!-- Wortschatz (mastery) dashboard -->
+  <div class="overlay hidden" id="vocab-overlay">
+    <div class="overlay-card vocab-card">
+      <div class="overlay-title">📚 Mein Wortschatz</div>
+      <div class="vocab-boxes" id="vocab-boxes"></div>
+      <div class="vocab-due" id="vocab-due"></div>
+      <div class="vocab-list" id="vocab-list"></div>
+      <button class="start-btn" id="vocab-close-btn" style="width:100%;">Schließen</button>
     </div>
   </div>
 
@@ -3002,6 +3048,8 @@ function updateReviewBadge() {
   const n = dueWords().length;
   badge.textContent = n;
   badge.hidden = n === 0;
+  const chip = document.getElementById('streak-vocab-count');
+  if (chip) chip.textContent = Object.keys(reviewDeck.cards).length;
 }
 
 function pickWord(level, type) {
@@ -5815,6 +5863,50 @@ document.getElementById('switch-artikel').addEventListener('click', () => {
   if (gameMode === 'ARTIKEL') return;
   hideSatzPanel();
   startArtikelMode();
+});
+
+// ─── Wortschatz dashboard (mastery overview) ──────────
+const BOX_LABELS = ['Üben', 'Neu', 'Bekannt', 'Sicher', 'Gemeistert'];
+
+function openVocabOverlay() {
+  const cards = Object.entries(reviewDeck.cards);
+
+  const counts = [0, 0, 0, 0, 0];
+  cards.forEach(([, c]) => counts[Math.min(c.box || 0, 4)]++);
+  document.getElementById('vocab-boxes').innerHTML = counts
+    .map((n, i) => `<div class="vocab-box"><strong>${n}</strong><span>${BOX_LABELS[i]}</span></div>`)
+    .join('');
+
+  const due = cards.filter(([, c]) => isDue(c)).length;
+  document.getElementById('vocab-due').textContent = !cards.length ? ''
+    : due ? `${due} ${due === 1 ? 'Wort ist' : 'Wörter sind'} heute fällig — übe im ★-Tab.`
+          : 'Heute ist nichts fällig. 🎉';
+
+  const list = document.getElementById('vocab-list');
+  if (!cards.length) {
+    list.innerHTML = '<div class="vocab-empty">Noch keine Wörter im Plan — löse ein Rätsel, um zu starten.</div>';
+  } else {
+    // Weakest words first: box, then earliest due, then alphabetical
+    cards.sort((a, b) => ((a[1].box || 0) - (b[1].box || 0))
+      || a[1].due.localeCompare(b[1].due) || a[0].localeCompare(b[0]));
+    list.innerHTML = cards.map(([w, c]) => {
+      const e   = wordEntryIndex[w] || {};
+      const gc  = e.type === 'noun' ? genderClass(e.article) : '';
+      const art = (e.article || '').split('/')[0];
+      const disp = e.type === 'noun' && art ? `${art} ${titleCaseWord(w)}` : w.toLowerCase();
+      const bar  = [1, 2, 3, 4]
+        .map(i => `<i class="${(c.box || 0) >= i ? 'on' : ''}"></i>`).join('');
+      return `<div class="vocab-row"><span class="vocab-word ${gc}">${disp}</span>` +
+        `<span class="vocab-en">${e.en || ''}</span>` +
+        `<span class="vocab-bar" role="img" aria-label="Stufe ${c.box || 0} von 4">${bar}</span></div>`;
+    }).join('');
+  }
+  document.getElementById('vocab-overlay').classList.remove('hidden');
+}
+
+document.getElementById('vocab-chip').addEventListener('click', openVocabOverlay);
+document.getElementById('vocab-close-btn').addEventListener('click', () => {
+  document.getElementById('vocab-overlay').classList.add('hidden');
 });
 
 // ─── Fullscreen ──────────────────────────────────────
