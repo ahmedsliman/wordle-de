@@ -22,10 +22,16 @@ Kill a stuck server: `lsof -ti:8080 | xargs kill -9`
 | Mode | Value | Description |
 |------|-------|-------------|
 | 1P Crossword | `'1P'` | Solo crossword puzzle, 11×11 grid, 6 words |
+| Satz-Modus | `'SATZ'` | Sentence exercises: fill-in-blank + word-order chips, 10 rounds |
+| Artikel-Sprint | `'ARTIKEL'` | der/die/das drill, 10 nouns, keyboard keys 1/2/3 |
 | 2P Local | `'2P'` + `onlineMode=false` | Wordle-Tac-Toe on one device, first to 3 points |
 | 2P Online | `'2P'` + `onlineMode=true` | Firebase Realtime DB multiplayer via 6-char room code |
 
-`setMode(mode)` is the single entry point for switching modes — it shows/hides all panels and kicks off the appropriate game start.
+`setMode(mode)` is the single entry point for 1P/2P switching — it shows/hides all panels and kicks off the appropriate game start. SATZ and ARTIKEL are entered via the mode-switcher tabs (`startSatzMode()` / `startArtikelMode()`), which hide the crossword UI themselves and return through `setMode('1P')`.
+
+### Spaced Repetition (Leitner)
+
+`wortle-review` in localStorage holds one card per word: `{box 0–4, due, seen, correct, level, type, lastSeen}`. Intervals `[0,1,2,4,7]` days by box. **Every mode grades into the deck** via `gradeReview(word, correct)`: crossword rounds auto-add all 6 words at end (`buildReviewPanel`), Satz-Modus grades its fill-in results at summary time, Artikel-Sprint grades each answer. Normal crossword generation weaves up to 3 due words into the pool (`generateCrossword(pool, prioritySet)`); the ★ tab builds puzzles from due words only (needs ≥5). The 📚 pill in the streak bar opens the Wortschatz dashboard (box counts + mastery bars).
 
 ### Crossword Generation
 
@@ -55,6 +61,8 @@ Constants at top of `<script>`: `CW_GRID=11`, `CW_MIN=3`, `CW_MAX=7`, `CW_COUNT=
 |-----|-------|---------|
 | `wortle-streak` | `{current, best}` | Daily streak counter |
 | `wortle-diamonds` | `{total, log[], milestones[]}` | Diamond currency; log capped at 100 entries; milestones prevent double-awarding |
+| `wortle-review` | `{version, cards{WORD: {box, due, ...}}}` | Leitner spaced-repetition deck (see above) |
+| `wortle-onboarded` | `'1'` | First-run "how to play" overlay shown once |
 
 ### Firebase (Online Mode)
 
