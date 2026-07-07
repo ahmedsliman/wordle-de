@@ -2353,6 +2353,10 @@
       <span class="mode-switch-icon">✍</span>
       <span class="mode-switch-label">Sätze</span>
     </button>
+    <button class="mode-switch-btn" id="switch-artikel" role="tab" aria-selected="false" aria-controls="artikel-panel">
+      <span class="mode-switch-icon">⚖</span>
+      <span class="mode-switch-label">Artikel</span>
+    </button>
   </div>
 
   <main id="game-main" tabindex="-1">
@@ -2501,6 +2505,41 @@
     </div>
     <!-- Feedback message -->
     <div class="satz-feedback" id="satz-feedback" aria-live="polite"></div>
+  </div>
+
+  <!-- ── Artikel-Sprint (der/die/das drill) ─────── -->
+  <div id="artikel-panel" class="hidden">
+    <div class="satz-top-bar">
+      <span class="satz-round-badge artikel">Artikel-Sprint</span>
+      <div class="satz-progress-wrap">
+        <div class="satz-progress-bar"><div class="satz-progress-fill" id="artikel-progress-fill"></div></div>
+        <span class="satz-progress-text" id="artikel-progress-text">1 / 10</span>
+      </div>
+    </div>
+    <div class="artikel-card">
+      <div class="artikel-word" id="artikel-word"></div>
+      <div class="artikel-meta" id="artikel-meta"></div>
+      <button class="audio-btn" id="artikel-audio-btn" aria-label="Aussprache anhören" title="Aussprache anhören">🔊</button>
+    </div>
+    <div class="artikel-btn-row" role="group" aria-label="Artikel wählen">
+      <button class="artikel-btn" data-art="der">der</button>
+      <button class="artikel-btn" data-art="die">die</button>
+      <button class="artikel-btn" data-art="das">das</button>
+    </div>
+    <div class="artikel-reveal" id="artikel-reveal" aria-live="polite"></div>
+    <div class="artikel-kbd-hint">Tastatur: 1 = der · 2 = die · 3 = das</div>
+  </div>
+
+  <!-- Artikel summary overlay -->
+  <div class="overlay hidden" id="artikel-summary-overlay">
+    <div class="overlay-card">
+      <div class="overlay-title">Artikel-Sprint beendet!</div>
+      <div class="satz-summary-score" id="artikel-summary-score"></div>
+      <div class="satz-summary-grid" id="artikel-summary-grid" style="grid-template-columns:repeat(2,1fr);"></div>
+      <div style="font-size:0.78rem;color:var(--color-text-muted);margin-bottom:8px;">Ergebnisse in deinen Wiederholungsplan übernommen ✓</div>
+      <button class="start-btn" id="artikel-again-btn">Nochmal üben</button>
+      <button class="satz-ghost-btn" id="artikel-back-btn" style="margin-top:8px;">Zurück zum Rätsel</button>
+    </div>
   </div>
 
   <!-- Satz summary overlay -->
@@ -4141,6 +4180,12 @@ function handleKey(key) {
     if (round && round.mode === 'fill') satzFillHandleKey(key);
     return;
   }
+  if (gameMode === 'ARTIKEL') {
+    if (key === '1') chooseArtikel('der');
+    else if (key === '2') chooseArtikel('die');
+    else if (key === '3') chooseArtikel('das');
+    return;
+  }
   if (gameMode === '2P') {
     // 2P path
     if (gameOver || animating || !currentWord) return;
@@ -4290,8 +4335,9 @@ function submitGuess() {
 // ─── Mode switching ───────────────────────────────────
 function setMode(mode) {
   gameMode = mode;
-  // Always hide satz panel when switching to a non-SATZ mode
+  // Always hide the satz/artikel panels when switching to a puzzle mode
   document.getElementById('satz-panel')?.classList.add('hidden');
+  document.getElementById('artikel-panel')?.classList.add('hidden');
 
   const panel       = document.getElementById('wordle-panel');
   const cwClueBar   = document.getElementById('cw-clue-bar');
@@ -4897,6 +4943,8 @@ document.getElementById('level-tabs').addEventListener('click', e => {
   });
   if (gameMode === 'SATZ') {
     startSatzMode(); // restart with new level selection
+  } else if (gameMode === 'ARTIKEL') {
+    startArtikelMode();
   } else {
     startCrossword();
   }
@@ -5275,8 +5323,9 @@ function showSatzPanel() {
     document.getElementById(id)?.classList.add('hidden');
   });
   document.getElementById('wordle-panel').classList.add('hidden');
+  document.getElementById('artikel-panel')?.classList.add('hidden');
   document.getElementById('satz-panel').classList.remove('hidden');
-  setSatzSwitcher(true);
+  setModeSwitcher('satz');
 }
 
 function hideSatzPanel() {
@@ -5595,29 +5644,177 @@ document.getElementById('satz-again-btn').addEventListener('click', () => {
 document.getElementById('satz-back-btn').addEventListener('click', () => {
   document.getElementById('satz-summary-overlay').classList.add('hidden');
   hideSatzPanel();
-  setSatzSwitcher(false);
+  setModeSwitcher('cw');
   setMode('1P');
 });
 
 // ── Mode switcher buttons ──
-function setSatzSwitcher(isSatz) {
-  document.getElementById('switch-crossword').classList.toggle('active', !isSatz);
-  document.getElementById('switch-satz').classList.toggle('active', isSatz);
-  document.getElementById('switch-crossword').setAttribute('aria-selected', !isSatz ? 'true' : 'false');
-  document.getElementById('switch-satz').setAttribute('aria-selected', isSatz ? 'true' : 'false');
+function setModeSwitcher(active) {
+  const map = { cw: 'switch-crossword', satz: 'switch-satz', artikel: 'switch-artikel' };
+  for (const [key, id] of Object.entries(map)) {
+    const el = document.getElementById(id);
+    el.classList.toggle('active', key === active);
+    el.setAttribute('aria-selected', key === active ? 'true' : 'false');
+  }
 }
 
 document.getElementById('switch-satz').addEventListener('click', () => {
   if (gameMode === 'SATZ') return;
-  setSatzSwitcher(true);
+  hideArtikelPanel();
+  setModeSwitcher('satz');
   startSatzMode();
 });
 
 document.getElementById('switch-crossword').addEventListener('click', () => {
-  if (gameMode !== 'SATZ') return;
-  setSatzSwitcher(false);
+  if (gameMode !== 'SATZ' && gameMode !== 'ARTIKEL') return;
+  setModeSwitcher('cw');
   hideSatzPanel();
+  hideArtikelPanel();
   setMode('1P');
+});
+
+// ─── Artikel-Sprint (der/die/das drill) ───────────────
+const ARTIKEL_ROUNDS = 10;
+let artikelQueue   = [];   // noun entries
+let artikelIdx     = 0;
+let artikelScore   = 0;
+let artikelResults = [];   // [{entry, correct}]
+let artikelLocked  = false;
+
+function titleCaseWord(w) { return w.charAt(0) + w.slice(1).toLowerCase(); }
+
+function showArtikelPanel() {
+  gameMode = 'ARTIKEL';
+  document.body.classList.remove('cw-active', 'cw-typing');
+  ['cw-clue-bar','cw-progress','clue-chips','crossword-area','cw-actions','cw-keyboard','streak-bar'].forEach(id => {
+    document.getElementById(id)?.classList.add('hidden');
+  });
+  document.getElementById('wordle-panel').classList.add('hidden');
+  document.getElementById('satz-panel').classList.add('hidden');
+  document.getElementById('artikel-panel').classList.remove('hidden');
+  setModeSwitcher('artikel');
+}
+
+function hideArtikelPanel() {
+  document.getElementById('artikel-panel').classList.add('hidden');
+}
+
+async function startArtikelMode() {
+  // ★ Review tab: drill due nouns from every level; otherwise the selected levels
+  const useReview = selectedLevels.has('REVIEW');
+  const lvls = useReview ? new Set(['A1', 'A2', 'B1', 'B2']) : selectedLevels;
+  await ensureLevels(lvls);
+  const seen = new Set();
+  let pool = [...lvls].flatMap(lvl => words[lvl] || []).filter(e => {
+    if (e.type !== 'noun' || !['der', 'die', 'das'].includes(e.article)) return false;
+    if (seen.has(e.w)) return false;
+    seen.add(e.w);
+    return true;
+  });
+  const due = new Set(dueWords());
+  if (useReview) {
+    const duePool = pool.filter(e => due.has(e.w));
+    if (duePool.length >= 4) pool = duePool;   // not enough due → drill everything
+  }
+  if (pool.length < 4) { showMessage('Nicht genug Nomen für diese Stufe.', 'lose'); return; }
+
+  // Due review nouns first (max 4), rest random, then shuffle the session
+  const shuffled = pool.slice().sort(() => Math.random() - 0.5);
+  const dueOnes  = shuffled.filter(e => due.has(e.w)).slice(0, 4);
+  const rest     = shuffled.filter(e => !dueOnes.includes(e)).slice(0, ARTIKEL_ROUNDS - dueOnes.length);
+  artikelQueue   = [...dueOnes, ...rest].sort(() => Math.random() - 0.5);
+  artikelIdx     = 0;
+  artikelScore   = 0;
+  artikelResults = [];
+
+  showArtikelPanel();
+  renderArtikelRound();
+}
+
+function renderArtikelRound() {
+  if (artikelIdx >= artikelQueue.length) { showArtikelSummary(); return; }
+  const e = artikelQueue[artikelIdx];
+  artikelLocked = false;
+
+  document.getElementById('artikel-progress-fill').style.width = (artikelIdx / artikelQueue.length * 100) + '%';
+  document.getElementById('artikel-progress-text').textContent = (artikelIdx + 1) + ' / ' + artikelQueue.length;
+
+  document.getElementById('artikel-word').textContent = titleCaseWord(e.w);
+  document.getElementById('artikel-meta').textContent = e.en + (e.ar ? ' · ' + e.ar : '');
+  const audio = document.getElementById('artikel-audio-btn');
+  audio.onclick = () => speakWord(e.w, audio);
+
+  document.getElementById('artikel-reveal').innerHTML = '';
+  document.querySelectorAll('.artikel-btn').forEach(b => {
+    b.disabled  = false;
+    b.className = 'artikel-btn';
+  });
+}
+
+function chooseArtikel(art) {
+  if (gameMode !== 'ARTIKEL' || artikelLocked || artikelIdx >= artikelQueue.length) return;
+  artikelLocked = true;
+  const e       = artikelQueue[artikelIdx];
+  const correct = art === e.article;
+  if (correct) artikelScore++;
+  artikelResults.push({ entry: e, correct });
+  gradeReview(e.w, correct);
+
+  const gc = genderClass(e.article);
+  document.querySelectorAll('.artikel-btn').forEach(b => {
+    b.disabled = true;
+    if (b.dataset.art === e.article) b.classList.add('right', gc);
+    else if (b.dataset.art === art)  b.classList.add('wrong');
+  });
+
+  // Reveal the full form (+ plural + sentence) and speak article + noun as a unit
+  const full     = `${e.article} ${titleCaseWord(e.w)}`;
+  const plural   = e.plural ? ` · Plural: ${e.plural}` : '';
+  const sentence = e.sentence ? e.sentence.replace('___', titleCaseWord(e.w)) : '';
+  document.getElementById('artikel-reveal').innerHTML =
+    `<span class="artikel-full ${gc}">${correct ? '✅' : '❌'} ${full}${plural}</span>` +
+    (sentence ? `<span class="artikel-sentence">„${sentence}"</span>` : '');
+  speakWord(full, document.getElementById('artikel-audio-btn'));
+
+  setTimeout(() => { artikelIdx++; renderArtikelRound(); }, correct ? 1200 : 2600);
+}
+
+function showArtikelSummary() {
+  document.getElementById('artikel-progress-fill').style.width = '100%';
+  const total = artikelQueue.length;
+  const pct   = Math.round(artikelScore / total * 100);
+  const emoji = pct >= 90 ? '🏆' : pct >= 70 ? '🌟' : pct >= 50 ? '👍' : '💪';
+  document.getElementById('artikel-summary-score').textContent = `${emoji} ${artikelScore} / ${total} (${pct}%)`;
+
+  const grid = document.getElementById('artikel-summary-grid');
+  grid.innerHTML = '';
+  artikelResults.forEach(({ entry, correct }) => {
+    const item = document.createElement('div');
+    item.className = 'satz-summary-item ' + (correct ? 'win' : 'lose');
+    item.innerHTML = `<div class="satz-item-icon">${correct ? '✅' : '❌'}</div>` +
+      `<span class="${genderClass(entry.article)}">${entry.article} ${titleCaseWord(entry.w)}</span>`;
+    grid.appendChild(item);
+  });
+  document.getElementById('artikel-summary-overlay').classList.remove('hidden');
+}
+
+document.querySelectorAll('.artikel-btn').forEach(b => {
+  b.addEventListener('click', () => chooseArtikel(b.dataset.art));
+});
+document.getElementById('artikel-again-btn').addEventListener('click', () => {
+  document.getElementById('artikel-summary-overlay').classList.add('hidden');
+  startArtikelMode();
+});
+document.getElementById('artikel-back-btn').addEventListener('click', () => {
+  document.getElementById('artikel-summary-overlay').classList.add('hidden');
+  hideArtikelPanel();
+  setModeSwitcher('cw');
+  setMode('1P');
+});
+document.getElementById('switch-artikel').addEventListener('click', () => {
+  if (gameMode === 'ARTIKEL') return;
+  hideSatzPanel();
+  startArtikelMode();
 });
 
 // ─── Fullscreen ──────────────────────────────────────
