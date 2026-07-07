@@ -1067,9 +1067,8 @@
     .rev-example .rev-ex-ar { direction: rtl; unicode-bidi: isolate; display: block; font-style: normal; }
     .rev-add {
       display: flex; align-items: center; gap: 6px; margin-top: 2px;
-      font-size: 0.8rem; color: var(--color-text-muted); cursor: pointer; user-select: none;
+      font-size: 0.8rem; color: var(--color-text-muted);
     }
-    .rev-add input { accent-color: var(--color-correct); width: 15px; height: 15px; }
 
     /* ─── Review level tab + due badge ───────────────── */
     .tab-review { gap: 4px; }
@@ -1854,12 +1853,6 @@
     .rev-add {
       background: var(--color-surface); border: 1px solid var(--hairline);
       border-radius: 999px; padding: 6px 12px; align-self: flex-start; margin-top: var(--space-1);
-      transition: border-color 0.15s, color 0.15s, background 0.15s;
-    }
-    .rev-add:hover { color: var(--color-text); }
-    .rev-add:has(input:checked) {
-      color: var(--color-correct-text); border-color: rgba(29,158,117,0.4);
-      background: rgba(29,158,117,0.08);
     }
 
     /* ── Due-count badge: pop when it appears ── */
@@ -2237,6 +2230,58 @@
     }
     .satz-summary-item.win  .satz-item-icon { background: rgba(29,158,117,0.12); }
     .satz-summary-item.lose .satz-item-icon { background: rgba(239,68,68,0.08); }
+
+    /* ── Artikel-Sprint (der/die/das drill) ── */
+    #artikel-panel {
+      max-width: 460px; margin: 0 auto; padding: 16px 16px 32px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .satz-round-badge.artikel { background: rgba(124,58,237,0.12); color: #7c3aed; }
+    @media (prefers-color-scheme: dark) {
+      .satz-round-badge.artikel { color: #a78bfa; }
+    }
+    .artikel-card {
+      background: var(--color-surface); border: 1px solid var(--hairline);
+      border-radius: 16px; padding: 24px 16px; text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      box-shadow: var(--shadow-sm);
+    }
+    .artikel-word {
+      font-family: 'DM Mono', monospace; font-size: 2rem; font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+    .artikel-meta { font-size: 0.9rem; color: var(--color-text-muted); }
+    .artikel-btn-row { display: flex; gap: 10px; justify-content: center; }
+    .artikel-btn {
+      flex: 1; max-width: 120px; min-height: 52px;
+      font-family: 'DM Mono', monospace; font-size: 1.15rem; font-weight: 500;
+      background: var(--color-surface); color: var(--color-text);
+      border: 2px solid var(--hairline); border-radius: 14px; cursor: pointer;
+      transition: transform 0.12s var(--ease-spring), border-color 0.15s, background 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .artikel-btn:hover:not(:disabled)  { transform: translateY(-2px); border-color: var(--color-text-muted); }
+    .artikel-btn:active:not(:disabled) { transform: scale(0.96); }
+    .artikel-btn:disabled { cursor: default; opacity: 0.55; }
+    .artikel-btn.right {
+      opacity: 1; color: #fff;
+      border-color: transparent;
+    }
+    .artikel-btn.right.g-der { background: var(--gender-der); }
+    .artikel-btn.right.g-die { background: var(--gender-die); }
+    .artikel-btn.right.g-das { background: var(--gender-das); }
+    .artikel-btn.wrong {
+      opacity: 1; border-color: var(--gender-die); color: var(--gender-die);
+      animation: shake 0.35s;
+    }
+    .artikel-reveal {
+      min-height: 72px; text-align: center; font-size: 0.92rem;
+      display: flex; flex-direction: column; gap: 4px; align-items: center;
+    }
+    .artikel-reveal .artikel-full { font-weight: 700; font-size: 1.1rem; }
+    .artikel-reveal .artikel-sentence { color: var(--color-text-muted); font-style: italic; }
+    .artikel-kbd-hint { font-size: 0.72rem; color: var(--color-text-muted); text-align: center; }
+    @media (max-width: 680px), (pointer: coarse) { .artikel-kbd-hint { display: none; } }
   </style>
 </head>
 
@@ -2464,6 +2509,7 @@
       <div class="overlay-title" id="satz-summary-title">Übung beendet!</div>
       <div class="satz-summary-score" id="satz-summary-score"></div>
       <div class="satz-summary-grid" id="satz-summary-grid"></div>
+      <div id="satz-summary-note" style="font-size:0.78rem;color:var(--color-text-muted);"></div>
       <button class="start-btn" id="satz-again-btn">Nochmal üben</button>
       <button class="satz-ghost-btn" id="satz-back-btn" style="margin-top:8px;">Zurück zum Rätsel</button>
     </div>
@@ -2908,6 +2954,7 @@ function gradeReview(word, correct) {
   c.lastSeen = dayStr();
   reviewDeck.cards[word] = c;
   saveReview();
+  return c;
 }
 
 function updateReviewBadge() {
@@ -3006,12 +3053,17 @@ function cwBbox(grid) {
   return { minR, maxR, minC, maxC };
 }
 
-function generateCrossword(pool) {
+function generateCrossword(pool, priority = null) {
   const eligible = pool.filter(e => e.w.length >= CW_MIN && e.w.length <= CW_MAX);
   if (eligible.length < 5) return null;
 
   for (let attempt = 0; attempt < 3; attempt++) {
     const shuffled = cwShuffle(eligible);
+    // Stable-sort priority words (due for review) to the front so they get
+    // placed first; order within each group stays random.
+    if (priority && priority.size) {
+      shuffled.sort((a, b) => (priority.has(b.w) ? 1 : 0) - (priority.has(a.w) ? 1 : 0));
+    }
     const grid     = cwMakeGrid();
     const placed   = [];
 
@@ -3866,7 +3918,7 @@ function revealWord() {
 }
 
 // Build the post-round review card for one puzzle word.
-function renderReviewCard(pw, autoAdded) {
+function renderReviewCard(pw, scheduleHtml) {
   const e   = pw.entry;
   const isNoun = e.type === 'noun';
   const gc  = isNoun ? genderClass(e.article) : '';
@@ -3886,11 +3938,6 @@ function renderReviewCard(pw, autoAdded) {
     exampleHtml = `<div class="rev-example">„${e.example.de}"${en}${ar}</div>`;
   }
 
-  const already = autoAdded || inDeck(e.w);
-  const addHtml = already
-    ? `<label class="rev-add"><input type="checkbox" checked disabled> Zur Wiederholung hinzugefügt</label>`
-    : `<label class="rev-add"><input type="checkbox" class="rev-add-chk" data-word="${e.w}"> Zur Wiederholung</label>`;
-
   return `<div class="rev-card ${gc}">
     <div class="rev-word-row">
       <span class="rev-word ${gc}">${wordDisplay}</span>
@@ -3899,14 +3946,29 @@ function renderReviewCard(pw, autoAdded) {
     <div class="rev-meta">${e.en} · <span class="rev-ar">${e.ar}</span></div>
     ${grammarHtml}
     ${exampleHtml}
-    ${addHtml}
+    <div class="rev-add">${scheduleHtml}</div>
   </div>`;
 }
 
+// Human label for when a card comes back, from its due date.
+function dueInLabel(card) {
+  const days = Math.round((new Date(card.due) - new Date(dayStr())) / 86400000);
+  if (days <= 0) return 'heute';
+  if (days === 1) return 'morgen';
+  return `in ${days} Tagen`;
+}
+
+function scheduleLabel(card, wasNew, fumbled) {
+  if (fumbled) return `🔁 Zum Üben vorgemerkt · wieder ${dueInLabel(card)}`;
+  if (wasNew)  return `🆕 Neu im Wiederholungsplan · wieder ${dueInLabel(card)}`;
+  return `📈 Stufe ${card.box}/4 · wieder ${dueInLabel(card)}`;
+}
+
 // Grade every puzzle word into the Leitner deck and render the review panel.
+// Returns learning stats for the summary overlay.
 function buildReviewPanel() {
   const panel = document.getElementById('cw-review-panel');
-  if (!panel || !currentPuzzle) return;
+  if (!panel || !currentPuzzle) return { fresh: 0, reviewed: 0, relapsed: 0 };
   panel.innerHTML = '<div class="cw-review-title">Wörter dieser Runde</div>';
 
   // Gender legend — only when the puzzle contains nouns
@@ -3919,27 +3981,25 @@ function buildReviewPanel() {
        </div>`);
   }
 
+  // Every puzzle word enters the spaced-repetition deck: fumbled words reset
+  // to box 0, clean solves advance (new words start at box 1, due tomorrow).
+  const stats = { fresh: 0, reviewed: 0, relapsed: 0 };
   currentPuzzle.words.forEach(pw => {
-    const word     = pw.entry.w;
-    const fumbled  = !!pw._hadWrong || !!pw._revealed;
-    let autoAdded  = false;
-    if (fumbled)          { gradeReview(word, false); autoAdded = true; }  // auto-add on loss
-    else if (inDeck(word)) { gradeReview(word, true);  autoAdded = true; }  // due word solved cleanly → advance
-    panel.insertAdjacentHTML('beforeend', renderReviewCard(pw, autoAdded));
+    const word    = pw.entry.w;
+    const fumbled = !!pw._hadWrong || !!pw._revealed;
+    const wasNew  = !inDeck(word);
+    const card    = gradeReview(word, !fumbled);
+    if (fumbled)     stats.relapsed++;
+    else if (wasNew) stats.fresh++;
+    else             stats.reviewed++;
+    panel.insertAdjacentHTML('beforeend', renderReviewCard(pw, scheduleLabel(card, wasNew, fumbled)));
   });
 
-  // Wire per-card audio + opt-in checkboxes
+  // Wire per-card audio
   panel.querySelectorAll('.rev-audio').forEach(btn => {
     btn.onclick = () => speakWord(btn.dataset.word, btn);
   });
-  panel.querySelectorAll('.rev-add-chk').forEach(chk => {
-    chk.onchange = () => {
-      if (!chk.checked) return;
-      gradeReview(chk.dataset.word, true);   // clean solve, user opted in
-      chk.disabled = true;
-      chk.parentElement.lastChild.textContent = ' Zur Wiederholung hinzugefügt';
-    };
-  });
+  return stats;
 }
 
 function endCrossword(won) {
@@ -3976,14 +4036,19 @@ function endCrossword(won) {
       checkStreakMilestones();
     }
 
+    // Grade words into the review deck + build the review panel (returns learning stats)
+    const learn = buildReviewPanel();
+
     // Build summary overlay
     const stats = document.getElementById('cw-summary-stats');
     stats.innerHTML = '';
     const rows = [
       { icon: '⏱️', label: 'Zeit',    value: timeStr },
-      { icon: '✅', label: 'Wörter',  value: currentPuzzle.words.length + ' / ' + currentPuzzle.words.length },
       { icon: '🔥', label: 'Serie',   value: streak.current + ' Tag' + (streak.current !== 1 ? 'e' : '') },
     ];
+    if (learn.fresh)    rows.push({ icon: '🆕', label: 'Neu gelernt',  value: String(learn.fresh) });
+    if (learn.reviewed) rows.push({ icon: '📈', label: 'Wiederholt',   value: String(learn.reviewed) });
+    if (learn.relapsed) rows.push({ icon: '🔁', label: 'Zum Üben',     value: String(learn.relapsed) });
     if (bonuses.length) {
       rows.push({ icon: '💎', label: 'Verdient', value: '+' + bonuses.reduce((s, b) => s + b.amount, 0) + ' Diamanten' });
     }
@@ -3993,9 +4058,6 @@ function endCrossword(won) {
       row.innerHTML = `<span style="color:var(--color-text-muted)">${icon} ${label}</span><strong>${value}</strong>`;
       stats.appendChild(row);
     });
-
-    // Grade words into the review deck + build the review panel
-    buildReviewPanel();
 
     // Show overlay after a short delay so the last word's green flash is visible
     setTimeout(() => {
@@ -4022,7 +4084,7 @@ async function startCrossword() {
   if (gameMode === '2P') return;
   await ensureLevels(selectedLevels);
   document.getElementById('cw-review-empty').classList.add('hidden');
-  let pool;
+  let pool, priority = null;
   if (selectedLevels.has('REVIEW')) {
     pool = dueWords().map(w => wordEntryIndex[w]).filter(Boolean);
     const eligible = pool.filter(e => e.w.length >= CW_MIN && e.w.length <= CW_MAX);
@@ -4035,9 +4097,15 @@ async function startCrossword() {
       seen.add(e.w);
       return true;
     });
+    // Weave up to 3 due review words into the puzzle so vocabulary
+    // resurfaces during normal play, not only in the ★ tab.
+    const due = new Set(dueWords());
+    const dueEligible = cwShuffle(pool.filter(e =>
+      due.has(e.w) && e.w.length >= CW_MIN && e.w.length <= CW_MAX));
+    if (dueEligible.length) priority = new Set(dueEligible.slice(0, 3).map(e => e.w));
   }
   let puzzle = null;
-  for (let i = 0; i < 3 && !puzzle; i++) puzzle = generateCrossword(pool);
+  for (let i = 0; i < 3 && !puzzle; i++) puzzle = generateCrossword(pool, priority);
   if (!puzzle) { showMessage('Rätsel konnte nicht erstellt werden.', 'lose'); return; }
 
   currentPuzzle = puzzle;
@@ -5224,8 +5292,12 @@ async function startSatzMode() {
   });
   if (pool.length < 5) { showMessage('Nicht genug Sätze für diese Stufe.', 'lose'); return; }
 
-  // Pick 5 random entries, shuffle
-  const picked = pool.slice().sort(() => Math.random() - 0.5).slice(0, 5);
+  // Pick 5 entries: up to 2 due review words first, the rest random
+  const due      = new Set(dueWords());
+  const shuffled = pool.slice().sort(() => Math.random() - 0.5);
+  const dueOnes  = shuffled.filter(e => due.has(e.w)).slice(0, 2);
+  const rest     = shuffled.filter(e => !dueOnes.includes(e)).slice(0, 5 - dueOnes.length);
+  const picked   = [...dueOnes, ...rest].sort(() => Math.random() - 0.5);
   satzQueue   = picked.flatMap(e => [{ entry: e, mode: 'fill' }, { entry: e, mode: 'order' }]);
   satzRoundIdx = 0;
   satzScore    = 0;
@@ -5490,11 +5562,17 @@ function showSatzSummary() {
   });
   Object.values(byWord).forEach(({ entry, fill, order }) => {
     const won = fill && order;
+    // Feed the spaced-repetition deck: the fill-in round is the production-
+    // recall signal (typing the word); word order tests syntax, not vocab.
+    if (fill !== null) gradeReview(entry.w, fill);
     const item = document.createElement('div');
     item.className = 'satz-summary-item ' + (won ? 'win' : 'lose');
     item.innerHTML = `<div class="satz-item-icon">${won ? '✅' : '❌'}</div><span>${entry.en}</span>`;
     grid.appendChild(item);
   });
+
+  const note = document.getElementById('satz-summary-note');
+  if (note) note.textContent = 'Ergebnisse in deinen Wiederholungsplan übernommen ✓';
 
   document.getElementById('satz-summary-overlay').classList.remove('hidden');
 }
