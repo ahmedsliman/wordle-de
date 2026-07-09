@@ -3557,7 +3557,15 @@ function selectCell(r, c, forceDir) {
     // Prefer direction that has a word
     if (cell.acrossId && !cell.downId) selectedDir = 'across';
     else if (cell.downId && !cell.acrossId) selectedDir = 'down';
-    else selectedDir = selectedDir; // keep current
+    else {
+      // Both directions have a word — prefer the one whose word STARTS at this cell
+      // so clicking a numbered cell always opens that numbered word's clue first.
+      const startsAcross = currentPuzzle.words.some(w => w.dir === 'across' && w.row === r && w.col === c);
+      const startsDown   = currentPuzzle.words.some(w => w.dir === 'down'   && w.row === r && w.col === c);
+      if (startsAcross && !startsDown) selectedDir = 'across';
+      else if (startsDown && !startsAcross) selectedDir = 'down';
+      // both or neither start here → keep current (second click toggles)
+    }
   }
   // If chosen dir has no word here, switch
   if (selectedDir === 'across' && !cell.acrossId && cell.downId) selectedDir = 'down';
