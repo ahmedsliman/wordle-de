@@ -6930,6 +6930,7 @@ function hideAllGamePanels() {
     document.getElementById(id)?.classList.add('hidden');
   });
   document.getElementById('wordle-panel')?.classList.add('hidden');
+  document.getElementById('pack-strip')?.classList.add('hidden');
   document.body.classList.remove('cw-active','cw-typing');
   clearInterval(mcTimerInterval);
 }
