@@ -512,11 +512,12 @@
     }
 
     /* Sticky clue bar only on desktop — mobile uses overflow:hidden flex lock */
+    /* top: 93px = header (52px) + mode-switcher (~40px) + 1px safety */
     @media (min-width: 681px) {
       .hint-bar {
         position: sticky;
-        top: 0;
-        z-index: 10;
+        top: 93px;
+        z-index: 8;
       }
     }
 
@@ -1366,6 +1367,8 @@
       .tab, .type-tab { padding: 0 10px; font-size: 0.76rem; min-height: 48px; }
       .diamond-counter { font-size: 0.72rem; padding: 3px 6px; gap: 2px; }
       .mode-btn { font-size: 0.7rem; padding: 4px 9px; }
+      /* Free up header space: fullscreen and help are secondary on mobile */
+      .fullscreen-btn, .help-btn { display: none; }
       /* Streak bar wraps to 2 rows */
       .streak-bar { flex-wrap: wrap; }
       /* Clue bar: Arabic wraps to its own line on small screens */
@@ -1394,6 +1397,9 @@
     /* ─── 1P Crossword: mobile viewport lock + three-zone layout ── */
     /* body.cw-active is set by startCrossword() on mobile */
     @media (max-width: 680px) {
+      /* Mode switcher: left-align scrollable pills on mobile */
+      .mode-switcher { justify-content: flex-start; }
+
       body.cw-active {
         height: 100dvh;
         overflow: hidden;
@@ -2105,36 +2111,33 @@
     .mode-switcher {
       display: flex;
       justify-content: center;
-      gap: 0;
+      gap: 5px;
       padding: 8px 16px 0;
       background: var(--color-bg);
       position: sticky;
       top: 52px;
       z-index: 9;
+      overflow-x: auto;
+      scrollbar-width: none;
     }
+    .mode-switcher::-webkit-scrollbar { display: none; }
     .mode-switch-btn {
       font-family: 'Inter', system-ui, sans-serif;
       font-size: 0.82rem;
       font-weight: 600;
-      padding: 7px 20px;
+      padding: 7px 16px;
       border: 1.5px solid var(--color-border);
+      border-radius: 999px;
       background: transparent;
       color: var(--color-text-muted);
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 6px;
+      flex-shrink: 0;
       transition: background 0.15s, color 0.15s, border-color 0.15s;
       -webkit-tap-highlight-color: transparent;
       white-space: nowrap;
-    }
-    .mode-switch-btn:first-child {
-      border-radius: 999px 0 0 999px;
-      border-right-width: 0.75px;
-    }
-    .mode-switch-btn:last-child {
-      border-radius: 0 999px 999px 0;
-      border-left-width: 0.75px;
     }
     .mode-switch-btn:hover { color: var(--color-text); background: var(--color-surface); }
     .mode-switch-btn.active {
@@ -2144,9 +2147,8 @@
     }
     .mode-switch-icon { font-size: 1rem; line-height: 1; }
     @media (max-width: 480px) {
-      .mode-switch-label { display: none; }
-      .mode-switch-btn { padding: 7px 16px; }
-      .mode-switch-icon { font-size: 1.1rem; }
+      .mode-switch-btn { padding: 6px 11px; font-size: 0.74rem; }
+      .mode-switch-icon { font-size: 1rem; }
     }
 
     /* ─── Satz-Modus ──────────────────────────────────── */
@@ -2585,22 +2587,6 @@
       width: 10px; height: 10px; border-radius: 2px;
     }
 
-    /* ─── Mode Switcher: scrollable on mobile ──────────── */
-    .mode-switcher {
-      overflow-x: auto;
-      scrollbar-width: none;
-      justify-content: flex-start;
-      gap: 5px;
-    }
-    .mode-switcher::-webkit-scrollbar { display: none; }
-    .mode-switch-btn {
-      flex-shrink: 0;
-      border-radius: 999px !important;
-      border-width: 1.5px !important;
-    }
-    .mode-switch-btn:first-child { border-right-width: 1.5px !important; }
-    .mode-switch-btn:last-child  { border-left-width:  1.5px !important; }
-
     /* ─── Hide pack-strip and mode-switcher on home ─────── */
     body.on-home .pack-strip    { display: none !important; }
     body.on-home .mode-switcher { display: none !important; }
@@ -2754,7 +2740,6 @@
   </header>
 
   <nav class="pack-strip" id="pack-strip" aria-label="Fachvokabular-Pakete">
-    <span class="pack-strip-label" aria-hidden="true">📦</span>
     <button class="pack-btn" data-pack="BUSINESS"    aria-pressed="false">💼 Wirtschaft</button>
     <button class="pack-btn" data-pack="MEDICAL"     aria-pressed="false">🩺 Medizin</button>
     <button class="pack-btn" data-pack="SOFTWARE"    aria-pressed="false">💻 IT</button>
@@ -4093,7 +4078,8 @@ function computeCwCellSize(cols, rows) {
   const isMobile = window.innerWidth <= 680;
   const pad = 32;
   const availW = (vw - pad) * (isMobile ? 1 : 0.62);
-  const byWidth = Math.floor(availW / cols);
+  const gap = 2; // gap between cells in CSS
+  const byWidth = Math.floor((availW - (cols - 1) * gap) / cols);
 
   let byHeight = 999;
   if (isMobile && rows) {
@@ -6130,14 +6116,10 @@ let satzOrderPlaced = []; // words placed in answer row (order mode)
 let satzOrderPool   = []; // {word, idx, el} word chips
 
 function showSatzPanel() {
+  hideAllGamePanels();
   gameMode = 'SATZ';
-  document.body.classList.remove('cw-active', 'cw-typing');
-  ['cw-clue-bar','cw-progress','clue-chips','crossword-area','cw-actions','cw-keyboard','streak-bar'].forEach(id => {
-    document.getElementById(id)?.classList.add('hidden');
-  });
-  document.getElementById('wordle-panel').classList.add('hidden');
-  document.getElementById('artikel-panel')?.classList.add('hidden');
   document.getElementById('satz-panel').classList.remove('hidden');
+  document.getElementById('streak-bar').classList.remove('hidden');
   setModeSwitcher('satz');
 }
 
@@ -6500,14 +6482,10 @@ let artikelLocked  = false;
 function titleCaseWord(w) { return w.charAt(0) + w.slice(1).toLowerCase(); }
 
 function showArtikelPanel() {
+  hideAllGamePanels();
   gameMode = 'ARTIKEL';
-  document.body.classList.remove('cw-active', 'cw-typing');
-  ['cw-clue-bar','cw-progress','clue-chips','crossword-area','cw-actions','cw-keyboard','streak-bar'].forEach(id => {
-    document.getElementById(id)?.classList.add('hidden');
-  });
-  document.getElementById('wordle-panel').classList.add('hidden');
-  document.getElementById('satz-panel').classList.add('hidden');
   document.getElementById('artikel-panel').classList.remove('hidden');
+  document.getElementById('streak-bar').classList.remove('hidden');
   setModeSwitcher('artikel');
 }
 
@@ -6647,16 +6625,10 @@ function hidePairsPanel() {
 }
 
 async function startPairsMode() {
+  hideAllGamePanels();
   gameMode = 'PAARE';
   setModeSwitcher('pairs');
-  hideSatzPanel();
-  hideArtikelPanel();
-  hideListenPanel();
-  hideMcPanel();
   document.getElementById('pairs-panel').classList.remove('hidden');
-  document.getElementById('crossword-area').classList.add('hidden');
-  document.getElementById('cw-clue-bar').classList.add('hidden');
-  document.getElementById('cw-actions').classList.add('hidden');
   document.getElementById('streak-bar').classList.remove('hidden');
 
   const lvls = selectedLevels.has('REVIEW')
@@ -6806,15 +6778,10 @@ function hideMcPanel() {
 }
 
 async function startMcMode() {
+  hideAllGamePanels();
   gameMode = 'MC';
   setModeSwitcher('mc');
-  hideSatzPanel();
-  hideArtikelPanel();
-  hideListenPanel();
   document.getElementById('mc-panel').classList.remove('hidden');
-  document.getElementById('crossword-area').classList.add('hidden');
-  document.getElementById('cw-clue-bar').classList.add('hidden');
-  document.getElementById('cw-actions').classList.add('hidden');
   document.getElementById('streak-bar').classList.remove('hidden');
 
   const lvls = selectedLevels.has('REVIEW')
@@ -6957,20 +6924,26 @@ function hideListenPanel() {
   document.getElementById('listen-panel').classList.add('hidden');
 }
 
+function hideAllGamePanels() {
+  hideSatzPanel(); hideArtikelPanel(); hideListenPanel(); hideMcPanel(); hidePairsPanel();
+  ['cw-clue-bar','cw-progress','clue-chips','crossword-area','cw-actions','cw-keyboard'].forEach(id => {
+    document.getElementById(id)?.classList.add('hidden');
+  });
+  document.getElementById('wordle-panel')?.classList.add('hidden');
+  document.body.classList.remove('cw-active','cw-typing');
+  clearInterval(mcTimerInterval);
+}
+
 async function startListenMode() {
   if (deVoiceAvailable === false) {
     showMessage('Keine deutsche Stimme auf diesem Gerät.', 'lose');
     setTimeout(() => showMessage('', ''), 2500);
     return;
   }
+  hideAllGamePanels();
   gameMode = 'HÖREN';
   setModeSwitcher('listen');
-  hideSatzPanel();
-  hideArtikelPanel();
   document.getElementById('listen-panel').classList.remove('hidden');
-  document.getElementById('crossword-area').classList.add('hidden');
-  document.getElementById('cw-clue-bar').classList.add('hidden');
-  document.getElementById('cw-actions').classList.add('hidden');
   document.getElementById('streak-bar').classList.remove('hidden');
 
   const lvls = selectedLevels.has('REVIEW')
