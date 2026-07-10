@@ -1,5 +1,5 @@
 /* Wörtle service worker — cache-first for all static assets */
-const CACHE = 'wortle-v2';
+const CACHE = 'wortle-v3';
 
 const PRECACHE = [
   './',

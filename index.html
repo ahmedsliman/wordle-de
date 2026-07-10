@@ -272,6 +272,57 @@
       height: 100%;
     }
 
+    /* ─── Domain Pack Strip ─────────────────────────── */
+    .pack-strip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      background: var(--color-header-bg);
+      border-bottom: 1px solid var(--color-header-border);
+      overflow-x: auto;
+      scrollbar-width: none;
+      position: sticky;
+      top: calc(52px + env(safe-area-inset-top, 0px));
+      z-index: 9;
+      -webkit-overflow-scrolling: touch;
+    }
+    .pack-strip::-webkit-scrollbar { display: none; }
+    .pack-strip-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-right: 2px;
+    }
+    .pack-btn {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.74rem;
+      font-weight: 600;
+      padding: 4px 11px;
+      border: 1.5px solid var(--color-border);
+      border-radius: 20px;
+      background: transparent;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+      flex-shrink: 0;
+      min-height: 28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .pack-btn:hover { color: var(--color-text); border-color: var(--color-text-muted); }
+    .pack-btn.active {
+      color: var(--color-correct-text);
+      border-color: var(--color-correct-text);
+      background: color-mix(in srgb, var(--color-correct-text) 12%, transparent);
+    }
+    .pack-btn:focus-visible { outline: 2px solid var(--color-correct); outline-offset: 2px; border-radius: 20px; }
+
     .tab, .type-tab {
       font-family: 'Inter', system-ui, sans-serif;
       font-size: 0.82rem;
@@ -2467,6 +2518,15 @@
       </div>
     </div>
   </header>
+
+  <nav class="pack-strip" id="pack-strip" aria-label="Fachvokabular-Pakete">
+    <span class="pack-strip-label" aria-hidden="true">📦</span>
+    <button class="pack-btn" data-pack="BUSINESS"    aria-pressed="false">💼 Wirtschaft</button>
+    <button class="pack-btn" data-pack="MEDICAL"     aria-pressed="false">🩺 Medizin</button>
+    <button class="pack-btn" data-pack="SOFTWARE"    aria-pressed="false">💻 IT</button>
+    <button class="pack-btn" data-pack="ENGINEERING" aria-pressed="false">⚙️ Technik</button>
+    <button class="pack-btn" data-pack="LEGAL"       aria-pressed="false">⚖️ Recht</button>
+  </nav>
 
   <div class="mode-switcher" id="mode-switcher" role="tablist" aria-label="Spielmodus">
     <button class="mode-switch-btn active" id="switch-crossword" role="tab" aria-selected="true" aria-controls="crossword-area">
@@ -5158,6 +5218,8 @@ document.getElementById('level-tabs').addEventListener('click', e => {
     selectedLevels = new Set(['REVIEW']);
   } else {
     selectedLevels.delete('REVIEW');
+    // clear any active domain pack
+    PACK_LEVELS.forEach(p => selectedLevels.delete(p));
     if (selectedLevels.has(level) && selectedLevels.size > 1) {
       selectedLevels.delete(level);
     } else {
@@ -5165,6 +5227,8 @@ document.getElementById('level-tabs').addEventListener('click', e => {
     }
   }
   currentLevel = [...selectedLevels][0];
+  // Clear pack strip visuals
+  selectPack(null);
   // Update tab visuals
   document.querySelectorAll('#level-tabs .tab').forEach(t => {
     const on = selectedLevels.has(t.dataset.level);
@@ -5180,8 +5244,55 @@ document.getElementById('level-tabs').addEventListener('click', e => {
   }
 });
 
+// ─── Domain pack strip ────────────────────────────────
+function selectPack(pack) {
+  document.querySelectorAll('#pack-strip .pack-btn').forEach(b => {
+    const on = b.dataset.pack === pack;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+}
+
+document.getElementById('pack-strip').addEventListener('click', e => {
+  const btn = e.target.closest('[data-pack]');
+  if (!btn) return;
+  const pack = btn.dataset.pack;
+
+  if (gameMode === '2P') {
+    showMessage('Pakete nur im Solo-Modus', '');
+    setTimeout(() => showMessage('', ''), 1800);
+    return;
+  }
+
+  if (btn.classList.contains('active')) {
+    // Deselect pack → go back to A1
+    selectPack(null);
+    selectedLevels = new Set(['A1']);
+    currentLevel = 'A1';
+    document.querySelectorAll('#level-tabs .tab').forEach(t => {
+      const on = t.dataset.level === 'A1';
+      t.classList.toggle('active', on);
+      t.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  } else {
+    selectPack(pack);
+    selectedLevels = new Set([pack]);
+    currentLevel = pack;
+    // Deactivate all CEFR tabs
+    document.querySelectorAll('#level-tabs .tab').forEach(t => {
+      t.classList.remove('active');
+      t.setAttribute('aria-pressed', 'false');
+    });
+  }
+
+  if (gameMode === 'SATZ') startSatzMode();
+  else if (gameMode === 'ARTIKEL') startArtikelMode();
+  else startCrossword();
+});
+
 document.getElementById('cw-review-empty-btn').addEventListener('click', () => {
   document.getElementById('cw-review-empty').classList.add('hidden');
+  selectPack(null);
   document.querySelectorAll('#level-tabs .tab').forEach(t => {
     t.classList.remove('active');
     t.setAttribute('aria-pressed', 'false');
@@ -5361,7 +5472,12 @@ document.addEventListener('keydown', e => {
 });
 
 // ─── Fetch & init ─────────────────────────────────────
-const LEVEL_FILES = { A1: 'words/a1.json', A2: 'words/a2.json', B1: 'words/b1.json', B2: 'words/b2.json' };
+const LEVEL_FILES = {
+  A1: 'words/a1.json', A2: 'words/a2.json', B1: 'words/b1.json', B2: 'words/b2.json',
+  BUSINESS: 'words/business.json', MEDICAL: 'words/medical.json',
+  SOFTWARE: 'words/software.json', ENGINEERING: 'words/engineering.json', LEGAL: 'words/legal.json',
+};
+const PACK_LEVELS = new Set(['BUSINESS','MEDICAL','SOFTWARE','ENGINEERING','LEGAL']);
 
 async function loadLevel(lvl) {
   if (loadedLevels.has(lvl)) return;
