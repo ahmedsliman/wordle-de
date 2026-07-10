@@ -1,0 +1,344 @@
+[
+  {
+    "w": "ARZT",
+    "en": "doctor",
+    "ar": "طبيب",
+    "hint": "A medical professional who treats patients",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ hat mir ein Rezept geschrieben."
+  },
+  {
+    "w": "HERZ",
+    "en": "heart",
+    "ar": "قلب",
+    "hint": "The organ that pumps blood through the body",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das ___ schlägt im Durchschnitt 70 Mal pro Minute."
+  },
+  {
+    "w": "PULS",
+    "en": "pulse",
+    "ar": "نبض",
+    "hint": "The rhythmic beating of blood through arteries",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Die Krankenschwester hat meinen ___ gemessen."
+  },
+  {
+    "w": "BLUT",
+    "en": "blood",
+    "ar": "دم",
+    "hint": "The red fluid that circulates in the body",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Bei der Untersuchung wurde ___ abgenommen."
+  },
+  {
+    "w": "GIPS",
+    "en": "cast / plaster",
+    "ar": "جبيرة",
+    "hint": "Hard material used to hold a broken bone in place",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Nach dem Unfall trägt sie einen ___ am Arm."
+  },
+  {
+    "w": "MAGEN",
+    "en": "stomach",
+    "ar": "معدة",
+    "hint": "The organ that digests food",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ tut mir nach dem Essen weh."
+  },
+  {
+    "w": "NIERE",
+    "en": "kidney",
+    "ar": "كلية",
+    "hint": "The organ that filters waste from the blood",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ filtert täglich viele Liter Blut."
+  },
+  {
+    "w": "LUNGE",
+    "en": "lung",
+    "ar": "رئة",
+    "hint": "The organ used for breathing",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Rauchen schadet der ___ erheblich."
+  },
+  {
+    "w": "KREBS",
+    "en": "cancer",
+    "ar": "سرطان",
+    "hint": "A disease caused by uncontrolled cell growth",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Frühe Diagnose ist beim ___ sehr wichtig."
+  },
+  {
+    "w": "TUMOR",
+    "en": "tumor",
+    "ar": "ورم",
+    "hint": "An abnormal mass of tissue",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ muss sofort operiert werden."
+  },
+  {
+    "w": "WUNDE",
+    "en": "wound",
+    "ar": "جرح",
+    "hint": "An injury to the skin or tissue",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ muss sauber verbunden werden."
+  },
+  {
+    "w": "FIEBER",
+    "en": "fever",
+    "ar": "حمى",
+    "hint": "Body temperature higher than normal",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das Kind hat hohes ___ und muss im Bett bleiben."
+  },
+  {
+    "w": "HUSTEN",
+    "en": "cough",
+    "ar": "سعال",
+    "hint": "Sudden expulsion of air from the lungs",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Er hat seit einer Woche starken ___."
+  },
+  {
+    "w": "GEHIRN",
+    "en": "brain",
+    "ar": "دماغ",
+    "hint": "The organ that controls all body functions",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das ___ verarbeitet alle Informationen des Körpers."
+  },
+  {
+    "w": "REZEPT",
+    "en": "prescription",
+    "ar": "وصفة طبية",
+    "hint": "A written order from a doctor for medication",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Der Arzt hat mir ein ___ für das Medikament ausgestellt."
+  },
+  {
+    "w": "SCHMERZ",
+    "en": "pain",
+    "ar": "ألم",
+    "hint": "An unpleasant physical sensation",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ in meinem Rücken wird immer stärker."
+  },
+  {
+    "w": "IMPFUNG",
+    "en": "vaccination",
+    "ar": "تطعيم",
+    "hint": "Injection that protects against disease",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ schützt vor vielen gefährlichen Krankheiten."
+  },
+  {
+    "w": "NOTFALL",
+    "en": "emergency",
+    "ar": "طوارئ",
+    "hint": "A sudden serious situation requiring immediate action",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Im ___ rufen Sie bitte sofort den Krankenwagen."
+  },
+  {
+    "w": "ALLERGIE",
+    "en": "allergy",
+    "ar": "حساسية",
+    "hint": "An immune reaction to a normally harmless substance",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Sie hat eine starke ___ gegen Nüsse."
+  },
+  {
+    "w": "DIAGNOSE",
+    "en": "diagnosis",
+    "ar": "تشخيص",
+    "hint": "Identifying a disease from its symptoms",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ ergab, dass er an Diabetes leidet."
+  },
+  {
+    "w": "THERAPIE",
+    "en": "therapy",
+    "ar": "علاج",
+    "hint": "Treatment intended to cure a condition",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ hat ihm sehr geholfen."
+  },
+  {
+    "w": "APOTHEKE",
+    "en": "pharmacy",
+    "ar": "صيدلية",
+    "hint": "A shop where medicines are dispensed",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Das Medikament kaufe ich in der ___."
+  },
+  {
+    "w": "DIABETES",
+    "en": "diabetes",
+    "ar": "داء السكري",
+    "hint": "A chronic condition affecting blood sugar levels",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Viele Menschen weltweit leiden an ___."
+  },
+  {
+    "w": "BLUTDRUCK",
+    "en": "blood pressure",
+    "ar": "ضغط الدم",
+    "hint": "The pressure of blood against the artery walls",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Ihr ___ ist zu hoch, sagt der Arzt."
+  },
+  {
+    "w": "MEDIKAMENT",
+    "en": "medication",
+    "ar": "دواء",
+    "hint": "A substance used to treat illness",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Nehmen Sie das ___ dreimal täglich ein."
+  },
+  {
+    "w": "BEHANDLUNG",
+    "en": "treatment",
+    "ar": "علاج",
+    "hint": "Medical care given to a patient",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ dauert insgesamt etwa vier Wochen."
+  },
+  {
+    "w": "ÜBERWEISUNG",
+    "en": "referral",
+    "ar": "إحالة طبية",
+    "hint": "A note sending a patient to a specialist",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Der Hausarzt gibt mir eine ___ zum Spezialisten."
+  },
+  {
+    "w": "KRANKENHAUS",
+    "en": "hospital",
+    "ar": "مستشفى",
+    "hint": "A building where patients receive medical care",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Er wurde nach dem Unfall sofort ins ___ eingeliefert."
+  },
+  {
+    "w": "HERZINFARKT",
+    "en": "heart attack",
+    "ar": "نوبة قلبية",
+    "hint": "When blood supply to the heart is suddenly cut off",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Ein ___ ist ein lebensbedrohlicher Notfall."
+  },
+  {
+    "w": "UNTERSUCHUNG",
+    "en": "medical examination",
+    "ar": "فحص طبي",
+    "hint": "A systematic physical check by a doctor",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die regelmäßige ___ beim Arzt ist sehr wichtig."
+  },
+  {
+    "w": "HEILEN",
+    "en": "to heal / cure",
+    "ar": "يشفي",
+    "hint": "Restore to health",
+    "type": "verb",
+    "sentence": "Das Antibiotikum kann die Infektion vollständig ___."
+  },
+  {
+    "w": "IMPFEN",
+    "en": "to vaccinate",
+    "ar": "يطعم",
+    "hint": "Administer a vaccine",
+    "type": "verb",
+    "sentence": "Es ist wichtig, Kinder rechtzeitig gegen Masern zu ___."
+  },
+  {
+    "w": "ATMEN",
+    "en": "to breathe",
+    "ar": "يتنفس",
+    "hint": "Take air in and out of the lungs",
+    "type": "verb",
+    "sentence": "Versuchen Sie langsam und tief zu ___."
+  },
+  {
+    "w": "BEHANDELN",
+    "en": "to treat",
+    "ar": "يعالج",
+    "hint": "Give medical care to a patient",
+    "type": "verb",
+    "sentence": "Der Arzt wird den Patienten sofort ___."
+  },
+  {
+    "w": "GESUND",
+    "en": "healthy",
+    "ar": "صحي",
+    "hint": "In good physical condition",
+    "type": "adjective",
+    "sentence": "Nach drei Wochen Ruhe ist er wieder ___."
+  },
+  {
+    "w": "KRANK",
+    "en": "sick",
+    "ar": "مريض",
+    "hint": "Suffering from illness",
+    "type": "adjective",
+    "sentence": "Sie ist schon seit einer Woche ___."
+  },
+  {
+    "w": "AKUT",
+    "en": "acute",
+    "ar": "حاد",
+    "hint": "Severe and sudden in onset",
+    "type": "adjective",
+    "sentence": "Das ist ein ___ Fall, der sofort behandelt werden muss."
+  },
+  {
+    "w": "CHRONISCH",
+    "en": "chronic",
+    "ar": "مزمن",
+    "hint": "Persisting for a long time",
+    "type": "adjective",
+    "sentence": "Er leidet an einer ___ Krankheit seit Jahren."
+  },
+  {
+    "w": "STERIL",
+    "en": "sterile",
+    "ar": "معقم",
+    "hint": "Free from bacteria and germs",
+    "type": "adjective",
+    "sentence": "Das Operationsinstrument muss absolut ___ sein."
+  }
+]

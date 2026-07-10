@@ -1,0 +1,367 @@
+[
+  {
+    "w": "MOTOR",
+    "en": "engine / motor",
+    "ar": "محرك",
+    "hint": "A machine that converts energy into movement",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ des Autos ist kaputt und muss repariert werden."
+  },
+  {
+    "w": "DRUCK",
+    "en": "pressure",
+    "ar": "ضغط",
+    "hint": "Force applied over an area",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ im Rohrsystem ist zu hoch."
+  },
+  {
+    "w": "STAHL",
+    "en": "steel",
+    "ar": "فولاذ",
+    "hint": "A hard, strong metal made from iron and carbon",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Brücken werden oft aus ___ gebaut."
+  },
+  {
+    "w": "KRAFT",
+    "en": "force / power",
+    "ar": "قوة",
+    "hint": "A push or pull acting on an object",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ des Motors reicht nicht für diesen Auftrag."
+  },
+  {
+    "w": "WELLE",
+    "en": "shaft / wave",
+    "ar": "عمود / موجة",
+    "hint": "A rotating rod that transmits torque",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ überträgt das Drehmoment auf das Getriebe."
+  },
+  {
+    "w": "LAGER",
+    "en": "bearing",
+    "ar": "محمل",
+    "hint": "A component that reduces friction between moving parts",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das ___ muss regelmäßig geschmiert werden."
+  },
+  {
+    "w": "BETON",
+    "en": "concrete",
+    "ar": "خرسانة",
+    "hint": "A building material made from cement, sand and water",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Das Fundament des Gebäudes besteht aus ___."
+  },
+  {
+    "w": "PUMPE",
+    "en": "pump",
+    "ar": "مضخة",
+    "hint": "A device that moves fluids through a system",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ transportiert das Wasser durch das gesamte System."
+  },
+  {
+    "w": "KABEL",
+    "en": "cable",
+    "ar": "كابل",
+    "hint": "A thick wire or bundle of wires",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das ___ ist beschädigt und muss ersetzt werden."
+  },
+  {
+    "w": "VENTIL",
+    "en": "valve",
+    "ar": "صمام",
+    "hint": "A device that controls fluid flow",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das ___ kontrolliert den Flüssigkeitsstrom im Rohr."
+  },
+  {
+    "w": "SENSOR",
+    "en": "sensor",
+    "ar": "مستشعر",
+    "hint": "A device that detects physical conditions",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ misst die Temperatur in der Anlage."
+  },
+  {
+    "w": "ZAHNRAD",
+    "en": "gear",
+    "ar": "ترس",
+    "hint": "A toothed wheel that transmits motion",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das ___ überträgt die Bewegung auf die Welle."
+  },
+  {
+    "w": "ANTRIEB",
+    "en": "drive system",
+    "ar": "نظام محرك",
+    "hint": "The mechanism that powers a machine",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der elektrische ___ ist effizienter als der Dieselmotor."
+  },
+  {
+    "w": "BAUPLAN",
+    "en": "blueprint",
+    "ar": "مخطط",
+    "hint": "A detailed technical drawing of a structure",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Nach dem ___ wird das Gebäude Schritt für Schritt errichtet."
+  },
+  {
+    "w": "BAUTEIL",
+    "en": "component",
+    "ar": "مكوّن",
+    "hint": "A single part of a larger assembly",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Jedes ___ muss vor dem Einbau geprüft werden."
+  },
+  {
+    "w": "MONTAGE",
+    "en": "assembly",
+    "ar": "تجميع",
+    "hint": "The process of fitting parts together",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ aller Teile dauert etwa drei Stunden."
+  },
+  {
+    "w": "ENERGIE",
+    "en": "energy",
+    "ar": "طاقة",
+    "hint": "The capacity to do work",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Erneuerbare ___ ist die Zukunft der Industrie."
+  },
+  {
+    "w": "WARTUNG",
+    "en": "maintenance",
+    "ar": "صيانة",
+    "hint": "Regular upkeep of machinery to prevent failure",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die regelmäßige ___ verlängert die Lebensdauer der Maschine."
+  },
+  {
+    "w": "REIBUNG",
+    "en": "friction",
+    "ar": "احتكاك",
+    "hint": "Resistance force when surfaces slide against each other",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Durch ___ entsteht Wärme, die das System belastet."
+  },
+  {
+    "w": "KÜHLUNG",
+    "en": "cooling",
+    "ar": "تبريد",
+    "hint": "The removal of heat from a system",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ des Prozessors ist wichtig für die Leistung."
+  },
+  {
+    "w": "MASCHINE",
+    "en": "machine",
+    "ar": "آلة",
+    "hint": "A device with moving parts that performs work",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ produziert täglich tausende Bauteile."
+  },
+  {
+    "w": "SPANNUNG",
+    "en": "voltage / tension",
+    "ar": "جهد كهربائي",
+    "hint": "Electrical potential difference between two points",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die elektrische ___ beträgt hier 230 Volt."
+  },
+  {
+    "w": "LEISTUNG",
+    "en": "power / performance",
+    "ar": "قدرة / أداء",
+    "hint": "The rate at which energy is transferred",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ des Motors liegt bei 150 Kilowatt."
+  },
+  {
+    "w": "FREQUENZ",
+    "en": "frequency",
+    "ar": "تردد",
+    "hint": "The number of cycles per second in a wave",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ des Wechselstroms beträgt in Europa 50 Hertz."
+  },
+  {
+    "w": "WERKZEUG",
+    "en": "tool",
+    "ar": "أداة",
+    "hint": "An instrument used to carry out work",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das richtige ___ macht die Arbeit deutlich leichter."
+  },
+  {
+    "w": "FERTIGUNG",
+    "en": "manufacturing",
+    "ar": "تصنيع",
+    "hint": "The process of making goods in a factory",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die automatisierte ___ erhöht die Produktionsgeschwindigkeit."
+  },
+  {
+    "w": "WIDERSTAND",
+    "en": "resistance",
+    "ar": "مقاومة",
+    "hint": "Opposition to the flow of electric current",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der elektrische ___ wird in Ohm gemessen."
+  },
+  {
+    "w": "AUTOMATISIERUNG",
+    "en": "automation",
+    "ar": "أتمتة",
+    "hint": "Using machines to perform tasks without human effort",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ in der Fabrik spart Zeit und Kosten."
+  },
+  {
+    "w": "INFRASTRUKTUR",
+    "en": "infrastructure",
+    "ar": "بنية تحتية",
+    "hint": "Basic physical systems like roads, bridges and utilities",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ des Landes muss dringend modernisiert werden."
+  },
+  {
+    "w": "BAUEN",
+    "en": "to build / construct",
+    "ar": "يبني",
+    "hint": "Create a structure",
+    "type": "verb",
+    "sentence": "Das Team plant, eine neue Brücke über den Fluss zu ___."
+  },
+  {
+    "w": "MESSEN",
+    "en": "to measure",
+    "ar": "يقيس",
+    "hint": "Determine the size or quantity of something",
+    "type": "verb",
+    "sentence": "Mit diesem Gerät kann man den Druck genau ___."
+  },
+  {
+    "w": "PRÜFEN",
+    "en": "to test / inspect",
+    "ar": "يختبر",
+    "hint": "Examine something to check its quality",
+    "type": "verb",
+    "sentence": "Alle Bauteile müssen vor der Verwendung ___ werden."
+  },
+  {
+    "w": "WARTEN",
+    "en": "to maintain / service",
+    "ar": "يصون",
+    "hint": "Carry out regular upkeep on a machine",
+    "type": "verb",
+    "sentence": "Die Techniker kommen einmal im Jahr, um die Anlage zu ___."
+  },
+  {
+    "w": "BERECHNEN",
+    "en": "to calculate",
+    "ar": "يحسب",
+    "hint": "Determine a value using mathematics",
+    "type": "verb",
+    "sentence": "Die Ingenieure müssen die Belastung genau ___."
+  },
+  {
+    "w": "KONSTRUIEREN",
+    "en": "to design / construct",
+    "ar": "يصمم",
+    "hint": "Plan and build something technical",
+    "type": "verb",
+    "sentence": "Das Team möchte eine neue Brücke über den Fluss ___."
+  },
+  {
+    "w": "MONTIEREN",
+    "en": "to assemble / install",
+    "ar": "يجمّع / يركّب",
+    "hint": "Put parts together to form a complete unit",
+    "type": "verb",
+    "sentence": "Das Team muss alle Bauteile in drei Stunden ___."
+  },
+  {
+    "w": "STABIL",
+    "en": "stable",
+    "ar": "مستقر",
+    "hint": "Firmly established; not likely to collapse",
+    "type": "adjective",
+    "sentence": "Das Fundament muss ___ und sehr robust sein."
+  },
+  {
+    "w": "FLEXIBEL",
+    "en": "flexible",
+    "ar": "مرن",
+    "hint": "Able to bend without breaking",
+    "type": "adjective",
+    "sentence": "Das Material ist ___ und leicht zu formen."
+  },
+  {
+    "w": "PRÄZISE",
+    "en": "precise",
+    "ar": "دقيق",
+    "hint": "Exact and accurate",
+    "type": "adjective",
+    "sentence": "Die Messung muss sehr ___ sein."
+  },
+  {
+    "w": "EFFIZIENT",
+    "en": "efficient",
+    "ar": "فعّال",
+    "hint": "Achieving maximum output with minimum waste",
+    "type": "adjective",
+    "sentence": "Die neue Maschine ist viel ___ als die alte."
+  },
+  {
+    "w": "ELEKTRISCH",
+    "en": "electrical",
+    "ar": "كهربائي",
+    "hint": "Relating to electricity",
+    "type": "adjective",
+    "sentence": "Dieser Antrieb ist vollständig ___."
+  },
+  {
+    "w": "MECHANISCH",
+    "en": "mechanical",
+    "ar": "ميكانيكي",
+    "hint": "Relating to machinery or physical forces",
+    "type": "adjective",
+    "sentence": "Das Problem ist rein ___ und kein Softwarefehler."
+  }
+]

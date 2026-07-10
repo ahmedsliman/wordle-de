@@ -1,0 +1,348 @@
+[
+  {
+    "w": "CODE",
+    "en": "code",
+    "ar": "كود",
+    "hint": "Instructions written for a computer to execute",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ funktioniert nach dem Update ohne Fehler."
+  },
+  {
+    "w": "NETZ",
+    "en": "network / web",
+    "ar": "شبكة",
+    "hint": "An interconnected system of computers",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das drahtlose ___ ist in diesem Bereich sehr schwach."
+  },
+  {
+    "w": "BYTE",
+    "en": "byte",
+    "ar": "بايت",
+    "hint": "A unit of digital information equal to 8 bits",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Ein ___ besteht aus acht Bit."
+  },
+  {
+    "w": "DATEI",
+    "en": "file",
+    "ar": "ملف",
+    "hint": "A collection of data stored under one name",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Bitte öffnen Sie die ___ auf Ihrem Computer."
+  },
+  {
+    "w": "DATEN",
+    "en": "data",
+    "ar": "بيانات",
+    "hint": "Information processed or stored by a computer",
+    "type": "noun",
+    "article": "die/pl",
+    "sentence": "Die ___ werden verschlüsselt auf dem Server gespeichert."
+  },
+  {
+    "w": "FEHLER",
+    "en": "error / bug",
+    "ar": "خطأ",
+    "hint": "A mistake or defect in a program",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Das Programm hat einen kritischen ___ und stürzt ab."
+  },
+  {
+    "w": "SERVER",
+    "en": "server",
+    "ar": "خادم",
+    "hint": "A computer that provides services to other computers",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ ist zurzeit nicht erreichbar."
+  },
+  {
+    "w": "ORDNER",
+    "en": "folder",
+    "ar": "مجلد",
+    "hint": "A directory that stores files",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Speichern Sie alle Dokumente im richtigen ___."
+  },
+  {
+    "w": "CURSOR",
+    "en": "cursor",
+    "ar": "مؤشر",
+    "hint": "The movable indicator on a computer screen",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Bewegen Sie den ___ über das Symbol und klicken Sie."
+  },
+  {
+    "w": "AUFRUF",
+    "en": "function call",
+    "ar": "استدعاء",
+    "hint": "The invocation of a function in code",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Beim ___ der Funktion ist ein Fehler aufgetreten."
+  },
+  {
+    "w": "ZUGRIFF",
+    "en": "access",
+    "ar": "وصول",
+    "hint": "Permission or ability to use a system",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ auf das System ist nur mit Passwort möglich."
+  },
+  {
+    "w": "ABFRAGE",
+    "en": "query",
+    "ar": "استعلام",
+    "hint": "A request for data from a database",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ liefert alle passenden Einträge aus der Datenbank."
+  },
+  {
+    "w": "ANFRAGE",
+    "en": "request",
+    "ar": "طلب",
+    "hint": "A message sent to a server asking for data",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ an den Server ist fehlgeschlagen."
+  },
+  {
+    "w": "VERSION",
+    "en": "version",
+    "ar": "إصدار",
+    "hint": "A specific release of a software product",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Bitte installieren Sie die neueste ___ des Programms."
+  },
+  {
+    "w": "SITZUNG",
+    "en": "session",
+    "ar": "جلسة",
+    "hint": "A period of active use of a system by a user",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Ihre ___ ist abgelaufen. Bitte melden Sie sich neu an."
+  },
+  {
+    "w": "NETZWERK",
+    "en": "network",
+    "ar": "شبكة",
+    "hint": "A group of connected computers sharing resources",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das ___ verbindet alle Computer im Büro miteinander."
+  },
+  {
+    "w": "DATENBANK",
+    "en": "database",
+    "ar": "قاعدة بيانات",
+    "hint": "An organized collection of structured data",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ enthält über eine Million Kundeneinträge."
+  },
+  {
+    "w": "SICHERHEIT",
+    "en": "security",
+    "ar": "أمان",
+    "hint": "Protection of systems against unauthorized access",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ des Systems muss regelmäßig geprüft werden."
+  },
+  {
+    "w": "ENTWICKLER",
+    "en": "developer",
+    "ar": "مطور",
+    "hint": "A person who writes software code",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ schreibt täglich viele Zeilen Code."
+  },
+  {
+    "w": "ANWENDUNG",
+    "en": "application",
+    "ar": "تطبيق",
+    "hint": "A software program for a specific purpose",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Diese ___ ist für Android und iOS verfügbar."
+  },
+  {
+    "w": "DATENSCHUTZ",
+    "en": "data protection",
+    "ar": "حماية البيانات",
+    "hint": "Rules ensuring personal data is handled safely",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ der Nutzer hat bei uns höchste Priorität."
+  },
+  {
+    "w": "ALGORITHMUS",
+    "en": "algorithm",
+    "ar": "خوارزمية",
+    "hint": "A step-by-step procedure for solving a problem",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ sortiert die Daten in Millisekunden."
+  },
+  {
+    "w": "SCHNITTSTELLE",
+    "en": "interface",
+    "ar": "واجهة",
+    "hint": "A point where two systems meet and interact",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ verbindet zwei verschiedene Systeme miteinander."
+  },
+  {
+    "w": "PROGRAMMIERER",
+    "en": "programmer",
+    "ar": "مبرمج",
+    "hint": "A person who writes computer programs",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ hat das neue Feature in drei Tagen fertiggestellt."
+  },
+  {
+    "w": "BETRIEBSSYSTEM",
+    "en": "operating system",
+    "ar": "نظام تشغيل",
+    "hint": "The core software that manages a computer",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das ___ läuft nach dem Update deutlich stabiler."
+  },
+  {
+    "w": "VERSCHLUESSELUNG",
+    "en": "encryption",
+    "ar": "تشفير",
+    "hint": "Converting data into a coded form for security",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ schützt die Daten vor unbefugtem Zugriff."
+  },
+  {
+    "w": "STARTEN",
+    "en": "to start / launch",
+    "ar": "يبدأ / يشغّل",
+    "hint": "Begin running a program or process",
+    "type": "verb",
+    "sentence": "Man muss die Anwendung nach der Installation neu ___."
+  },
+  {
+    "w": "LÖSCHEN",
+    "en": "to delete",
+    "ar": "يحذف",
+    "hint": "Permanently remove data or a file",
+    "type": "verb",
+    "sentence": "Sie können die Datei einfach aus dem System ___."
+  },
+  {
+    "w": "SPEICHERN",
+    "en": "to save",
+    "ar": "يحفظ",
+    "hint": "Store data so it is not lost",
+    "type": "verb",
+    "sentence": "Vergessen Sie nicht, Ihre Arbeit regelmäßig zu ___."
+  },
+  {
+    "w": "LADEN",
+    "en": "to load",
+    "ar": "يحمّل",
+    "hint": "Transfer data into memory for use",
+    "type": "verb",
+    "sentence": "Die Seite braucht zu lange, um zu ___."
+  },
+  {
+    "w": "KLICKEN",
+    "en": "to click",
+    "ar": "ينقر",
+    "hint": "Press a mouse button to select something",
+    "type": "verb",
+    "sentence": "Man muss auf den OK-Button ___, um fortzufahren."
+  },
+  {
+    "w": "INSTALLIEREN",
+    "en": "to install",
+    "ar": "يثبّت",
+    "hint": "Set up software on a computer",
+    "type": "verb",
+    "sentence": "Sie müssen die Software zuerst ___."
+  },
+  {
+    "w": "AKTUALISIEREN",
+    "en": "to update",
+    "ar": "يحدّث",
+    "hint": "Bring software to the latest version",
+    "type": "verb",
+    "sentence": "Das System muss regelmäßig ___ werden."
+  },
+  {
+    "w": "HERUNTERLADEN",
+    "en": "to download",
+    "ar": "يحمّل",
+    "hint": "Transfer data from a server to a local device",
+    "type": "verb",
+    "sentence": "Sie können das Programm kostenlos ___."
+  },
+  {
+    "w": "HOCHLADEN",
+    "en": "to upload",
+    "ar": "يرفع",
+    "hint": "Transfer data from a local device to a server",
+    "type": "verb",
+    "sentence": "Bitte ___ Sie das Dokument in das System."
+  },
+  {
+    "w": "TESTEN",
+    "en": "to test",
+    "ar": "يختبر",
+    "hint": "Check if software works correctly",
+    "type": "verb",
+    "sentence": "Wir müssen die neue Funktion gründlich ___."
+  },
+  {
+    "w": "DIGITAL",
+    "en": "digital",
+    "ar": "رقمي",
+    "hint": "Relating to data in binary form",
+    "type": "adjective",
+    "sentence": "Die Transformation des Unternehmens ist jetzt vollständig ___."
+  },
+  {
+    "w": "FEHLERHAFT",
+    "en": "buggy / faulty",
+    "ar": "معطوب",
+    "hint": "Containing errors or defects",
+    "type": "adjective",
+    "sentence": "Der ___ Code muss dringend korrigiert werden."
+  },
+  {
+    "w": "SKALIERBAR",
+    "en": "scalable",
+    "ar": "قابل للتوسع",
+    "hint": "Able to handle increased workload by expanding",
+    "type": "adjective",
+    "sentence": "Das System muss ___ sein, um zukünftiges Wachstum zu unterstützen."
+  },
+  {
+    "w": "KOMPATIBEL",
+    "en": "compatible",
+    "ar": "متوافق",
+    "hint": "Able to work together without conflict",
+    "type": "adjective",
+    "sentence": "Diese App ist leider nicht mit älteren Geräten ___."
+  }
+]
