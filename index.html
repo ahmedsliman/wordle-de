@@ -2646,6 +2646,7 @@
   <div class="streak-bar" id="streak-bar">
     <div class="streak-pill">🔥 Serie <span id="streak-current">0</span></div>
     <div class="streak-pill">🏆 Beste <span id="streak-best">0</span></div>
+    <div class="streak-pill" id="streak-freeze-pill" title="Streak-Schutz-Token (1 pro Woche, max. 2)" aria-label="Schutz-Token"><span id="streak-freeze"></span></div>
     <div class="streak-pill" id="streak-bar-diamonds" style="display:none;color:var(--color-correct-text)">💎 <span id="streak-diamond-count">0</span></div>
     <button class="streak-pill vocab-chip" id="vocab-chip" aria-label="Mein Wortschatz öffnen" title="Mein Wortschatz">📚 <span id="streak-vocab-count">0</span></button>
   </div>
@@ -3045,7 +3046,7 @@ const loadedLevels = new Set();   // tracks which level files are cached
 let currentLevel  = 'A1';          // kept for 2P compat (single level)
 let selectedLevels = new Set(['A1']); // 1P multi-select
 let gameOver     = false;
-let streak       = { current: 0, best: 0 };
+let streak       = { current: 0, best: 0, lastDate: null, freezes: 0, lastFreezeWeek: null };
 let animating    = false;
 
 // ─── 1P Crossword state ───────────────────────────────
@@ -3124,13 +3125,58 @@ function setTileSize(wordLen) {
 }
 
 // ─── Streak persistence ───────────────────────────────
+function isoWeek(dateStr) {
+  // Returns "YYYY-Www" for the ISO week containing the given YYYY-MM-DD date
+  const d = new Date(dateStr);
+  d.setUTCHours(0, 0, 0, 0);
+  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+  const year = d.getUTCFullYear();
+  const week = Math.ceil(((d - new Date(Date.UTC(year, 0, 1))) / 86400000 + 1) / 7);
+  return `${year}-W${String(week).padStart(2, '0')}`;
+}
+
 function loadStreak() {
   try {
     const s = JSON.parse(localStorage.getItem('wortle-streak') || '{}');
-    streak.current = s.current || 0;
-    streak.best    = s.best    || 0;
+    streak.current        = s.current        || 0;
+    streak.best           = s.best           || 0;
+    streak.lastDate       = s.lastDate       || null;
+    streak.freezes        = s.freezes        ?? 0;
+    streak.lastFreezeWeek = s.lastFreezeWeek || null;
   } catch {}
+
+  // Award 1 freeze token per calendar week (max held: 2)
+  const today = new Date().toISOString().slice(0, 10);
+  const thisWeek = isoWeek(today);
+  if (streak.lastFreezeWeek !== thisWeek && streak.freezes < 2) {
+    streak.freezes++;
+    streak.lastFreezeWeek = thisWeek;
+    saveStreak();
+  }
+
+  // Check if streak should have broken while away
+  if (streak.lastDate && streak.lastDate !== today) {
+    const diff = Math.round((new Date(today) - new Date(streak.lastDate)) / 86400000);
+    if (diff >= 2) {
+      if (streak.freezes > 0) {
+        streak.freezes--;
+        streak.current = Math.max(streak.current, 1);
+        saveStreak();
+        setTimeout(() => showMessage('🛡️ Streak-Schutz aktiv! Ein Token verbraucht.', ''), 1200);
+        setTimeout(() => showMessage('', ''), 4000);
+      } else {
+        streak.current = 0;
+        saveStreak();
+      }
+    }
+  }
+
   renderStreak();
+}
+
+function getFreezesDisplay() {
+  const shields = ['', '🛡️', '🛡️🛡️'];
+  return streak.freezes > 0 ? shields[Math.min(streak.freezes, 2)] : '';
 }
 
 function saveStreak() {
@@ -3142,6 +3188,10 @@ function saveStreak() {
 function renderStreak() {
   document.getElementById('streak-current').textContent = streak.current;
   document.getElementById('streak-best').textContent    = streak.best;
+  const freezeEl   = document.getElementById('streak-freeze');
+  const freezePill = document.getElementById('streak-freeze-pill');
+  if (freezeEl)   freezeEl.textContent = getFreezesDisplay();
+  if (freezePill) freezePill.style.display = streak.freezes > 0 ? '' : 'none';
 }
 
 // ─── Diamond persistence ───────────────────────────────
@@ -4357,13 +4407,17 @@ function endCrossword(won) {
       setTimeout(() => earnDiamonds(b.amount, 'puzzle_bonus', counterEl), 400 + i * 600);
     });
 
-    // Update streak
+    // Update streak (once per calendar day)
     if (!usedReveal) {
-      streak.current++;
-      if (streak.current > streak.best) streak.best = streak.current;
-      saveStreak();
-      renderStreak();
-      checkStreakMilestones();
+      const today = new Date().toISOString().slice(0, 10);
+      if (streak.lastDate !== today) {
+        streak.current++;
+        streak.lastDate = today;
+        if (streak.current > streak.best) streak.best = streak.current;
+        saveStreak();
+        renderStreak();
+        checkStreakMilestones();
+      }
     }
 
     // Grade words into the review deck + build the review panel (returns learning stats)
