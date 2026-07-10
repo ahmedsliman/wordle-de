@@ -1,0 +1,42 @@
+{
+  "name": "Wörtle – Deutsch lernen",
+  "short_name": "Wörtle",
+  "description": "Lerne deutsche Wörter mit Kreuzworträtsel, Satz-Übungen und Artikel-Drill.",
+  "start_url": ".",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FAFAF8",
+  "theme_color": "#1D9E75",
+  "orientation": "portrait-primary",
+  "lang": "de",
+  "categories": ["education", "games"],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Kreuzwort spielen",
+      "short_name": "Kreuzwort",
+      "url": "./?mode=crossword",
+      "description": "Starte direkt ein Kreuzworträtsel"
+    },
+    {
+      "name": "Artikel-Sprint",
+      "short_name": "Artikel",
+      "url": "./?mode=artikel",
+      "description": "Der, die oder das — schnell üben"
+    }
+  ]
+}
