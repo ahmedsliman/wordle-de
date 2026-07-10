@@ -1,9 +1,11 @@
 /* Wörtle service worker — cache-first for all static assets */
-const CACHE = 'wortle-v3';
+const CACHE = 'wortle-v4';
 
 const PRECACHE = [
   './',
   './index.html',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
   './words/a1.json',
   './words/a2.json',
   './words/b1.json',
