@@ -1412,6 +1412,20 @@
       /* Streak bar and pack strip have no space in locked viewport */
       body.cw-active #streak-bar { display: none; }
       body.cw-active .pack-strip { display: none; }
+      /* Hide mode-switcher during crossword play or any active game on mobile */
+      body.cw-active   .mode-switcher,
+      body.game-active .mode-switcher { display: none; }
+
+      /* Viewport lock for non-crossword game modes */
+      body.game-active {
+        height: 100dvh;
+        overflow: hidden;
+      }
+      body.game-active #game-main {
+        min-height: 0;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
 
       /* Collapsible chrome: collapse chips + progress when a cell is selected */
       body.cw-active #cw-progress,
@@ -2598,7 +2612,7 @@
     /* ─── Home Screen ───────────────────────────────────── */
     #home-screen {
       width: 100%; display: flex; flex-direction: column; gap: 0;
-      padding: 16px 16px 100px;
+      padding: 16px 16px 32px;
     }
     .home-greeting {
       font-family: 'Fraunces', serif;
@@ -2667,15 +2681,52 @@
     .home-mode-desc  { font-size: 0.72rem; color: var(--color-text-muted); line-height: 1.3; }
     .home-mode-timing { font-size: 0.68rem; font-weight: 600; margin-top: 4px; opacity: 0.65; }
     .home-level-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .path-chip {
       display: flex; align-items: center; gap: 8px;
-      overflow-x: auto; padding-bottom: 4px; scrollbar-width: none;
-      margin-bottom: 8px;
+      padding: 10px 12px; border-radius: 12px;
+      border: 1.5px solid var(--hairline);
+      background: var(--color-surface); box-shadow: var(--shadow-sm);
+      text-align: left; cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      -webkit-tap-highlight-color: transparent;
     }
-    .home-level-row::-webkit-scrollbar { display: none; }
-    .home-level-label-txt {
-      font-size: 0.72rem; font-weight: 700; color: var(--color-text-muted);
-      text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; flex-shrink: 0;
+    .path-chip:active { transform: scale(0.97); }
+    .path-chip.active {
+      border-color: var(--color-correct-text);
+      background: color-mix(in srgb, var(--color-correct-text) 10%, transparent);
     }
+    .path-chip-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .path-chip-label { font-size: 0.78rem; font-weight: 600; color: var(--color-text); line-height: 1.2; }
+    .path-chip.active .path-chip-label { color: var(--color-correct-text); }
+
+    /* ─── Daily progress bar ─────────────────────────────── */
+    .home-daily-bar { margin-bottom: 20px; }
+    .daily-progress-label { font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 6px; }
+    .daily-progress-label strong { color: var(--color-text); font-weight: 700; }
+    .daily-progress-track {
+      height: 6px; border-radius: 3px; background: var(--hairline); overflow: hidden;
+    }
+    .daily-progress-fill {
+      height: 100%; border-radius: 3px; background: var(--color-correct);
+      transition: width 0.4s ease;
+    }
+
+    /* ─── Schreiben mode ─────────────────────────────────── */
+    .schreiben-umlaut {
+      padding: 8px 14px; border-radius: 8px; border: 1.5px solid var(--hairline);
+      background: var(--color-surface); color: var(--color-text);
+      font-family: 'DM Mono', monospace; font-size: 1rem; font-weight: 700;
+      cursor: pointer; min-height: 40px; min-width: 44px;
+      transition: background 0.1s;
+    }
+    .schreiben-umlaut:hover { background: var(--color-correct); color: #fff; border-color: var(--color-correct); }
+    #schreiben-input.correct { border-color: var(--color-correct); background: rgba(29,158,117,0.06); }
+    #schreiben-input.wrong   { border-color: #ef4444; animation: shake 0.35s; }
   </style>
 </head>
 
@@ -2772,6 +2823,10 @@
       <span class="mode-switch-icon">🃏</span>
       <span class="mode-switch-label">Paare</span>
     </button>
+    <button class="mode-switch-btn" id="switch-schreiben" role="tab" aria-selected="false" aria-controls="schreiben-panel">
+      <span class="mode-switch-icon">✏️</span>
+      <span class="mode-switch-label">Schreiben</span>
+    </button>
   </div>
 
   <main id="game-main" tabindex="-1">
@@ -2787,11 +2842,12 @@
       <div class="home-stat-pill">💎 <span id="home-diamond-val">0</span></div>
       <div class="home-stat-pill home-due-pill" id="home-due-pill" style="display:none">★ <span id="home-due-val">0</span> fällig</div>
     </div>
+    <div id="home-daily-bar" class="home-daily-bar"></div>
     <div class="home-section-title">Heute empfohlen</div>
     <div class="today-mix-row" id="today-mix-row"></div>
     <div class="home-section-title">Alle Modi</div>
     <div class="home-modes-grid" id="home-modes-grid"></div>
-    <div class="home-section-title">Niveau</div>
+    <div class="home-section-title">Lernpfad</div>
     <div class="home-level-row" id="home-level-row"></div>
   </div>
 
@@ -3028,6 +3084,34 @@
     </div>
     <div class="pairs-grid" id="pairs-grid" role="group" aria-label="Match-Paare"></div>
     <div class="satz-feedback" id="pairs-feedback" aria-live="polite" style="min-height:28px;"></div>
+  </div>
+
+  <!-- ── Schreiben (Type German from English) ──────── -->
+  <div id="schreiben-panel" class="hidden" style="width:100%;max-width:560px;display:flex;flex-direction:column;align-items:center;gap:16px;padding:16px 16px 32px;flex:1;">
+    <div class="satz-top-bar">
+      <div class="satz-progress" id="schreiben-progress"><div id="schreiben-progress-fill" style="height:100%;border-radius:2px;background:var(--color-correct);transition:width 0.3s;"></div></div>
+      <span class="satz-round-badge" id="schreiben-badge" style="background:rgba(8,145,178,0.12);color:#0891b2;">✏️ SCHREIBEN</span>
+      <span style="font-size:0.78rem;color:var(--color-text-muted);" id="schreiben-counter">1 / 10</span>
+    </div>
+    <div id="schreiben-prompt-card" style="width:100%;background:var(--color-surface);border-radius:20px;padding:28px 24px;text-align:center;box-shadow:var(--shadow-sm);">
+      <div id="schreiben-article-hint" style="font-size:0.78rem;font-weight:600;color:var(--color-text-muted);margin-bottom:6px;letter-spacing:0.04em;text-transform:uppercase;"></div>
+      <div id="schreiben-en" style="font-size:2rem;font-weight:700;color:var(--color-text);font-family:'DM Mono',monospace;"></div>
+      <div id="schreiben-ar" style="font-size:0.88rem;color:var(--color-text-muted);margin-top:6px;"></div>
+    </div>
+    <div style="width:100%;display:flex;flex-direction:column;align-items:center;gap:12px;">
+      <div id="schreiben-reveal" style="min-height:24px;font-size:0.9rem;color:var(--color-text-muted);"></div>
+      <input id="schreiben-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false"
+        placeholder="Deutsches Wort eingeben…"
+        style="width:100%;max-width:360px;padding:14px 16px;font-family:'DM Mono',monospace;font-size:1.1rem;border:2px solid var(--color-border);border-radius:12px;background:var(--color-bg);color:var(--color-text);text-transform:uppercase;text-align:center;" />
+      <div style="display:flex;gap:8px;">
+        <button class="schreiben-umlaut" data-ch="Ä">Ä</button>
+        <button class="schreiben-umlaut" data-ch="Ö">Ö</button>
+        <button class="schreiben-umlaut" data-ch="Ü">Ü</button>
+        <button class="schreiben-umlaut" data-ch="ß">ß</button>
+      </div>
+      <button id="schreiben-check-btn" style="padding:12px 32px;border-radius:999px;background:var(--color-correct);color:#fff;font-weight:700;font-size:0.95rem;border:none;cursor:pointer;min-height:44px;">Prüfen</button>
+      <button id="schreiben-skip-btn" style="font-size:0.78rem;color:var(--color-text-muted);background:none;border:none;cursor:pointer;padding:4px 8px;">Überspringen</button>
+    </div>
   </div>
 
   <!-- Pairs summary overlay -->
@@ -3666,8 +3750,39 @@ function recentMissRate() {
 
 function isStruggling() { return recentMissRate() > 0.40; }
 
+// ─── Daily progress tracking ──────────────────────────────
+let dailyProgress = { date: '', newWords: [], reviewCount: 0 };
+const DAILY_NEW_GOAL = 10;
+
+function loadDailyProgress() {
+  try {
+    const raw = JSON.parse(localStorage.getItem('wortle-daily') || '{}');
+    const today = new Date().toISOString().slice(0,10);
+    if (raw.date === today) {
+      dailyProgress = raw;
+    } else {
+      dailyProgress = { date: today, newWords: [], reviewCount: 0 };
+      saveDailyProgress();
+    }
+  } catch(e) {}
+}
+function saveDailyProgress() {
+  try { localStorage.setItem('wortle-daily', JSON.stringify(dailyProgress)); } catch(e) {}
+}
+function trackNewWord(word) {
+  if (!dailyProgress.newWords.includes(word)) {
+    dailyProgress.newWords.push(word);
+    saveDailyProgress();
+  }
+}
+function trackReview() {
+  dailyProgress.reviewCount++;
+  saveDailyProgress();
+}
+
 // Record a review outcome. `correct` advances the box; wrong resets to box 0.
 function gradeReview(word, correct) {
+  const isNew = !reviewDeck.cards[word] || (reviewDeck.cards[word].seen || 0) === 0;
   let c = reviewDeck.cards[word];
   if (!c) c = { box: 0, due: dayStr(), seen: 0, correct: 0,
                 level: wordLevelIndex[word] || currentLevel, type: (wordEntryIndex[word] || {}).type };
@@ -3683,6 +3798,8 @@ function gradeReview(word, correct) {
   c.lastSeen = dayStr();
   reviewDeck.cards[word] = c;
   saveReview();
+  if (isNew) trackNewWord(word);
+  else trackReview();
   return c;
 }
 
@@ -5921,6 +6038,19 @@ const LEVEL_FILES = {
 };
 const PACK_LEVELS = new Set(['BUSINESS','MEDICAL','SOFTWARE','ENGINEERING','LEGAL']);
 
+const PATHS = [
+  { id:'A1',          label:'Grundstufe A1',    desc:'Erste 200 Wörter',          icon:'🌱', cefr:['A1'],         domain:null },
+  { id:'A2',          label:'Aufbaustufe A2',   desc:'Alltag & Reise',             icon:'🌿', cefr:['A2'],         domain:null },
+  { id:'B1',          label:'Mittelstufe B1',   desc:'Goethe B1 Vorbereitung',     icon:'🌳', cefr:['B1'],         domain:null },
+  { id:'B2',          label:'Oberstufe B2',     desc:'Fließend kommunizieren',     icon:'🎓', cefr:['B2'],         domain:null },
+  { id:'REVIEW',      label:'Wiederholung',     desc:'Fällige Wörter üben',        icon:'★',  cefr:[],             domain:null },
+  { id:'BUSINESS',    label:'Beruf: Wirtschaft',desc:'Business & Büro',            icon:'💼', cefr:['A2','B1','B2'],domain:'BUSINESS' },
+  { id:'MEDICAL',     label:'Beruf: Medizin',   desc:'Arzt & Gesundheit',          icon:'🩺', cefr:['A2','B1','B2'],domain:'MEDICAL' },
+  { id:'SOFTWARE',    label:'Beruf: IT',        desc:'Tech & Software',            icon:'💻', cefr:['B1','B2'],    domain:'SOFTWARE' },
+  { id:'ENGINEERING', label:'Beruf: Technik',   desc:'Ingenieurwesen',             icon:'⚙️', cefr:['B1','B2'],    domain:'ENGINEERING' },
+  { id:'LEGAL',       label:'Beruf: Recht',     desc:'Jura & Verwaltung',          icon:'⚖️', cefr:['B1','B2'],    domain:'LEGAL' },
+];
+
 async function loadLevel(lvl) {
   if (loadedLevels.has(lvl)) return;
   const res = await fetch(`./${LEVEL_FILES[lvl]}`);
@@ -5959,6 +6089,9 @@ async function init() {
     loadStreak();
     loadDiamonds();
     loadReview();
+    loadDailyProgress();
+    const savedPath = localStorage.getItem('wortle-path') || 'A1';
+    selectPath(savedPath);
     showHome();
     updateThemeBtn();
     loading.classList.add('hidden');
@@ -6117,6 +6250,7 @@ let satzOrderPool   = []; // {word, idx, el} word chips
 
 function showSatzPanel() {
   hideAllGamePanels();
+  document.body.classList.add('game-active');
   gameMode = 'SATZ';
   document.getElementById('satz-panel').classList.remove('hidden');
   document.getElementById('streak-bar').classList.remove('hidden');
@@ -6445,7 +6579,7 @@ document.getElementById('satz-back-btn').addEventListener('click', () => {
 
 // ── Mode switcher buttons ──
 function setModeSwitcher(active) {
-  const map = { cw: 'switch-crossword', satz: 'switch-satz', artikel: 'switch-artikel', listen: 'switch-listen', mc: 'switch-mc', pairs: 'switch-pairs' };
+  const map = { cw: 'switch-crossword', satz: 'switch-satz', artikel: 'switch-artikel', listen: 'switch-listen', mc: 'switch-mc', pairs: 'switch-pairs', schreiben: 'switch-schreiben' };
   for (const [key, id] of Object.entries(map)) {
     const el = document.getElementById(id);
     el.classList.toggle('active', key === active);
@@ -6483,6 +6617,7 @@ function titleCaseWord(w) { return w.charAt(0) + w.slice(1).toLowerCase(); }
 
 function showArtikelPanel() {
   hideAllGamePanels();
+  document.body.classList.add('game-active');
   gameMode = 'ARTIKEL';
   document.getElementById('artikel-panel').classList.remove('hidden');
   document.getElementById('streak-bar').classList.remove('hidden');
@@ -6534,7 +6669,8 @@ function renderArtikelRound() {
   document.getElementById('artikel-progress-text').textContent = (artikelIdx + 1) + ' / ' + artikelQueue.length;
 
   document.getElementById('artikel-word').textContent = titleCaseWord(e.w);
-  document.getElementById('artikel-meta').textContent = e.en + (e.ar ? ' · ' + e.ar : '');
+  document.getElementById('artikel-meta').textContent =
+    (e.article ? e.article + ' · ' : '') + e.en + (e.ar ? ' · ' + e.ar : '');
   const audio = document.getElementById('artikel-audio-btn');
   audio.onclick = () => speakWord(e.w, audio);
 
@@ -6626,6 +6762,7 @@ function hidePairsPanel() {
 
 async function startPairsMode() {
   hideAllGamePanels();
+  document.body.classList.add('game-active');
   gameMode = 'PAARE';
   setModeSwitcher('pairs');
   document.getElementById('pairs-panel').classList.remove('hidden');
@@ -6779,6 +6916,7 @@ function hideMcPanel() {
 
 async function startMcMode() {
   hideAllGamePanels();
+  document.body.classList.add('game-active');
   gameMode = 'MC';
   setModeSwitcher('mc');
   document.getElementById('mc-panel').classList.remove('hidden');
@@ -6827,7 +6965,7 @@ function showMcRound() {
   // Question: show the German word, ask for English
   document.getElementById('mc-question').textContent = entry.w;
   const art = entry.type === 'noun' && entry.article ? entry.article + ' ' : '';
-  document.getElementById('mc-subtitle').textContent = entry.type === 'noun' ? art + entry.w : entry.w;
+  document.getElementById('mc-subtitle').textContent = entry.type === 'noun' ? art + entry.w : (entry.type === 'verb' ? 'Verb · ' + entry.w : entry.w);
   document.getElementById('mc-feedback').innerHTML = '';
 
   // Build 4 choices (1 correct, 3 random distractors)
@@ -6924,14 +7062,139 @@ function hideListenPanel() {
   document.getElementById('listen-panel').classList.add('hidden');
 }
 
+// ─── Schreiben (Write German from English) ────────────────
+const SCHREIBEN_ROUNDS = 10;
+let schreibenQueue   = [];
+let schreibenIdx     = 0;
+let schreibenResults = [];
+let schreibenLocked  = false;
+
+async function startSchreibenMode() {
+  hideAllGamePanels();
+  document.body.classList.add('game-active');
+  gameMode = 'SCHREIBEN';
+  setModeSwitcher('schreiben');
+  document.getElementById('schreiben-panel').classList.remove('hidden');
+  document.getElementById('streak-bar').classList.remove('hidden');
+
+  const lvls = selectedLevels.has('REVIEW') ? new Set(['A1','A2','B1','B2']) : selectedLevels;
+  await ensureLevels(lvls);
+  const seen = new Set();
+  let pool = [...lvls].flatMap(lvl => words[lvl] || [])
+    .filter(e => { if (seen.has(e.w)) return false; seen.add(e.w); return true; });
+  if (pool.length < 4) { showMessage('Nicht genug Wörter.', 'lose'); return; }
+
+  const due = new Set(dueWords());
+  const duePart  = pool.filter(e => due.has(e.w)).sort(() => Math.random()-0.5).slice(0, 3);
+  const restPart = pool.filter(e => !due.has(e.w)).sort(() => Math.random()-0.5).slice(0, SCHREIBEN_ROUNDS - duePart.length);
+  schreibenQueue   = [...duePart, ...restPart].sort(() => Math.random()-0.5);
+  schreibenIdx     = 0;
+  schreibenResults = [];
+  schreibenLocked  = false;
+  renderSchreibenRound();
+}
+
+function renderSchreibenRound() {
+  if (schreibenIdx >= schreibenQueue.length) { showSchreibenSummary(); return; }
+  const e = schreibenQueue[schreibenIdx];
+  schreibenLocked = false;
+
+  document.getElementById('schreiben-progress-fill').style.width = (schreibenIdx / schreibenQueue.length * 100) + '%';
+  document.getElementById('schreiben-counter').textContent = (schreibenIdx + 1) + ' / ' + schreibenQueue.length;
+
+  const hint = e.type === 'noun' && e.article ? 'Nomen · ' + e.article : e.type === 'verb' ? 'Verb' : e.type === 'adjective' ? 'Adjektiv' : '';
+  document.getElementById('schreiben-article-hint').textContent = hint;
+  document.getElementById('schreiben-en').textContent = e.en || e.hint || '';
+  document.getElementById('schreiben-ar').textContent = e.ar || '';
+  document.getElementById('schreiben-reveal').textContent = '';
+  document.getElementById('schreiben-reveal').style.color = '';
+
+  const input = document.getElementById('schreiben-input');
+  input.value = '';
+  input.className = '';
+  input.style.borderColor = '';
+  document.getElementById('schreiben-check-btn').textContent = 'Prüfen';
+  input.focus();
+}
+
+function checkSchreiben() {
+  if (schreibenLocked) {
+    schreibenIdx++;
+    renderSchreibenRound();
+    return;
+  }
+  const e = schreibenQueue[schreibenIdx];
+  const input = document.getElementById('schreiben-input');
+  const answer = input.value.trim().toUpperCase();
+  const correct = answer === e.w.toUpperCase() || norm(answer.toLowerCase()) === norm(e.w.toLowerCase());
+
+  schreibenLocked = true;
+  schreibenResults.push({ entry: e, answer, correct });
+  gradeReview(e.w, correct);
+
+  const revealEl = document.getElementById('schreiben-reveal');
+  if (correct) {
+    input.classList.add('correct');
+    revealEl.textContent = '✓ ' + e.w;
+    revealEl.style.color = 'var(--color-correct)';
+  } else {
+    input.classList.add('wrong');
+    revealEl.innerHTML = '✗   Richtig: <strong>' + e.w + '</strong>';
+    revealEl.style.color = '#ef4444';
+    speakWord(e.w);
+  }
+  document.getElementById('schreiben-check-btn').textContent = 'Weiter →';
+}
+
+function showSchreibenSummary() {
+  const correct = schreibenResults.filter(r => r.correct).length;
+  const total   = schreibenResults.length;
+  showMessage('✏️ ' + correct + '/' + total + ' richtig!', correct >= total * 0.8 ? 'win' : 'lose');
+  setTimeout(() => {
+    showMessage('', '');
+    showHome();
+  }, 2500);
+}
+
+document.getElementById('schreiben-check-btn').addEventListener('click', checkSchreiben);
+document.getElementById('schreiben-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkSchreiben();
+});
+document.getElementById('schreiben-skip-btn').addEventListener('click', () => {
+  if (!schreibenLocked) {
+    schreibenResults.push({ entry: schreibenQueue[schreibenIdx], answer: '', correct: false });
+    gradeReview(schreibenQueue[schreibenIdx].w, false);
+  }
+  schreibenIdx++;
+  renderSchreibenRound();
+});
+document.querySelectorAll('.schreiben-umlaut').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const input = document.getElementById('schreiben-input');
+    const ch = btn.dataset.ch;
+    const pos = input.selectionStart;
+    input.value = input.value.slice(0, pos) + ch + input.value.slice(pos);
+    input.setSelectionRange(pos + 1, pos + 1);
+    input.focus();
+  });
+});
+document.getElementById('switch-schreiben').addEventListener('click', () => {
+  if (gameMode === 'SCHREIBEN') return;
+  startSchreibenMode();
+});
+
+function hideSchreibenPanel() {
+  document.getElementById('schreiben-panel')?.classList.add('hidden');
+}
+
 function hideAllGamePanels() {
-  hideSatzPanel(); hideArtikelPanel(); hideListenPanel(); hideMcPanel(); hidePairsPanel();
+  hideSatzPanel(); hideArtikelPanel(); hideListenPanel(); hideMcPanel(); hidePairsPanel(); hideSchreibenPanel();
   ['cw-clue-bar','cw-progress','clue-chips','crossword-area','cw-actions','cw-keyboard'].forEach(id => {
     document.getElementById(id)?.classList.add('hidden');
   });
   document.getElementById('wordle-panel')?.classList.add('hidden');
   document.getElementById('pack-strip')?.classList.add('hidden');
-  document.body.classList.remove('cw-active','cw-typing');
+  document.body.classList.remove('cw-active','cw-typing','game-active');
   clearInterval(mcTimerInterval);
 }
 
@@ -6942,6 +7205,7 @@ async function startListenMode() {
     return;
   }
   hideAllGamePanels();
+  document.body.classList.add('game-active');
   gameMode = 'HÖREN';
   setModeSwitcher('listen');
   document.getElementById('listen-panel').classList.remove('hidden');
@@ -7294,12 +7558,13 @@ if ('serviceWorker' in navigator) {
 
 // ─── Home screen ──────────────────────────────────────────────────────────────
 const HOME_MODES = [
-  {icon:'⊞', id:'1P',      label:'Kreuzwort', desc:'Wörter im Kreuzrätsel', timing:'3–5 Min',    color:'#1D9E75'},
-  {icon:'✍', id:'SATZ',    label:'Sätze',     desc:'Lückentext & Wortfolge',timing:'10 Runden',  color:'#4f46e5'},
-  {icon:'⚖', id:'ARTIKEL', label:'Artikel',   desc:'der, die oder das?',    timing:'1 Min',      color:'#7c3aed'},
-  {icon:'👂', id:'HÖREN',  label:'Hören',     desc:'Diktat nach Ton',       timing:'10 Runden',  color:'#d97706'},
-  {icon:'⚡', id:'MC',     label:'Quiz',       desc:'4 Optionen · 60 Sek',   timing:'60 Sek',    color:'#2563eb'},
-  {icon:'🃏', id:'PAARE',  label:'Paare',     desc:'Wörter zuordnen',       timing:'2–3 Min',    color:'#e11d48'},
+  {icon:'⊞', id:'1P',          label:'Kreuzwort', desc:'Wörter im Kreuzrätsel', timing:'3–5 Min',    color:'#1D9E75'},
+  {icon:'✍', id:'SATZ',        label:'Sätze',     desc:'Lückentext & Wortfolge',timing:'10 Runden',  color:'#4f46e5'},
+  {icon:'⚖', id:'ARTIKEL',     label:'Artikel',   desc:'der, die oder das?',    timing:'1 Min',      color:'#7c3aed'},
+  {icon:'👂', id:'HÖREN',      label:'Hören',     desc:'Diktat nach Ton',       timing:'10 Runden',  color:'#d97706'},
+  {icon:'⚡', id:'MC',         label:'Quiz',       desc:'4 Optionen · 60 Sek',  timing:'60 Sek',    color:'#2563eb'},
+  {icon:'🃏', id:'PAARE',      label:'Paare',     desc:'Wörter zuordnen',       timing:'2–3 Min',    color:'#e11d48'},
+  {icon:'✏️', id:'SCHREIBEN',  label:'Schreiben', desc:'Tippe das deutsche Wort',timing:'10 Runden', color:'#0891b2'},
 ];
 
 function buildTodaysMix() {
@@ -7337,6 +7602,46 @@ function launchMode(modeId) {
   else if (modeId === 'HÖREN')     { setModeSwitcher('listen');  startListenMode(); }
   else if (modeId === 'MC')        { setModeSwitcher('mc');      startMcMode(); }
   else if (modeId === 'PAARE')     { setModeSwitcher('pairs');   startPairsMode(); }
+  else if (modeId === 'SCHREIBEN') { setModeSwitcher('schreiben'); startSchreibenMode(); }
+}
+
+function selectPath(pathId) {
+  const path = PATHS.find(p => p.id === pathId);
+  if (!path) return;
+  if (path.domain) {
+    // Domain pack
+    selectedLevels = new Set([path.domain]);
+    currentLevel   = path.domain;
+    selectPack(path.domain);
+    // Deactivate CEFR tabs
+    document.querySelectorAll('#level-tabs .tab').forEach(t => {
+      t.classList.remove('active'); t.setAttribute('aria-pressed','false');
+    });
+  } else if (path.id === 'REVIEW') {
+    selectedLevels = new Set(['REVIEW']);
+    currentLevel   = 'REVIEW';
+    selectPack(null);
+    document.querySelectorAll('#level-tabs .tab').forEach(t => {
+      const on = t.dataset.level === 'REVIEW';
+      t.classList.toggle('active', on);
+      t.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  } else {
+    selectedLevels = new Set([path.id]);
+    currentLevel   = path.id;
+    selectPack(null);
+    document.querySelectorAll('#level-tabs .tab').forEach(t => {
+      const on = t.dataset.level === path.id;
+      t.classList.toggle('active', on);
+      t.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+  // Persist chosen path
+  try { localStorage.setItem('wortle-path', pathId); } catch(e){}
+  // Update home screen path row
+  document.querySelectorAll('[data-path-id]').forEach(el => {
+    el.classList.toggle('active', el.dataset.pathId === pathId);
+  });
 }
 
 function buildHome() {
@@ -7356,6 +7661,20 @@ function buildHome() {
   const duePill = document.getElementById('home-due-pill');
   document.getElementById('home-due-val').textContent = due;
   duePill.style.display = due > 0 ? '' : 'none';
+
+  // Daily progress bar
+  const statBar = document.getElementById('home-daily-bar');
+  if (statBar) {
+    const newCount = dailyProgress.newWords.length;
+    const reviewCount = dailyProgress.reviewCount;
+    const goalMet = newCount >= DAILY_NEW_GOAL;
+    const pct = Math.min(100, (newCount / DAILY_NEW_GOAL) * 100);
+    statBar.innerHTML =
+      '<div class="daily-progress-label">' +
+        (goalMet ? '🎉 Tagesziel erreicht!' : 'Heute: <strong>' + newCount + '</strong> neu · <strong>' + reviewCount + '</strong> wiederholt') +
+      '</div>' +
+      '<div class="daily-progress-track"><div class="daily-progress-fill" style="width:' + pct + '%"></div></div>';
+  }
 
   // Today's Mix
   const mixRow = document.getElementById('today-mix-row');
@@ -7386,72 +7705,21 @@ function buildHome() {
     grid.appendChild(card);
   });
 
-  // Level/pack row
-  const levelRow = document.getElementById('home-level-row');
-  levelRow.innerHTML = '';
-  const CEFR = ['A1','A2','B1','B2'];
-  [...CEFR, 'REVIEW'].forEach(lvl => {
+  // Lernpfad (unified path picker)
+  const pathSection = document.getElementById('home-level-row');
+  pathSection.innerHTML = '';
+  PATHS.forEach(path => {
     const btn = document.createElement('button');
-    btn.className = 'pack-btn' + (selectedLevels.has(lvl) ? ' active' : '');
-    btn.dataset.homeLvl = lvl;
-    btn.textContent = lvl === 'REVIEW' ? '★ Wdh.' : lvl;
-    btn.setAttribute('aria-pressed', selectedLevels.has(lvl) ? 'true' : 'false');
+    const isActive = (path.domain && selectedLevels.has(path.domain)) ||
+                     (!path.domain && selectedLevels.has(path.id));
+    btn.className = 'path-chip' + (isActive ? ' active' : '');
+    btn.dataset.pathId = path.id;
+    btn.innerHTML = '<span class="path-chip-icon">' + path.icon + '</span><span class="path-chip-label">' + path.label + '</span>';
+    btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     btn.addEventListener('click', () => {
-      if (lvl === 'REVIEW') { selectedLevels = new Set(['REVIEW']); }
-      else {
-        selectedLevels.delete('REVIEW');
-        PACK_LEVELS.forEach(p => selectedLevels.delete(p));
-        if (selectedLevels.has(lvl) && selectedLevels.size > 1) selectedLevels.delete(lvl);
-        else selectedLevels.add(lvl);
-      }
-      currentLevel = [...selectedLevels][0];
-      selectPack(null);
-      document.querySelectorAll('#level-tabs .tab').forEach(t => {
-        const on = selectedLevels.has(t.dataset.level);
-        t.classList.toggle('active', on);
-        t.setAttribute('aria-pressed', on ? 'true' : 'false');
-      });
-      levelRow.querySelectorAll('[data-home-lvl]').forEach(b => {
-        const on = selectedLevels.has(b.dataset.homeLvl);
-        b.classList.toggle('active', on);
-        b.setAttribute('aria-pressed', on ? 'true' : 'false');
-      });
+      selectPath(path.id);
     });
-    levelRow.appendChild(btn);
-  });
-
-  // Domain packs
-  [{key:'BUSINESS',label:'💼 Wirtschaft'},{key:'MEDICAL',label:'🩺 Medizin'},
-   {key:'SOFTWARE',label:'💻 IT'},{key:'ENGINEERING',label:'⚙️ Technik'},{key:'LEGAL',label:'⚖️ Recht'}]
-  .forEach(p => {
-    const btn = document.createElement('button');
-    btn.className = 'pack-btn' + (selectedLevels.has(p.key) ? ' active' : '');
-    btn.dataset.homeLvl = p.key;
-    btn.textContent = p.label;
-    btn.setAttribute('aria-pressed', selectedLevels.has(p.key) ? 'true' : 'false');
-    btn.addEventListener('click', () => {
-      if (selectedLevels.has(p.key)) {
-        selectedLevels = new Set(['A1']); currentLevel = 'A1';
-        selectPack(null);
-      } else {
-        selectPack(p.key);
-        selectedLevels = new Set([p.key]); currentLevel = p.key;
-        document.querySelectorAll('#level-tabs .tab').forEach(t => {
-          t.classList.remove('active'); t.setAttribute('aria-pressed','false');
-        });
-      }
-      document.querySelectorAll('#pack-strip .pack-btn').forEach(b => {
-        const on = b.dataset.pack === p.key;
-        b.classList.toggle('active', on);
-        b.setAttribute('aria-pressed', on ? 'true' : 'false');
-      });
-      levelRow.querySelectorAll('[data-home-lvl]').forEach(b => {
-        const on = selectedLevels.has(b.dataset.homeLvl);
-        b.classList.toggle('active', on);
-        b.setAttribute('aria-pressed', on ? 'true' : 'false');
-      });
-    });
-    levelRow.appendChild(btn);
+    pathSection.appendChild(btn);
   });
 }
 
@@ -7459,10 +7727,10 @@ function showHome() {
   document.getElementById('home-screen').classList.remove('hidden');
   document.body.classList.add('on-home');
   ['crossword-area','cw-clue-bar','cw-actions','satz-panel','artikel-panel',
-   'listen-panel','mc-panel','pairs-panel','streak-bar','wordle-panel'].forEach(id => {
+   'listen-panel','mc-panel','pairs-panel','schreiben-panel','streak-bar','wordle-panel'].forEach(id => {
     document.getElementById(id)?.classList.add('hidden');
   });
-  document.body.classList.remove('cw-active','cw-typing');
+  document.body.classList.remove('cw-active','cw-typing','game-active');
   clearInterval(mcTimerInterval);
   buildHome();
 }
