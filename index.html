@@ -2373,10 +2373,47 @@
     .satz-summary-item.lose .satz-item-icon { background: rgba(239,68,68,0.08); }
 
     /* ── Artikel-Sprint (der/die/das drill) ── */
-    #artikel-panel {
+    #artikel-panel, #listen-panel {
       max-width: 460px; margin: 0 auto; padding: 16px 16px 32px;
       display: flex; flex-direction: column; gap: 16px;
     }
+
+    /* ── Listen & Type panel ── */
+    .listen-card {
+      background: var(--color-surface); border: 1px solid var(--hairline);
+      border-radius: 16px; padding: 32px 16px; text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .listen-speak-btn {
+      width: 80px; height: 80px; border-radius: 50%;
+      border: 2.5px solid var(--color-present);
+      background: rgba(239,159,39,0.08); color: var(--color-text);
+      font-size: 2rem; cursor: pointer; display: flex; align-items: center;
+      justify-content: center; transition: transform 0.12s, background 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .listen-speak-btn:hover { background: rgba(239,159,39,0.16); transform: scale(1.06); }
+    .listen-speak-btn:active { transform: scale(0.94); }
+    .listen-speak-btn.speaking { animation: listen-pulse 0.8s ease-in-out infinite alternate; }
+    @keyframes listen-pulse {
+      from { box-shadow: 0 0 0 0 rgba(239,159,39,0.4); }
+      to   { box-shadow: 0 0 0 12px rgba(239,159,39,0); }
+    }
+    .listen-hint { font-size: 1rem; color: var(--color-text-muted); line-height: 1.5; }
+    .listen-hint strong { color: var(--color-text); }
+    .listen-input-row {
+      display: flex; gap: 8px; width: 100%;
+    }
+    .listen-input {
+      flex: 1; font-family: 'DM Mono', monospace; font-size: 1.1rem;
+      padding: 12px 14px; border-radius: 12px; min-height: 44px;
+      border: 2px solid var(--color-border); background: var(--color-surface);
+      color: var(--color-text); outline: none; transition: border-color 0.15s;
+    }
+    .listen-input:focus { border-color: var(--color-correct); }
+    .listen-input.correct { border-color: var(--color-correct); background: rgba(29,158,117,0.06); }
+    .listen-input.wrong   { border-color: var(--gender-die); background: rgba(239,68,68,0.05); animation: shake 0.35s; }
     .satz-round-badge.artikel { background: rgba(124,58,237,0.12); color: #7c3aed; }
     @media (prefers-color-scheme: dark) {
       .satz-round-badge.artikel { color: #a78bfa; }
@@ -2575,6 +2612,10 @@
       <span class="mode-switch-icon">⚖</span>
       <span class="mode-switch-label">Artikel</span>
     </button>
+    <button class="mode-switch-btn" id="switch-listen" role="tab" aria-selected="false" aria-controls="listen-panel">
+      <span class="mode-switch-icon">👂</span>
+      <span class="mode-switch-label">Hören</span>
+    </button>
   </div>
 
   <main id="game-main" tabindex="-1">
@@ -2759,6 +2800,40 @@
       <div style="font-size:0.78rem;color:var(--color-text-muted);margin-bottom:8px;">Ergebnisse in deinen Wiederholungsplan übernommen ✓</div>
       <button class="start-btn" id="artikel-again-btn">Nochmal üben</button>
       <button class="satz-ghost-btn" id="artikel-back-btn" style="margin-top:8px;">Zurück zum Rätsel</button>
+    </div>
+  </div>
+
+  <!-- ── Hören & Tippen (Listen & Type) ─────────── -->
+  <div id="listen-panel" class="hidden">
+    <div class="satz-top-bar">
+      <span class="satz-round-badge" style="background:var(--color-present);color:#fff;">👂 Hören</span>
+      <div class="satz-progress-wrap">
+        <div class="satz-progress-bar"><div class="satz-progress-fill" id="listen-progress-fill"></div></div>
+        <span class="satz-progress-text" id="listen-progress-text">1 / 10</span>
+      </div>
+    </div>
+    <div class="listen-card">
+      <button class="listen-speak-btn" id="listen-speak-btn" aria-label="Wort anhören">🔊</button>
+      <div class="listen-hint" id="listen-hint"></div>
+    </div>
+    <div class="listen-input-row">
+      <input id="listen-input" class="listen-input" type="text" autocomplete="off"
+             autocorrect="off" autocapitalize="none" spellcheck="false"
+             placeholder="Deutsches Wort eintippen…" aria-label="Deine Antwort" />
+      <button id="listen-check-btn" class="satz-primary-btn">Prüfen</button>
+    </div>
+    <div id="listen-feedback" class="satz-feedback" aria-live="polite"></div>
+  </div>
+
+  <!-- Listen summary overlay -->
+  <div class="overlay hidden" id="listen-summary-overlay">
+    <div class="overlay-card">
+      <div class="overlay-title">Hören & Tippen beendet!</div>
+      <div class="satz-summary-score" id="listen-summary-score"></div>
+      <div class="satz-summary-grid" id="listen-summary-grid" style="grid-template-columns:repeat(2,1fr);"></div>
+      <div style="font-size:0.78rem;color:var(--color-text-muted);margin-bottom:8px;">Ergebnisse in deinen Wiederholungsplan übernommen ✓</div>
+      <button class="start-btn" id="listen-again-btn">Nochmal üben</button>
+      <button class="satz-ghost-btn" id="listen-back-btn" style="margin-top:8px;">Zurück zum Rätsel</button>
     </div>
   </div>
 
@@ -4729,9 +4804,10 @@ function submitGuess() {
 // ─── Mode switching ───────────────────────────────────
 function setMode(mode) {
   gameMode = mode;
-  // Always hide the satz/artikel panels when switching to a puzzle mode
+  // Always hide the satz/artikel/listen panels when switching to a puzzle mode
   document.getElementById('satz-panel')?.classList.add('hidden');
   document.getElementById('artikel-panel')?.classList.add('hidden');
+  document.getElementById('listen-panel')?.classList.add('hidden');
 
   const panel       = document.getElementById('wordle-panel');
   const cwClueBar   = document.getElementById('cw-clue-bar');
@@ -5343,6 +5419,8 @@ document.getElementById('level-tabs').addEventListener('click', e => {
     startSatzMode(); // restart with new level selection
   } else if (gameMode === 'ARTIKEL') {
     startArtikelMode();
+  } else if (gameMode === 'HÖREN') {
+    startListenMode();
   } else {
     startCrossword();
   }
@@ -5391,6 +5469,7 @@ document.getElementById('pack-strip').addEventListener('click', e => {
 
   if (gameMode === 'SATZ') startSatzMode();
   else if (gameMode === 'ARTIKEL') startArtikelMode();
+  else if (gameMode === 'HÖREN') startListenMode();
   else startCrossword();
 });
 
@@ -6111,7 +6190,7 @@ document.getElementById('satz-back-btn').addEventListener('click', () => {
 
 // ── Mode switcher buttons ──
 function setModeSwitcher(active) {
-  const map = { cw: 'switch-crossword', satz: 'switch-satz', artikel: 'switch-artikel' };
+  const map = { cw: 'switch-crossword', satz: 'switch-satz', artikel: 'switch-artikel', listen: 'switch-listen' };
   for (const [key, id] of Object.entries(map)) {
     const el = document.getElementById(id);
     el.classList.toggle('active', key === active);
@@ -6127,10 +6206,11 @@ document.getElementById('switch-satz').addEventListener('click', () => {
 });
 
 document.getElementById('switch-crossword').addEventListener('click', () => {
-  if (gameMode !== 'SATZ' && gameMode !== 'ARTIKEL') return;
+  if (gameMode !== 'SATZ' && gameMode !== 'ARTIKEL' && gameMode !== 'HÖREN') return;
   setModeSwitcher('cw');
   hideSatzPanel();
   hideArtikelPanel();
+  hideListenPanel();
   setMode('1P');
 });
 
@@ -6276,6 +6356,183 @@ document.getElementById('switch-artikel').addEventListener('click', () => {
   if (gameMode === 'ARTIKEL') return;
   hideSatzPanel();
   startArtikelMode();
+});
+
+// ─── Hören & Tippen (Listen & Type) ───────────────────
+const LISTEN_ROUNDS = 10;
+let listenQueue   = [];
+let listenIdx     = 0;
+let listenResults = [];
+let listenAdvanceTimer = null;
+
+function hideListenPanel() {
+  document.getElementById('listen-panel').classList.add('hidden');
+}
+
+async function startListenMode() {
+  if (deVoiceAvailable === false) {
+    showMessage('Keine deutsche Stimme auf diesem Gerät.', 'lose');
+    setTimeout(() => showMessage('', ''), 2500);
+    return;
+  }
+  gameMode = 'HÖREN';
+  setModeSwitcher('listen');
+  hideSatzPanel();
+  hideArtikelPanel();
+  document.getElementById('listen-panel').classList.remove('hidden');
+  document.getElementById('crossword-area').classList.add('hidden');
+  document.getElementById('cw-clue-bar').classList.add('hidden');
+  document.getElementById('cw-actions').classList.add('hidden');
+  document.getElementById('streak-bar').classList.remove('hidden');
+
+  const lvls = selectedLevels.has('REVIEW')
+    ? new Set(['A1','A2','B1','B2']) : new Set([...selectedLevels].filter(l => !PACK_LEVELS.has(l) || true));
+  await ensureLevels(lvls);
+
+  const seen = new Set();
+  let pool = [...(selectedLevels.has('REVIEW') ? new Set(['A1','A2','B1','B2']) : selectedLevels)]
+    .flatMap(lvl => words[lvl] || [])
+    .filter(e => { if (seen.has(e.w)) return false; seen.add(e.w); return e.w.length >= 3; });
+
+  const due = new Set(dueWords());
+  const shuffled = pool.slice().sort(() => Math.random() - 0.5);
+  const dueOnes  = shuffled.filter(e => due.has(e.w)).slice(0, 4);
+  const rest     = shuffled.filter(e => !dueOnes.includes(e)).slice(0, LISTEN_ROUNDS - dueOnes.length);
+  listenQueue   = [...dueOnes, ...rest].sort(() => Math.random() - 0.5).slice(0, LISTEN_ROUNDS);
+  listenIdx     = 0;
+  listenResults = [];
+
+  if (listenQueue.length < 3) {
+    showMessage('Nicht genug Wörter für diese Stufe.', 'lose');
+    setTimeout(() => showMessage('', ''), 2000);
+    return;
+  }
+  showListenRound();
+}
+
+function showListenRound() {
+  clearTimeout(listenAdvanceTimer);
+  const entry = listenQueue[listenIdx];
+  const total = listenQueue.length;
+
+  document.getElementById('listen-progress-fill').style.width = (listenIdx / total * 100) + '%';
+  document.getElementById('listen-progress-text').textContent = `${listenIdx + 1} / ${total}`;
+
+  const art = entry.type === 'noun' && entry.article ? entry.article + ' ' : '';
+  document.getElementById('listen-hint').innerHTML =
+    `<strong>${entry.en}</strong>` +
+    (entry.ar ? `<br><span style="direction:rtl;unicode-bidi:isolate;font-size:0.9rem">${entry.ar}</span>` : '') +
+    (entry.type === 'noun' ? `<br><span style="font-size:0.78rem;color:var(--color-text-muted)">Nomen · ${art}___</span>` : '');
+
+  const input = document.getElementById('listen-input');
+  input.value = '';
+  input.className = 'listen-input';
+  input.disabled = false;
+  document.getElementById('listen-feedback').innerHTML = '';
+  document.getElementById('listen-check-btn').disabled = false;
+
+  // Auto-play after a tiny delay so the UI has settled
+  setTimeout(() => {
+    speakListenWord(entry.w);
+    input.focus();
+  }, 250);
+}
+
+function speakListenWord(word) {
+  const btn = document.getElementById('listen-speak-btn');
+  btn.classList.add('speaking');
+  speakWord(word, null);
+  setTimeout(() => btn.classList.remove('speaking'), 1200);
+}
+
+function checkListenAnswer() {
+  const entry = listenQueue[listenIdx];
+  const input = document.getElementById('listen-input');
+  const raw   = input.value.trim();
+  if (!raw) return;
+
+  // Normalize: uppercase, map umlauts
+  const typed = raw.toUpperCase().replace(/Ä/g,'Ä').replace(/Ö/g,'Ö').replace(/Ü/g,'Ü').replace(/ß/g,'SS');
+  const target = entry.w.toUpperCase();
+  const correct = typed === target;
+
+  input.disabled = true;
+  document.getElementById('listen-check-btn').disabled = true;
+  listenResults.push({ entry, correct });
+  gradeReview(entry.w, correct);
+
+  const fb = document.getElementById('listen-feedback');
+  if (correct) {
+    input.classList.add('correct');
+    fb.innerHTML = `<span style="color:var(--color-correct)">✓ Richtig!</span>`;
+    listenAdvanceTimer = setTimeout(advanceListenRound, 1200);
+  } else {
+    input.classList.add('wrong');
+    const art = entry.type === 'noun' && entry.article ? entry.article + ' ' : '';
+    fb.innerHTML = `<span style="color:var(--gender-die)">✗ ${art}<strong>${entry.w}</strong></span>
+      <button class="listen-speak-btn" style="width:36px;height:36px;font-size:1rem;margin:0 auto;"
+        onclick="speakListenWord('${entry.w.replace(/'/g,"\\'")}')">🔊</button>
+      <button id="listen-next-btn" class="satz-primary-btn" style="margin-top:8px">Weiter →</button>`;
+    const nxt = document.getElementById('listen-next-btn');
+    if (nxt) nxt.addEventListener('click', advanceListenRound);
+  }
+}
+
+function advanceListenRound() {
+  clearTimeout(listenAdvanceTimer);
+  listenIdx++;
+  if (listenIdx >= listenQueue.length) {
+    endListenMode();
+  } else {
+    showListenRound();
+  }
+}
+
+function endListenMode() {
+  const total   = listenResults.length;
+  const correct = listenResults.filter(r => r.correct).length;
+  const pct     = Math.round(correct / total * 100);
+
+  // Award diamonds
+  let gems = Math.round(pct / 10);
+  if (gems > 0) earnDiamonds(gems, 'listen', document.getElementById('diamond-counter'));
+
+  const scoreEl = document.getElementById('listen-summary-score');
+  scoreEl.textContent = `${correct} / ${total}  (${pct}%)`;
+  scoreEl.className = 'satz-summary-score ' + (pct >= 70 ? 'win' : 'lose');
+
+  const grid = document.getElementById('listen-summary-grid');
+  grid.innerHTML = listenResults.map(r => {
+    const art = r.entry.type === 'noun' && r.entry.article ? r.entry.article + ' ' : '';
+    return `<div class="satz-summary-item ${r.correct ? 'win' : 'lose'}">
+      <span>${r.correct ? '✓' : '✗'} ${art}${r.entry.w}</span>
+      <span style="color:var(--color-text-muted)">${r.entry.en}</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('listen-summary-overlay').classList.remove('hidden');
+}
+
+document.getElementById('listen-speak-btn').addEventListener('click', () => {
+  if (listenQueue[listenIdx]) speakListenWord(listenQueue[listenIdx].w);
+});
+document.getElementById('listen-check-btn').addEventListener('click', checkListenAnswer);
+document.getElementById('listen-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') { e.preventDefault(); checkListenAnswer(); }
+});
+document.getElementById('listen-again-btn').addEventListener('click', () => {
+  document.getElementById('listen-summary-overlay').classList.add('hidden');
+  startListenMode();
+});
+document.getElementById('listen-back-btn').addEventListener('click', () => {
+  document.getElementById('listen-summary-overlay').classList.add('hidden');
+  hideListenPanel();
+  setModeSwitcher('cw');
+  setMode('1P');
+});
+document.getElementById('switch-listen').addEventListener('click', () => {
+  if (gameMode === 'HÖREN') return;
+  startListenMode();
 });
 
 // ─── Wortschatz dashboard (mastery overview) ──────────
