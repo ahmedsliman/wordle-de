@@ -2457,6 +2457,39 @@
     .vocab-bar i { width: 7px; height: 14px; border-radius: 2px; background: var(--hairline); }
     .vocab-bar i.on { background: var(--color-correct); }
     .vocab-empty { font-size: 0.85rem; color: var(--color-text-muted); padding: 16px 0; text-align: center; }
+
+    /* ── Streak heatmap ── */
+    .heatmap-wrap {
+      width: 100%; display: flex; flex-direction: column; gap: 4px;
+      background: var(--color-surface); border-radius: 12px;
+      padding: 12px; border: 1px solid var(--hairline);
+    }
+    .heatmap-title {
+      font-size: 0.72rem; font-weight: 700; color: var(--color-text-muted);
+      text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px;
+    }
+    .heatmap-grid {
+      display: grid;
+      grid-template-columns: repeat(13, 1fr);
+      gap: 3px;
+      width: 100%;
+    }
+    .heatmap-cell {
+      aspect-ratio: 1;
+      border-radius: 3px;
+      background: var(--color-border);
+      transition: background 0.15s;
+      cursor: default;
+    }
+    .heatmap-cell.played { background: var(--color-correct); }
+    .heatmap-cell.today  { outline: 2px solid var(--color-correct); outline-offset: 1px; }
+    .heatmap-legend {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 0.68rem; color: var(--color-text-muted); margin-top: 2px;
+    }
+    .heatmap-legend-swatch {
+      width: 10px; height: 10px; border-radius: 2px;
+    }
   </style>
 </head>
 
@@ -2859,6 +2892,14 @@
   <div class="overlay hidden" id="vocab-overlay">
     <div class="overlay-card vocab-card">
       <div class="overlay-title">📚 Mein Wortschatz</div>
+      <div class="heatmap-wrap" id="streak-heatmap">
+        <div class="heatmap-title">Aktivität — letzte 13 Wochen</div>
+        <div class="heatmap-grid" id="heatmap-grid"></div>
+        <div class="heatmap-legend">
+          <div class="heatmap-legend-swatch" style="background:var(--color-border)"></div> kein Spiel
+          <div class="heatmap-legend-swatch" style="background:var(--color-correct);margin-left:8px"></div> gespielt
+        </div>
+      </div>
       <div class="vocab-boxes" id="vocab-boxes"></div>
       <div class="vocab-due" id="vocab-due"></div>
       <div class="vocab-list" id="vocab-list"></div>
@@ -3046,7 +3087,7 @@ const loadedLevels = new Set();   // tracks which level files are cached
 let currentLevel  = 'A1';          // kept for 2P compat (single level)
 let selectedLevels = new Set(['A1']); // 1P multi-select
 let gameOver     = false;
-let streak       = { current: 0, best: 0, lastDate: null, freezes: 0, lastFreezeWeek: null };
+let streak       = { current: 0, best: 0, lastDate: null, freezes: 0, lastFreezeWeek: null, playDates: [] };
 let animating    = false;
 
 // ─── 1P Crossword state ───────────────────────────────
@@ -3143,6 +3184,7 @@ function loadStreak() {
     streak.lastDate       = s.lastDate       || null;
     streak.freezes        = s.freezes        ?? 0;
     streak.lastFreezeWeek = s.lastFreezeWeek || null;
+    streak.playDates      = s.playDates      || [];
   } catch {}
 
   // Award 1 freeze token per calendar week (max held: 2)
@@ -4414,6 +4456,13 @@ function endCrossword(won) {
         streak.current++;
         streak.lastDate = today;
         if (streak.current > streak.best) streak.best = streak.current;
+        // Record play date for heatmap; keep last 91 days
+        if (!streak.playDates.includes(today)) {
+          streak.playDates.push(today);
+          const cutoff = new Date(); cutoff.setDate(cutoff.getDate() - 91);
+          const cutoffStr = cutoff.toISOString().slice(0, 10);
+          streak.playDates = streak.playDates.filter(d => d >= cutoffStr);
+        }
         saveStreak();
         renderStreak();
         checkStreakMilestones();
@@ -6232,7 +6281,48 @@ document.getElementById('switch-artikel').addEventListener('click', () => {
 // ─── Wortschatz dashboard (mastery overview) ──────────
 const BOX_LABELS = ['Üben', 'Neu', 'Bekannt', 'Sicher', 'Gemeistert'];
 
+function buildHeatmap() {
+  const grid = document.getElementById('heatmap-grid');
+  if (!grid) return;
+  const played = new Set(streak.playDates);
+  const today = new Date().toISOString().slice(0, 10);
+
+  // Start from 13 weeks ago (Monday), aligned to ISO week
+  const start = new Date();
+  start.setDate(start.getDate() - 13 * 7);
+  // Snap to Monday
+  const dow = start.getDay() || 7;
+  start.setDate(start.getDate() - dow + 1);
+
+  const cells = [];
+  const cursor = new Date(start);
+  const end = new Date();
+  end.setDate(end.getDate() + (7 - ((end.getDay() || 7))) ); // to end of current week (Sun)
+  while (cursor <= end) {
+    const ds = cursor.toISOString().slice(0, 10);
+    const isFuture = ds > today;
+    const el = document.createElement('div');
+    el.className = 'heatmap-cell';
+    if (!isFuture && played.has(ds)) el.classList.add('played');
+    if (ds === today) el.classList.add('today');
+    if (isFuture) el.style.opacity = '0.25';
+    el.title = ds;
+    el.setAttribute('aria-label', ds + (played.has(ds) ? ' — gespielt' : ''));
+    cells.push(el);
+    cursor.setDate(cursor.getDate() + 1);
+  }
+  grid.innerHTML = '';
+  // Render column by column (Mon→Sun per column = week)
+  // But grid is row-major, so just append in order (Mon row 0, Tue row 1 ... Sun row 6, 13 cols)
+  // Transpose: we want 7 rows × 13 cols; append week by week
+  grid.style.gridTemplateColumns = `repeat(13, 1fr)`;
+  grid.style.gridTemplateRows    = `repeat(7, 1fr)`;
+  grid.style.gridAutoFlow = 'column';
+  cells.forEach(c => grid.appendChild(c));
+}
+
 function openVocabOverlay() {
+  buildHeatmap();
   const cards = Object.entries(reviewDeck.cards);
 
   const counts = [0, 0, 0, 0, 0];
