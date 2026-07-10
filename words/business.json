@@ -1,0 +1,368 @@
+[
+  {
+    "w": "PLAN",
+    "en": "plan",
+    "ar": "خطة",
+    "hint": "A strategy or outline for achieving a goal",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Wir haben einen guten ___ für das neue Projekt."
+  },
+  {
+    "w": "CHEF",
+    "en": "boss",
+    "ar": "رئيس",
+    "hint": "The person in charge at work",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ hat alle Mitarbeiter ins Meeting eingeladen."
+  },
+  {
+    "w": "TEAM",
+    "en": "team",
+    "ar": "فريق",
+    "hint": "A group of people working together",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das ___ arbeitet sehr gut zusammen."
+  },
+  {
+    "w": "PREIS",
+    "en": "price",
+    "ar": "سعر",
+    "hint": "The amount of money asked for a product",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ für das Produkt ist sehr fair."
+  },
+  {
+    "w": "MARKT",
+    "en": "market",
+    "ar": "سوق",
+    "hint": "Where goods and services are traded",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ für Elektroautos wächst rasant."
+  },
+  {
+    "w": "KUNDE",
+    "en": "customer",
+    "ar": "عميل",
+    "hint": "A person who buys goods or services",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ ist mit unserem Service sehr zufrieden."
+  },
+  {
+    "w": "FRIST",
+    "en": "deadline",
+    "ar": "موعد نهائي",
+    "hint": "The latest time by which something must be done",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ für die Abgabe ist morgen."
+  },
+  {
+    "w": "AKTIE",
+    "en": "share / stock",
+    "ar": "سهم",
+    "hint": "A unit of ownership in a company",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ des Unternehmens ist stark gestiegen."
+  },
+  {
+    "w": "MESSE",
+    "en": "trade fair",
+    "ar": "معرض تجاري",
+    "hint": "A large business exhibition",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Wir stellen unsere Produkte auf der ___ vor."
+  },
+  {
+    "w": "MARKE",
+    "en": "brand",
+    "ar": "علامة تجارية",
+    "hint": "A company's trademark or label",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ ist in Deutschland sehr bekannt."
+  },
+  {
+    "w": "BUDGET",
+    "en": "budget",
+    "ar": "ميزانية",
+    "hint": "The financial plan for a project or company",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das ___ für das Projekt ist leider zu klein."
+  },
+  {
+    "w": "UMSATZ",
+    "en": "revenue / turnover",
+    "ar": "إيرادات",
+    "hint": "Total income a company earns from sales",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ ist im letzten Quartal gestiegen."
+  },
+  {
+    "w": "GEHALT",
+    "en": "salary",
+    "ar": "راتب",
+    "hint": "Monthly pay for an employee",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Er verhandelt über ein höheres ___."
+  },
+  {
+    "w": "GEWINN",
+    "en": "profit",
+    "ar": "ربح",
+    "hint": "Money earned above costs",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ des Unternehmens war dieses Jahr sehr hoch."
+  },
+  {
+    "w": "STEUER",
+    "en": "tax",
+    "ar": "ضريبة",
+    "hint": "A mandatory payment to the government",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Jedes Unternehmen muss ___ zahlen."
+  },
+  {
+    "w": "KREDIT",
+    "en": "loan / credit",
+    "ar": "قرض",
+    "hint": "Money borrowed from a bank",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Die Bank hat uns einen ___ für den Kauf gegeben."
+  },
+  {
+    "w": "EXPORT",
+    "en": "export",
+    "ar": "تصدير",
+    "hint": "Goods or services sold to another country",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ von Autos ist für Deutschland sehr wichtig."
+  },
+  {
+    "w": "IMPORT",
+    "en": "import",
+    "ar": "استيراد",
+    "hint": "Goods brought in from another country",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ von Rohstoffen kostet viel Geld."
+  },
+  {
+    "w": "VERLUST",
+    "en": "loss",
+    "ar": "خسارة",
+    "hint": "Money lost in a business deal",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Das Unternehmen hat einen großen ___ gemacht."
+  },
+  {
+    "w": "BERICHT",
+    "en": "report",
+    "ar": "تقرير",
+    "hint": "A written summary of findings or events",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Bitte schreiben Sie einen ___ über die Ergebnisse."
+  },
+  {
+    "w": "VERTRAG",
+    "en": "contract",
+    "ar": "عقد",
+    "hint": "A formal legal agreement between parties",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Wir haben einen neuen ___ mit dem Kunden geschlossen."
+  },
+  {
+    "w": "ANGEBOT",
+    "en": "offer / quote",
+    "ar": "عرض",
+    "hint": "A proposed deal or price",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das ___ ist sehr attraktiv und wettbewerbsfähig."
+  },
+  {
+    "w": "AUFTRAG",
+    "en": "order / commission",
+    "ar": "طلب عمل",
+    "hint": "An assignment or job given to a company",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Wir haben heute einen großen ___ erhalten."
+  },
+  {
+    "w": "FILIALE",
+    "en": "branch office",
+    "ar": "فرع",
+    "hint": "A secondary office of a company",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die neue ___ wird nächsten Monat eröffnet."
+  },
+  {
+    "w": "RECHNUNG",
+    "en": "invoice / bill",
+    "ar": "فاتورة",
+    "hint": "A document requesting payment for goods or services",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Bitte schicken Sie mir die ___ per E-Mail."
+  },
+  {
+    "w": "LIEFERANT",
+    "en": "supplier",
+    "ar": "مورد",
+    "hint": "A company that provides goods to another",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Unser ___ liefert immer pünktlich und zuverlässig."
+  },
+  {
+    "w": "BEWERBUNG",
+    "en": "job application",
+    "ar": "طلب توظيف",
+    "hint": "A formal request for a job position",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Er hat seine ___ für die Stelle abgeschickt."
+  },
+  {
+    "w": "BESTELLUNG",
+    "en": "order",
+    "ar": "طلبية",
+    "hint": "A request to purchase goods",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ wird morgen an Sie geliefert."
+  },
+  {
+    "w": "KONFERENZ",
+    "en": "conference",
+    "ar": "مؤتمر",
+    "hint": "A large formal business meeting",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die internationale ___ findet nächste Woche in Berlin statt."
+  },
+  {
+    "w": "VEREINBARUNG",
+    "en": "agreement",
+    "ar": "اتفاق",
+    "hint": "A mutual deal reached between two parties",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Beide Seiten haben eine ___ getroffen."
+  },
+  {
+    "w": "KAUFEN",
+    "en": "to buy",
+    "ar": "يشتري",
+    "hint": "Acquire something by paying money",
+    "type": "verb",
+    "sentence": "Wir möchten neue Computer für das Büro ___."
+  },
+  {
+    "w": "ZAHLEN",
+    "en": "to pay",
+    "ar": "يدفع",
+    "hint": "Give money in exchange for goods or services",
+    "type": "verb",
+    "sentence": "Können Sie die Rechnung bitte sofort ___?"
+  },
+  {
+    "w": "MIETEN",
+    "en": "to rent",
+    "ar": "يأجر",
+    "hint": "Pay for the temporary use of something",
+    "type": "verb",
+    "sentence": "Das Unternehmen möchte ein größeres Büro ___."
+  },
+  {
+    "w": "LEITEN",
+    "en": "to manage / lead",
+    "ar": "يدير",
+    "hint": "Be responsible for a team or organization",
+    "type": "verb",
+    "sentence": "Sie wird die neue Abteilung ab Januar ___."
+  },
+  {
+    "w": "PRÜFEN",
+    "en": "to review / check",
+    "ar": "يراجع",
+    "hint": "Examine something carefully",
+    "type": "verb",
+    "sentence": "Man sollte jeden Vertrag sorgfältig ___."
+  },
+  {
+    "w": "KÜNDIGEN",
+    "en": "to resign / terminate",
+    "ar": "يستقيل / يفصل",
+    "hint": "End an employment relationship",
+    "type": "verb",
+    "sentence": "Er hat beschlossen, seinen Job zu ___."
+  },
+  {
+    "w": "VERHANDELN",
+    "en": "to negotiate",
+    "ar": "يتفاوض",
+    "hint": "Discuss terms to reach an agreement",
+    "type": "verb",
+    "sentence": "Wir müssen noch über den Preis ___."
+  },
+  {
+    "w": "INVESTIEREN",
+    "en": "to invest",
+    "ar": "يستثمر",
+    "hint": "Put money in to generate profit",
+    "type": "verb",
+    "sentence": "Das Unternehmen plant, in neue Technologien zu ___."
+  },
+  {
+    "w": "BILLIG",
+    "en": "cheap",
+    "ar": "رخيص",
+    "hint": "Low in price",
+    "type": "adjective",
+    "sentence": "Das Produkt ist sehr ___, aber von guter Qualität."
+  },
+  {
+    "w": "TEUER",
+    "en": "expensive",
+    "ar": "غالٍ",
+    "hint": "High in price",
+    "type": "adjective",
+    "sentence": "Die neue Software ist sehr ___, aber sehr effektiv."
+  },
+  {
+    "w": "PROFITABEL",
+    "en": "profitable",
+    "ar": "مربح",
+    "hint": "Generating more income than costs",
+    "type": "adjective",
+    "sentence": "Das neue Geschäftsmodell ist sehr ___."
+  },
+  {
+    "w": "KOSTENLOS",
+    "en": "free of charge",
+    "ar": "مجاني",
+    "hint": "Available without payment",
+    "type": "adjective",
+    "sentence": "Der Kundendienst ist für alle Nutzer ___."
+  }
+]

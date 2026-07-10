@@ -1,0 +1,315 @@
+[
+  {
+    "w": "EID",
+    "en": "oath",
+    "ar": "قسم",
+    "hint": "A solemn promise made in court",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der Zeuge schwört einen feierlichen ___."
+  },
+  {
+    "w": "RECHT",
+    "en": "right / law",
+    "ar": "حق / قانون",
+    "hint": "A legal entitlement or the body of laws",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Jeder Mensch hat das ___ auf eine faire Behandlung."
+  },
+  {
+    "w": "KLAGE",
+    "en": "lawsuit / complaint",
+    "ar": "دعوى",
+    "hint": "A formal legal challenge filed in court",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ gegen das Unternehmen wurde gestern eingereicht."
+  },
+  {
+    "w": "ZEUGE",
+    "en": "witness",
+    "ar": "شاهد",
+    "hint": "A person who gives testimony in court",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ beschrieb den Vorfall sehr genau."
+  },
+  {
+    "w": "GESETZ",
+    "en": "law",
+    "ar": "قانون",
+    "hint": "A rule established by authority",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das ___ schützt die Rechte aller Bürger."
+  },
+  {
+    "w": "STRAFE",
+    "en": "penalty / punishment",
+    "ar": "عقوبة",
+    "hint": "A sanction imposed for breaking the law",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ für dieses Vergehen ist sehr hoch."
+  },
+  {
+    "w": "SCHULD",
+    "en": "guilt",
+    "ar": "ذنب",
+    "hint": "Responsibility for a crime or wrongdoing",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Das Gericht hat seine ___ eindeutig bewiesen."
+  },
+  {
+    "w": "KLÄGER",
+    "en": "plaintiff",
+    "ar": "مدعٍ",
+    "hint": "The party who brings a case to court",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ fordert hohen Schadensersatz."
+  },
+  {
+    "w": "ANWALT",
+    "en": "lawyer / attorney",
+    "ar": "محامٍ",
+    "hint": "A professional who represents clients in legal matters",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Mein ___ hat mir geraten, nicht auszusagen."
+  },
+  {
+    "w": "URTEIL",
+    "en": "verdict / judgment",
+    "ar": "حكم",
+    "hint": "A court's final decision in a case",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das ___ des Richters war sehr klar und eindeutig."
+  },
+  {
+    "w": "RICHTER",
+    "en": "judge",
+    "ar": "قاضٍ",
+    "hint": "An official who presides over a court",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ verkündete das Urteil nach langer Beratung."
+  },
+  {
+    "w": "GERICHT",
+    "en": "court",
+    "ar": "محكمة",
+    "hint": "A place where legal cases are heard",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das ___ hat die Klage gestern abgewiesen."
+  },
+  {
+    "w": "PROZESS",
+    "en": "trial / lawsuit",
+    "ar": "محاكمة",
+    "hint": "A formal legal proceeding in court",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ dauerte mehrere Wochen."
+  },
+  {
+    "w": "AUSSAGE",
+    "en": "testimony / statement",
+    "ar": "إفادة",
+    "hint": "A formal spoken or written statement in court",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ des Zeugen war entscheidend für den Fall."
+  },
+  {
+    "w": "PFLICHT",
+    "en": "duty / obligation",
+    "ar": "واجب",
+    "hint": "A legal or moral responsibility",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Es ist die ___ jedes Bürgers, Gesetze zu befolgen."
+  },
+  {
+    "w": "VERTRAG",
+    "en": "contract",
+    "ar": "عقد",
+    "hint": "A legally binding agreement between parties",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Beide Parteien haben den ___ unterzeichnet."
+  },
+  {
+    "w": "BERUFUNG",
+    "en": "appeal",
+    "ar": "استئناف",
+    "hint": "A request to a higher court to review a decision",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Der Angeklagte hat ___ gegen das Urteil eingelegt."
+  },
+  {
+    "w": "STRAFTAT",
+    "en": "criminal offence",
+    "ar": "جريمة",
+    "hint": "An act that violates criminal law",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ wurde vor dem Landgericht verhandelt."
+  },
+  {
+    "w": "BEKLAGTE",
+    "en": "defendant",
+    "ar": "مدعى عليه",
+    "hint": "The party accused or sued in court",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ wies alle Vorwürfe entschieden zurück."
+  },
+  {
+    "w": "FREISPRUCH",
+    "en": "acquittal",
+    "ar": "تبرئة",
+    "hint": "A verdict of not guilty",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der Angeklagte erhielt nach langer Verhandlung einen ___."
+  },
+  {
+    "w": "VERHAFTUNG",
+    "en": "arrest",
+    "ar": "اعتقال",
+    "hint": "The act of taking someone into police custody",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die Polizei vollzog die ___ am frühen Morgen."
+  },
+  {
+    "w": "VERBRECHEN",
+    "en": "crime / felony",
+    "ar": "جريمة",
+    "hint": "A serious illegal act",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Für dieses ___ droht eine lange Freiheitsstrafe."
+  },
+  {
+    "w": "VERFASSUNG",
+    "en": "constitution",
+    "ar": "دستور",
+    "hint": "The fundamental law of a state",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Die ___ garantiert die Grundrechte aller Bürger."
+  },
+  {
+    "w": "GERECHTIGKEIT",
+    "en": "justice",
+    "ar": "عدالة",
+    "hint": "Fair treatment according to the law",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Das Gericht strebt nach wahrer ___."
+  },
+  {
+    "w": "SCHADENSERSATZ",
+    "en": "damages / compensation",
+    "ar": "تعويض",
+    "hint": "Money paid to compensate for loss or injury",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Das Unternehmen muss hohen ___ zahlen."
+  },
+  {
+    "w": "KLAGEN",
+    "en": "to sue",
+    "ar": "يقاضي",
+    "hint": "Take legal action against someone in court",
+    "type": "verb",
+    "sentence": "Das Unternehmen will ihn wegen Betrugs ___."
+  },
+  {
+    "w": "VERHAFTEN",
+    "en": "to arrest",
+    "ar": "يعتقل",
+    "hint": "Take someone into police custody",
+    "type": "verb",
+    "sentence": "Die Polizei durfte ihn ohne Haftbefehl nicht ___."
+  },
+  {
+    "w": "VERURTEILEN",
+    "en": "to convict / sentence",
+    "ar": "يدين",
+    "hint": "Declare someone guilty and impose a punishment",
+    "type": "verb",
+    "sentence": "Das Gericht wird ihn wegen schweren Betrugs ___."
+  },
+  {
+    "w": "FREILASSEN",
+    "en": "to release",
+    "ar": "يطلق سراح",
+    "hint": "Set a person free from custody",
+    "type": "verb",
+    "sentence": "Nach dem Freispruch musste die Polizei ihn sofort ___."
+  },
+  {
+    "w": "BEZEUGEN",
+    "en": "to witness / attest",
+    "ar": "يشهد",
+    "hint": "Give testimony about an event",
+    "type": "verb",
+    "sentence": "Er war der einzige, der den Unfall ___ konnte."
+  },
+  {
+    "w": "ANKLAGEN",
+    "en": "to indict / accuse",
+    "ar": "يتهم",
+    "hint": "Formally charge someone with a crime",
+    "type": "verb",
+    "sentence": "Die Staatsanwaltschaft will ihn formell ___."
+  },
+  {
+    "w": "SCHULDIG",
+    "en": "guilty",
+    "ar": "مذنب",
+    "hint": "Having committed a crime or offence",
+    "type": "adjective",
+    "sentence": "Das Gericht befand ihn in allen Punkten für ___."
+  },
+  {
+    "w": "UNSCHULDIG",
+    "en": "innocent",
+    "ar": "بريء",
+    "hint": "Not guilty of a crime",
+    "type": "adjective",
+    "sentence": "Er betonte, er sei völlig ___ an dem Verbrechen."
+  },
+  {
+    "w": "GESETZLICH",
+    "en": "lawful / legal",
+    "ar": "قانوني",
+    "hint": "In accordance with the law",
+    "type": "adjective",
+    "sentence": "Das Vorgehen war vollkommen ___."
+  },
+  {
+    "w": "ILLEGAL",
+    "en": "illegal",
+    "ar": "غير قانوني",
+    "hint": "Against the law",
+    "type": "adjective",
+    "sentence": "Dieser Waffenhandel ist vollständig ___."
+  },
+  {
+    "w": "STRAFBAR",
+    "en": "punishable by law",
+    "ar": "يستوجب العقوبة",
+    "hint": "An act that can result in legal punishment",
+    "type": "adjective",
+    "sentence": "Diese Handlung ist in Deutschland ___."
+  }
+]
