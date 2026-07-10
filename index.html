@@ -2445,6 +2445,32 @@
     .mc-choice.correct { border-color: var(--color-correct); background: rgba(29,158,117,0.1); color: var(--color-correct-text); }
     .mc-choice.wrong   { border-color: var(--gender-die); background: rgba(239,68,68,0.08); color: var(--gender-die); }
     .mc-choice:disabled { cursor: default; }
+
+    /* ── Match Pairs ── */
+    #pairs-panel {
+      max-width: 500px; margin: 0 auto; padding: 16px 16px 32px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .pairs-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .pairs-card {
+      min-height: 64px; padding: 8px 6px;
+      font-family: 'Inter', system-ui, sans-serif; font-size: 0.82rem; font-weight: 600;
+      background: var(--color-surface); border: 2px solid var(--hairline);
+      border-radius: 12px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      line-height: 1.3; word-break: break-word;
+      transition: transform 0.12s, border-color 0.15s, background 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .pairs-card:hover:not(:disabled):not(.matched) { border-color: var(--color-text-muted); transform: scale(1.04); }
+    .pairs-card.selected { border-color: #7c3aed; background: rgba(124,58,237,0.08); }
+    .pairs-card.matched  { border-color: var(--color-correct); background: rgba(29,158,117,0.1); color: var(--color-correct-text); cursor: default; opacity: 0.7; }
+    .pairs-card.wrong    { border-color: var(--gender-die); animation: shake 0.3s; }
+    .pairs-card:disabled { cursor: default; }
     .satz-round-badge.artikel { background: rgba(124,58,237,0.12); color: #7c3aed; }
     @media (prefers-color-scheme: dark) {
       .satz-round-badge.artikel { color: #a78bfa; }
@@ -2650,6 +2676,10 @@
     <button class="mode-switch-btn" id="switch-mc" role="tab" aria-selected="false" aria-controls="mc-panel">
       <span class="mode-switch-icon">⚡</span>
       <span class="mode-switch-label">Quiz</span>
+    </button>
+    <button class="mode-switch-btn" id="switch-pairs" role="tab" aria-selected="false" aria-controls="pairs-panel">
+      <span class="mode-switch-icon">🃏</span>
+      <span class="mode-switch-label">Paare</span>
     </button>
   </div>
 
@@ -2875,6 +2905,30 @@
     </div>
     <div class="mc-choices" id="mc-choices" role="group" aria-label="Antwortmöglichkeiten"></div>
     <div class="satz-feedback" id="mc-feedback" aria-live="polite"></div>
+  </div>
+
+  <!-- ── Match Pairs ────────────────────────────── -->
+  <div id="pairs-panel" class="hidden">
+    <div class="satz-top-bar">
+      <span class="satz-round-badge" style="background:rgba(139,92,246,0.12);color:#7c3aed;">🃏 Paare</span>
+      <div class="satz-progress-wrap">
+        <div class="satz-progress-bar"><div class="satz-progress-fill" id="pairs-progress-fill"></div></div>
+        <span class="satz-progress-text" id="pairs-progress-text">0 / 8</span>
+      </div>
+    </div>
+    <div class="pairs-grid" id="pairs-grid" role="group" aria-label="Match-Paare"></div>
+    <div class="satz-feedback" id="pairs-feedback" aria-live="polite" style="min-height:28px;"></div>
+  </div>
+
+  <!-- Pairs summary overlay -->
+  <div class="overlay hidden" id="pairs-summary-overlay">
+    <div class="overlay-card">
+      <div class="overlay-title">🃏 Paare abgeschlossen!</div>
+      <div class="satz-summary-score" id="pairs-summary-score"></div>
+      <div style="font-size:0.78rem;color:var(--color-text-muted);margin-bottom:8px;">Ergebnisse in deinen Wiederholungsplan übernommen ✓</div>
+      <button class="start-btn" id="pairs-again-btn">Nochmal</button>
+      <button class="satz-ghost-btn" id="pairs-back-btn" style="margin-top:8px;">Zurück zum Rätsel</button>
+    </div>
   </div>
 
   <!-- MC summary overlay -->
@@ -4868,11 +4922,12 @@ function submitGuess() {
 // ─── Mode switching ───────────────────────────────────
 function setMode(mode) {
   gameMode = mode;
-  // Always hide the satz/artikel/listen/mc panels when switching to a puzzle mode
+  // Always hide the satz/artikel/listen/mc/pairs panels when switching to a puzzle mode
   document.getElementById('satz-panel')?.classList.add('hidden');
   document.getElementById('artikel-panel')?.classList.add('hidden');
   document.getElementById('listen-panel')?.classList.add('hidden');
   document.getElementById('mc-panel')?.classList.add('hidden');
+  document.getElementById('pairs-panel')?.classList.add('hidden');
   clearInterval(mcTimerInterval);
 
   const panel       = document.getElementById('wordle-panel');
@@ -5489,6 +5544,8 @@ document.getElementById('level-tabs').addEventListener('click', e => {
     startListenMode();
   } else if (gameMode === 'MC') {
     startMcMode();
+  } else if (gameMode === 'PAARE') {
+    startPairsMode();
   } else {
     startCrossword();
   }
@@ -5539,6 +5596,7 @@ document.getElementById('pack-strip').addEventListener('click', e => {
   else if (gameMode === 'ARTIKEL') startArtikelMode();
   else if (gameMode === 'HÖREN') startListenMode();
   else if (gameMode === 'MC') startMcMode();
+  else if (gameMode === 'PAARE') startPairsMode();
   else startCrossword();
 });
 
@@ -6259,7 +6317,7 @@ document.getElementById('satz-back-btn').addEventListener('click', () => {
 
 // ── Mode switcher buttons ──
 function setModeSwitcher(active) {
-  const map = { cw: 'switch-crossword', satz: 'switch-satz', artikel: 'switch-artikel', listen: 'switch-listen', mc: 'switch-mc' };
+  const map = { cw: 'switch-crossword', satz: 'switch-satz', artikel: 'switch-artikel', listen: 'switch-listen', mc: 'switch-mc', pairs: 'switch-pairs' };
   for (const [key, id] of Object.entries(map)) {
     const el = document.getElementById(id);
     el.classList.toggle('active', key === active);
@@ -6275,12 +6333,13 @@ document.getElementById('switch-satz').addEventListener('click', () => {
 });
 
 document.getElementById('switch-crossword').addEventListener('click', () => {
-  if (gameMode !== 'SATZ' && gameMode !== 'ARTIKEL' && gameMode !== 'HÖREN' && gameMode !== 'MC') return;
+  if (!['SATZ','ARTIKEL','HÖREN','MC','PAARE'].includes(gameMode)) return;
   setModeSwitcher('cw');
   hideSatzPanel();
   hideArtikelPanel();
   hideListenPanel();
   hideMcPanel();
+  hidePairsPanel();
   setMode('1P');
 });
 
@@ -6426,6 +6485,164 @@ document.getElementById('switch-artikel').addEventListener('click', () => {
   if (gameMode === 'ARTIKEL') return;
   hideSatzPanel();
   startArtikelMode();
+});
+
+// ─── Match Pairs ──────────────────────────────────────
+const PAIRS_COUNT = 8;   // 8 pairs = 16 cards
+let pairsWords     = [];  // [{w, en}]
+let pairsMatched   = new Set();
+let pairsSelected  = null;   // { cardEl, id, side }
+let pairsMistakes  = 0;
+let pairsStartTime = 0;
+let pairsPendingLock = false;
+
+function hidePairsPanel() {
+  document.getElementById('pairs-panel').classList.add('hidden');
+}
+
+async function startPairsMode() {
+  gameMode = 'PAARE';
+  setModeSwitcher('pairs');
+  hideSatzPanel();
+  hideArtikelPanel();
+  hideListenPanel();
+  hideMcPanel();
+  document.getElementById('pairs-panel').classList.remove('hidden');
+  document.getElementById('crossword-area').classList.add('hidden');
+  document.getElementById('cw-clue-bar').classList.add('hidden');
+  document.getElementById('cw-actions').classList.add('hidden');
+  document.getElementById('streak-bar').classList.remove('hidden');
+
+  const lvls = selectedLevels.has('REVIEW')
+    ? new Set(['A1','A2','B1','B2']) : selectedLevels;
+  await ensureLevels(lvls);
+
+  const seen = new Set();
+  let pool = [...lvls].flatMap(lvl => words[lvl] || [])
+    .filter(e => { if (seen.has(e.w)) return false; seen.add(e.w); return !!e.en; });
+
+  if (pool.length < PAIRS_COUNT) {
+    showMessage('Nicht genug Wörter für diese Stufe.', 'lose');
+    setTimeout(() => showMessage('', ''), 2000);
+    return;
+  }
+
+  const due = new Set(dueWords());
+  const shuffled = pool.slice().sort(() => Math.random() - 0.5);
+  const dueOnes  = shuffled.filter(e => due.has(e.w)).slice(0, 4);
+  const rest     = shuffled.filter(e => !dueOnes.includes(e)).slice(0, PAIRS_COUNT - dueOnes.length);
+  pairsWords    = [...dueOnes, ...rest].slice(0, PAIRS_COUNT);
+  pairsMatched  = new Set();
+  pairsSelected = null;
+  pairsMistakes = 0;
+  pairsStartTime = Date.now();
+  pairsPendingLock = false;
+
+  // Build 16 cards: 8 German + 8 English, shuffled
+  const deCards = pairsWords.map((e, i) => ({ id: i, side: 'de', text: e.w, entry: e }));
+  const enCards = pairsWords.map((e, i) => ({ id: i, side: 'en', text: e.en, entry: e }));
+  const cards = [...deCards, ...enCards].sort(() => Math.random() - 0.5);
+
+  document.getElementById('pairs-progress-text').textContent = `0 / ${PAIRS_COUNT}`;
+  document.getElementById('pairs-progress-fill').style.width = '0%';
+  document.getElementById('pairs-feedback').innerHTML = '';
+
+  const grid = document.getElementById('pairs-grid');
+  grid.innerHTML = '';
+  cards.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'pairs-card';
+    btn.textContent = c.text;
+    btn.dataset.id   = c.id;
+    btn.dataset.side = c.side;
+    if (c.side === 'de') {
+      btn.style.fontFamily = "'DM Mono', monospace";
+    }
+    btn.addEventListener('click', () => onPairsCardClick(btn, c));
+    grid.appendChild(btn);
+  });
+}
+
+function onPairsCardClick(btn, card) {
+  if (pairsPendingLock) return;
+  if (pairsMatched.has(card.id + card.side)) return;
+  if (pairsSelected && pairsSelected.cardEl === btn) {
+    btn.classList.remove('selected');
+    pairsSelected = null;
+    return;
+  }
+
+  btn.classList.add('selected');
+
+  if (!pairsSelected) {
+    pairsSelected = { cardEl: btn, id: card.id, side: card.side };
+    return;
+  }
+
+  // Two cards selected
+  const prev = pairsSelected;
+  pairsSelected = null;
+  pairsPendingLock = true;
+
+  if (prev.id === card.id && prev.side !== card.side) {
+    // Match!
+    [prev.cardEl, btn].forEach(el => {
+      el.classList.remove('selected');
+      el.classList.add('matched');
+      el.disabled = true;
+    });
+    pairsMatched.add(card.id + 'de');
+    pairsMatched.add(card.id + 'en');
+    gradeReview(pairsWords[card.id].w, true);
+
+    const matched = pairsMatched.size / 2;
+    document.getElementById('pairs-progress-fill').style.width = (matched / PAIRS_COUNT * 100) + '%';
+    document.getElementById('pairs-progress-text').textContent = `${matched} / ${PAIRS_COUNT}`;
+    pairsPendingLock = false;
+
+    if (pairsMatched.size === PAIRS_COUNT * 2) {
+      setTimeout(endPairsMode, 600);
+    }
+  } else {
+    // Mismatch
+    pairsMistakes++;
+    gradeReview(pairsWords[card.id].w, false);
+    [prev.cardEl, btn].forEach(el => el.classList.add('wrong'));
+    document.getElementById('pairs-feedback').textContent = '✗ Kein Paar — versuche es nochmal!';
+    setTimeout(() => {
+      [prev.cardEl, btn].forEach(el => el.classList.remove('selected', 'wrong'));
+      document.getElementById('pairs-feedback').textContent = '';
+      pairsPendingLock = false;
+    }, 700);
+  }
+}
+
+function endPairsMode() {
+  const secs    = Math.round((Date.now() - pairsStartTime) / 1000);
+  const timeStr = secs < 60 ? `${secs}s` : `${Math.floor(secs/60)}m ${secs%60}s`;
+  const gems    = Math.max(0, 10 - pairsMistakes);
+  if (gems > 0) earnDiamonds(gems, 'pairs', document.getElementById('diamond-counter'));
+
+  const sc = document.getElementById('pairs-summary-score');
+  sc.className = 'satz-summary-score win';
+  sc.innerHTML = `⏱ ${timeStr} · ${pairsMistakes} Fehler · +${gems} 💎`;
+
+  document.getElementById('pairs-summary-overlay').classList.remove('hidden');
+}
+
+document.getElementById('pairs-again-btn').addEventListener('click', () => {
+  document.getElementById('pairs-summary-overlay').classList.add('hidden');
+  startPairsMode();
+});
+document.getElementById('pairs-back-btn').addEventListener('click', () => {
+  document.getElementById('pairs-summary-overlay').classList.add('hidden');
+  hidePairsPanel();
+  setModeSwitcher('cw');
+  setMode('1P');
+});
+document.getElementById('switch-pairs').addEventListener('click', () => {
+  if (gameMode === 'PAARE') return;
+  startPairsMode();
 });
 
 // ─── Multiple Choice Blitz-Quiz ───────────────────────
