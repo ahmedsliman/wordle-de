@@ -7,6 +7,13 @@
   <meta name="color-scheme" content="light dark" />
   <meta name="theme-color" content="#FAFAF8" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#14161A" media="(prefers-color-scheme: dark)" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Wörtle" />
+  <!-- Apply saved theme before first paint to prevent flash -->
+  <script>(function(){try{var t=localStorage.getItem('wortle-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}})()</script>
   <title>Wörtle — German Wordle</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,700;1,9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -57,7 +64,7 @@
        (teal/orange/gender) stay put; only text-weight teal
        is brightened via --color-correct-text. */
     @media (prefers-color-scheme: dark) {
-      :root {
+      :root:not([data-theme="light"]) {
         --color-bg:               #14161A;
         --color-surface:          #1E2128;
         --color-border:           #2C313B;
@@ -84,6 +91,67 @@
         --color-canvas:           #0E0F12;
       }
     }
+
+    /* ─── Manual theme override ──────────────────────────
+       [data-theme="dark"]  → dark regardless of OS setting
+       [data-theme="light"] → light even on dark-OS systems  */
+    :root[data-theme="dark"] {
+      --color-bg:               #14161A;
+      --color-surface:          #1E2128;
+      --color-border:           #2C313B;
+      --color-text:             #E8E6E3;
+      --color-text-inv:         #14161A;
+      --color-text-muted:       #9AA4B8;
+      --color-cell:             #262A32;
+      --color-cell-block:       #0C0D10;
+      --color-correct:          #1D9E75;
+      --color-correct-text:     #3DD0A0;
+      --color-present:          #EF9F27;
+      --color-absent:           #52525B;
+      --color-absent-bg:        #52525B;
+      --color-key-bg:           #2C313B;
+      --color-key-text:         #E8E6E3;
+      --color-tile-border:      #3A3F4B;
+      --color-tile-filled:      #5B6472;
+      --color-header-bg:        #14161A;
+      --color-header-border:    #2C313B;
+      --color-tab-active-bg:    #E8E6E3;
+      --color-tab-active-text:  #14161A;
+      --color-streak-bg:        #14261C;
+      --color-streak-border:    #1F5137;
+      --color-canvas:           #0E0F12;
+    }
+    :root[data-theme="dark"] .satz-round-badge.order   { color: #EF9F27; }
+    :root[data-theme="dark"] .satz-round-badge.artikel { color: #a78bfa; }
+
+    :root[data-theme="light"] {
+      --color-bg:               #FAFAF8;
+      --color-surface:          #F2F0EB;
+      --color-border:           #E5E1D9;
+      --color-text:             #1C1917;
+      --color-text-inv:         #FFFFFF;
+      --color-text-muted:       #5a6480;
+      --color-cell:             #FFFFFF;
+      --color-cell-block:       #292524;
+      --color-correct:          #1D9E75;
+      --color-correct-text:     #156D4C;
+      --color-present:          #EF9F27;
+      --color-absent:           #79716B;
+      --color-absent-bg:        #79716B;
+      --color-key-bg:           #E7E5E4;
+      --color-key-text:         #1C1917;
+      --color-header-bg:        #FAFAF8;
+      --color-header-border:    #E5E1D9;
+      --color-tab-active-bg:    #1C1917;
+      --color-tab-active-text:  #FFFFFF;
+      --color-streak-bg:        #F0FDF4;
+      --color-streak-border:    #BBF7D0;
+      --color-canvas:           #EBE8E1;
+      --color-tile-border:      #E5E1D9;
+      --color-tile-filled:      #D6D3CD;
+    }
+    :root[data-theme="light"] .satz-round-badge.order   { color: #b37208; }
+    :root[data-theme="light"] .satz-round-badge.artikel { color: #7c3aed; }
 
 
     /* ─── Reset & Base ─────────────────────────────── */
@@ -274,6 +342,26 @@
     }
     .help-btn:hover { color: var(--color-text); border-color: var(--color-text-muted); }
     .help-btn:focus-visible { outline: 2px solid var(--color-correct); outline-offset: 2px; }
+
+    /* Theme toggle button — same chrome as help-btn */
+    .theme-btn {
+      display: inline-flex;
+      background: none;
+      border: 1.5px solid var(--color-border);
+      border-radius: 8px;
+      font-size: 1rem;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--color-text-muted);
+      padding: 0;
+      line-height: 1;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .theme-btn:hover { color: var(--color-text); border-color: var(--color-text-muted); background: var(--color-surface); }
 
     /* Onboarding "How to play" card */
     .howto-card { max-width: 440px; text-align: left; gap: 6px; }
@@ -2003,9 +2091,10 @@
       border-color: var(--color-correct);
     }
     .mode-switch-icon { font-size: 1rem; line-height: 1; }
-    @media (max-width: 380px) {
+    @media (max-width: 480px) {
       .mode-switch-label { display: none; }
-      .mode-switch-btn { padding: 7px 14px; }
+      .mode-switch-btn { padding: 7px 16px; }
+      .mode-switch-icon { font-size: 1.1rem; }
     }
 
     /* ─── Satz-Modus ──────────────────────────────────── */
@@ -2366,6 +2455,7 @@
       <button class="tab tab-review" data-level="REVIEW" aria-label="Wiederholung — fällige Wörter" aria-pressed="false">★<span class="review-badge" id="review-badge" hidden>0</span></button>
     </div>
     <div style="display:flex;align-items:center;gap:8px;">
+      <button id="theme-btn" class="theme-btn" title="Farbschema umschalten" aria-label="Auf dunkles Design wechseln">🌙</button>
       <button id="help-btn" class="help-btn" title="Anleitung" aria-label="Spielanleitung öffnen">?</button>
       <button id="fullscreen-btn" class="fullscreen-btn" title="Vollbild" aria-label="Vollbild ein/aus">⛶</button>
       <div class="diamond-counter" id="diamond-counter" title="Gesamt-Diamanten">
@@ -2743,6 +2833,87 @@
   </div>
 
 <script>
+'use strict';
+
+// ─── IndexedDB key-value store ────────────────────────
+// Stores all game data (streak, diamonds, review deck) in IndexedDB so
+// data persists across clears of the localStorage HTTP cache. localStorage
+// is kept as a synchronous fallback and in-flight buffer.
+const wortleDB = (() => {
+  const DB   = 'wortle';
+  const STORE = 'kv';
+  let db = null;
+
+  const ready = new Promise((resolve) => {
+    if (typeof indexedDB === 'undefined') { resolve(null); return; }
+    const req = indexedDB.open(DB, 1);
+    req.onupgradeneeded = (e) => {
+      const d = e.target.result;
+      if (!d.objectStoreNames.contains(STORE)) {
+        d.createObjectStore(STORE, { keyPath: 'k' });
+      }
+    };
+    req.onsuccess = (e) => { db = e.target.result; resolve(db); };
+    req.onerror   = ()  => resolve(null);
+  });
+
+  async function get(key) {
+    await ready;
+    if (!db) return null;
+    return new Promise((resolve) => {
+      try {
+        const tx  = db.transaction(STORE, 'readonly');
+        const req = tx.objectStore(STORE).get(key);
+        req.onsuccess = () => resolve(req.result ? req.result.v : null);
+        req.onerror   = () => resolve(null);
+      } catch { resolve(null); }
+    });
+  }
+
+  async function set(key, value) {
+    await ready;
+    if (!db) return;
+    return new Promise((resolve) => {
+      try {
+        const tx = db.transaction(STORE, 'readwrite');
+        tx.objectStore(STORE).put({ k: key, v: value });
+        tx.oncomplete = resolve;
+        tx.onerror    = resolve;
+      } catch { resolve(); }
+    });
+  }
+
+  return { ready, get, set };
+})();
+
+// ─── Theme management ─────────────────────────────────
+function _themeIsDark() {
+  const t = document.documentElement.dataset.theme;
+  if (t === 'dark')  return true;
+  if (t === 'light') return false;
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
+function updateThemeBtn() {
+  const btn = document.getElementById('theme-btn');
+  if (!btn) return;
+  const dark = _themeIsDark();
+  btn.textContent = dark ? '☀' : '🌙';
+  btn.title       = dark ? 'Helles Design' : 'Dunkles Design';
+  btn.setAttribute('aria-label', dark ? 'Auf helles Design wechseln' : 'Auf dunkles Design wechseln');
+}
+
+function toggleTheme() {
+  const next = _themeIsDark() ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  localStorage.setItem('wortle-theme', next);
+  wortleDB.set('wortle-theme', next);
+  updateThemeBtn();
+}
+
+// Wire up immediately (button is already in DOM at script parse time)
+document.getElementById('theme-btn')?.addEventListener('click', toggleTheme);
+
 // ─── Audio ────────────────────────────────────────────
 // ─── Pronunciation (Web Speech API, de-DE) ────────────
 let deVoice          = null;   // preferred German voice, if any
@@ -2903,6 +3074,7 @@ function loadStreak() {
 
 function saveStreak() {
   localStorage.setItem('wortle-streak', JSON.stringify(streak));
+  wortleDB.set('wortle-streak', streak);
   renderStreak();
 }
 
@@ -2928,6 +3100,7 @@ function saveDiamonds() {
   // Cap log at 100 entries
   if (diamonds.log.length > 100) diamonds.log = diamonds.log.slice(-100);
   localStorage.setItem('wortle-diamonds', JSON.stringify(diamonds));
+  wortleDB.set('wortle-diamonds', diamonds);
 }
 
 function earnDiamonds(amount, reason, anchorEl) {
@@ -3011,6 +3184,7 @@ function loadReview() {
 }
 function saveReview() {
   localStorage.setItem(REVIEW_KEY, JSON.stringify(reviewDeck));
+  wortleDB.set(REVIEW_KEY, reviewDeck);
   updateReviewBadge();
 }
 function dayStr(offset = 0) {
@@ -5205,6 +5379,16 @@ async function ensureLevels(levelSet) {
 async function init() {
   const loading = document.getElementById('loading');
   try {
+    // Hydrate localStorage from IndexedDB (IDB is the durable source of truth;
+    // localStorage is the synchronous cache that the rest of the app reads from).
+    await wortleDB.ready;
+    await Promise.all(
+      ['wortle-streak', 'wortle-diamonds', REVIEW_KEY].map(async (key) => {
+        const val = await wortleDB.get(key);
+        if (val !== null) localStorage.setItem(key, JSON.stringify(val));
+      })
+    );
+
     // Load A1 eagerly (default level), rest in parallel but non-blocking
     await loadLevel('A1');
     Promise.all(['A2', 'B1', 'B2'].map(lvl => loadLevel(lvl))).then(() => {
@@ -5218,6 +5402,7 @@ async function init() {
     loadDiamonds();
     loadReview();
     setMode('1P');
+    updateThemeBtn();
     loading.classList.add('hidden');
   } catch (err) {
     loading.textContent = 'Failed to load words — ' + err.message;
@@ -6018,6 +6203,14 @@ document.getElementById('vocab-close-btn').addEventListener('click', () => {
     try { localStorage.setItem(KEY, '1'); } catch {}
   }
 })();
+
+// ─── Service Worker (PWA / offline support) ──────────
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .catch((err) => console.warn('SW registration failed:', err));
+  });
+}
 
 init();
 </script>
