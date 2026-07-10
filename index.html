@@ -2616,70 +2616,126 @@
     }
     .home-greeting {
       font-family: 'Fraunces', serif;
-      font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px;
-      color: var(--color-text); line-height: 1.2; margin-bottom: 4px;
+      font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px;
+      color: var(--color-text); line-height: 1.2; margin-bottom: 2px;
     }
-    .home-subline {
-      font-size: 0.88rem; color: var(--color-text-muted); margin-bottom: 16px;
-    }
-    .home-stats {
-      display: flex; gap: 8px; align-items: center;
-      margin-bottom: 20px; flex-wrap: wrap;
-    }
-    .home-stat-pill {
-      display: flex; align-items: center; gap: 5px;
-      padding: 6px 12px; border-radius: 999px;
-      background: var(--color-surface); border: 1px solid var(--hairline);
-      font-size: 0.85rem; font-weight: 600; white-space: nowrap;
-    }
-    .home-due-pill { color: var(--color-present); border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.08); }
     .home-section-title {
       font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em;
       text-transform: uppercase; color: var(--color-text-muted);
       margin-bottom: 10px;
     }
-    .today-mix-row {
-      display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px;
-      scrollbar-width: none; margin-bottom: 24px;
+
+    /* ─── Home header row ─────────────────────────────────── */
+    .home-header-row {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      padding: 18px 0 14px;
     }
-    .today-mix-row::-webkit-scrollbar { display: none; }
-    .today-mix-card {
-      flex-shrink: 0; width: 150px; padding: 14px;
-      border-radius: 16px; cursor: pointer;
-      display: flex; flex-direction: column; gap: 6px;
-      transition: transform 0.15s, box-shadow 0.15s;
-      background: var(--color-surface); border: 1.5px solid var(--hairline);
-      box-shadow: var(--shadow-sm);
-      -webkit-tap-highlight-color: transparent;
-      text-align: left;
+    .home-streak-line {
+      font-size: 0.88rem; font-weight: 600; color: var(--color-text-muted);
+      margin-top: 3px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
     }
-    .today-mix-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
-    .today-mix-card:active { transform: scale(0.97); }
-    .today-mix-icon {
-      width: 36px; height: 36px; border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem;
+    .home-streak-val { font-size: 1rem; font-weight: 800; color: var(--color-text); }
+    .home-due-badge  { font-weight: 700; color: var(--color-present); }
+    .home-diamond-badge {
+      font-size: 0.8rem; font-weight: 700; color: var(--color-text-muted);
+      background: var(--color-surface); border: 1px solid var(--hairline);
+      padding: 5px 10px; border-radius: 999px;
+      display: flex; align-items: center; gap: 3px; white-space: nowrap;
+      flex-shrink: 0; margin-left: 8px;
     }
-    .today-mix-label { font-size: 0.88rem; font-weight: 700; color: var(--color-text); }
-    .today-mix-desc  { font-size: 0.75rem; color: var(--color-text-muted); line-height: 1.3; }
-    .home-modes-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-      margin-bottom: 24px;
-    }
-    .home-mode-card {
-      padding: 16px 14px; border-radius: 16px; cursor: pointer;
-      display: flex; flex-direction: column; gap: 6px;
-      background: var(--color-surface); border: 1.5px solid var(--hairline);
-      box-shadow: var(--shadow-sm); text-align: left;
+
+    /* ─── Hero CTA card ───────────────────────────────────── */
+    .home-hero {
+      width: 100%; border-radius: 22px;
+      background: linear-gradient(140deg, #1D9E75 0%, #0f7a5a 100%);
+      padding: 22px 22px 18px; margin-bottom: 14px;
+      display: flex; flex-direction: column; gap: 4px;
+      cursor: pointer; border: none; text-align: left;
+      box-shadow: 0 6px 24px rgba(29,158,117,0.30);
       transition: transform 0.15s, box-shadow 0.15s;
       -webkit-tap-highlight-color: transparent;
     }
-    .home-mode-card:hover  { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-    .home-mode-card:active { transform: scale(0.97); }
-    .home-mode-icon  { font-size: 1.4rem; margin-bottom: 2px; }
-    .home-mode-label { font-size: 0.92rem; font-weight: 700; color: var(--color-text); }
-    .home-mode-desc  { font-size: 0.72rem; color: var(--color-text-muted); line-height: 1.3; }
-    .home-mode-timing { font-size: 0.68rem; font-weight: 600; margin-top: 4px; opacity: 0.65; }
+    .home-hero:active { transform: scale(0.98); box-shadow: 0 2px 12px rgba(29,158,117,0.2); }
+    .home-hero.done {
+      background: linear-gradient(140deg, #059669 0%, #065f46 100%);
+    }
+    .home-hero-eyebrow {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 2px;
+    }
+    .home-hero-title {
+      font-family: 'Fraunces', serif; font-size: 1.8rem; font-weight: 700;
+      color: #fff; line-height: 1.1;
+    }
+    .home-hero-meta {
+      font-size: 0.83rem; color: rgba(255,255,255,0.78); margin-top: 2px; line-height: 1.4;
+    }
+    .home-hero-cta {
+      margin-top: 14px; align-self: flex-start;
+      background: #fff; color: #0f7a5a;
+      border-radius: 999px; padding: 10px 24px;
+      font-weight: 800; font-size: 0.9rem; letter-spacing: 0.01em;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+
+    /* ─── Recall teaser ───────────────────────────────────── */
+    .home-recall-card {
+      width: 100%; border-radius: 16px;
+      background: var(--color-surface); border: 1.5px solid var(--hairline);
+      box-shadow: var(--shadow-sm); padding: 16px 18px;
+      margin-bottom: 20px;
+    }
+    .recall-eyebrow {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 8px;
+    }
+    .recall-en {
+      font-size: 1.25rem; font-weight: 700; color: var(--color-text);
+      font-family: 'DM Mono', monospace; margin-bottom: 2px;
+    }
+    .recall-ar  { font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 10px; }
+    .recall-answer {
+      font-size: 1.05rem; font-weight: 700; font-family: 'DM Mono', monospace;
+      letter-spacing: 0.04em; color: var(--color-correct-text);
+      filter: blur(5px); transition: filter 0.35s; user-select: none;
+      margin-bottom: 12px;
+    }
+    .recall-answer.revealed { filter: none; }
+    .recall-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .recall-reveal-btn {
+      font-size: 0.78rem; font-weight: 600; color: var(--color-text-muted);
+      background: var(--hairline); border: none; border-radius: 999px;
+      padding: 7px 16px; cursor: pointer; transition: background 0.15s, color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .recall-reveal-btn:active { background: var(--color-correct); color: #fff; }
+    .recall-practice-btn {
+      font-size: 0.78rem; font-weight: 700; color: var(--color-correct-text);
+      background: color-mix(in srgb, var(--color-correct-text) 12%, transparent);
+      border: 1.5px solid color-mix(in srgb, var(--color-correct-text) 28%, transparent);
+      border-radius: 999px; padding: 7px 16px; cursor: pointer;
+      transition: background 0.15s; -webkit-tap-highlight-color: transparent;
+    }
+    .recall-practice-btn:active { background: var(--color-correct); color: #fff; border-color: transparent; }
+
+    /* ─── Mode chips strip ────────────────────────────────── */
+    .home-modes-strip {
+      display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none;
+      padding-bottom: 6px; margin-bottom: 22px;
+    }
+    .home-modes-strip::-webkit-scrollbar { display: none; }
+    .home-mode-chip {
+      flex-shrink: 0; display: flex; flex-direction: column; align-items: center;
+      gap: 5px; padding: 12px 14px; border-radius: 14px; min-width: 68px;
+      background: var(--color-surface); border: 1.5px solid var(--hairline);
+      box-shadow: var(--shadow-sm); cursor: pointer;
+      transition: transform 0.12s; text-align: center;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .home-mode-chip:active { transform: scale(0.93); }
+    .home-mode-chip-icon  { font-size: 1.35rem; }
+    .home-mode-chip-label { font-size: 0.68rem; font-weight: 700; color: var(--color-text-muted); white-space: nowrap; }
     .home-level-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -2833,22 +2889,38 @@
 
   <!-- ─── Home Screen ──────────────────────────────────── -->
   <div id="home-screen" class="hidden">
-    <div style="padding: 20px 0 8px;">
-      <div class="home-greeting" id="home-greeting">Willkommen!</div>
-      <div class="home-subline" id="home-subline">Was möchtest du heute üben?</div>
+
+    <!-- Header: greeting + streak + diamond -->
+    <div class="home-header-row">
+      <div>
+        <div class="home-greeting" id="home-greeting">Guten Morgen!</div>
+        <div class="home-streak-line" id="home-streak-line"></div>
+      </div>
+      <div class="home-diamond-badge">💎 <span id="home-diamond-val">0</span></div>
     </div>
-    <div class="home-stats">
-      <div class="home-stat-pill">🔥 <span id="home-streak-val">0</span> Tage</div>
-      <div class="home-stat-pill">💎 <span id="home-diamond-val">0</span></div>
-      <div class="home-stat-pill home-due-pill" id="home-due-pill" style="display:none">★ <span id="home-due-val">0</span> fällig</div>
-    </div>
+
+    <!-- Hero CTA -->
+    <button class="home-hero" id="home-hero">
+      <div class="home-hero-eyebrow" id="home-hero-eyebrow">Heute üben · ~5 Min</div>
+      <div class="home-hero-title" id="home-hero-title">Jetzt starten</div>
+      <div class="home-hero-meta" id="home-hero-meta"></div>
+      <div class="home-hero-cta" id="home-hero-cta">▶ Starten</div>
+    </button>
+
+    <!-- Daily progress bar -->
     <div id="home-daily-bar" class="home-daily-bar"></div>
-    <div class="home-section-title">Heute empfohlen</div>
-    <div class="today-mix-row" id="today-mix-row"></div>
+
+    <!-- Recall teaser from previous session -->
+    <div class="home-recall-card hidden" id="home-recall-card"></div>
+
+    <!-- Compact mode chips -->
     <div class="home-section-title">Alle Modi</div>
-    <div class="home-modes-grid" id="home-modes-grid"></div>
+    <div class="home-modes-strip" id="home-modes-strip"></div>
+
+    <!-- Lernpfad picker -->
     <div class="home-section-title">Lernpfad</div>
     <div class="home-level-row" id="home-level-row"></div>
+
   </div>
 
   <!-- Hidden input captures physical keyboard events in crossword mode (OS keyboard suppressed via inputmode=none) -->
@@ -7644,68 +7716,121 @@ function selectPath(pathId) {
   });
 }
 
-function buildHome() {
-  // Greeting
-  const h = new Date().getHours();
-  const greeting = h < 12 ? 'Guten Morgen!' : h < 18 ? 'Guten Tag!' : 'Guten Abend!';
-  const sub = streak.current > 1
-    ? streak.current + ' Tage am Stück 🔥 — weiter so!'
-    : 'Was möchtest du heute üben?';
-  document.getElementById('home-greeting').textContent = greeting;
-  document.getElementById('home-subline').textContent = sub;
+function buildRecallTeaser() {
+  if (!reviewDeck || !reviewDeck.cards) return null;
+  const entries = Object.entries(reviewDeck.cards).filter(([, c]) => c.seen >= 1);
+  if (entries.length === 0) return null;
+  // Shuffle and find one with a matching loaded word entry
+  entries.sort(() => Math.random() - 0.5);
+  const allWords = Object.values(words).flat();
+  for (const [word] of entries) {
+    const e = allWords.find(w => w.w === word);
+    if (e && e.en) return e;
+  }
+  return null;
+}
 
-  // Stats
-  document.getElementById('home-streak-val').textContent = streak.current;
-  document.getElementById('home-diamond-val').textContent = diamonds.total;
+function buildHeroMeta(mix) {
   const due = dueWords().length;
-  const duePill = document.getElementById('home-due-pill');
-  document.getElementById('home-due-val').textContent = due;
-  duePill.style.display = due > 0 ? '' : 'none';
+  const mastered = Object.values(reviewDeck?.cards || {}).filter(c => c.box >= 4).length;
+  if (due > 0) return due + ' Wörter warten auf Wiederholung';
+  if (mastered > 0) return 'Du hast bereits ' + mastered + ' Wörter gemeistert!';
+  return mix[0]?.desc || 'Dein tägliches Training wartet';
+}
 
-  // Daily progress bar
+function buildHome() {
+  // 1. Greeting
+  const h = new Date().getHours();
+  document.getElementById('home-greeting').textContent =
+    h < 12 ? 'Guten Morgen!' : h < 18 ? 'Guten Tag!' : 'Guten Abend!';
+
+  // 2. Streak line — emotional, prominent
+  const due = dueWords().length;
+  const streakEl = document.getElementById('home-streak-line');
+  const parts = [];
+  if (streak.current > 0)
+    parts.push('<span class="home-streak-val">🔥 ' + streak.current + ' Tage</span>');
+  if (due > 0)
+    parts.push('<span class="home-due-badge">★ ' + due + ' fällig</span>');
+  if (streak.current === 0 && due === 0)
+    parts.push('Fang heute an!');
+  streakEl.innerHTML = parts.join(' · ');
+
+  // 3. Diamond count
+  document.getElementById('home-diamond-val').textContent = diamonds.total;
+
+  // 4. Hero CTA
+  const mix = buildTodaysMix();
+  const primary = mix[0];
+  const goalMet = dailyProgress.newWords.length >= DAILY_NEW_GOAL;
+  const hero = document.getElementById('home-hero');
+  hero.classList.toggle('done', goalMet);
+  document.getElementById('home-hero-eyebrow').textContent =
+    goalMet ? 'Heute erledigt' : 'Empfehlung · ~5 Min';
+  document.getElementById('home-hero-title').textContent =
+    goalMet ? 'Tagesziel erreicht 🎉' : 'Jetzt starten';
+  document.getElementById('home-hero-meta').textContent =
+    goalMet
+      ? dailyProgress.newWords.length + ' neue Wörter · ' + dailyProgress.reviewCount + ' Wiederholungen — super!'
+      : buildHeroMeta(mix);
+  document.getElementById('home-hero-cta').textContent =
+    goalMet ? '▶ Weitermachen' : '▶ Starten';
+  hero.onclick = () => launchMode(primary.mode);
+
+  // 5. Daily progress bar (hidden once goal met)
   const statBar = document.getElementById('home-daily-bar');
-  if (statBar) {
-    const newCount = dailyProgress.newWords.length;
-    const reviewCount = dailyProgress.reviewCount;
-    const goalMet = newCount >= DAILY_NEW_GOAL;
-    const pct = Math.min(100, (newCount / DAILY_NEW_GOAL) * 100);
+  if (statBar && !goalMet) {
+    const n = dailyProgress.newWords.length;
+    const pct = Math.min(100, (n / DAILY_NEW_GOAL) * 100);
     statBar.innerHTML =
-      '<div class="daily-progress-label">' +
-        (goalMet ? '🎉 Tagesziel erreicht!' : 'Heute: <strong>' + newCount + '</strong> neu · <strong>' + reviewCount + '</strong> wiederholt') +
-      '</div>' +
+      '<div class="daily-progress-label">Heute: <strong>' + n + '</strong> von ' + DAILY_NEW_GOAL + ' neuen Wörtern</div>' +
       '<div class="daily-progress-track"><div class="daily-progress-fill" style="width:' + pct + '%"></div></div>';
+  } else if (statBar) {
+    statBar.innerHTML = '';
   }
 
-  // Today's Mix
-  const mixRow = document.getElementById('today-mix-row');
-  mixRow.innerHTML = '';
-  buildTodaysMix().forEach(rec => {
-    const card = document.createElement('button');
-    card.className = 'today-mix-card';
-    card.innerHTML =
-      '<div class="today-mix-icon" style="background:' + rec.color + '22;color:' + rec.color + '">' + rec.icon + '</div>' +
-      '<div class="today-mix-label">' + rec.label + '</div>' +
-      '<div class="today-mix-desc">' + rec.desc + '</div>';
-    card.addEventListener('click', () => launchMode(rec.mode));
-    mixRow.appendChild(card);
-  });
+  // 6. "Weißt du das noch?" recall teaser
+  const recallEl = document.getElementById('home-recall-card');
+  const entry = buildRecallTeaser();
+  if (entry) {
+    recallEl.classList.remove('hidden');
+    const articleStr = entry.article ? entry.article + ' ' : '';
+    const fullGerman = articleStr + entry.w;
+    recallEl.innerHTML =
+      '<div class="recall-eyebrow">💭 Weißt du das noch?</div>' +
+      '<div class="recall-en">' + entry.en + '</div>' +
+      (entry.ar ? '<div class="recall-ar">' + entry.ar + '</div>' : '') +
+      '<div class="recall-answer" id="recall-answer-word">' + fullGerman + '</div>' +
+      '<div class="recall-actions">' +
+        '<button class="recall-reveal-btn" id="recall-reveal-btn">Aufdecken</button>' +
+        '<button class="recall-practice-btn" id="recall-practice-btn">Üben →</button>' +
+      '</div>';
+    document.getElementById('recall-reveal-btn').addEventListener('click', function() {
+      document.getElementById('recall-answer-word').classList.add('revealed');
+      this.textContent = '✓ ' + fullGerman;
+      this.style.color = 'var(--color-correct-text)';
+      this.style.background = 'color-mix(in srgb, var(--color-correct-text) 10%, transparent)';
+    });
+    document.getElementById('recall-practice-btn').addEventListener('click', () => launchMode('SCHREIBEN'));
+  } else {
+    recallEl.classList.add('hidden');
+  }
 
-  // Mode grid
-  const grid = document.getElementById('home-modes-grid');
-  grid.innerHTML = '';
+  // 7. Compact mode chips
+  const strip = document.getElementById('home-modes-strip');
+  strip.innerHTML = '';
   HOME_MODES.forEach(m => {
-    const card = document.createElement('button');
-    card.className = 'home-mode-card';
-    card.innerHTML =
-      '<div class="home-mode-icon" style="color:' + m.color + '">' + m.icon + '</div>' +
-      '<div class="home-mode-label">' + m.label + '</div>' +
-      '<div class="home-mode-desc">' + m.desc + '</div>' +
-      '<div class="home-mode-timing" style="color:' + m.color + '">' + m.timing + '</div>';
-    card.addEventListener('click', () => launchMode(m.id));
-    grid.appendChild(card);
+    const chip = document.createElement('button');
+    chip.className = 'home-mode-chip';
+    chip.style.cssText = 'border-color:' + m.color + '44;';
+    chip.innerHTML =
+      '<span class="home-mode-chip-icon" style="color:' + m.color + '">' + m.icon + '</span>' +
+      '<span class="home-mode-chip-label">' + m.label + '</span>';
+    chip.addEventListener('click', () => launchMode(m.id));
+    strip.appendChild(chip);
   });
 
-  // Lernpfad (unified path picker)
+  // 8. Lernpfad
   const pathSection = document.getElementById('home-level-row');
   pathSection.innerHTML = '';
   PATHS.forEach(path => {
@@ -7716,9 +7841,7 @@ function buildHome() {
     btn.dataset.pathId = path.id;
     btn.innerHTML = '<span class="path-chip-icon">' + path.icon + '</span><span class="path-chip-label">' + path.label + '</span>';
     btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-    btn.addEventListener('click', () => {
-      selectPath(path.id);
-    });
+    btn.addEventListener('click', () => selectPath(path.id));
     pathSection.appendChild(btn);
   });
 }
