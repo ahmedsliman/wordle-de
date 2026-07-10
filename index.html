@@ -3542,6 +3542,20 @@ function isDue(card)   { return card && card.due <= dayStr(); }
 function dueWords()    { return Object.keys(reviewDeck.cards).filter(w => isDue(reviewDeck.cards[w])); }
 function inDeck(word)  { return !!reviewDeck.cards[word]; }
 
+// Returns the recent miss rate across all deck cards seen in last 7 days.
+// >0.40 means the user is struggling — slow down new-word introduction.
+function recentMissRate() {
+  const cards = Object.values(reviewDeck.cards);
+  const cutoff = dayStr(-7);
+  const recent = cards.filter(c => c.lastSeen && c.lastSeen >= cutoff && (c.seen || 0) > 0);
+  if (recent.length < 5) return 0;
+  const totalSeen    = recent.reduce((s, c) => s + (c.seen    || 0), 0);
+  const totalCorrect = recent.reduce((s, c) => s + (c.correct || 0), 0);
+  return totalSeen > 0 ? (totalSeen - totalCorrect) / totalSeen : 0;
+}
+
+function isStruggling() { return recentMissRate() > 0.40; }
+
 // Record a review outcome. `correct` advances the box; wrong resets to box 0.
 function gradeReview(word, correct) {
   let c = reviewDeck.cards[word];
@@ -4723,12 +4737,19 @@ async function startCrossword() {
       seen.add(e.w);
       return true;
     });
-    // Weave up to 3 due review words into the puzzle so vocabulary
-    // resurfaces during normal play, not only in the ★ tab.
+    // Weave due review words into the puzzle. If user is struggling (>40% miss
+    // rate last 7 days), cap pool to known words and prioritise up to 5 due words.
     const due = new Set(dueWords());
+    const struggling = isStruggling();
+    if (struggling && Object.keys(reviewDeck.cards).length >= 5) {
+      // Only allow words the user has already seen — no new vocab until they consolidate
+      const knownPool = pool.filter(e => inDeck(e.w) && e.w.length >= CW_MIN && e.w.length <= CW_MAX);
+      if (knownPool.length >= 5) pool = knownPool;
+    }
+    const maxDue = struggling ? 5 : 3;
     const dueEligible = cwShuffle(pool.filter(e =>
       due.has(e.w) && e.w.length >= CW_MIN && e.w.length <= CW_MAX));
-    if (dueEligible.length) priority = new Set(dueEligible.slice(0, 3).map(e => e.w));
+    if (dueEligible.length) priority = new Set(dueEligible.slice(0, maxDue).map(e => e.w));
   }
   let puzzle = null;
   for (let i = 0; i < 3 && !puzzle; i++) puzzle = generateCrossword(pool, priority);
