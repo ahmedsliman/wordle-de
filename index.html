@@ -2876,6 +2876,75 @@
     .schreiben-umlaut:hover { background: var(--color-correct); color: #fff; border-color: var(--color-correct); }
     #schreiben-input.correct { border-color: var(--color-correct); background: rgba(29,158,117,0.06); }
     #schreiben-input.wrong   { border-color: #ef4444; animation: shake 0.35s; }
+
+    /* ─── XP bar ──────────────────────────────────────────── */
+    .home-xp-row {
+      display: flex; align-items: center; gap: 7px; margin-top: 12px;
+      width: 100%;
+    }
+    .home-xp-bar {
+      flex: 1; height: 5px; border-radius: 3px;
+      background: rgba(255,255,255,0.2); overflow: hidden;
+    }
+    .xp-bar-fill {
+      height: 100%; border-radius: 3px; background: #fff;
+      transition: width 0.5s ease; width: 0%;
+    }
+
+    /* ─── Combo toast ─────────────────────────────────────── */
+    .combo-toast {
+      position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.7);
+      background: var(--color-present); color: #fff;
+      font-family: 'Fraunces', serif; font-size: 1.6rem; font-weight: 700;
+      padding: 14px 28px; border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+      pointer-events: none; z-index: 999;
+      opacity: 0; transition: opacity 0.2s, transform 0.25s;
+    }
+    .combo-toast.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+    /* ─── XP float ────────────────────────────────────────── */
+    .xp-float {
+      position: fixed; font-size: 0.78rem; font-weight: 800;
+      color: var(--color-correct-text); pointer-events: none; z-index: 998;
+      opacity: 1; transition: opacity 0.9s, transform 0.9s;
+      background: color-mix(in srgb, var(--color-correct-text) 12%, transparent);
+      border: 1px solid color-mix(in srgb, var(--color-correct-text) 25%, transparent);
+      padding: 3px 8px; border-radius: 999px;
+    }
+    .xp-float.fly { opacity: 0; transform: translateY(-40px); }
+
+    /* ─── Achievement toast ───────────────────────────────── */
+    .achievement-toast {
+      position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
+      width: min(340px, calc(100vw - 32px));
+      background: var(--color-surface); border: 1.5px solid var(--hairline);
+      border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      display: flex; align-items: center; gap: 14px; padding: 14px 16px;
+      z-index: 997; transition: bottom 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .achievement-toast.show { bottom: 24px; }
+    .ach-toast-icon  { font-size: 2rem; flex-shrink: 0; }
+    .ach-toast-title { font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+                       letter-spacing: 0.05em; color: var(--color-correct-text); margin-bottom: 2px; }
+    .ach-toast-label { font-size: 0.95rem; font-weight: 800; color: var(--color-text); }
+    .ach-toast-desc  { font-size: 0.75rem; color: var(--color-text-muted); }
+
+    /* ─── Achievement grid ────────────────────────────────── */
+    .ach-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%;
+    }
+    @media (max-width: 360px) { .ach-grid { grid-template-columns: repeat(2, 1fr); } }
+    .ach-cell {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      padding: 12px 8px; border-radius: 12px; text-align: center;
+      background: var(--color-surface); border: 1.5px solid var(--hairline);
+    }
+    .ach-cell.unlocked { border-color: var(--color-correct); background: color-mix(in srgb, var(--color-correct) 8%, transparent); }
+    .ach-cell.locked { opacity: 0.45; filter: grayscale(0.5); }
+    .ach-cell-icon  { font-size: 1.5rem; }
+    .ach-cell-label { font-size: 0.68rem; font-weight: 700; color: var(--color-text); line-height: 1.2; }
+    .ach-cell-desc  { font-size: 0.6rem; color: var(--color-text-muted); line-height: 1.3; }
   </style>
 </head>
 
@@ -2998,6 +3067,12 @@
       <div class="home-hero-title" id="home-hero-title">Jetzt starten</div>
       <div class="home-hero-meta" id="home-hero-meta"></div>
       <div class="home-hero-cta" id="home-hero-cta">▶ Starten</div>
+      <div class="home-xp-row">
+        <span class="xp-rank-icon">🌱</span>
+        <span class="xp-rank-label" style="font-size:0.78rem;color:rgba(255,255,255,0.8);font-weight:700;">Einsteiger</span>
+        <div class="home-xp-bar"><div class="xp-bar-fill"></div></div>
+        <span class="xp-total" style="font-size:0.7rem;color:rgba(255,255,255,0.6);">0 XP</span>
+      </div>
     </button>
 
     <!-- Daily progress bar -->
@@ -3119,6 +3194,8 @@
     <div class="streak-pill" id="streak-freeze-pill" title="Streak-Schutz-Token (1 pro Woche, max. 2)" aria-label="Schutz-Token"><span id="streak-freeze"></span></div>
     <div class="streak-pill" id="streak-bar-diamonds" style="display:none;color:var(--color-correct-text)">💎 <span id="streak-diamond-count">0</span></div>
     <button class="streak-pill vocab-chip" id="vocab-chip" aria-label="Mein Wortschatz öffnen" title="Mein Wortschatz">📚 <span id="streak-vocab-count">0</span></button>
+    <div class="streak-pill hidden" id="combo-pill" style="background:rgba(239,159,39,0.15);color:var(--color-present);font-weight:800;font-family:'DM Mono',monospace;border-color:rgba(239,159,39,0.3);">3×</div>
+    <button class="streak-pill vocab-chip" id="ach-chip" aria-label="Achievements öffnen" title="Achievements">🏆 <span class="ach-count">0/15</span></button>
   </div>
 
   <!-- ── Satz-Modus (sentence exercises) ─────────── -->
@@ -3465,6 +3542,26 @@
     </div>
   </div>
 
+  <!-- Rank-up celebration overlay -->
+  <div id="rankup-overlay" class="overlay hidden" style="backdrop-filter:blur(8px);">
+    <div class="overlay-card" style="text-align:center;gap:16px;max-width:280px;">
+      <div id="rankup-icon" style="font-size:3.5rem;line-height:1;">🏆</div>
+      <div class="overlay-title" style="font-size:1.1rem;">Rang erreicht!</div>
+      <div id="rankup-label" style="font-family:'Fraunces',serif;font-size:1.8rem;font-weight:700;color:var(--color-correct-text);">Meister</div>
+      <div style="font-size:0.82rem;color:var(--color-text-muted);">Tippe um fortzufahren</div>
+    </div>
+  </div>
+
+  <!-- Achievements overlay -->
+  <div id="ach-overlay" class="overlay hidden">
+    <div class="overlay-card" style="max-width:420px;">
+      <div class="overlay-title">🏆 Achievements</div>
+      <div style="font-size:0.8rem;color:var(--color-text-muted);text-align:center;margin-top:-8px;" id="ach-overlay-count"></div>
+      <div id="ach-grid" class="ach-grid"></div>
+      <button class="start-btn" id="ach-close-btn" style="width:100%;">Schließen</button>
+    </div>
+  </div>
+
   <!-- Review mode: nothing due -->
   <div id="cw-review-empty" class="overlay hidden">
     <div class="overlay-card" style="text-align:center;gap:16px;">
@@ -3697,6 +3794,34 @@ function speakWord(word, btn) {
   window.speechSynthesis.speak(utt);
 }
 
+// ─── XP Ranks ─────────────────────────────────────────
+const RANKS = [
+  { min:     0, label: 'Einsteiger',        icon: '🌱' },
+  { min:   500, label: 'Lernender',         icon: '📖' },
+  { min:  1500, label: 'Fortgeschrittener', icon: '💡' },
+  { min:  3500, label: 'Könner',            icon: '⭐' },
+  { min:  7500, label: 'Meister',           icon: '🏆' },
+  { min: 15000, label: 'Sprachprofi',       icon: '🎓' },
+];
+
+const ACHIEVEMENTS = [
+  { id:'first_word',   icon:'🌱', label:'Erster Schritt',   desc:'Dein erstes Wort gelernt'              },
+  { id:'streak_3',     icon:'🔥', label:'Feuersträhne',     desc:'3 Tage am Stück'                       },
+  { id:'streak_7',     icon:'🔥', label:'Wochenheld',       desc:'7 Tage am Stück'                       },
+  { id:'streak_30',    icon:'🏆', label:'Monatsmeister',    desc:'30 Tage am Stück'                      },
+  { id:'words_10',     icon:'📖', label:'Erste Seite',      desc:'10 Wörter gemeistert (Box 4)'          },
+  { id:'words_50',     icon:'📚', label:'Halbzeit',         desc:'50 Wörter gemeistert'                  },
+  { id:'words_100',    icon:'🎓', label:'Hundertschaft',    desc:'100 Wörter gemeistert'                 },
+  { id:'words_250',    icon:'🏅', label:'Wortschatzgott',   desc:'250 Wörter gemeistert'                 },
+  { id:'combo_5',      icon:'⚡', label:'Kombo-König',      desc:'5× Kombo erreicht'                     },
+  { id:'combo_10',     icon:'💥', label:'Unaufhaltbar',     desc:'10× Kombo erreicht'                    },
+  { id:'all_modes',    icon:'🎮', label:'Allrounder',       desc:'Alle 7 Modi gespielt'                  },
+  { id:'xp_1000',      icon:'💎', label:'XP-Sammler',       desc:'1.000 XP verdient'                    },
+  { id:'xp_5000',      icon:'🔮', label:'XP-Profi',         desc:'5.000 XP verdient'                    },
+  { id:'schreiben_50', icon:'✍️', label:'Schreibmaschine',  desc:'50 Wörter in Schreiben richtig getippt'},
+  { id:'artikel_20',   icon:'🎯', label:'Artikel-Ass',      desc:'20 Artikel-Antworten in Folge richtig' },
+];
+
 // ─── Motivation messages ──────────────────────────────
 const MOTIVATION = [
   '🎯 Genau!', '✨ Super!', '💪 Weiter so!', '🌟 Klasse!',
@@ -3715,6 +3840,13 @@ function showMotivation() {
   clearTimeout(_motivTimer);
   _motivTimer = setTimeout(() => el.classList.remove('show'), 3000);
 }
+
+// ─── XP / Achievement / Combo State ──────────────────
+let xpData     = { total: 0, rankIdx: 0 };
+let achData    = { unlocked: [] };
+let gameStats  = { totalAnswers: 0, maxCombo: 0, artikelStreak: 0,
+                   modesPlayed: [], schreibenCorrect: 0 };
+let comboCount = 0;
 
 // ─── State ────────────────────────────────────────────
 let words        = {};
@@ -3891,6 +4023,231 @@ function saveDiamonds() {
   wortleDB.set('wortle-diamonds', diamonds);
 }
 
+// ─── XP / Achievement / GameStats persistence ─────────
+function loadXP() {
+  try {
+    const raw = JSON.parse(localStorage.getItem('wortle-xp') || '{}');
+    xpData.total   = raw.total   || 0;
+    xpData.rankIdx = raw.rankIdx || 0;
+  } catch {}
+}
+function saveXP() {
+  try { localStorage.setItem('wortle-xp', JSON.stringify(xpData)); } catch {}
+}
+function loadAchievements() {
+  try {
+    const raw = JSON.parse(localStorage.getItem('wortle-achievements') || '{}');
+    achData.unlocked = raw.unlocked || [];
+  } catch {}
+}
+function saveAchievements() {
+  try { localStorage.setItem('wortle-achievements', JSON.stringify(achData)); } catch {}
+}
+function loadGameStats() {
+  try {
+    const raw = JSON.parse(localStorage.getItem('wortle-gamestats') || '{}');
+    gameStats.totalAnswers     = raw.totalAnswers     || 0;
+    gameStats.maxCombo         = raw.maxCombo         || 0;
+    gameStats.artikelStreak    = raw.artikelStreak    || 0;
+    gameStats.modesPlayed      = raw.modesPlayed      || [];
+    gameStats.schreibenCorrect = raw.schreibenCorrect || 0;
+  } catch {}
+}
+function saveGameStats() {
+  try { localStorage.setItem('wortle-gamestats', JSON.stringify(gameStats)); } catch {}
+}
+
+// ─── XP core ──────────────────────────────────────────
+function currentRank() {
+  for (let i = RANKS.length - 1; i >= 0; i--) {
+    if (xpData.total >= RANKS[i].min) return i;
+  }
+  return 0;
+}
+
+function earnXP(amount, anchorEl) {
+  if (amount <= 0) return;
+  const prevRank = currentRank();
+  xpData.total += amount;
+  const newRank = currentRank();
+  xpData.rankIdx = newRank;
+  saveXP();
+  showXPFloat('+' + amount + ' XP', anchorEl);
+  if (newRank > prevRank) {
+    showRankUpOverlay(RANKS[newRank]);
+  }
+  updateXPDisplay();
+}
+
+function showXPFloat(text, anchorEl) {
+  const el = document.createElement('div');
+  el.className = 'xp-float';
+  el.textContent = text;
+  document.body.appendChild(el);
+  const rect = anchorEl
+    ? anchorEl.getBoundingClientRect()
+    : { top: window.innerHeight / 2, left: window.innerWidth / 2 };
+  el.style.cssText = 'top:' + (rect.top - 10) + 'px;left:' + rect.left + 'px;';
+  requestAnimationFrame(() => el.classList.add('fly'));
+  setTimeout(() => el.remove(), 1100);
+}
+
+function updateXPDisplay() {
+  const idx  = currentRank();
+  const rank = RANKS[idx];
+  const next = RANKS[idx + 1];
+  const pct  = next
+    ? Math.round(((xpData.total - rank.min) / (next.min - rank.min)) * 100)
+    : 100;
+  document.querySelectorAll('.xp-rank-icon').forEach(el  => el.textContent  = rank.icon);
+  document.querySelectorAll('.xp-rank-label').forEach(el => el.textContent = rank.label);
+  document.querySelectorAll('.xp-bar-fill').forEach(el   => el.style.width  = pct + '%');
+  document.querySelectorAll('.xp-total').forEach(el      => el.textContent  = xpData.total.toLocaleString() + ' XP');
+}
+
+function showRankUpOverlay(rank) {
+  const ov = document.getElementById('rankup-overlay');
+  if (!ov) return;
+  document.getElementById('rankup-icon').textContent  = rank.icon;
+  document.getElementById('rankup-label').textContent = rank.label;
+  ov.classList.remove('hidden');
+  const dismiss = () => ov.classList.add('hidden');
+  ov.addEventListener('click', dismiss, { once: true });
+  setTimeout(dismiss, 3000);
+}
+
+// ─── Combo system ─────────────────────────────────────
+function addCombo() {
+  comboCount++;
+  if (comboCount > gameStats.maxCombo) {
+    gameStats.maxCombo = comboCount;
+    saveGameStats();
+  }
+  if (comboCount === 3 || comboCount === 5 || comboCount === 10) {
+    showComboToast(comboCount);
+    const bonus = comboCount === 3 ? 1 : comboCount === 5 ? 2 : 5;
+    earnDiamonds(bonus, comboCount + '× Kombo!', null);
+  }
+  updateComboDisplay();
+}
+
+function breakCombo() {
+  comboCount = 0;
+  updateComboDisplay();
+}
+
+function resetCombo() {
+  comboCount = 0;
+  updateComboDisplay();
+}
+
+function showComboToast(n) {
+  const el = document.createElement('div');
+  el.className = 'combo-toast';
+  el.textContent = n + '× Kombo! ' + (n >= 10 ? '💥' : n >= 5 ? '⚡' : '🔥');
+  document.body.appendChild(el);
+  requestAnimationFrame(() => el.classList.add('show'));
+  setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 400); }, 1800);
+}
+
+function updateComboDisplay() {
+  const pill = document.getElementById('combo-pill');
+  if (!pill) return;
+  if (comboCount >= 3) {
+    pill.textContent = comboCount + '×';
+    pill.classList.remove('hidden');
+  } else {
+    pill.classList.add('hidden');
+  }
+}
+
+// ─── Achievements ─────────────────────────────────────
+function checkAchievements() {
+  const mastered = Object.values(reviewDeck && reviewDeck.cards || {}).filter(c => (c.box || 0) >= 4).length;
+  const stats = {
+    streak:           streak.current,
+    mastered,
+    maxCombo:         gameStats.maxCombo,
+    modesPlayed:      new Set(gameStats.modesPlayed),
+    xpTotal:          xpData.total,
+    schreibenCorrect: gameStats.schreibenCorrect,
+    artikelStreak:    gameStats.artikelStreak,
+    totalAnswers:     gameStats.totalAnswers,
+  };
+  const checks = {
+    first_word:   () => stats.totalAnswers >= 1,
+    streak_3:     () => stats.streak >= 3,
+    streak_7:     () => stats.streak >= 7,
+    streak_30:    () => stats.streak >= 30,
+    words_10:     () => stats.mastered >= 10,
+    words_50:     () => stats.mastered >= 50,
+    words_100:    () => stats.mastered >= 100,
+    words_250:    () => stats.mastered >= 250,
+    combo_5:      () => stats.maxCombo >= 5,
+    combo_10:     () => stats.maxCombo >= 10,
+    all_modes:    () => stats.modesPlayed.size >= 7,
+    xp_1000:      () => stats.xpTotal >= 1000,
+    xp_5000:      () => stats.xpTotal >= 5000,
+    schreiben_50: () => stats.schreibenCorrect >= 50,
+    artikel_20:   () => stats.artikelStreak >= 20,
+  };
+  let changed = false;
+  ACHIEVEMENTS.forEach(ach => {
+    if (achData.unlocked.includes(ach.id)) return;
+    if (checks[ach.id] && checks[ach.id]()) {
+      achData.unlocked.push(ach.id);
+      changed = true;
+      showAchievementToast(ach);
+    }
+  });
+  if (changed) {
+    saveAchievements();
+    updateAchievementDisplay();
+  }
+}
+
+function showAchievementToast(ach) {
+  const el = document.createElement('div');
+  el.className = 'achievement-toast';
+  el.innerHTML =
+    '<div class="ach-toast-icon">' + ach.icon + '</div>' +
+    '<div class="ach-toast-body">' +
+      '<div class="ach-toast-title">Achievement freigeschaltet!</div>' +
+      '<div class="ach-toast-label">' + ach.label + '</div>' +
+      '<div class="ach-toast-desc">' + ach.desc + '</div>' +
+    '</div>';
+  document.body.appendChild(el);
+  requestAnimationFrame(() => el.classList.add('show'));
+  setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 500); }, 3500);
+}
+
+function updateAchievementDisplay() {
+  const count = achData.unlocked.length;
+  const total = ACHIEVEMENTS.length;
+  document.querySelectorAll('.ach-count').forEach(el =>
+    el.textContent = count + '/' + total
+  );
+}
+
+function openAchievementsOverlay() {
+  const grid = document.getElementById('ach-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  ACHIEVEMENTS.forEach(ach => {
+    const unlocked = achData.unlocked.includes(ach.id);
+    const cell = document.createElement('div');
+    cell.className = 'ach-cell ' + (unlocked ? 'unlocked' : 'locked');
+    cell.innerHTML =
+      '<div class="ach-cell-icon">' + ach.icon + '</div>' +
+      '<div class="ach-cell-label">' + ach.label + '</div>' +
+      '<div class="ach-cell-desc">' + ach.desc + '</div>';
+    grid.appendChild(cell);
+  });
+  document.getElementById('ach-overlay-count').textContent =
+    achData.unlocked.length + ' von ' + ACHIEVEMENTS.length + ' freigeschaltet';
+  document.getElementById('ach-overlay').classList.remove('hidden');
+}
+
 function earnDiamonds(amount, reason, anchorEl) {
   if (amount <= 0) return;
   const today = new Date().toISOString().slice(0, 10);
@@ -4048,6 +4405,24 @@ function gradeReview(word, correct) {
   saveReview();
   if (isNew) trackNewWord(word);
   else trackReview();
+  // XP + combo
+  if (correct) {
+    const xpAmt = 10 + (comboCount >= 10 ? 20 : comboCount >= 5 ? 10 : comboCount >= 3 ? 5 : 0);
+    earnXP(xpAmt, null);
+    addCombo();
+    gameStats.totalAnswers++;
+  } else {
+    breakCombo();
+    gameStats.totalAnswers++;
+  }
+  // Track mode-specific stats
+  if (gameMode === 'SCHREIBEN' && correct) gameStats.schreibenCorrect++;
+  if (gameMode === 'ARTIKEL') {
+    if (correct) gameStats.artikelStreak = (gameStats.artikelStreak || 0) + 1;
+    else gameStats.artikelStreak = 0;
+  }
+  saveGameStats();
+  checkAchievements();
   return c;
 }
 
@@ -6338,10 +6713,16 @@ async function init() {
     loadDiamonds();
     loadReview();
     loadDailyProgress();
+    loadXP();
+    loadAchievements();
+    loadGameStats();
+    updateXPDisplay();
+    updateAchievementDisplay();
     const savedPath = localStorage.getItem('wortle-path') || 'A1';
     selectPath(savedPath);
     showHome();
     updateThemeBtn();
+    checkAchievements();
     loading.classList.add('hidden');
   } catch (err) {
     loading.textContent = 'Failed to load words — ' + err.message;
@@ -7444,6 +7825,7 @@ function hideAllGamePanels() {
   document.getElementById('pack-strip')?.classList.add('hidden');
   document.body.classList.remove('cw-active','cw-typing','game-active');
   clearInterval(mcTimerInterval);
+  resetCombo();
 }
 
 async function startListenMode() {
@@ -7731,6 +8113,11 @@ document.getElementById('vocab-close-btn').addEventListener('click', () => {
   document.getElementById('vocab-overlay').classList.add('hidden');
 });
 
+document.getElementById('ach-chip')?.addEventListener('click', openAchievementsOverlay);
+document.getElementById('ach-close-btn')?.addEventListener('click', () => {
+  document.getElementById('ach-overlay').classList.add('hidden');
+});
+
 // ─── Fullscreen ──────────────────────────────────────
 (function setupFullscreen() {
   const btn = document.getElementById('fullscreen-btn');
@@ -7951,6 +8338,10 @@ function buildTodaysMix() {
 
 function launchMode(modeId) {
   showGame();
+  if (!gameStats.modesPlayed.includes(modeId)) {
+    gameStats.modesPlayed.push(modeId);
+    saveGameStats();
+  }
   if (modeId === '1P' || modeId === 'review-cw') {
     if (modeId === 'review-cw') {
       selectPack(null);
@@ -8140,6 +8531,10 @@ function buildHome() {
     btn.addEventListener('click', () => selectPath(path.id));
     pathSection.appendChild(btn);
   });
+
+  // 9. XP + Achievement display
+  updateXPDisplay();
+  updateAchievementDisplay();
 }
 
 function showHome() {
@@ -8151,6 +8546,7 @@ function showHome() {
   });
   document.body.classList.remove('cw-active','cw-typing','game-active');
   clearInterval(mcTimerInterval);
+  resetCombo();
   buildHome();
 }
 
