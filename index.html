@@ -4000,7 +4000,7 @@ function isStruggling() { return recentMissRate() > 0.40; }
 
 // ─── Daily progress tracking ──────────────────────────────
 let dailyProgress = { date: '', newWords: [], reviewCount: 0 };
-const DAILY_NEW_GOAL = 10;
+let DAILY_NEW_GOAL = 10;
 
 function loadDailyProgress() {
   try {
