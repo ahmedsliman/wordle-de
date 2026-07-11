@@ -53,7 +53,14 @@ Constants at top of `<script>`: `CW_GRID=11`, `CW_MIN=3`, `CW_MAX=7`, `CW_COUNT=
 - `article`: `"der"` | `"die"` | `"das"` | `"die/pl"` — present only on nouns
 - `sentence`: optional — a short German example sentence with `___` replacing the word; shown in the clue bar and revealed (word highlighted) after solving
 - `hint`: short German description or clue (shown if `sentence` is absent)
+- `packs`: optional array of theme-pack tags (e.g. `["FAMILY"]`) — cuts across CEFR levels; see Themed Packs below
 - A dedup check runs on every page load and logs to console
+
+### Themed Packs
+
+Curriculum packs (`FAMILY`, `RESTAURANT`, `TRAVEL`, `NUMBERS`, `FIRST100`) are **not** separate files — they're a `packs` tag on existing A1/A2/B1 word entries, synthesized client-side. `THEME_PACKS` (a `Set` of these tag names) is checked inside `loadLevel()`: instead of fetching a file, it ensures A1/A2/B1 are loaded, then builds `words[TAG] = [...A1,...A2,...B1].filter(e => e.packs?.includes(TAG))`. This deliberately skips updating `wordLevelIndex`/`wordEntryIndex` — those entries are the same object references as their CEFR-file counterparts, so mastery/review tracking (keyed by word string) isn't affected by which pack pulled a word in. Selectable from the home screen's Lernpfad row (`PATHS` array) exactly like a CEFR level or professional domain pack.
+
+This is distinct from the 5 professional domain packs (Wirtschaft/Medizin/IT/Technik/Recht), which *are* separate files (`words/business.json` etc., see `PACK_LEVELS`) since that vocabulary doesn't overlap with the CEFR level content.
 
 ### localStorage Keys
 
@@ -63,6 +70,7 @@ Constants at top of `<script>`: `CW_GRID=11`, `CW_MIN=3`, `CW_MAX=7`, `CW_COUNT=
 | `wortle-diamonds` | `{total, log[], milestones[]}` | Diamond currency; log capped at 100 entries; milestones prevent double-awarding |
 | `wortle-review` | `{version, cards{WORD: {box, due, ...}}}` | Leitner spaced-repetition deck (see above) |
 | `wortle-onboarded` | `'1'` | First-run "how to play" overlay shown once |
+| `wortle-packs-done` | `[packId, ...]` | Theme packs already celebrated (100% mastered), prevents re-firing the completion overlay |
 
 ### Firebase (Online Mode)
 

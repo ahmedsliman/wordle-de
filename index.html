@@ -2876,6 +2876,14 @@
     .path-chip-icon { font-size: 1.1rem; flex-shrink: 0; }
     .path-chip-label { font-size: 0.78rem; font-weight: 600; color: var(--color-text); line-height: 1.2; }
     .path-chip.active .path-chip-label { color: var(--color-correct-text); }
+    .path-chip-progress {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      height: 3px; background: var(--hairline);
+      border-radius: 0 0 12px 12px; overflow: hidden;
+    }
+    .path-chip-progress div {
+      height: 100%; background: var(--color-correct-text);
+    }
 
     /* ─── Keyboard highlight ─────────────────────────────── */
     .kb-hl { outline: 2px solid var(--color-correct) !important; outline-offset: 2px; }
@@ -3586,6 +3594,17 @@
     </div>
   </div>
 
+  <!-- Pack completion celebration overlay -->
+  <div id="pack-complete-overlay" class="overlay hidden" style="backdrop-filter:blur(8px);">
+    <div class="overlay-card" style="text-align:center;gap:16px;max-width:280px;">
+      <div id="pack-complete-icon" style="font-size:3.5rem;line-height:1;">💯</div>
+      <div class="overlay-title" style="font-size:1.1rem;">Paket gemeistert!</div>
+      <div id="pack-complete-label" style="font-family:'Fraunces',serif;font-size:1.6rem;font-weight:700;color:var(--color-correct-text);">Familie</div>
+      <div id="pack-complete-meta" style="font-size:0.82rem;color:var(--color-text-muted);"></div>
+      <div style="font-size:0.78rem;color:var(--color-text-muted);">Tippe um fortzufahren</div>
+    </div>
+  </div>
+
   <!-- Achievements overlay -->
   <div id="ach-overlay" class="overlay hidden">
     <div class="overlay-card" style="max-width:420px;">
@@ -4154,6 +4173,28 @@ function showRankUpOverlay(rank) {
   setTimeout(dismiss, 3000);
 }
 
+const PACKS_DONE_KEY = 'wortle-packs-done';
+function packsDoneSet() {
+  try { return new Set(JSON.parse(localStorage.getItem(PACKS_DONE_KEY) || '[]')); }
+  catch { return new Set(); }
+}
+function markPackDone(packId) {
+  const done = packsDoneSet();
+  done.add(packId);
+  try { localStorage.setItem(PACKS_DONE_KEY, JSON.stringify([...done])); } catch {}
+}
+function showPackCompleteOverlay(path, prog) {
+  const ov = document.getElementById('pack-complete-overlay');
+  if (!ov) return;
+  document.getElementById('pack-complete-icon').textContent  = path.icon;
+  document.getElementById('pack-complete-label').textContent = path.label;
+  document.getElementById('pack-complete-meta').textContent  = prog.mastered + ' von ' + prog.total + ' Wörtern gemeistert';
+  ov.classList.remove('hidden');
+  const dismiss = () => ov.classList.add('hidden');
+  ov.addEventListener('click', dismiss, { once: true });
+  setTimeout(dismiss, 4000);
+}
+
 // ─── Combo system ─────────────────────────────────────
 function addCombo() {
   comboCount++;
@@ -4378,6 +4419,15 @@ function dayStr(offset = 0) {
 function isDue(card)   { return card && card.due <= dayStr(); }
 function dueWords()    { return Object.keys(reviewDeck.cards).filter(w => isDue(reviewDeck.cards[w])); }
 function inDeck(word)  { return !!reviewDeck.cards[word]; }
+
+// Progress for a theme pack (e.g. 'FAMILY'): how many of its tagged words are
+// mastered (box >= 4 in the Leitner deck, same threshold as achievements).
+function packProgress(packId) {
+  const tagged = ['A1','A2','B1'].flatMap(l => words[l] || []).filter(e => e.packs?.includes(packId));
+  if (!tagged.length) return null;
+  const mastered = tagged.filter(e => (reviewDeck.cards[e.w]?.box || 0) >= 4).length;
+  return { mastered, total: tagged.length };
+}
 
 // Returns the recent miss rate across all deck cards seen in last 7 days.
 // >0.40 means the user is struggling — slow down new-word introduction.
@@ -5950,6 +6000,7 @@ function setMode(mode) {
     panelHint.classList.add('hidden');
     // Hide the Wordle grid — only keyboard is needed
     document.querySelector('.grid-wrap').classList.add('hidden');
+    setRoute('crossword');
     startCrossword();
   } else {
     // Clear 1P viewport lock when switching to 2P
@@ -5978,6 +6029,48 @@ function showModePickerOverlay() {
 function hideModePickerOverlay() {
   document.getElementById('mode-picker-overlay').classList.add('hidden');
 }
+
+// ─── URL routing ───────────────────────────────────────
+// Keeps the address bar in sync with the active mode so refresh/back-forward
+// and shared links land on the right screen. Hash-only (no server routing
+// needed — this is a static GitHub Pages file).
+const ROUTE_HASH = { '1P': 'crossword', 'SATZ': 'satz', 'ARTIKEL': 'artikel', 'HÖREN': 'hoeren', 'MC': 'quiz', 'PAARE': 'paare', 'SCHREIBEN': 'schreiben' };
+const HASH_MODE  = Object.fromEntries(Object.entries(ROUTE_HASH).map(([k, v]) => [v, k]));
+
+function setRoute(hash) {
+  if (location.hash.slice(1) === hash) return; // already there — don't spam history
+  const url = hash ? '#' + hash : location.pathname + location.search;
+  history.pushState(null, '', url);
+}
+
+function applyRouteFromHash() {
+  ['setup-overlay', 'mode-picker-overlay', 'online-lobby-overlay', 'handoff-overlay', 'results-overlay'].forEach(id => {
+    document.getElementById(id)?.classList.add('hidden');
+  });
+  const raw = location.hash.slice(1);
+  if (!raw) { showHome(); return; }
+  if (raw === '2p') {
+    showGame();
+    setMode('2P');
+    hideModePickerOverlay();
+    showSetupOverlay();
+    return;
+  }
+  if (raw.startsWith('online')) {
+    showGame();
+    setMode('2P');
+    hideModePickerOverlay();
+    openOverlay('online-lobby-overlay');
+    const room = new URLSearchParams(raw.split('?')[1] || '').get('room');
+    if (room) document.getElementById('room-code-input').value = room.toUpperCase();
+    return;
+  }
+  const modeId = HASH_MODE[raw];
+  if (modeId) launchMode(modeId);
+  else showHome();
+}
+
+window.addEventListener('popstate', applyRouteFromHash);
 
 // ─── Overlay helpers ──────────────────────────────────
 function openOverlay(id) {
@@ -6009,6 +6102,7 @@ function startGame2P() {
   roundStartPlayer = 0;
 
   hideSetupOverlay();
+  setRoute('2p');
   updateTurnBanner();
   updateScoreStrip();
   startRound2P();
@@ -6287,6 +6381,7 @@ function startOnlineGame() {
   roundStartPlayer = 0;
   lastRoundNum = -1;
 
+  setRoute('online?room=' + roomId);
   updateScoreStrip();
 
   // Subscribe: round data (all game state)
@@ -6782,6 +6877,7 @@ const LEVEL_FILES = {
   SOFTWARE: 'words/software.json', ENGINEERING: 'words/engineering.json', LEGAL: 'words/legal.json',
 };
 const PACK_LEVELS = new Set(['BUSINESS','MEDICAL','SOFTWARE','ENGINEERING','LEGAL']);
+const THEME_PACKS = new Set(['FAMILY','RESTAURANT','TRAVEL','NUMBERS','FIRST100']);
 
 const PATHS = [
   { id:'A1',          label:'Grundstufe A1',    desc:'Erste 200 Wörter',          icon:'🌱', cefr:['A1'],         domain:null },
@@ -6794,10 +6890,25 @@ const PATHS = [
   { id:'SOFTWARE',    label:'Beruf: IT',        desc:'Tech & Software',            icon:'💻', cefr:['B1','B2'],    domain:'SOFTWARE' },
   { id:'ENGINEERING', label:'Beruf: Technik',   desc:'Ingenieurwesen',             icon:'⚙️', cefr:['B1','B2'],    domain:'ENGINEERING' },
   { id:'LEGAL',       label:'Beruf: Recht',     desc:'Jura & Verwaltung',          icon:'⚖️', cefr:['B1','B2'],    domain:'LEGAL' },
+  { id:'FAMILY',      label:'Familie',          desc:'Verwandte & Zuhause',        icon:'👨‍👩‍👧', cefr:[], domain:'FAMILY' },
+  { id:'RESTAURANT',  label:'Restaurant',       desc:'Essen & Bestellen',          icon:'🍽️', cefr:[], domain:'RESTAURANT' },
+  { id:'TRAVEL',      label:'Reisen',           desc:'Unterwegs',                  icon:'✈️', cefr:[], domain:'TRAVEL' },
+  { id:'NUMBERS',     label:'Zahlen',           desc:'1 bis 100',                  icon:'🔢', cefr:[], domain:'NUMBERS' },
+  { id:'FIRST100',    label:'Erste 100',        desc:'Die wichtigsten Wörter',     icon:'💯', cefr:[], domain:'FIRST100' },
 ];
 
 async function loadLevel(lvl) {
   if (loadedLevels.has(lvl)) return;
+  if (THEME_PACKS.has(lvl)) {
+    // Curriculum packs aren't separate files — they're a `packs` tag on existing
+    // A1/A2/B1 entries. Synthesize the pool and deliberately skip wordLevelIndex/
+    // wordEntryIndex: those entries are the same object references as their CEFR-file
+    // counterparts, so mastery/review tracking (keyed by word string) stays correct.
+    await ensureLevels(new Set(['A1','A2','B1']));
+    words[lvl] = ['A1','A2','B1'].flatMap(l => words[l] || []).filter(e => e.packs?.includes(lvl));
+    loadedLevels.add(lvl);
+    return;
+  }
   const res = await fetch(`./${LEVEL_FILES[lvl]}`);
   if (!res.ok) throw new Error(`HTTP ${res.status} loading ${lvl}`);
   words[lvl] = await res.json();
@@ -6806,7 +6917,7 @@ async function loadLevel(lvl) {
 }
 
 async function ensureLevels(levelSet) {
-  await Promise.all([...levelSet].map(lvl => LEVEL_FILES[lvl] ? loadLevel(lvl) : Promise.resolve()));
+  await Promise.all([...levelSet].map(lvl => (LEVEL_FILES[lvl] || THEME_PACKS.has(lvl)) ? loadLevel(lvl) : Promise.resolve()));
 }
 
 async function init() {
@@ -6861,7 +6972,7 @@ async function init() {
       el.classList.toggle('active', !!active);
       el.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
-    showHome();
+    applyRouteFromHash();
     updateThemeBtn();
     checkAchievements();
     loading.classList.add('hidden');
@@ -7026,6 +7137,7 @@ function showSatzPanel() {
   document.getElementById('satz-panel').classList.remove('hidden');
   document.getElementById('streak-bar').classList.remove('hidden');
   setModeSwitcher('satz');
+  setRoute('satz');
 }
 
 function hideSatzPanel() {
@@ -7422,6 +7534,7 @@ function showArtikelPanel() {
   document.getElementById('artikel-panel').classList.remove('hidden');
   document.getElementById('streak-bar').classList.remove('hidden');
   setModeSwitcher('artikel');
+  setRoute('artikel');
 }
 
 function hideArtikelPanel() {
@@ -7571,6 +7684,7 @@ async function startPairsMode() {
   document.body.classList.add('game-active');
   gameMode = 'PAARE';
   setModeSwitcher('pairs');
+  setRoute('paare');
   document.getElementById('pairs-panel').classList.remove('hidden');
   document.getElementById('streak-bar').classList.remove('hidden');
 
@@ -7727,6 +7841,7 @@ async function startMcMode() {
   document.body.classList.add('game-active');
   gameMode = 'MC';
   setModeSwitcher('mc');
+  setRoute('quiz');
   document.getElementById('mc-panel').classList.remove('hidden');
   document.getElementById('streak-bar').classList.remove('hidden');
 
@@ -7882,6 +7997,7 @@ async function startSchreibenMode() {
   document.body.classList.add('game-active');
   gameMode = 'SCHREIBEN';
   setModeSwitcher('schreiben');
+  setRoute('schreiben');
   document.getElementById('schreiben-panel').classList.remove('hidden');
   document.getElementById('streak-bar').classList.remove('hidden');
 
@@ -8017,6 +8133,7 @@ async function startListenMode() {
   document.body.classList.add('game-active');
   gameMode = 'HÖREN';
   setModeSwitcher('listen');
+  setRoute('hoeren');
   document.getElementById('listen-panel').classList.remove('hidden');
   document.getElementById('streak-bar').classList.remove('hidden');
 
@@ -8710,6 +8827,8 @@ function buildHome() {
   // 8. Lernpfad
   const pathSection = document.getElementById('home-level-row');
   pathSection.innerHTML = '';
+  const doneSet = packsDoneSet();
+  let newlyCompleted = null;
   PATHS.forEach(path => {
     const btn = document.createElement('button');
     const isActive = (path.domain && selectedLevels.has(path.domain)) ||
@@ -8717,10 +8836,22 @@ function buildHome() {
     btn.className = 'path-chip' + (isActive ? ' active' : '');
     btn.dataset.pathId = path.id;
     btn.innerHTML = '<span class="path-chip-icon">' + path.icon + '</span><span class="path-chip-label">' + path.label + '</span>';
+    if (THEME_PACKS.has(path.domain)) {
+      const prog = packProgress(path.domain);
+      if (prog) {
+        btn.innerHTML += '<div class="path-chip-progress"><div style="width:' + Math.round(prog.mastered / prog.total * 100) + '%"></div></div>';
+        btn.title = prog.mastered + ' / ' + prog.total + ' gemeistert';
+        if (prog.mastered === prog.total && !doneSet.has(path.domain)) {
+          markPackDone(path.domain);
+          if (!newlyCompleted) newlyCompleted = { path, prog }; // celebrate one at a time
+        }
+      }
+    }
     btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     btn.addEventListener('click', () => selectPath(path.id));
     pathSection.appendChild(btn);
   });
+  if (newlyCompleted) showPackCompleteOverlay(newlyCompleted.path, newlyCompleted.prog);
 
   // 9. XP + Achievement display
   updateXPDisplay();
@@ -8737,6 +8868,7 @@ function showHome() {
   document.body.classList.remove('cw-active','cw-typing','game-active');
   clearInterval(mcTimerInterval);
   resetCombo();
+  setRoute('');
   buildHome();
 }
 
