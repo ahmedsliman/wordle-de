@@ -5704,7 +5704,9 @@ async function startCrossword() {
 function handleKey(key) {
   if (gameMode === 'SATZ') {
     const round = satzQueue[satzRoundIdx];
-    if (round && round.mode === 'fill') satzFillHandleKey(key);
+    if (!round) return;
+    if (round.mode === 'fill') satzFillHandleKey(key);
+    else                       satzOrderHandleKey(key);
     return;
   }
   if (gameMode === 'ARTIKEL') {
@@ -7015,6 +7017,7 @@ let satzInput     = [];  // current letter array (fill mode)
 let satzCursor    = 0;   // active tile index (fill mode)
 let satzOrderPlaced = []; // words placed in answer row (order mode)
 let satzOrderPool   = []; // {word, idx, el} word chips
+let satzOrderKbIdx  = -1; // keyboard-highlight index into the chip pool (-1 = none)
 
 function showSatzPanel() {
   hideAllGamePanels();
@@ -7030,6 +7033,7 @@ function hideSatzPanel() {
 }
 
 async function startSatzMode() {
+  satzOrderKbIdx = -1;
   await ensureLevels(selectedLevels);
   const seen = new Set();
   const pool = [...selectedLevels].flatMap(lvl => words[lvl] || []).filter(e => {
@@ -7137,7 +7141,11 @@ function updateSatzTileCursor() {
 function satzFillHandleKey(key) {
   const entry = satzQueue[satzRoundIdx].entry;
   const word  = entry.w;
-  if (key === 'BACKSPACE' || key === '⌫') {
+  if (key === 'Enter' || key === 'ENTER') {
+    const btn = document.getElementById('satz-fill-check');
+    if (btn && !btn.disabled) btn.click();
+    return;
+  } else if (key === 'BACKSPACE' || key === '⌫' || key === 'Backspace') {
     if (satzInput[satzCursor]) {
       satzInput[satzCursor] = '';
     } else if (satzCursor > 0) {
@@ -7245,6 +7253,29 @@ function satzChipTap(chipEl, word) {
   });
   answerRow.appendChild(placed);
   answerRow.classList.add('has-words');
+  satzOrderKbIdx = -1; // pool shifted — drop the stale highlight
+}
+
+// Arrow keys cycle through remaining pool chips; Enter taps the highlighted
+// chip. Once the pool is empty, Enter submits via the Prüfen button.
+function satzOrderHandleKey(key) {
+  const chips = [...document.querySelectorAll('#satz-chip-pool .satz-chip:not(.used):not(:disabled)')];
+  if (!chips.length) {
+    if (key === 'Enter' || key === 'ENTER') {
+      const btn = document.getElementById('satz-order-check');
+      if (btn && !btn.disabled) btn.click();
+    }
+    return;
+  }
+  if (key === 'ArrowRight' || key === 'ArrowDown')
+    satzOrderKbIdx = (satzOrderKbIdx + 1 + chips.length) % chips.length;
+  else if (key === 'ArrowLeft' || key === 'ArrowUp')
+    satzOrderKbIdx = (satzOrderKbIdx - 1 + chips.length) % chips.length;
+  else if ((key === 'Enter' || key === 'ENTER') && satzOrderKbIdx >= 0)
+    { chips[satzOrderKbIdx].click(); return; }
+  else return;
+  chips.forEach(c => c.classList.remove('kb-hl'));
+  chips[satzOrderKbIdx]?.classList.add('kb-hl');
 }
 
 function checkSatzOrder() {
