@@ -6,7 +6,10 @@
     "hint": "Where trains arrive and depart",
     "type": "noun",
     "article": "der",
-    "sentence": "Wir treffen uns um zehn Uhr am ___."
+    "sentence": "Wir treffen uns um zehn Uhr am ___.",
+    "packs": [
+      "TRAVEL"
+    ]
   },
   {
     "w": "FLUGHAFEN",
@@ -15,7 +18,10 @@
     "hint": "Where planes take off",
     "type": "noun",
     "article": "der",
-    "sentence": "Das Flugzeug landet bald auf dem ___."
+    "sentence": "Das Flugzeug landet bald auf dem ___.",
+    "packs": [
+      "TRAVEL"
+    ]
   },
   {
     "w": "HOTEL",
@@ -24,7 +30,10 @@
     "hint": "Temporary accommodation",
     "type": "noun",
     "article": "das",
-    "sentence": "Wir übernachten in einem gemütlichen ___."
+    "sentence": "Wir übernachten in einem gemütlichen ___.",
+    "packs": [
+      "TRAVEL"
+    ]
   },
   {
     "w": "RESTAURANT",
@@ -33,7 +42,10 @@
     "hint": "You eat meals there",
     "type": "noun",
     "article": "das",
-    "sentence": "Wir essen heute Abend in einem neuen ___ in der Stadt."
+    "sentence": "Wir essen heute Abend in einem neuen ___ in der Stadt.",
+    "packs": [
+      "RESTAURANT"
+    ]
   },
   {
     "w": "KÜCHE",
@@ -241,7 +253,10 @@
     "hint": "Serves food in a restaurant",
     "type": "noun",
     "article": "der",
-    "sentence": "Der ___ bringt uns die Speisekarte."
+    "sentence": "Der ___ bringt uns die Speisekarte.",
+    "packs": [
+      "RESTAURANT"
+    ]
   },
   {
     "w": "BÄCKER",
@@ -457,7 +472,10 @@
     "hint": "Travel to another place",
     "type": "noun",
     "article": "die",
-    "sentence": "Die ___ nach Italien war sehr schön."
+    "sentence": "Die ___ nach Italien war sehr schön.",
+    "packs": [
+      "TRAVEL"
+    ]
   },
   {
     "w": "URLAUB",
@@ -466,7 +484,10 @@
     "hint": "Time off work for rest",
     "type": "noun",
     "article": "der",
-    "sentence": "Im ___ fahren wir immer ans Meer."
+    "sentence": "Im ___ fahren wir immer ans Meer.",
+    "packs": [
+      "TRAVEL"
+    ]
   },
   {
     "w": "KOFFER",
@@ -475,7 +496,10 @@
     "hint": "You pack clothes in it for travel",
     "type": "noun",
     "article": "der",
-    "sentence": "Ich packe meinen ___ für die Reise."
+    "sentence": "Ich packe meinen ___ für die Reise.",
+    "packs": [
+      "TRAVEL"
+    ]
   },
   {
     "w": "KARTE",
@@ -493,7 +517,10 @@
     "hint": "Permits entry or travel",
     "type": "noun",
     "article": "das",
-    "sentence": "Das ___ für den Zug kostet dreißig Euro."
+    "sentence": "Das ___ für den Zug kostet dreißig Euro.",
+    "packs": [
+      "TRAVEL"
+    ]
   },
   {
     "w": "RECHNUNG",
@@ -502,7 +529,10 @@
     "hint": "Request for payment",
     "type": "noun",
     "article": "die",
-    "sentence": "Der Kellner bringt uns die ___ am Ende des Abends."
+    "sentence": "Der Kellner bringt uns die ___ nach dem Essen.",
+    "packs": [
+      "RESTAURANT"
+    ]
   },
   {
     "w": "QUITTUNG",
@@ -601,7 +631,10 @@
     "hint": "Hot caffeinated drink",
     "type": "noun",
     "article": "der",
-    "sentence": "Ich trinke jeden Morgen eine Tasse ___."
+    "sentence": "Ich trinke jeden Morgen eine Tasse ___.",
+    "packs": [
+      "RESTAURANT"
+    ]
   },
   {
     "w": "TEE",
@@ -610,7 +643,10 @@
     "hint": "Hot drink made with leaves",
     "type": "noun",
     "article": "der",
-    "sentence": "Ich trinke abends gerne einen heißen ___."
+    "sentence": "Ich trinke abends gerne einen heißen ___.",
+    "packs": [
+      "RESTAURANT"
+    ]
   },
   {
     "w": "SAFT",
@@ -628,7 +664,10 @@
     "hint": "Alcoholic drink from barley",
     "type": "noun",
     "article": "das",
-    "sentence": "Er trinkt ein kühles ___ nach der Arbeit."
+    "sentence": "Er trinkt ein kühles ___ nach der Arbeit.",
+    "packs": [
+      "RESTAURANT"
+    ]
   },
   {
     "w": "WEIN",
@@ -637,7 +676,10 @@
     "hint": "Alcoholic drink from grapes",
     "type": "noun",
     "article": "der",
-    "sentence": "Zum Essen trinkt sie ein Glas roten ___."
+    "sentence": "Zum Essen trinkt sie ein Glas roten ___.",
+    "packs": [
+      "RESTAURANT"
+    ]
   },
   {
     "w": "TASSE",
@@ -646,7 +688,10 @@
     "hint": "Container for hot drinks",
     "type": "noun",
     "article": "die",
-    "sentence": "Ich möchte bitte eine ___ Kaffee."
+    "sentence": "Ich möchte bitte eine ___ Kaffee.",
+    "packs": [
+      "RESTAURANT"
+    ]
   },
   {
     "w": "GLAS",
@@ -655,7 +700,10 @@
     "hint": "Container for cold drinks",
     "type": "noun",
     "article": "das",
-    "sentence": "Er trinkt ein ___ Wasser zum Essen."
+    "sentence": "Er trinkt ein ___ Wasser zum Essen.",
+    "packs": [
+      "RESTAURANT"
+    ]
   },
   {
     "w": "TELLER",
@@ -664,7 +712,10 @@
     "hint": "Flat dish for food",
     "type": "noun",
     "article": "der",
-    "sentence": "Sie legt das Essen auf den ___."
+    "sentence": "Sie legt das Essen auf den ___.",
+    "packs": [
+      "RESTAURANT"
+    ]
   },
   {
     "w": "LÖFFEL",
@@ -673,7 +724,10 @@
     "hint": "Used to eat soup",
     "type": "noun",
     "article": "der",
-    "sentence": "Ich esse die Suppe mit einem ___."
+    "sentence": "Ich esse die Suppe mit einem ___.",
+    "packs": [
+      "RESTAURANT"
+    ]
   },
   {
     "w": "GABEL",
@@ -682,7 +736,10 @@
     "hint": "Used to eat salad",
     "type": "noun",
     "article": "die",
-    "sentence": "Er isst den Salat mit einer ___."
+    "sentence": "Er isst den Salat mit einer ___.",
+    "packs": [
+      "RESTAURANT"
+    ]
   },
   {
     "w": "MESSER",
@@ -691,7 +748,10 @@
     "hint": "Used to cut food",
     "type": "noun",
     "article": "das",
-    "sentence": "Sie schneidet das Brot mit einem ___."
+    "sentence": "Sie schneidet das Brot mit einem ___.",
+    "packs": [
+      "RESTAURANT"
+    ]
   },
   {
     "w": "LAMPE",
@@ -977,7 +1037,10 @@
     "ar": "يطلب",
     "hint": "Ask for food or goods",
     "type": "verb",
-    "sentence": "Ich möchte eine Pizza im Restaurant ___."
+    "sentence": "Ich möchte eine Pizza im Restaurant ___.",
+    "packs": [
+      "RESTAURANT"
+    ]
   },
   {
     "w": "BEZAHLEN",
@@ -1641,7 +1704,7 @@
     "ar": "ذكي / حكيم",
     "hint": "Showing good judgment",
     "type": "adjective",
-    "sentence": "Die Lösung, die sie gefunden hat, ist sehr ___."
+    "sentence": "Ihre Lösung für das Problem ist sehr ___."
   },
   {
     "w": "DUMM",
@@ -1776,7 +1839,7 @@
     "hint": "Der Weg hinein ins Gebäude.",
     "type": "noun",
     "article": "der",
-    "sentence": "Wir treffen uns am ___ des Museums."
+    "sentence": "Wir treffen uns am ___ vom Museum."
   },
   {
     "w": "TERMIN",
@@ -1803,7 +1866,10 @@
     "hint": "Das, was man auf Reisen trägt.",
     "type": "noun",
     "article": "das",
-    "sentence": "Das ___ ist zu schwer für das Flugzeug."
+    "sentence": "Das ___ ist zu schwer für das Flugzeug.",
+    "packs": [
+      "TRAVEL"
+    ]
   },
   {
     "w": "ABFAHRT",
@@ -1812,7 +1878,10 @@
     "hint": "Der Moment, wenn der Zug losfährt.",
     "type": "noun",
     "article": "die",
-    "sentence": "Die ___ des Zuges ist um 10 Uhr."
+    "sentence": "Die ___ vom Zug ist um 10 Uhr.",
+    "packs": [
+      "TRAVEL"
+    ]
   },
   {
     "w": "ANKUNFT",
@@ -1821,7 +1890,10 @@
     "hint": "Der Moment, wenn man ankommt.",
     "type": "noun",
     "article": "die",
-    "sentence": "Die ___ in Berlin ist um 14 Uhr."
+    "sentence": "Die ___ in Berlin ist um 14 Uhr.",
+    "packs": [
+      "TRAVEL"
+    ]
   },
   {
     "w": "HAUSHALT",
@@ -2223,7 +2295,10 @@
     "hint": "Your parents, siblings and relatives",
     "type": "noun",
     "article": "die",
-    "sentence": "Ich würde meine ___ nie verlassen."
+    "sentence": "Ich würde meine ___ nie verlassen.",
+    "packs": [
+      "FAMILY"
+    ]
   },
   {
     "w": "VERLASSEN",
@@ -2374,5 +2449,77 @@
     "ar": "يفتقد / يشتاق",
     "hint": "To feel sad someone is away",
     "type": "verb"
+  },
+  {
+    "w": "SPEISEKARTE",
+    "en": "menu",
+    "ar": "قائمة الطعام",
+    "hint": "Lists the food you can order",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Der Kellner bringt uns die ___.",
+    "packs": [
+      "RESTAURANT"
+    ]
+  },
+  {
+    "w": "TRINKGELD",
+    "en": "tip",
+    "ar": "بقشيش",
+    "hint": "Extra money for good service",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Wir geben dem Kellner ein kleines ___.",
+    "packs": [
+      "RESTAURANT"
+    ]
+  },
+  {
+    "w": "VORSPEISE",
+    "en": "appetizer",
+    "ar": "مقبلات",
+    "hint": "The first small dish before the main meal",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Als ___ nehme ich eine Suppe.",
+    "packs": [
+      "RESTAURANT"
+    ]
+  },
+  {
+    "w": "HAUPTGERICHT",
+    "en": "main course",
+    "ar": "الطبق الرئيسي",
+    "hint": "The biggest dish of the meal",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Das ___ kommt in zehn Minuten.",
+    "packs": [
+      "RESTAURANT"
+    ]
+  },
+  {
+    "w": "NACHTISCH",
+    "en": "dessert",
+    "ar": "حلوى",
+    "hint": "Sweet food after the main meal",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Zum ___ nehme ich Eis.",
+    "packs": [
+      "RESTAURANT"
+    ]
+  },
+  {
+    "w": "SALAT",
+    "en": "salad",
+    "ar": "سلطة",
+    "hint": "A cold dish with vegetables",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Ich nehme einen frischen ___.",
+    "packs": [
+      "RESTAURANT"
+    ]
   }
 ]

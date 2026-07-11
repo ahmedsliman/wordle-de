@@ -12,7 +12,10 @@
       "en": "The house is very old.",
       "ar": "المنزل قديم جدًا."
     },
-    "sentence": "Wir wohnen in einem kleinen ___."
+    "sentence": "Wir wohnen in einem kleinen ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "HUND",
@@ -27,7 +30,10 @@
       "en": "The dog sleeps in the garden.",
       "ar": "الكلب ينام في الحديقة."
     },
-    "sentence": "Der ___ bellt laut im Garten."
+    "sentence": "Der ___ bellt laut im Garten.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "KATZE",
@@ -42,7 +48,10 @@
       "en": "The cat drinks milk.",
       "ar": "القطة تشرب الحليب."
     },
-    "sentence": "Die ___ schläft auf dem warmen Sofa."
+    "sentence": "Die ___ schläft auf dem warmen Sofa.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "BUCH",
@@ -57,7 +66,10 @@
       "en": "The book is interesting.",
       "ar": "الكتاب مثير للاهتمام."
     },
-    "sentence": "Ich lese gerade ein interessantes ___."
+    "sentence": "Ich lese gerade ein interessantes ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "AUTO",
@@ -67,7 +79,10 @@
     "type": "noun",
     "article": "das",
     "plural": "die Autos",
-    "sentence": "Mein ___ ist rot und noch neu."
+    "sentence": "Mein ___ ist rot und noch neu.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "KIND",
@@ -82,7 +97,11 @@
       "en": "The child plays outside.",
       "ar": "الطفل يلعب في الخارج."
     },
-    "sentence": "Das ___ spielt gerne im Park."
+    "sentence": "Das ___ spielt gerne im Park.",
+    "packs": [
+      "FAMILY",
+      "FIRST100"
+    ]
   },
   {
     "w": "MANN",
@@ -92,7 +111,10 @@
     "type": "noun",
     "article": "der",
     "plural": "die Männer",
-    "sentence": "Der ___ trägt heute eine blaue Jacke."
+    "sentence": "Der ___ trägt heute eine blaue Jacke.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "FRAU",
@@ -102,7 +124,10 @@
     "type": "noun",
     "article": "die",
     "plural": "die Frauen",
-    "sentence": "Die ___ kauft frisches Brot beim Bäcker."
+    "sentence": "Die ___ kauft frisches Brot beim Bäcker.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "TISCH",
@@ -112,7 +137,10 @@
     "type": "noun",
     "article": "der",
     "plural": "die Tische",
-    "sentence": "Wir essen alle zusammen am großen ___."
+    "sentence": "Wir essen alle zusammen am großen ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "STUHL",
@@ -122,7 +150,10 @@
     "type": "noun",
     "article": "der",
     "plural": "die Stühle",
-    "sentence": "Setz dich bitte auf den ___."
+    "sentence": "Setz dich bitte auf den ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "BETT",
@@ -132,7 +163,10 @@
     "type": "noun",
     "article": "das",
     "plural": "die Betten",
-    "sentence": "Ich schlafe in einem bequemen ___."
+    "sentence": "Ich schlafe in einem bequemen ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "BROT",
@@ -142,7 +176,11 @@
     "type": "noun",
     "article": "das",
     "plural": "die Brote",
-    "sentence": "Ich esse morgens gerne frisches ___."
+    "sentence": "Ich esse morgens gerne frisches ___.",
+    "packs": [
+      "RESTAURANT",
+      "FIRST100"
+    ]
   },
   {
     "w": "MILCH",
@@ -160,7 +198,11 @@
     "hint": "H₂O, you drink it",
     "type": "noun",
     "article": "das",
-    "sentence": "Bitte gib mir ein Glas ___."
+    "sentence": "Bitte gib mir ein Glas ___.",
+    "packs": [
+      "RESTAURANT",
+      "FIRST100"
+    ]
   },
   {
     "w": "APFEL",
@@ -170,7 +212,10 @@
     "type": "noun",
     "article": "der",
     "plural": "die Äpfel",
-    "sentence": "Ich esse jeden Tag einen roten ___."
+    "sentence": "Ich esse jeden Tag einen roten ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "BALL",
@@ -236,7 +281,10 @@
     "type": "noun",
     "article": "die",
     "plural": "die Hände",
-    "sentence": "Er gibt mir die ___ zur Begrüßung."
+    "sentence": "Er gibt mir die ___ zur Begrüßung.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "KOPF",
@@ -246,7 +294,10 @@
     "type": "noun",
     "article": "der",
     "plural": "die Köpfe",
-    "sentence": "Mein ___ tut mir heute sehr weh."
+    "sentence": "Mein ___ tut mir heute sehr weh.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "AUGE",
@@ -256,7 +307,10 @@
     "type": "noun",
     "article": "das",
     "plural": "die Augen",
-    "sentence": "Sie hat ein blaues ___ nach dem Sturz."
+    "sentence": "Sie hat ein blaues ___ nach dem Sturz.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "NASE",
@@ -274,7 +328,10 @@
     "hint": "You eat and talk with it",
     "type": "noun",
     "article": "der",
-    "sentence": "Beim Zahnarzt muss man den ___ weit öffnen."
+    "sentence": "Beim Zahnarzt muss man den ___ weit öffnen.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "OHR",
@@ -283,7 +340,7 @@
     "hint": "You hear with it",
     "type": "noun",
     "article": "das",
-    "sentence": "Er hält sich das ___ wegen des Lärms zu."
+    "sentence": "Das ___ tut mir weh."
   },
   {
     "w": "FUSS",
@@ -292,7 +349,10 @@
     "hint": "Bottom of the leg",
     "type": "noun",
     "article": "der",
-    "sentence": "Mein ___ tut nach dem langen Spaziergang weh."
+    "sentence": "Mein ___ tut nach dem langen Spaziergang weh.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "BEIN",
@@ -320,7 +380,10 @@
     "type": "noun",
     "article": "die",
     "plural": "die Schulen",
-    "sentence": "Die Kinder gehen jeden Morgen in die ___."
+    "sentence": "Die Kinder gehen jeden Morgen in die ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "LEHRER",
@@ -374,7 +437,11 @@
     "hint": "Male parent",
     "type": "noun",
     "article": "der",
-    "sentence": "Mein ___ arbeitet jeden Tag bis sechs Uhr."
+    "sentence": "Mein ___ arbeitet jeden Tag bis sechs Uhr.",
+    "packs": [
+      "FAMILY",
+      "FIRST100"
+    ]
   },
   {
     "w": "MUTTER",
@@ -383,7 +450,11 @@
     "hint": "Female parent",
     "type": "noun",
     "article": "die",
-    "sentence": "Meine ___ kocht sehr leckeres Essen."
+    "sentence": "Meine ___ kocht sehr leckeres Essen.",
+    "packs": [
+      "FAMILY",
+      "FIRST100"
+    ]
   },
   {
     "w": "BRUDER",
@@ -392,7 +463,11 @@
     "hint": "Male sibling",
     "type": "noun",
     "article": "der",
-    "sentence": "Mein ___ ist zwei Jahre jünger als ich."
+    "sentence": "Mein ___ ist zwei Jahre jünger als ich.",
+    "packs": [
+      "FAMILY",
+      "FIRST100"
+    ]
   },
   {
     "w": "SCHWESTER",
@@ -401,7 +476,11 @@
     "hint": "Female sibling",
     "type": "noun",
     "article": "die",
-    "sentence": "Meine ___ wohnt in einer anderen Stadt."
+    "sentence": "Meine ___ wohnt in einer anderen Stadt.",
+    "packs": [
+      "FAMILY",
+      "FIRST100"
+    ]
   },
   {
     "w": "OMA",
@@ -410,7 +489,10 @@
     "hint": "Mother's or father's mother",
     "type": "noun",
     "article": "die",
-    "sentence": "Meine ___ backt den besten Kuchen der Welt."
+    "sentence": "Meine ___ backt den besten Kuchen der Welt.",
+    "packs": [
+      "FAMILY"
+    ]
   },
   {
     "w": "OPA",
@@ -419,7 +501,10 @@
     "hint": "Mother's or father's father",
     "type": "noun",
     "article": "der",
-    "sentence": "Mein ___ erzählt gerne alte Geschichten."
+    "sentence": "Mein ___ erzählt gerne alte Geschichten.",
+    "packs": [
+      "FAMILY"
+    ]
   },
   {
     "w": "BABY",
@@ -428,7 +513,10 @@
     "hint": "Very young child",
     "type": "noun",
     "article": "das",
-    "sentence": "Das ___ schläft den ganzen Nachmittag."
+    "sentence": "Das ___ schläft den ganzen Nachmittag.",
+    "packs": [
+      "FAMILY"
+    ]
   },
   {
     "w": "FREUND",
@@ -437,7 +525,10 @@
     "hint": "Someone you like and trust",
     "type": "noun",
     "article": "der",
-    "sentence": "Mein ___ kommt heute zum Spielen."
+    "sentence": "Mein ___ kommt heute zum Spielen.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "FELD",
@@ -546,7 +637,10 @@
     "type": "noun",
     "article": "der",
     "plural": "die Tage",
-    "sentence": "Heute war ein langer und anstrengender ___."
+    "sentence": "Heute war ein langer und anstrengender ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "NACHT",
@@ -555,7 +649,10 @@
     "hint": "Opposite of day",
     "type": "noun",
     "article": "die",
-    "sentence": "In der ___ schlafen alle Menschen."
+    "sentence": "In der ___ schlafen alle Menschen.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "MORGEN",
@@ -564,7 +661,10 @@
     "hint": "Early part of the day",
     "type": "noun",
     "article": "der",
-    "sentence": "Am ___ trinke ich immer Kaffee."
+    "sentence": "Am ___ trinke ich immer Kaffee.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "ABEND",
@@ -573,7 +673,10 @@
     "hint": "Late part of the day",
     "type": "noun",
     "article": "der",
-    "sentence": "Am ___ sehen wir zusammen fern."
+    "sentence": "Am ___ sehen wir zusammen fern.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "WOCHE",
@@ -582,7 +685,10 @@
     "hint": "7 days",
     "type": "noun",
     "article": "die",
-    "sentence": "Nächste ___ habe ich keine Schule."
+    "sentence": "Nächste ___ habe ich keine Schule.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "MONAT",
@@ -601,7 +707,10 @@
     "type": "noun",
     "article": "das",
     "plural": "die Jahre",
-    "sentence": "Das neue ___ beginnt am ersten Januar."
+    "sentence": "Das neue ___ beginnt am ersten Januar.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "STUNDE",
@@ -610,7 +719,10 @@
     "hint": "60 minutes",
     "type": "noun",
     "article": "die",
-    "sentence": "Eine ___ hat sechzig Minuten."
+    "sentence": "Eine ___ hat sechzig Minuten.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "MINUTE",
@@ -629,7 +741,10 @@
     "type": "noun",
     "article": "die",
     "plural": "die Städte",
-    "sentence": "Berlin ist eine große und schöne ___."
+    "sentence": "Berlin ist eine große und schöne ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "STRASSE",
@@ -639,7 +754,10 @@
     "type": "noun",
     "article": "die",
     "plural": "die Straßen",
-    "sentence": "Die ___ vor unserem Haus ist sehr laut."
+    "sentence": "Die ___ vor unserem Haus ist sehr laut.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "PLATZ",
@@ -675,7 +793,10 @@
     "hint": "Small store",
     "type": "noun",
     "article": "der",
-    "sentence": "Der kleine ___ um die Ecke verkauft Süßigkeiten."
+    "sentence": "Der kleine ___ um die Ecke verkauft Süßigkeiten.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "PREIS",
@@ -702,7 +823,10 @@
     "hint": "Red, blue, green...",
     "type": "noun",
     "article": "die",
-    "sentence": "Das Kleid hat eine sehr schöne ___."
+    "sentence": "Das Kleid hat eine sehr schöne ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "ROT",
@@ -711,7 +835,10 @@
     "hint": "Color of blood",
     "type": "noun",
     "article": "das",
-    "sentence": "Das ___ ist die Farbe des Feuers."
+    "sentence": "Die Tomate ist ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "BLAU",
@@ -720,7 +847,10 @@
     "hint": "Color of the sky",
     "type": "noun",
     "article": "das",
-    "sentence": "Das ___ ist die Farbe des Himmels."
+    "sentence": "Der Himmel ist heute ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "GRUEN",
@@ -729,7 +859,10 @@
     "hint": "Color of grass",
     "type": "noun",
     "article": "das",
-    "sentence": "Das ___ ist die Farbe der Natur."
+    "sentence": "Das ___ ist die Farbe der Natur.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "GELB",
@@ -738,7 +871,10 @@
     "hint": "Color of the sun",
     "type": "noun",
     "article": "das",
-    "sentence": "Das ___ ist die Farbe der Banane."
+    "sentence": "Das ___ ist die Farbe der Banane.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "WEISS",
@@ -747,7 +883,10 @@
     "hint": "Color of snow",
     "type": "noun",
     "article": "das",
-    "sentence": "Das ___ ist die Farbe des Schnees."
+    "sentence": "Der Schnee ist ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "SCHWARZ",
@@ -756,7 +895,10 @@
     "hint": "Color of night",
     "type": "noun",
     "article": "das",
-    "sentence": "Das ___ ist die Farbe der Nacht."
+    "sentence": "Das ___ ist die Farbe der Nacht.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "VOGEL",
@@ -774,7 +916,7 @@
     "hint": "Lives in water, has fins",
     "type": "noun",
     "article": "der",
-    "sentence": "Der ___ schwimmt im klaren Wasser des Sees."
+    "sentence": "Der ___ schwimmt im See."
   },
   {
     "w": "PFERD",
@@ -909,7 +1051,7 @@
     "hint": "Where sick people are treated",
     "type": "noun",
     "article": "das",
-    "sentence": "Sie wurde nach dem Unfall ins ___ gebracht."
+    "sentence": "Er ist krank und geht ins ___."
   },
   {
     "w": "APOTHEKE",
@@ -927,7 +1069,10 @@
     "hint": "Public road transport",
     "type": "noun",
     "article": "der",
-    "sentence": "Der ___ kommt alle zehn Minuten."
+    "sentence": "Der ___ kommt alle zehn Minuten.",
+    "packs": [
+      "TRAVEL"
+    ]
   },
   {
     "w": "ZUG",
@@ -936,7 +1081,10 @@
     "hint": "Travels on rails",
     "type": "noun",
     "article": "der",
-    "sentence": "Der ___ fährt um acht Uhr morgens ab."
+    "sentence": "Der ___ fährt um acht Uhr morgens ab.",
+    "packs": [
+      "TRAVEL"
+    ]
   },
   {
     "w": "FLUGZEUG",
@@ -945,7 +1093,10 @@
     "hint": "Flies in the sky",
     "type": "noun",
     "article": "das",
-    "sentence": "Das ___ landet in zwei Stunden in Frankfurt."
+    "sentence": "Das ___ landet in zwei Stunden in Frankfurt.",
+    "packs": [
+      "TRAVEL"
+    ]
   },
   {
     "w": "FAHRRAD",
@@ -972,7 +1123,10 @@
     "hint": "What you are called",
     "type": "noun",
     "article": "der",
-    "sentence": "Wie ist dein ___?"
+    "sentence": "Wie ist dein ___?",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "LAND",
@@ -981,7 +1135,10 @@
     "hint": "Nation with borders",
     "type": "noun",
     "article": "das",
-    "sentence": "Deutschland ist ein schönes ___."
+    "sentence": "Deutschland ist ein schönes ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "SPRACHE",
@@ -990,7 +1147,10 @@
     "hint": "System of communication",
     "type": "noun",
     "article": "die",
-    "sentence": "Deutsch ist meine erste ___."
+    "sentence": "Deutsch ist meine erste ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "WORT",
@@ -1027,7 +1187,10 @@
     "hint": "Exists, is — most basic verb",
     "type": "verb",
     "principal_parts": "sein, war, ist gewesen",
-    "sentence": "Ich möchte immer ehrlich ___."
+    "sentence": "Ich möchte immer ehrlich ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "HABEN",
@@ -1036,7 +1199,10 @@
     "hint": "Possession",
     "type": "verb",
     "principal_parts": "haben, hatte, hat gehabt",
-    "sentence": "Er möchte ein neues Fahrrad ___."
+    "sentence": "Er möchte ein neues Fahrrad ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "GEHEN",
@@ -1050,7 +1216,10 @@
       "en": "We are going home.",
       "ar": "نحن ذاهبون إلى المنزل."
     },
-    "sentence": "Wir wollen heute in den Park ___."
+    "sentence": "Wir wollen heute in den Park ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "KOMMEN",
@@ -1059,7 +1228,10 @@
     "hint": "Move toward something",
     "type": "verb",
     "principal_parts": "kommen, kam, ist gekommen",
-    "sentence": "Kannst du morgen zu meiner Feier ___?"
+    "sentence": "Kannst du morgen zu meiner Feier ___?",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "ESSEN",
@@ -1073,7 +1245,11 @@
       "en": "I am eating an apple.",
       "ar": "أنا آكل تفاحة."
     },
-    "sentence": "Was möchtest du zum Mittagessen ___?"
+    "sentence": "Was möchtest du zum Mittagessen ___?",
+    "packs": [
+      "RESTAURANT",
+      "FIRST100"
+    ]
   },
   {
     "w": "TRINKEN",
@@ -1087,7 +1263,11 @@
       "en": "She likes to drink coffee.",
       "ar": "هي تحب شرب القهوة."
     },
-    "sentence": "Willst du eine Tasse Tee ___?"
+    "sentence": "Willst du eine Tasse Tee ___?",
+    "packs": [
+      "RESTAURANT",
+      "FIRST100"
+    ]
   },
   {
     "w": "SCHLAFEN",
@@ -1105,7 +1285,10 @@
     "hint": "Create or perform",
     "type": "verb",
     "principal_parts": "machen, machte, hat gemacht",
-    "sentence": "Was willst du heute Nachmittag ___?"
+    "sentence": "Was willst du heute Nachmittag ___?",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "SEHEN",
@@ -1114,7 +1297,10 @@
     "hint": "Perceive with eyes",
     "type": "verb",
     "principal_parts": "sehen, sah, hat gesehen",
-    "sentence": "Ich kann die hohen Berge von hier ___."
+    "sentence": "Ich kann die hohen Berge von hier ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "HÖREN",
@@ -1122,7 +1308,10 @@
     "ar": "يسمع",
     "hint": "Perceive with ears",
     "type": "verb",
-    "sentence": "Ich kann die Musik durch die Wand ___."
+    "sentence": "Ich kann die Musik durch die Wand ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "SAGEN",
@@ -1130,7 +1319,10 @@
     "ar": "يقول",
     "hint": "Speak words",
     "type": "verb",
-    "sentence": "Was willst du ihr zum Geburtstag ___?"
+    "sentence": "Was willst du ihr zum Geburtstag ___?",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "LESEN",
@@ -1139,7 +1331,10 @@
     "hint": "Look at text and understand it",
     "type": "verb",
     "principal_parts": "lesen, las, hat gelesen",
-    "sentence": "Ich will dieses Buch bis Ende der Woche ___."
+    "sentence": "Ich will dieses Buch bis Ende der Woche ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "SCHREIBEN",
@@ -1148,7 +1343,10 @@
     "hint": "Put words on paper",
     "type": "verb",
     "principal_parts": "schreiben, schrieb, hat geschrieben",
-    "sentence": "Er muss heute noch einen Brief an die Schule ___."
+    "sentence": "Er muss heute noch einen Brief an die Schule ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "SPIELEN",
@@ -1156,7 +1354,10 @@
     "ar": "يلعب",
     "hint": "Have fun with games",
     "type": "verb",
-    "sentence": "Die Kinder wollen draußen im Garten ___."
+    "sentence": "Die Kinder wollen draußen im Garten ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "KAUFEN",
@@ -1164,7 +1365,10 @@
     "ar": "يشتري",
     "hint": "Pay money for something",
     "type": "verb",
-    "sentence": "Ich muss noch frisches Brot beim Bäcker ___."
+    "sentence": "Ich muss noch frisches Brot beim Bäcker ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "FAHREN",
@@ -1181,7 +1385,10 @@
     "ar": "يسكن",
     "hint": "Have your home somewhere",
     "type": "verb",
-    "sentence": "Ich möchte gerne in einer großen Stadt ___."
+    "sentence": "Ich möchte gerne in einer großen Stadt ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "ARBEITEN",
@@ -1189,7 +1396,10 @@
     "ar": "يعمل",
     "hint": "Do a job",
     "type": "verb",
-    "sentence": "Er muss morgen früh wieder in der Fabrik ___."
+    "sentence": "Er muss morgen früh wieder in der Fabrik ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "HELFEN",
@@ -1197,7 +1407,10 @@
     "ar": "يساعد",
     "hint": "Support someone",
     "type": "verb",
-    "sentence": "Kannst du mir bitte bei der Hausaufgabe ___?"
+    "sentence": "Kannst du mir bitte bei der Hausaufgabe ___?",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "LIEBEN",
@@ -1213,7 +1426,10 @@
     "ar": "يتعلم",
     "hint": "Gain new knowledge",
     "type": "verb",
-    "sentence": "Ich will Deutsch besser ___."
+    "sentence": "Ich will Deutsch besser ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "SPRECHEN",
@@ -1222,7 +1438,10 @@
     "hint": "Use your voice to communicate",
     "type": "verb",
     "principal_parts": "sprechen, sprach, hat gesprochen",
-    "sentence": "Sie will Englisch fließend ___."
+    "sentence": "Sie will Englisch fließend ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "FRAGEN",
@@ -1230,7 +1449,10 @@
     "ar": "يسأل",
     "hint": "Request information",
     "type": "verb",
-    "sentence": "Ich muss den Lehrer noch etwas ___."
+    "sentence": "Ich muss den Lehrer noch etwas ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "ANTWORTEN",
@@ -1238,7 +1460,7 @@
     "ar": "يجيب",
     "hint": "Reply to a question",
     "type": "verb",
-    "sentence": "Du musst auf die Frage des Lehrers ___."
+    "sentence": "Du musst auf die Frage ___."
   },
   {
     "w": "KENNEN",
@@ -1254,7 +1476,10 @@
     "ar": "يعرف حقيقة",
     "hint": "Have information in mind",
     "type": "verb",
-    "sentence": "Ich möchte immer die Wahrheit ___."
+    "sentence": "Ich möchte immer die Wahrheit ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "DENKEN",
@@ -1278,7 +1503,10 @@
     "ar": "يحتاج",
     "hint": "Require something",
     "type": "verb",
-    "sentence": "Was wirst du morgen ___?"
+    "sentence": "Was wirst du morgen ___?",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "WOLLEN",
@@ -1286,7 +1514,10 @@
     "ar": "يريد",
     "hint": "Desire something",
     "type": "verb",
-    "sentence": "Ich weiß nicht, was er wirklich ___ soll."
+    "sentence": "Ich weiß nicht, was er wirklich ___ soll.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "KÖNNEN",
@@ -1294,7 +1525,10 @@
     "ar": "يستطيع",
     "hint": "Have the ability",
     "type": "verb",
-    "sentence": "Das wirst du auch noch ___."
+    "sentence": "Das wirst du auch noch ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "MÜSSEN",
@@ -1302,7 +1536,10 @@
     "ar": "يجب عليه",
     "hint": "Be obliged to do something",
     "type": "verb",
-    "sentence": "Du wirst das bald alleine ___."
+    "sentence": "Du wirst das bald alleine ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "HEISSEN",
@@ -1310,7 +1547,10 @@
     "ar": "اسمه / تُسمى",
     "hint": "What is your name?",
     "type": "verb",
-    "sentence": "Wie soll der neue Hund ___?"
+    "sentence": "Wie soll der neue Hund ___?",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "LEBEN",
@@ -1361,7 +1601,10 @@
     "hint": "Hand something to someone",
     "type": "verb",
     "principal_parts": "geben, gab, hat gegeben",
-    "sentence": "Kannst du mir bitte das Salz ___?"
+    "sentence": "Kannst du mir bitte das Salz ___?",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "BRINGEN",
@@ -1402,7 +1645,10 @@
     "ar": "جيد",
     "hint": "Positive quality",
     "type": "adjective",
-    "sentence": "Das Essen hier ist wirklich sehr ___."
+    "sentence": "Das Essen hier ist wirklich sehr ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "SCHLECHT",
@@ -1410,7 +1656,10 @@
     "ar": "سيئ",
     "hint": "Negative quality",
     "type": "adjective",
-    "sentence": "Das Wetter heute ist wirklich ___."
+    "sentence": "Das Wetter heute ist wirklich ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "GROSS",
@@ -1418,7 +1667,10 @@
     "ar": "كبير / طويل",
     "hint": "Large in size",
     "type": "adjective",
-    "sentence": "Das Haus ist sehr ___ und hat viele Zimmer."
+    "sentence": "Das Haus ist sehr ___ und hat viele Zimmer.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "KLEIN",
@@ -1426,7 +1678,10 @@
     "ar": "صغير / قصير",
     "hint": "Little in size",
     "type": "adjective",
-    "sentence": "Das Kind ist noch sehr ___."
+    "sentence": "Das Kind ist noch sehr ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "ALT",
@@ -1434,7 +1689,10 @@
     "ar": "قديم / عجوز",
     "hint": "Not young or new",
     "type": "adjective",
-    "sentence": "Das Gebäude ist sehr ___ und historisch."
+    "sentence": "Das Gebäude ist sehr ___ und historisch.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "NEU",
@@ -1442,7 +1700,10 @@
     "ar": "جديد",
     "hint": "Just made or acquired",
     "type": "adjective",
-    "sentence": "Ich habe ein ___ Fahrrad bekommen."
+    "sentence": "Ich habe ein ___ Fahrrad bekommen.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "JUNG",
@@ -1450,7 +1711,10 @@
     "ar": "شاب / صغير",
     "hint": "Not old",
     "type": "adjective",
-    "sentence": "Der Lehrer ist noch sehr ___."
+    "sentence": "Der Lehrer ist noch sehr ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "SCHÖN",
@@ -1458,7 +1722,10 @@
     "ar": "جميل",
     "hint": "Pleasing to the eye",
     "type": "adjective",
-    "sentence": "Die Landschaft hier ist wirklich ___."
+    "sentence": "Die Landschaft hier ist wirklich ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "HÄSSLICH",
@@ -1474,7 +1741,10 @@
     "ar": "سريع",
     "hint": "Moving quickly",
     "type": "adjective",
-    "sentence": "Der neue Zug ist sehr ___."
+    "sentence": "Der neue Zug ist sehr ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "LANGSAM",
@@ -1490,7 +1760,10 @@
     "ar": "حار",
     "hint": "High temperature",
     "type": "adjective",
-    "sentence": "Im Sommer ist es hier sehr ___."
+    "sentence": "Im Sommer ist es hier sehr ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "KALT",
@@ -1498,7 +1771,10 @@
     "ar": "بارد",
     "hint": "Low temperature",
     "type": "adjective",
-    "sentence": "Im Winter ist es draußen sehr ___."
+    "sentence": "Im Winter ist es draußen sehr ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "WARM",
@@ -1522,7 +1798,10 @@
     "ar": "غالي",
     "hint": "High price",
     "type": "adjective",
-    "sentence": "Das neue Handy ist leider sehr ___."
+    "sentence": "Das neue Handy ist leider sehr ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "LEICHT",
@@ -1546,7 +1825,10 @@
     "ar": "متعب",
     "hint": "Need rest or sleep",
     "type": "adjective",
-    "sentence": "Ich bin heute sehr ___, weil ich wenig geschlafen habe."
+    "sentence": "Ich bin heute sehr ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "FROH",
@@ -1562,7 +1844,7 @@
     "ar": "حزين",
     "hint": "Unhappy, sorrowful",
     "type": "adjective",
-    "sentence": "Das Kind ist ___, weil sein Hund krank ist."
+    "sentence": "Das Kind ist heute sehr ___."
   },
   {
     "w": "VOLL",
@@ -1602,7 +1884,10 @@
     "ar": "مريض",
     "hint": "Not healthy",
     "type": "adjective",
-    "sentence": "Ich bin heute ___ und bleibe im Bett."
+    "sentence": "Ich bin heute ___ und bleibe im Bett.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "GESUND",
@@ -1610,7 +1895,10 @@
     "ar": "بصحة جيدة",
     "hint": "Not sick",
     "type": "adjective",
-    "sentence": "Nach der Krankheit bin ich wieder ___."
+    "sentence": "Nach der Krankheit bin ich wieder ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "RICHTIG",
@@ -1666,7 +1954,7 @@
     "ar": "ساطع / فاتح",
     "hint": "Full of light",
     "type": "adjective",
-    "sentence": "Das Zimmer ist sehr ___, weil die Sonne scheint."
+    "sentence": "Am Morgen ist das Zimmer sehr ___."
   },
   {
     "w": "DUNKEL",
@@ -1682,7 +1970,7 @@
     "ar": "مبلل",
     "hint": "Contains water",
     "type": "adjective",
-    "sentence": "Ich bin total ___, weil es geregnet hat."
+    "sentence": "Es regnet und ich bin ganz ___."
   },
   {
     "w": "TROCKEN",
@@ -1759,7 +2047,10 @@
     "hint": "Das männliche Kind der Eltern.",
     "type": "noun",
     "article": "der",
-    "sentence": "Ihr ___ ist fünf Jahre alt."
+    "sentence": "Ihr ___ ist fünf Jahre alt.",
+    "packs": [
+      "FAMILY"
+    ]
   },
   {
     "w": "TOCHTER",
@@ -1768,7 +2059,10 @@
     "hint": "Das weibliche Kind der Eltern.",
     "type": "noun",
     "article": "die",
-    "sentence": "Meine ___ geht schon zur Schule."
+    "sentence": "Meine ___ geht schon zur Schule.",
+    "packs": [
+      "FAMILY"
+    ]
   },
   {
     "w": "ONKEL",
@@ -1777,7 +2071,10 @@
     "hint": "Der Bruder des Vaters oder der Mutter.",
     "type": "noun",
     "article": "der",
-    "sentence": "Mein ___ wohnt in München."
+    "sentence": "Mein ___ wohnt in München.",
+    "packs": [
+      "FAMILY"
+    ]
   },
   {
     "w": "TANTE",
@@ -1786,7 +2083,10 @@
     "hint": "Die Schwester des Vaters oder der Mutter.",
     "type": "noun",
     "article": "die",
-    "sentence": "Meine ___ backt sehr guten Kuchen."
+    "sentence": "Meine ___ backt sehr guten Kuchen.",
+    "packs": [
+      "FAMILY"
+    ]
   },
   {
     "w": "WAND",
@@ -1849,7 +2149,10 @@
     "hint": "Warme Flüssigkeit im Teller.",
     "type": "noun",
     "article": "die",
-    "sentence": "Im Winter trinken wir gern ___."
+    "sentence": "Im Winter trinken wir gern ___.",
+    "packs": [
+      "RESTAURANT"
+    ]
   },
   {
     "w": "PIZZA",
@@ -1858,7 +2161,10 @@
     "hint": "Italienisches Gericht mit Belag.",
     "type": "noun",
     "article": "die",
-    "sentence": "Wir bestellen eine ___ mit Käse."
+    "sentence": "Wir bestellen eine ___ mit Käse.",
+    "packs": [
+      "RESTAURANT"
+    ]
   },
   {
     "w": "SCHLÜSSEL",
@@ -2146,7 +2452,7 @@
     "ar": "يسقط",
     "hint": "Man verliert das Gleichgewicht.",
     "type": "verb",
-    "sentence": "Pass auf, du könntest ___!"
+    "sentence": "Pass auf, sonst kannst du ___!"
   },
   {
     "w": "ZIMMER",
@@ -2155,7 +2461,11 @@
     "hint": "A space inside a house",
     "type": "noun",
     "article": "das",
-    "sentence": "Vielleicht haben sie ein ___ frei."
+    "sentence": "Vielleicht haben sie ein ___ frei.",
+    "packs": [
+      "TRAVEL",
+      "FIRST100"
+    ]
   },
   {
     "w": "SUPER",
@@ -2223,7 +2533,10 @@
     "hint": "Your mother and father",
     "type": "noun",
     "article": "die/pl",
-    "sentence": "Meine ___ sagen, Ingenieur ist gut."
+    "sentence": "Meine ___ sagen, Ingenieur ist gut.",
+    "packs": [
+      "FAMILY"
+    ]
   },
   {
     "w": "FAHRRADLADEN",
@@ -2239,7 +2552,10 @@
     "en": "would like",
     "ar": "يريد (بأدب)",
     "hint": "Polite way to say you want something",
-    "type": "verb"
+    "type": "verb",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "UHR",
@@ -2248,7 +2564,10 @@
     "hint": "It tells the time",
     "type": "noun",
     "article": "die",
-    "sentence": "Es ist zwölf ___."
+    "sentence": "Es ist zwölf ___.",
+    "packs": [
+      "FIRST100"
+    ]
   },
   {
     "w": "MOMENT",
@@ -2267,5 +2586,361 @@
     "type": "noun",
     "article": "die",
     "sentence": "Danke, Nico, für deine ___!"
+  },
+  {
+    "w": "EINS",
+    "en": "one",
+    "ar": "واحد",
+    "hint": "The number 1",
+    "type": "adjective",
+    "sentence": "Zählen wir zusammen: ___, zwei, drei!",
+    "packs": [
+      "NUMBERS",
+      "FIRST100"
+    ]
+  },
+  {
+    "w": "ZWEI",
+    "en": "two",
+    "ar": "اثنان",
+    "hint": "The number 2",
+    "type": "adjective",
+    "sentence": "Ich habe ___ Katzen.",
+    "packs": [
+      "NUMBERS",
+      "FIRST100"
+    ]
+  },
+  {
+    "w": "DREI",
+    "en": "three",
+    "ar": "ثلاثة",
+    "hint": "The number 3",
+    "type": "adjective",
+    "sentence": "Das Baby ist ___ Jahre alt.",
+    "packs": [
+      "NUMBERS",
+      "FIRST100"
+    ]
+  },
+  {
+    "w": "VIER",
+    "en": "four",
+    "ar": "أربعة",
+    "hint": "The number 4",
+    "type": "adjective",
+    "sentence": "Der Tisch hat ___ Stühle.",
+    "packs": [
+      "NUMBERS",
+      "FIRST100"
+    ]
+  },
+  {
+    "w": "FÜNF",
+    "en": "five",
+    "ar": "خمسة",
+    "hint": "The number 5",
+    "type": "adjective",
+    "sentence": "Ich habe ___ Finger an einer Hand.",
+    "packs": [
+      "NUMBERS",
+      "FIRST100"
+    ]
+  },
+  {
+    "w": "SECHS",
+    "en": "six",
+    "ar": "ستة",
+    "hint": "The number 6",
+    "type": "adjective",
+    "sentence": "Die Uhr zeigt ___ Uhr.",
+    "packs": [
+      "NUMBERS",
+      "FIRST100"
+    ]
+  },
+  {
+    "w": "SIEBEN",
+    "en": "seven",
+    "ar": "سبعة",
+    "hint": "The number 7",
+    "type": "adjective",
+    "sentence": "Eine Woche hat ___ Tage.",
+    "packs": [
+      "NUMBERS",
+      "FIRST100"
+    ]
+  },
+  {
+    "w": "ACHT",
+    "en": "eight",
+    "ar": "ثمانية",
+    "hint": "The number 8",
+    "type": "adjective",
+    "sentence": "Wir treffen uns um ___ Uhr.",
+    "packs": [
+      "NUMBERS",
+      "FIRST100"
+    ]
+  },
+  {
+    "w": "NEUN",
+    "en": "nine",
+    "ar": "تسعة",
+    "hint": "The number 9",
+    "type": "adjective",
+    "sentence": "Die Schule beginnt um ___ Uhr.",
+    "packs": [
+      "NUMBERS",
+      "FIRST100"
+    ]
+  },
+  {
+    "w": "ZEHN",
+    "en": "ten",
+    "ar": "عشرة",
+    "hint": "The number 10",
+    "type": "adjective",
+    "sentence": "Ich zähle bis ___.",
+    "packs": [
+      "NUMBERS",
+      "FIRST100"
+    ]
+  },
+  {
+    "w": "ELF",
+    "en": "eleven",
+    "ar": "أحد عشر",
+    "hint": "The number 11",
+    "type": "adjective",
+    "sentence": "Der Zug kommt um ___ Uhr.",
+    "packs": [
+      "NUMBERS"
+    ]
+  },
+  {
+    "w": "ZWÖLF",
+    "en": "twelve",
+    "ar": "اثنا عشر",
+    "hint": "The number 12",
+    "type": "adjective",
+    "sentence": "Ein Dutzend sind ___ Stück.",
+    "packs": [
+      "NUMBERS"
+    ]
+  },
+  {
+    "w": "NORDEN",
+    "en": "north",
+    "ar": "شمال",
+    "hint": "Direction opposite of south",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der Kompass zeigt nach ___."
+  },
+  {
+    "w": "SÜDEN",
+    "en": "south",
+    "ar": "جنوب",
+    "hint": "Direction opposite of north",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Spanien liegt im ___ von Europa."
+  },
+  {
+    "w": "OSTEN",
+    "en": "east",
+    "ar": "شرق",
+    "hint": "Direction where the sun rises",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Die Sonne geht im ___ auf."
+  },
+  {
+    "w": "WESTEN",
+    "en": "west",
+    "ar": "غرب",
+    "hint": "Direction where the sun sets",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Die Sonne geht im ___ unter."
+  },
+  {
+    "w": "GROSSMUTTER",
+    "en": "grandmother",
+    "ar": "جدة",
+    "hint": "Mother of your mother or father",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Meine ___ backt jeden Sonntag Kuchen.",
+    "packs": [
+      "FAMILY"
+    ]
+  },
+  {
+    "w": "GROSSVATER",
+    "en": "grandfather",
+    "ar": "جد",
+    "hint": "Father of your mother or father",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Mein ___ erzählt gern alte Geschichten.",
+    "packs": [
+      "FAMILY"
+    ]
+  },
+  {
+    "w": "GESCHWISTER",
+    "en": "siblings",
+    "ar": "إخوة",
+    "hint": "Your brothers and sisters together",
+    "type": "noun",
+    "article": "die/pl",
+    "sentence": "Ich habe zwei ___: einen Bruder und eine Schwester.",
+    "packs": [
+      "FAMILY"
+    ]
+  },
+  {
+    "w": "EHEMANN",
+    "en": "husband",
+    "ar": "زوج",
+    "hint": "A woman's married partner",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Ihr ___ arbeitet als Lehrer.",
+    "packs": [
+      "FAMILY"
+    ]
+  },
+  {
+    "w": "EHEFRAU",
+    "en": "wife",
+    "ar": "زوجة",
+    "hint": "A man's married partner",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Seine ___ kommt aus Italien.",
+    "packs": [
+      "FAMILY"
+    ]
+  },
+  {
+    "w": "COUSIN",
+    "en": "male cousin",
+    "ar": "ابن العم/الخال",
+    "hint": "Son of your aunt or uncle",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Mein ___ wohnt in Berlin.",
+    "packs": [
+      "FAMILY"
+    ]
+  },
+  {
+    "w": "COUSINE",
+    "en": "female cousin",
+    "ar": "ابنة العم/الخال",
+    "hint": "Daughter of your aunt or uncle",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Meine ___ ist genauso alt wie ich.",
+    "packs": [
+      "FAMILY"
+    ]
+  },
+  {
+    "w": "ENKEL",
+    "en": "grandson/grandchild",
+    "ar": "حفيد",
+    "hint": "Child of your son or daughter",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Der ___ besucht die Großeltern oft.",
+    "packs": [
+      "FAMILY"
+    ]
+  },
+  {
+    "w": "NEFFE",
+    "en": "nephew",
+    "ar": "ابن الأخ/الأخت",
+    "hint": "Son of your brother or sister",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Mein ___ ist erst drei Jahre alt.",
+    "packs": [
+      "FAMILY"
+    ]
+  },
+  {
+    "w": "NICHTE",
+    "en": "niece",
+    "ar": "ابنة الأخ/الأخت",
+    "hint": "Daughter of your brother or sister",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Meine ___ malt sehr gern.",
+    "packs": [
+      "FAMILY"
+    ]
+  },
+  {
+    "w": "TAXI",
+    "en": "taxi",
+    "ar": "سيارة أجرة",
+    "hint": "A car you pay to drive you somewhere",
+    "type": "noun",
+    "article": "das",
+    "sentence": "Wir nehmen ein ___ zum Flughafen.",
+    "packs": [
+      "TRAVEL"
+    ]
+  },
+  {
+    "w": "PASS",
+    "en": "passport",
+    "ar": "جواز سفر",
+    "hint": "A document you need to travel abroad",
+    "type": "noun",
+    "article": "der",
+    "sentence": "Dein ___ ist noch gültig.",
+    "packs": [
+      "TRAVEL"
+    ]
+  },
+  {
+    "w": "LANDKARTE",
+    "en": "map",
+    "ar": "خريطة",
+    "hint": "Shows you where places are",
+    "type": "noun",
+    "article": "die",
+    "sentence": "Wir brauchen eine ___ für die Reise.",
+    "packs": [
+      "TRAVEL"
+    ]
+  },
+  {
+    "w": "ZWANZIG",
+    "en": "twenty",
+    "ar": "عشرون",
+    "hint": "The number 20",
+    "type": "adjective",
+    "sentence": "In der Klasse sind ___ Schüler.",
+    "packs": [
+      "NUMBERS"
+    ]
+  },
+  {
+    "w": "HUNDERT",
+    "en": "hundred",
+    "ar": "مئة",
+    "hint": "The number 100",
+    "type": "adjective",
+    "sentence": "Ein Jahrhundert hat ___ Jahre.",
+    "packs": [
+      "NUMBERS"
+    ]
   }
 ]
