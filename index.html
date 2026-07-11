@@ -2734,8 +2734,16 @@
       background: var(--color-surface); border: 1px solid var(--hairline);
       padding: 5px 10px; border-radius: 999px;
       display: flex; align-items: center; gap: 3px; white-space: nowrap;
-      flex-shrink: 0; margin-left: 8px;
+      flex-shrink: 0;
     }
+    .home-icon-btn {
+      display: flex; align-items: center; gap: 4px;
+      padding: 5px 10px; border-radius: 999px; border: 1px solid var(--hairline);
+      background: var(--color-surface); color: var(--color-text-muted);
+      font-size: 0.82rem; font-weight: 600; cursor: pointer; white-space: nowrap;
+      transition: background 0.12s; -webkit-tap-highlight-color: transparent;
+    }
+    .home-icon-btn:active { background: var(--hairline); }
 
     /* ─── Hero CTA card ───────────────────────────────────── */
     .home-hero {
@@ -3058,7 +3066,11 @@
         <div class="home-greeting" id="home-greeting">Guten Morgen!</div>
         <div class="home-streak-line" id="home-streak-line"></div>
       </div>
-      <div class="home-diamond-badge">💎 <span id="home-diamond-val">0</span></div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <button class="home-icon-btn" id="home-vocab-btn" aria-label="Wortschatz öffnen" title="Wortschatz">📚</button>
+        <button class="home-icon-btn" id="home-ach-btn"   aria-label="Achievements öffnen" title="Achievements">🏆 <span class="ach-count" style="font-size:0.72rem;">0/15</span></button>
+        <div class="home-diamond-badge">💎 <span id="home-diamond-val">0</span></div>
+      </div>
     </div>
 
     <!-- Hero CTA -->
@@ -3573,7 +3585,7 @@
   </div>
 
   <!-- ─── Personalisation setup (first run only) ──────── -->
-  <div id="setup-overlay" class="overlay hidden">
+  <div id="personalise-overlay" class="overlay hidden">
     <div class="overlay-card setup-card">
 
       <!-- Step 1: Name -->
@@ -8109,6 +8121,8 @@ function openVocabOverlay() {
 }
 
 document.getElementById('vocab-chip').addEventListener('click', openVocabOverlay);
+document.getElementById('home-vocab-btn')?.addEventListener('click', openVocabOverlay);
+document.getElementById('home-ach-btn')?.addEventListener('click', openAchievementsOverlay);
 document.getElementById('vocab-close-btn').addEventListener('click', () => {
   document.getElementById('vocab-overlay').classList.add('hidden');
 });
@@ -8214,7 +8228,7 @@ function saveUserProfile() {
 
 // ─── Setup overlay (first-run 3-step personalisation) ─
 (function setupPersonalisation() {
-  const overlay = document.getElementById('setup-overlay');
+  const overlay = document.getElementById('personalise-overlay');
   if (!overlay) return;
   const SETUP_KEY = 'wortle-setup-done';
   let setupDone = false;
@@ -8239,7 +8253,7 @@ function saveUserProfile() {
     DAILY_NEW_GOAL        = chosenMin;
     saveUserProfile();
     try { localStorage.setItem(SETUP_KEY, '1'); } catch {}
-    overlay.classList.add('hidden');
+    document.getElementById('personalise-overlay').classList.add('hidden');
     // Update home greeting with name
     buildHome();
   }
@@ -8436,7 +8450,7 @@ function buildHome() {
   const streakEl = document.getElementById('home-streak-line');
   const parts = [];
   if (streak.current > 0)
-    parts.push('<span class="home-streak-val">🔥 ' + streak.current + ' Tage</span>');
+    parts.push('<span class="home-streak-val">🔥 ' + streak.current + ' ' + (streak.current === 1 ? 'Tag' : 'Tage') + '</span>');
   if (due > 0)
     parts.push('<span class="home-due-badge">★ ' + due + ' fällig</span>');
   if (streak.current === 0 && due === 0)
