@@ -2471,9 +2471,14 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 8px;
+      width: 100%;
+    }
+    @media (max-width: 480px) {
+      .pairs-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
     }
     .pairs-card {
       min-height: 64px; padding: 8px 6px;
+      touch-action: manipulation;
       font-family: 'Inter', system-ui, sans-serif; font-size: 0.82rem; font-weight: 600;
       background: var(--color-surface); border: 2px solid var(--hairline);
       border-radius: 12px; cursor: pointer;
@@ -2913,25 +2918,28 @@
 
     /* ─── XP float ────────────────────────────────────────── */
     .xp-float {
-      position: fixed; font-size: 0.78rem; font-weight: 800;
-      color: var(--color-correct-text); pointer-events: none; z-index: 998;
-      opacity: 1; transition: opacity 0.9s, transform 0.9s;
-      background: color-mix(in srgb, var(--color-correct-text) 12%, transparent);
-      border: 1px solid color-mix(in srgb, var(--color-correct-text) 25%, transparent);
-      padding: 3px 8px; border-radius: 999px;
+      position: fixed; font-size: 0.85rem; font-weight: 800;
+      color: var(--color-correct-text); pointer-events: none; z-index: 9998;
+      opacity: 1; transition: opacity 0.7s ease, transform 0.7s ease;
+      background: color-mix(in srgb, var(--color-correct-text) 14%, var(--color-bg));
+      border: 1.5px solid color-mix(in srgb, var(--color-correct-text) 35%, transparent);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+      padding: 5px 12px; border-radius: 999px;
+      white-space: nowrap;
     }
-    .xp-float.fly { opacity: 0; transform: translateY(-40px); }
+    .xp-float.fly { opacity: 0; transform: translateY(-36px); }
 
     /* ─── Achievement toast ───────────────────────────────── */
     .achievement-toast {
-      position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
-      width: min(340px, calc(100vw - 32px));
-      background: var(--color-surface); border: 1.5px solid var(--hairline);
-      border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      position: fixed; bottom: -120px; left: 50%; transform: translateX(-50%);
+      width: min(360px, calc(100vw - 24px));
+      background: var(--color-surface); border: 1.5px solid var(--color-correct);
+      border-radius: 16px; box-shadow: 0 8px 40px rgba(0,0,0,0.25);
       display: flex; align-items: center; gap: 14px; padding: 14px 16px;
-      z-index: 997; transition: bottom 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      z-index: 9997; transition: bottom 0.45s cubic-bezier(0.34,1.56,0.64,1);
+      cursor: pointer;
     }
-    .achievement-toast.show { bottom: 24px; }
+    .achievement-toast.show { bottom: calc(70px + env(safe-area-inset-bottom, 0px)); }
     .ach-toast-icon  { font-size: 2rem; flex-shrink: 0; }
     .ach-toast-title { font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
                        letter-spacing: 0.05em; color: var(--color-correct-text); margin-bottom: 2px; }
@@ -4084,7 +4092,7 @@ function earnXP(amount, anchorEl) {
   const newRank = currentRank();
   xpData.rankIdx = newRank;
   saveXP();
-  showXPFloat('+' + amount + ' XP', anchorEl);
+  showXPFloat('⭐ +' + amount + ' XP', anchorEl);
   if (newRank > prevRank) {
     showRankUpOverlay(RANKS[newRank]);
   }
@@ -4096,12 +4104,16 @@ function showXPFloat(text, anchorEl) {
   el.className = 'xp-float';
   el.textContent = text;
   document.body.appendChild(el);
+  // Position: anchor element if provided, else top-center of viewport
   const rect = anchorEl
     ? anchorEl.getBoundingClientRect()
-    : { top: window.innerHeight / 2, left: window.innerWidth / 2 };
-  el.style.cssText = 'top:' + (rect.top - 10) + 'px;left:' + rect.left + 'px;';
-  requestAnimationFrame(() => el.classList.add('fly'));
-  setTimeout(() => el.remove(), 1100);
+    : { top: 100, left: window.innerWidth / 2, width: 0 };
+  // Center horizontally on anchor (or on viewport when no anchor)
+  const elW = el.offsetWidth || 90;
+  el.style.cssText = `position:fixed;top:${Math.max(60, rect.top - 10)}px;left:${rect.left + (rect.width || 0) / 2 - elW / 2}px;`;
+  // 400ms hold before fading so user can read it
+  setTimeout(() => el.classList.add('fly'), 400);
+  setTimeout(() => el.remove(), 1500);
 }
 
 function updateXPDisplay() {
@@ -5561,6 +5573,36 @@ function endCrossword(won) {
       row.innerHTML = `<span style="color:var(--color-text-muted)">${icon} ${label}</span><strong>${value}</strong>`;
       stats.appendChild(row);
     });
+
+    // XP rank progress bar
+    (() => {
+      const rankIdx = currentRank();
+      const rank    = RANKS[rankIdx];
+      const next    = RANKS[rankIdx + 1];
+      const pct     = next
+        ? Math.round(((xpData.total - rank.min) / (next.min - rank.min)) * 100)
+        : 100;
+      const toNext  = next ? (next.min - xpData.total).toLocaleString() + ' XP bis ' + next.label : 'Max. Rang erreicht!';
+      const xpEl = document.createElement('div');
+      xpEl.style.cssText = 'background:var(--color-surface);border-radius:12px;padding:12px 14px;text-align:left;';
+      xpEl.innerHTML =
+        '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">' +
+          '<span style="font-size:1.4rem;line-height:1;">' + rank.icon + '</span>' +
+          '<div>' +
+            '<div style="font-size:0.82rem;font-weight:700;color:var(--color-text);">' + rank.label + ' · ' + xpData.total.toLocaleString() + ' XP</div>' +
+            '<div style="font-size:0.7rem;color:var(--color-text-muted);margin-top:1px;">' + toNext + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div style="height:7px;border-radius:999px;background:var(--color-border);overflow:hidden;">' +
+          '<div id="summary-xp-fill" style="height:100%;width:0%;border-radius:999px;background:var(--color-correct);transition:width 1s ease 0.3s;"></div>' +
+        '</div>';
+      stats.appendChild(xpEl);
+      // Animate the bar after the overlay appears
+      requestAnimationFrame(() => {
+        const fill = document.getElementById('summary-xp-fill');
+        if (fill) fill.style.width = pct + '%';
+      });
+    })();
 
     // Show overlay after a short delay so the last word's green flash is visible
     setTimeout(() => {
@@ -7389,7 +7431,7 @@ document.getElementById('switch-artikel').addEventListener('click', () => {
 });
 
 // ─── Match Pairs ──────────────────────────────────────
-const PAIRS_COUNT = 8;   // 8 pairs = 16 cards
+let pairsCount = 8;       // set dynamically in startPairsMode (6 on mobile, 8 on desktop)
 let pairsWords     = [];  // [{w, en}]
 let pairsMatched   = new Set();
 let pairsSelected  = null;   // { cardEl, id, side }
@@ -7402,6 +7444,9 @@ function hidePairsPanel() {
 }
 
 async function startPairsMode() {
+  // Fewer pairs on mobile so the grid fits one screen without scrolling
+  pairsCount = window.innerWidth <= 480 ? 6 : 8;
+
   hideAllGamePanels();
   document.body.classList.add('game-active');
   gameMode = 'PAARE';
@@ -7417,7 +7462,7 @@ async function startPairsMode() {
   let pool = [...lvls].flatMap(lvl => words[lvl] || [])
     .filter(e => { if (seen.has(e.w)) return false; seen.add(e.w); return !!e.en; });
 
-  if (pool.length < PAIRS_COUNT) {
+  if (pool.length < pairsCount) {
     showMessage('Nicht genug Wörter für diese Stufe.', 'lose');
     setTimeout(() => showMessage('', ''), 2000);
     return;
@@ -7425,21 +7470,21 @@ async function startPairsMode() {
 
   const due = new Set(dueWords());
   const shuffled = pool.slice().sort(() => Math.random() - 0.5);
-  const dueOnes  = shuffled.filter(e => due.has(e.w)).slice(0, 4);
-  const rest     = shuffled.filter(e => !dueOnes.includes(e)).slice(0, PAIRS_COUNT - dueOnes.length);
-  pairsWords    = [...dueOnes, ...rest].slice(0, PAIRS_COUNT);
+  const dueOnes  = shuffled.filter(e => due.has(e.w)).slice(0, Math.min(4, Math.floor(pairsCount / 2)));
+  const rest     = shuffled.filter(e => !dueOnes.includes(e)).slice(0, pairsCount - dueOnes.length);
+  pairsWords    = [...dueOnes, ...rest].slice(0, pairsCount);
   pairsMatched  = new Set();
   pairsSelected = null;
   pairsMistakes = 0;
   pairsStartTime = Date.now();
   pairsPendingLock = false;
 
-  // Build 16 cards: 8 German + 8 English, shuffled
+  // Build cards: N German + N English, shuffled
   const deCards = pairsWords.map((e, i) => ({ id: i, side: 'de', text: e.w, entry: e }));
   const enCards = pairsWords.map((e, i) => ({ id: i, side: 'en', text: e.en, entry: e }));
   const cards = [...deCards, ...enCards].sort(() => Math.random() - 0.5);
 
-  document.getElementById('pairs-progress-text').textContent = `0 / ${PAIRS_COUNT}`;
+  document.getElementById('pairs-progress-text').textContent = `0 / ${pairsCount}`;
   document.getElementById('pairs-progress-fill').style.width = '0%';
   document.getElementById('pairs-feedback').innerHTML = '';
 
@@ -7492,11 +7537,11 @@ function onPairsCardClick(btn, card) {
     gradeReview(pairsWords[card.id].w, true);
 
     const matched = pairsMatched.size / 2;
-    document.getElementById('pairs-progress-fill').style.width = (matched / PAIRS_COUNT * 100) + '%';
-    document.getElementById('pairs-progress-text').textContent = `${matched} / ${PAIRS_COUNT}`;
+    document.getElementById('pairs-progress-fill').style.width = (matched / pairsCount * 100) + '%';
+    document.getElementById('pairs-progress-text').textContent = `${matched} / ${pairsCount}`;
     pairsPendingLock = false;
 
-    if (pairsMatched.size === PAIRS_COUNT * 2) {
+    if (pairsMatched.size === pairsCount * 2) {
       setTimeout(endPairsMode, 600);
     }
   } else {
