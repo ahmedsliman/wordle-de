@@ -2853,6 +2853,7 @@
       margin-bottom: 24px;
     }
     .path-chip {
+      position: relative;
       display: flex; align-items: center; gap: 8px;
       padding: 10px 12px; border-radius: 12px;
       border: 1.5px solid var(--hairline);
@@ -2866,9 +2867,18 @@
       border-color: var(--color-correct-text);
       background: color-mix(in srgb, var(--color-correct-text) 10%, transparent);
     }
+    .path-chip.active::after {
+      content: '✓';
+      position: absolute; top: 5px; right: 7px;
+      font-size: 0.62rem; font-weight: 800;
+      color: var(--color-correct-text);
+    }
     .path-chip-icon { font-size: 1.1rem; flex-shrink: 0; }
     .path-chip-label { font-size: 0.78rem; font-weight: 600; color: var(--color-text); line-height: 1.2; }
     .path-chip.active .path-chip-label { color: var(--color-correct-text); }
+
+    /* ─── Keyboard highlight ─────────────────────────────── */
+    .kb-hl { outline: 2px solid var(--color-correct) !important; outline-offset: 2px; }
 
     /* ─── Daily progress bar ─────────────────────────────── */
     .home-daily-bar { margin-bottom: 20px; }
@@ -5701,6 +5711,56 @@ function handleKey(key) {
     if (key === '1') chooseArtikel('der');
     else if (key === '2') chooseArtikel('die');
     else if (key === '3') chooseArtikel('das');
+    else {
+      // Arrow keys cycle through der/die/das; Enter confirms highlighted
+      const btns = [...document.querySelectorAll('.artikel-btn:not(:disabled)')];
+      if (btns.length) {
+        btns.forEach(b => b.classList.remove('kb-hl'));
+        if (key === 'ArrowRight' || key === 'ArrowDown')
+          artikelKbIdx = (artikelKbIdx + 1) % btns.length;
+        else if (key === 'ArrowLeft' || key === 'ArrowUp')
+          artikelKbIdx = (artikelKbIdx - 1 + btns.length) % btns.length;
+        else if ((key === 'Enter' || key === 'ENTER') && artikelKbIdx >= 0)
+          { btns[artikelKbIdx].click(); return; }
+        else return;
+        btns[artikelKbIdx]?.classList.add('kb-hl');
+      }
+    }
+    return;
+  }
+  if (gameMode === 'MC') {
+    const btns = [...document.querySelectorAll('#mc-choices .mc-choice:not(:disabled)')];
+    if (!btns.length) return;
+    btns.forEach(b => b.classList.remove('kb-hl'));
+    if (key === 'ArrowDown' || key === 'ArrowRight')
+      mcKbIdx = (mcKbIdx + 1) % btns.length;
+    else if (key === 'ArrowUp' || key === 'ArrowLeft')
+      mcKbIdx = (mcKbIdx - 1 + btns.length) % btns.length;
+    else if ((key === 'Enter' || key === 'ENTER') && mcKbIdx >= 0)
+      { btns[mcKbIdx].click(); return; }
+    else return;
+    btns[mcKbIdx]?.classList.add('kb-hl');
+    return;
+  }
+  if (gameMode === 'PAARE') {
+    const btns = [...document.querySelectorAll('#pairs-grid button:not(.matched):not([disabled])')];
+    if (!btns.length) return;
+    const cols = window.innerWidth <= 480 ? 2 : 4;
+    if (key === 'ArrowRight')
+      pairsKbIdx = Math.min(pairsKbIdx + 1, btns.length - 1);
+    else if (key === 'ArrowLeft')
+      pairsKbIdx = Math.max(pairsKbIdx - 1, 0);
+    else if (key === 'ArrowDown')
+      pairsKbIdx = Math.min(pairsKbIdx + cols, btns.length - 1);
+    else if (key === 'ArrowUp')
+      pairsKbIdx = Math.max(pairsKbIdx - cols, 0);
+    else if ((key === 'Enter' || key === 'ENTER') && pairsKbIdx >= 0)
+      { btns[pairsKbIdx].click(); return; }
+    else return;
+    if (pairsKbIdx < 0) pairsKbIdx = 0;
+    btns.forEach(b => b.classList.remove('kb-hl'));
+    btns[pairsKbIdx]?.classList.add('kb-hl');
+    btns[pairsKbIdx]?.scrollIntoView({ block: 'nearest' });
     return;
   }
   if (gameMode === '2P') {
@@ -6682,6 +6742,8 @@ document.getElementById('back-1p-btn').addEventListener('click', () => {
 // ─── Physical keyboard ────────────────────────────────
 document.addEventListener('keydown', e => {
   if (e.ctrlKey || e.metaKey || e.altKey) return;
+  // Let native text inputs handle their own keys (Hören, Schreiben)
+  if (['INPUT','TEXTAREA'].includes(document.activeElement?.tagName)) return;
 
   if (e.key === 'Escape') {
     const overlayIds = ['setup-overlay', 'mode-picker-overlay', 'online-lobby-overlay', 'handoff-overlay', 'results-overlay'];
@@ -6776,8 +6838,27 @@ async function init() {
     loadGameStats();
     updateXPDisplay();
     updateAchievementDisplay();
-    const savedPath = localStorage.getItem('wortle-path') || 'A1';
-    selectPath(savedPath);
+    // Load saved path selection — supports both legacy single string and new JSON array
+    const savedPath = localStorage.getItem('wortle-path');
+    try {
+      const arr = JSON.parse(savedPath);
+      if (Array.isArray(arr) && arr.length) {
+        selectedLevels = new Set(arr);
+      } else throw 0;
+    } catch {
+      selectedLevels = new Set([savedPath || 'A1']);
+    }
+    const _cefrOrder = ['A1','A2','B1','B2'];
+    currentLevel = _cefrOrder.find(l => selectedLevels.has(l)) || [...selectedLevels][0];
+    // Sync UI without overwriting the Set (call selectPath only to update visuals)
+    const _activePack = [...selectedLevels].find(k => PACK_LEVELS.has(k)) || null;
+    selectPack(_activePack);
+    document.querySelectorAll('[data-path-id]').forEach(el => {
+      const p = PATHS.find(x => x.id === el.dataset.pathId);
+      const active = p && selectedLevels.has(p.domain || p.id);
+      el.classList.toggle('active', !!active);
+      el.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
     showHome();
     updateThemeBtn();
     checkAchievements();
@@ -7299,6 +7380,7 @@ let artikelIdx     = 0;
 let artikelScore   = 0;
 let artikelResults = [];   // [{entry, correct}]
 let artikelLocked  = false;
+let artikelKbIdx   = -1;   // keyboard-highlight index (-1 = none)
 
 function titleCaseWord(w) { return w.charAt(0) + w.slice(1).toLowerCase(); }
 
@@ -7316,6 +7398,7 @@ function hideArtikelPanel() {
 }
 
 async function startArtikelMode() {
+  artikelKbIdx = -1;
   // ★ Review tab: drill due nouns from every level; otherwise the selected levels
   const useReview = selectedLevels.has('REVIEW');
   const lvls = useReview ? new Set(['A1', 'A2', 'B1', 'B2']) : selectedLevels;
@@ -7442,12 +7525,14 @@ let pairsSelected  = null;   // { cardEl, id, side }
 let pairsMistakes  = 0;
 let pairsStartTime = 0;
 let pairsPendingLock = false;
+let pairsKbIdx     = -1;   // keyboard-highlight index (-1 = none)
 
 function hidePairsPanel() {
   document.getElementById('pairs-panel').classList.add('hidden');
 }
 
 async function startPairsMode() {
+  pairsKbIdx = -1;
   // Fewer pairs on mobile so the grid fits one screen without scrolling
   pairsCount = window.innerWidth <= 480 ? 6 : 8;
 
@@ -7598,6 +7683,7 @@ let mcIdx        = 0;
 let mcResults    = [];
 let mcTimerSecs  = 0;
 let mcTimerInterval = null;
+let mcKbIdx      = -1;     // keyboard-highlight index (-1 = none)
 
 function hideMcPanel() {
   document.getElementById('mc-panel').classList.add('hidden');
@@ -7605,6 +7691,7 @@ function hideMcPanel() {
 }
 
 async function startMcMode() {
+  mcKbIdx = -1;
   hideAllGamePanels();
   document.body.classList.add('game-active');
   gameMode = 'MC';
@@ -8429,39 +8516,48 @@ function launchMode(modeId) {
 function selectPath(pathId) {
   const path = PATHS.find(p => p.id === pathId);
   if (!path) return;
-  if (path.domain) {
-    // Domain pack
-    selectedLevels = new Set([path.domain]);
-    currentLevel   = path.domain;
-    selectPack(path.domain);
-    // Deactivate CEFR tabs
-    document.querySelectorAll('#level-tabs .tab').forEach(t => {
-      t.classList.remove('active'); t.setAttribute('aria-pressed','false');
-    });
-  } else if (path.id === 'REVIEW') {
+
+  const key = path.domain || path.id; // e.g. 'A1' or 'BUSINESS'
+
+  if (pathId === 'REVIEW') {
+    // REVIEW is exclusive — toggle it; clicking it again when it's the only one does nothing
+    if (selectedLevels.has('REVIEW') && selectedLevels.size === 1) return;
     selectedLevels = new Set(['REVIEW']);
-    currentLevel   = 'REVIEW';
-    selectPack(null);
-    document.querySelectorAll('#level-tabs .tab').forEach(t => {
-      const on = t.dataset.level === 'REVIEW';
-      t.classList.toggle('active', on);
-      t.setAttribute('aria-pressed', on ? 'true' : 'false');
-    });
   } else {
-    selectedLevels = new Set([path.id]);
-    currentLevel   = path.id;
-    selectPack(null);
-    document.querySelectorAll('#level-tabs .tab').forEach(t => {
-      const on = t.dataset.level === path.id;
-      t.classList.toggle('active', on);
-      t.setAttribute('aria-pressed', on ? 'true' : 'false');
-    });
+    if (selectedLevels.has(key)) {
+      if (selectedLevels.size === 1) return; // last one — keep minimum 1
+      selectedLevels.delete(key);
+    } else {
+      selectedLevels.delete('REVIEW');  // deactivate REVIEW when picking a real path
+      selectedLevels.add(key);
+    }
   }
-  // Persist chosen path
-  try { localStorage.setItem('wortle-path', pathId); } catch(e){}
-  // Update home screen path row
+
+  // currentLevel = first CEFR level in selection, or first key (for 2P compat)
+  const cefrOrder = ['A1','A2','B1','B2'];
+  currentLevel = cefrOrder.find(l => selectedLevels.has(l)) || [...selectedLevels][0];
+
+  // Sync pack strip visuals
+  const activePack = [...selectedLevels].find(k => PACK_LEVELS.has(k)) || null;
+  selectPack(activePack);
+
+  // Sync CEFR tab underlines
+  document.querySelectorAll('#level-tabs .tab').forEach(t => {
+    const lvl = t.dataset.level;
+    const on = lvl ? selectedLevels.has(lvl) : false;
+    t.classList.toggle('active', on);
+    t.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+
+  // Persist as JSON array so multi-select survives reload
+  try { localStorage.setItem('wortle-path', JSON.stringify([...selectedLevels])); } catch(e){}
+
+  // Update home screen path chips
   document.querySelectorAll('[data-path-id]').forEach(el => {
-    el.classList.toggle('active', el.dataset.pathId === pathId);
+    const p = PATHS.find(x => x.id === el.dataset.pathId);
+    const active = p && (selectedLevels.has(p.domain || p.id));
+    el.classList.toggle('active', !!active);
+    el.setAttribute('aria-pressed', active ? 'true' : 'false');
   });
 }
 
