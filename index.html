@@ -3445,6 +3445,18 @@
     </div>
   </div>
 
+  <!-- Schreiben summary overlay -->
+  <div class="overlay hidden" id="schreiben-summary-overlay">
+    <div class="overlay-card">
+      <div class="overlay-title">Schreiben beendet!</div>
+      <div class="satz-summary-score" id="schreiben-summary-score"></div>
+      <div class="satz-summary-grid" id="schreiben-summary-grid" style="grid-template-columns:repeat(2,1fr);"></div>
+      <div style="font-size:0.78rem;color:var(--color-text-muted);margin-bottom:8px;">Ergebnisse in deinen Wiederholungsplan übernommen ✓</div>
+      <button class="start-btn" id="schreiben-again-btn">Nochmal üben</button>
+      <button class="satz-ghost-btn" id="schreiben-back-btn" style="margin-top:8px;">Zurück zum Rätsel</button>
+    </div>
+  </div>
+
   </main><!-- /game-main -->
 
   <!-- Motivation toast (word solved feedback) -->
@@ -6108,7 +6120,8 @@ function startGame2P() {
   startRound2P();
 }
 
-function startRound2P() {
+async function startRound2P() {
+  await ensureLevels(selectedLevels);
   const w0 = pickWord(currentLevel, 'all');
   if (!w0) return;
   const w1 = pickWordSameLength(currentLevel, w0.w.length, w0.w) || w0;
@@ -6428,9 +6441,10 @@ function startOnlineGame() {
   }
 }
 
-function startOnlineRound() {
+async function startOnlineRound() {
   if (myPlayerIdx !== 0) return; // only host picks words
 
+  await ensureLevels(new Set([currentLevel]));
   const w0 = pickWord(currentLevel, 'all');
   if (!w0) return;
   const w1 = pickWordSameLength(currentLevel, w0.w.length, w0.w) || w0;
@@ -8071,14 +8085,40 @@ function checkSchreiben() {
 }
 
 function showSchreibenSummary() {
-  const correct = schreibenResults.filter(r => r.correct).length;
   const total   = schreibenResults.length;
-  showMessage('✏️ ' + correct + '/' + total + ' richtig!', correct >= total * 0.8 ? 'win' : 'lose');
-  setTimeout(() => {
-    showMessage('', '');
-    showHome();
-  }, 2500);
+  const correct = schreibenResults.filter(r => r.correct).length;
+  const pct     = total ? Math.round(correct / total * 100) : 0;
+
+  // Award diamonds (same scaling as Hören & Tippen)
+  const gems = Math.round(pct / 10);
+  if (gems > 0) earnDiamonds(gems, 'schreiben', document.getElementById('diamond-counter'));
+
+  const scoreEl = document.getElementById('schreiben-summary-score');
+  scoreEl.textContent = `${correct} / ${total}  (${pct}%)`;
+  scoreEl.className = 'satz-summary-score ' + (pct >= 70 ? 'win' : 'lose');
+
+  const grid = document.getElementById('schreiben-summary-grid');
+  grid.innerHTML = schreibenResults.map(r => {
+    const art = r.entry.type === 'noun' && r.entry.article ? r.entry.article + ' ' : '';
+    return `<div class="satz-summary-item ${r.correct ? 'win' : 'lose'}">
+      <span>${r.correct ? '✓' : '✗'} ${art}${r.entry.w}</span>
+      <span style="color:var(--color-text-muted)">${r.entry.en}</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('schreiben-summary-overlay').classList.remove('hidden');
 }
+
+document.getElementById('schreiben-again-btn').addEventListener('click', () => {
+  document.getElementById('schreiben-summary-overlay').classList.add('hidden');
+  startSchreibenMode();
+});
+document.getElementById('schreiben-back-btn').addEventListener('click', () => {
+  document.getElementById('schreiben-summary-overlay').classList.add('hidden');
+  hideSchreibenPanel();
+  setModeSwitcher('cw');
+  showHome();
+});
 
 document.getElementById('schreiben-check-btn').addEventListener('click', checkSchreiben);
 document.getElementById('schreiben-input').addEventListener('keydown', e => {
@@ -8111,8 +8151,17 @@ function hideSchreibenPanel() {
   document.getElementById('schreiben-panel')?.classList.add('hidden');
 }
 
+// Summary/result overlays that must be dismissed when switching modes or going
+// home, so a stale one never lingers on top of the next screen.
+const SUMMARY_OVERLAY_IDS = ['cw-summary-overlay','satz-summary-overlay','artikel-summary-overlay',
+  'listen-summary-overlay','mc-summary-overlay','pairs-summary-overlay','schreiben-summary-overlay','results-overlay'];
+function hideSummaryOverlays() {
+  SUMMARY_OVERLAY_IDS.forEach(id => document.getElementById(id)?.classList.add('hidden'));
+}
+
 function hideAllGamePanels() {
   hideSatzPanel(); hideArtikelPanel(); hideListenPanel(); hideMcPanel(); hidePairsPanel(); hideSchreibenPanel();
+  hideSummaryOverlays();
   ['cw-clue-bar','cw-progress','clue-chips','crossword-area','cw-actions','cw-keyboard'].forEach(id => {
     document.getElementById(id)?.classList.add('hidden');
   });
@@ -8671,12 +8720,24 @@ function selectPath(pathId) {
     // REVIEW is exclusive — toggle it; clicking it again when it's the only one does nothing
     if (selectedLevels.has('REVIEW') && selectedLevels.size === 1) return;
     selectedLevels = new Set(['REVIEW']);
+  } else if (THEME_PACKS.has(key)) {
+    // Theme packs are curated subsets of the CEFR levels, so combining one
+    // with a level would just shadow the subset (making the pack a no-op).
+    // Treat them as exclusive (like REVIEW): tap to isolate the pack's words,
+    // tap the active one again to return to the A1 default.
+    if (selectedLevels.has(key) && selectedLevels.size === 1) {
+      selectedLevels = new Set(['A1']);
+    } else {
+      selectedLevels = new Set([key]);
+    }
   } else {
+    // CEFR level or professional domain pack (separate content → additive multi-select)
     if (selectedLevels.has(key)) {
       if (selectedLevels.size === 1) return; // last one — keep minimum 1
       selectedLevels.delete(key);
     } else {
       selectedLevels.delete('REVIEW');  // deactivate REVIEW when picking a real path
+      THEME_PACKS.forEach(tp => selectedLevels.delete(tp)); // drop any shadowed subset pack
       selectedLevels.add(key);
     }
   }
@@ -8865,6 +8926,7 @@ function showHome() {
    'listen-panel','mc-panel','pairs-panel','schreiben-panel','streak-bar','wordle-panel'].forEach(id => {
     document.getElementById(id)?.classList.add('hidden');
   });
+  hideSummaryOverlays();
   document.body.classList.remove('cw-active','cw-typing','game-active');
   clearInterval(mcTimerInterval);
   resetCombo();
