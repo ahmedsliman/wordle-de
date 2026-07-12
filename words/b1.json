@@ -6,7 +6,7 @@
     "hint": "Group of people living together",
     "type": "noun",
     "article": "die",
-    "sentence": "In einer freien ___ gelten bestimmte Regeln."
+    "sentence": "Die ___, die wir uns wünschen, respektiert alle Minderheiten."
   },
   {
     "w": "UMWELT",
@@ -96,7 +96,7 @@
     "hint": "Government by the people",
     "type": "noun",
     "article": "die",
-    "sentence": "In einer ___ haben alle Bürger das Recht zu wählen."
+    "sentence": "Ohne freie Wahlen gäbe es keine echte ___."
   },
   {
     "w": "REGIERUNG",
@@ -141,7 +141,7 @@
     "hint": "Ability to act without restraint",
     "type": "noun",
     "article": "die",
-    "sentence": "Die ___ der Meinungsäußerung ist ein Grundrecht."
+    "sentence": "Ohne ___ könnte niemand seine Meinung offen sagen."
   },
   {
     "w": "GERECHTIGKEIT",
@@ -150,7 +150,7 @@
     "hint": "Fairness in society",
     "type": "noun",
     "article": "die",
-    "sentence": "Die ___ im Rechtssystem ist sehr wichtig."
+    "sentence": "Ohne ___ hätte das Rechtssystem keine Legitimität."
   },
   {
     "w": "VERANTWORTUNG",
@@ -204,7 +204,7 @@
     "hint": "Answer to a problem",
     "type": "noun",
     "article": "die",
-    "sentence": "Wir suchen gemeinsam nach einer guten ___."
+    "sentence": "Wir brauchen eine ___, die wirklich allen hilft."
   },
   {
     "w": "PROBLEM",
@@ -474,7 +474,7 @@
     "hint": "Belief in someone's reliability",
     "type": "noun",
     "article": "das",
-    "sentence": "Ohne ___ kann keine Beziehung funktionieren."
+    "sentence": "Ohne ___ wäre die Beziehung längst gescheitert."
   },
   {
     "w": "RESPEKT",
@@ -537,7 +537,7 @@
     "hint": "Long-term shift in global temperatures",
     "type": "noun",
     "article": "der",
-    "sentence": "Der ___ bedroht die Lebensräume vieler Tierarten."
+    "sentence": "Wenn wir nichts täten, würde der ___ noch mehr Schaden anrichten."
   },
   {
     "w": "NACHHALTIGKEIT",
@@ -591,7 +591,7 @@
     "hint": "State of being very poor",
     "type": "noun",
     "article": "die",
-    "sentence": "___ ist eines der größten sozialen Probleme weltweit."
+    "sentence": "___ ist ein Problem, das viele Länder betrifft."
   },
   {
     "w": "REICHTUM",
@@ -842,7 +842,7 @@
     "ar": "يحلل",
     "hint": "Examine in detail",
     "type": "verb",
-    "sentence": "Wir müssen die Situation genau ___."
+    "sentence": "Wir sollten die Situation genauer ___, bevor wir entscheiden."
   },
   {
     "w": "BESCHREIBEN",
@@ -858,7 +858,7 @@
     "ar": "يقارن",
     "hint": "Look at similarities and differences",
     "type": "verb",
-    "sentence": "Wir sollen die beiden Texte miteinander ___."
+    "sentence": "Die Texte, die wir ___ sollen, stammen aus unterschiedlichen Epochen."
   },
   {
     "w": "BEURTEILEN",
@@ -866,7 +866,7 @@
     "ar": "يحكم / يقيّم",
     "hint": "Form an opinion about quality",
     "type": "verb",
-    "sentence": "Der Lehrer muss die Leistungen der Schüler ___."
+    "sentence": "Der Lehrer muss die Leistungen fair ___, auch wenn das schwerfällt."
   },
   {
     "w": "KRITISIEREN",
@@ -898,7 +898,7 @@
     "ar": "يقرر",
     "hint": "Make a choice",
     "type": "verb",
-    "sentence": "Die Gruppe muss sich bald für eine Lösung ___."
+    "sentence": "Die Gruppe müsste sich schneller ___, sonst verlieren wir Zeit."
   },
   {
     "w": "ÜBERZEUGEN",
@@ -906,7 +906,7 @@
     "ar": "يقنع",
     "hint": "Persuade someone to believe",
     "type": "verb",
-    "sentence": "Er möchte alle von seiner Idee ___."
+    "sentence": "Er hätte alle ___ können, wenn er besser vorbereitet gewesen wäre."
   },
   {
     "w": "PLANEN",
@@ -914,7 +914,7 @@
     "ar": "يخطط",
     "hint": "Organise in advance",
     "type": "verb",
-    "sentence": "Wir müssen die nächsten Schritte sorgfältig ___."
+    "sentence": "Wir müssten die nächsten Schritte sorgfältiger ___, wenn wir Fehler vermeiden wollen."
   },
   {
     "w": "ORGANISIEREN",
@@ -938,7 +938,7 @@
     "ar": "يطور",
     "hint": "Grow or advance",
     "type": "verb",
-    "sentence": "Das Unternehmen will neue Produkte ___."
+    "sentence": "Wir würden gerne neue Produkte ___."
   },
   {
     "w": "VERBESSERN",
@@ -946,7 +946,7 @@
     "ar": "يحسن",
     "hint": "Make better",
     "type": "verb",
-    "sentence": "Wir müssen die Situation für alle ___."
+    "sentence": "Wenn wir zusammenarbeiten, könnten wir die Situation für alle ___."
   },
   {
     "w": "VERÄNDERN",
@@ -954,7 +954,7 @@
     "ar": "يغير",
     "hint": "Make different",
     "type": "verb",
-    "sentence": "Technologie kann die Gesellschaft grundlegend ___."
+    "sentence": "Technologie würde die Gesellschaft grundlegend ___, wenn wir sie richtig nutzten."
   },
   {
     "w": "ERREICHEN",
@@ -962,7 +962,7 @@
     "ar": "يحقق / يصل إلى",
     "hint": "Attain a goal",
     "type": "verb",
-    "sentence": "Mit harter Arbeit kann man seine Ziele ___."
+    "sentence": "Ohne harte Arbeit würde er sein Ziel nie ___."
   },
   {
     "w": "UNTERSTÜTZEN",
@@ -970,7 +970,7 @@
     "ar": "يدعم",
     "hint": "Give help or backing",
     "type": "verb",
-    "sentence": "Wir wollen die Benachteiligten finanziell ___."
+    "sentence": "Wir würden die Benachteiligten gerne stärker ___."
   },
   {
     "w": "FÖRDERN",
@@ -978,7 +978,7 @@
     "ar": "يعزز / يشجع",
     "hint": "Encourage growth",
     "type": "verb",
-    "sentence": "Die Regierung will die Forschung stärker ___."
+    "sentence": "Die Regierung müsste die Forschung viel stärker ___."
   },
   {
     "w": "VERHINDERN",
@@ -986,7 +986,7 @@
     "ar": "يمنع",
     "hint": "Stop something from happening",
     "type": "verb",
-    "sentence": "Wie können wir den Klimawandel noch ___?"
+    "sentence": "Wir müssen den Klimawandel jetzt ___, sonst ist es zu spät."
   },
   {
     "w": "LÖSEN",
@@ -994,7 +994,7 @@
     "ar": "يحل",
     "hint": "Find an answer to a problem",
     "type": "verb",
-    "sentence": "Wir müssen dieses Problem gemeinsam ___."
+    "sentence": "Wenn wir zusammenarbeiten würden, könnten wir dieses Problem ___."
   },
   {
     "w": "UNTERSUCHEN",
@@ -1018,7 +1018,7 @@
     "ar": "يثبت",
     "hint": "Show something is true",
     "type": "verb",
-    "sentence": "Er muss seine Theorie noch wissenschaftlich ___."
+    "sentence": "Er müsste seine Theorie erst wissenschaftlich ___."
   },
   {
     "w": "WIDERSPRECHEN",
@@ -1050,7 +1050,7 @@
     "ar": "يقبل",
     "hint": "Agree to something offered",
     "type": "verb",
-    "sentence": "Wir müssen die Entscheidung ___."
+    "sentence": "Auch wenn es schwerfällt, müssten wir die Entscheidung ___."
   },
   {
     "w": "VORSCHLAGEN",
@@ -1066,7 +1066,7 @@
     "ar": "يمكّن",
     "hint": "Make something possible",
     "type": "verb",
-    "sentence": "Technologie kann viele neue Dinge ___."
+    "sentence": "Neue Technologien könnten viele Dinge ___, die heute noch unmöglich scheinen."
   },
   {
     "w": "BEEINFLUSSEN",
@@ -1074,7 +1074,7 @@
     "ar": "يؤثر على",
     "hint": "Have an effect on",
     "type": "verb",
-    "sentence": "Medien können die öffentliche Meinung stark ___."
+    "sentence": "Medien könnten die öffentliche Meinung stark ___, wenn sie wollten."
   },
   {
     "w": "BETONEN",
@@ -1178,7 +1178,7 @@
     "ar": "ينجح",
     "hint": "Turn out well",
     "type": "verb",
-    "sentence": "Das Projekt muss auf jeden Fall ___."
+    "sentence": "Wenn alle mitarbeiten würden, würde das Projekt sicher ___."
   },
   {
     "w": "SCHEITERN",
@@ -1186,7 +1186,7 @@
     "ar": "يفشل",
     "hint": "Not succeed",
     "type": "verb",
-    "sentence": "Ohne Teamarbeit wird das Projekt ___."
+    "sentence": "Ohne Teamarbeit würde das Projekt schnell ___."
   },
   {
     "w": "RISKIEREN",
@@ -1210,7 +1210,7 @@
     "ar": "يضمن",
     "hint": "Promise with certainty",
     "type": "verb",
-    "sentence": "Niemand kann den Erfolg ___."
+    "sentence": "Niemand kann ___, dass das Projekt gelingt."
   },
   {
     "w": "FINANZIEREN",
@@ -1218,7 +1218,7 @@
     "ar": "يموّل",
     "hint": "Provide money for something",
     "type": "verb",
-    "sentence": "Wer soll das neue Projekt ___?"
+    "sentence": "Wer würde so ein teures Projekt schon ___?"
   },
   {
     "w": "POLITISCH",
@@ -1402,7 +1402,7 @@
     "ar": "معقد",
     "hint": "Having many interrelated parts",
     "type": "adjective",
-    "sentence": "Das Problem ist sehr ___ und hat viele Ursachen."
+    "sentence": "Das Thema ist viel ___, als die meisten denken."
   },
   {
     "w": "VIELFÄLTIG",
@@ -1917,7 +1917,7 @@
     "ar": "يتأقلم",
     "hint": "Man ändert sich für eine neue Situation.",
     "type": "verb",
-    "sentence": "Man muss sich an die neue Situation ___."
+    "sentence": "Wenn sich niemand ___ würde, gäbe es Chaos."
   },
   {
     "w": "ÜBERNEHMEN",
@@ -1925,7 +1925,7 @@
     "ar": "يتولّى",
     "hint": "Man übernimmt eine Aufgabe oder ein Amt.",
     "type": "verb",
-    "sentence": "Sie möchte die Leitung der Abteilung ___."
+    "sentence": "Sie würde die Leitung der Abteilung gerne ___."
   },
   {
     "w": "NACHFRAGEN",
@@ -1957,7 +1957,7 @@
     "ar": "حكومي",
     "hint": "Es gehört zum Staat.",
     "type": "adjective",
-    "sentence": "Die Schule ist ___."
+    "sentence": "Die Schule ist ___, weil sie vom Staat finanziert wird."
   },
   {
     "w": "GEMEINSAM",
@@ -2093,7 +2093,7 @@
     "hint": "What is really true",
     "type": "noun",
     "article": "die",
-    "sentence": "Du wirst die ___ sagen."
+    "sentence": "Auch wenn es wehtut, sollte man die ___ sagen."
   },
   {
     "w": "VERLANGEN",
@@ -2142,7 +2142,8 @@
     "en": "to lie to",
     "ar": "يكذب على",
     "hint": "To tell someone something untrue",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Er würde seine Freunde nie ___."
   },
   {
     "w": "ENTSCHEIDUNG",
@@ -2151,7 +2152,7 @@
     "hint": "A choice you make",
     "type": "noun",
     "article": "die",
-    "sentence": "Es war ganz sicher die richtige ___."
+    "sentence": "Es war eine ___, die ich nie bereut habe."
   },
   {
     "w": "RISKANT",
@@ -2184,7 +2185,8 @@
     "ar": "سائح",
     "hint": "Someone travelling for pleasure",
     "type": "noun",
-    "article": "der"
+    "article": "der",
+    "sentence": "Er ist nur ein ___ und kein Einwohner."
   },
   {
     "w": "PERSONAL",
@@ -2293,7 +2295,8 @@
     "en": "to misplace",
     "ar": "يضع في مكان خاطئ / يُضيّع",
     "hint": "To lose something by forgetting where you put it",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Ich möchte meine Schlüssel nicht wieder ___."
   },
   {
     "w": "DATUM",
@@ -2318,7 +2321,8 @@
     "en": "different, varied",
     "ar": "مختلف",
     "hint": "Not the same as each other",
-    "type": "adjective"
+    "type": "adjective",
+    "sentence": "Die beiden Modelle sind sehr ___."
   },
   {
     "w": "SYSTEM",
@@ -2327,6 +2331,6 @@
     "hint": "An organised set of parts or rules",
     "type": "noun",
     "article": "das",
-    "sentence": "Ich kann das ___ nun mal nicht ändern."
+    "sentence": "Wenn ich könnte, würde ich das ___ ändern."
   }
 ]

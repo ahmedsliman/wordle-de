@@ -1514,7 +1514,7 @@
     "ar": "يريد",
     "hint": "Desire something",
     "type": "verb",
-    "sentence": "Ich weiß nicht, was er wirklich ___ soll.",
+    "sentence": "Du wirst das bald auch ___.",
     "packs": [
       "FIRST100"
     ]
@@ -2553,6 +2553,7 @@
     "ar": "يريد (بأدب)",
     "hint": "Polite way to say you want something",
     "type": "verb",
+    "sentence": "Ich ___ ein Glas Wasser, bitte.",
     "packs": [
       "FIRST100"
     ]

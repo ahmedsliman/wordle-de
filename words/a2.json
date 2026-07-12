@@ -54,7 +54,7 @@
     "hint": "Room where you cook",
     "type": "noun",
     "article": "die",
-    "sentence": "Das Essen wird in der ___ zubereitet."
+    "sentence": "Ich bereite das Essen in der ___ zu."
   },
   {
     "w": "WOHNZIMMER",
@@ -172,7 +172,7 @@
     "hint": "Where goods are manufactured",
     "type": "noun",
     "article": "die",
-    "sentence": "In der ___ werden Autos hergestellt."
+    "sentence": "In der ___ stellt man Autos her."
   },
   {
     "w": "MUSEUM",
@@ -1624,7 +1624,7 @@
     "ar": "شهري",
     "hint": "Every month",
     "type": "adjective",
-    "sentence": "Die Miete wird ___ bezahlt."
+    "sentence": "Ich bezahle die Miete ___."
   },
   {
     "w": "KOSTENLOS",
@@ -2229,7 +2229,8 @@
     "en": "to stay",
     "ar": "يبقى",
     "hint": "To remain in one place",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Wie lange möchtest du noch ___?"
   },
   {
     "w": "SPRACHKURS",
@@ -2245,14 +2246,16 @@
     "en": "to practise",
     "ar": "يتمرّن / يتدرّب",
     "hint": "To repeat something to get better",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Ich muss noch mein Deutsch ___."
   },
   {
     "w": "SCHAFFEN",
     "en": "to manage, to achieve",
     "ar": "ينجح في / يتمكن من",
     "hint": "To succeed in doing something",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Wir können das zusammen ___."
   },
   {
     "w": "ÜBERWEISEN",
@@ -2332,7 +2335,8 @@
     "ar": "شيء بسيط / تفصيل صغير",
     "hint": "A little thing of no importance",
     "type": "noun",
-    "article": "die"
+    "article": "die",
+    "sentence": "Das ist nur eine ___, kein Problem."
   },
   {
     "w": "SERIE",
@@ -2348,7 +2352,8 @@
     "en": "to give (a gift)",
     "ar": "يهدي",
     "hint": "To give something as a present",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Was möchtest du ihr zum Geburtstag ___?"
   },
   {
     "w": "ORDNUNG",
@@ -2425,14 +2430,16 @@
     "en": "to come here",
     "ar": "يأتي إلى هنا",
     "hint": "To arrive at this place",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Kannst du bitte später noch einmal ___?"
   },
   {
     "w": "WEGGEHEN",
     "en": "to leave, to go away",
     "ar": "يرحل / يبتعد",
     "hint": "To move away from a place",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Ich muss jetzt leider ___."
   },
   {
     "w": "HEIMWEH",
@@ -2448,7 +2455,8 @@
     "en": "to miss",
     "ar": "يفتقد / يشتاق",
     "hint": "To feel sad someone is away",
-    "type": "verb"
+    "type": "verb",
+    "sentence": "Ich ___ meine Familie sehr."
   },
   {
     "w": "SPEISEKARTE",
