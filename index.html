@@ -275,6 +275,25 @@
       justify-content: center;
       height: 100%;
     }
+    /* Compact "you're studying X pack" indicator — stays visible even where the
+       full pack-strip row is hidden to save space (locked mobile crossword view). */
+    .active-pack-pip {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      align-self: center;
+      margin-left: 6px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      white-space: nowrap;
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background: rgba(29,158,117,0.12);
+      color: var(--color-correct-text);
+    }
 
     /* ─── Domain Pack Strip ─────────────────────────── */
     .pack-strip {
@@ -292,6 +311,13 @@
       -webkit-overflow-scrolling: touch;
     }
     .pack-strip::-webkit-scrollbar { display: none; }
+    .pack-strip-sep {
+      flex-shrink: 0;
+      width: 1px;
+      align-self: stretch;
+      margin: 4px 2px;
+      background: var(--color-header-border);
+    }
     .pack-strip-label {
       font-size: 0.72rem;
       font-weight: 700;
@@ -2435,6 +2461,41 @@
     .listen-input.correct { border-color: var(--color-correct); background: rgba(29,158,117,0.06); }
     .listen-input.wrong   { border-color: var(--gender-die); background: rgba(239,68,68,0.05); animation: shake 0.35s; }
 
+    /* ── Nachsprechen (Shadowing) panel ── */
+    #shadowing-panel { max-width: 460px; margin: 0 auto; padding: 16px 16px 32px; display: flex; flex-direction: column; gap: 16px; }
+    #shadowing-sentence { font-size: 1.15rem; }
+    .shadowing-word-hit  { color: var(--color-correct-text); }
+    .shadowing-word-miss { color: var(--gender-die); text-decoration: line-through; opacity: 0.75; }
+    .shadowing-record-row {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .shadowing-record-btn {
+      width: 72px; height: 72px; border-radius: 50%;
+      border: 2.5px solid #db2777; background: rgba(219,39,119,0.08); color: var(--color-text);
+      font-size: 1.7rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: transform 0.12s, background 0.15s; -webkit-tap-highlight-color: transparent;
+    }
+    .shadowing-record-btn:hover:not(:disabled) { background: rgba(219,39,119,0.16); transform: scale(1.06); }
+    .shadowing-record-btn:active:not(:disabled) { transform: scale(0.94); }
+    .shadowing-record-btn:disabled { opacity: 0.35; cursor: default; }
+    .shadowing-record-btn.recording { animation: shadowing-pulse 0.8s ease-in-out infinite alternate; }
+    @keyframes shadowing-pulse {
+      from { box-shadow: 0 0 0 0 rgba(219,39,119,0.4); }
+      to   { box-shadow: 0 0 0 14px rgba(219,39,119,0); }
+    }
+    .shadowing-record-hint { font-size: 0.82rem; color: var(--color-text-muted); text-align: center; }
+    .shadowing-self-assess { display: flex; gap: 10px; width: 100%; }
+    .shadowing-assess-btn {
+      flex: 1; padding: 12px 8px; border-radius: 12px; font-weight: 700; font-size: 0.88rem;
+      border: 2px solid var(--color-border); background: var(--color-surface); color: var(--color-text);
+      cursor: pointer; min-height: 44px;
+    }
+    .shadowing-assess-btn.good:hover { border-color: var(--color-correct); color: var(--color-correct-text); }
+    .shadowing-assess-btn.miss:hover { border-color: var(--gender-die); color: var(--gender-die); }
+    @media (prefers-reduced-motion: reduce) {
+      .shadowing-record-btn.recording { animation: none; }
+    }
+
     /* ── Multiple Choice panel ── */
     #mc-panel {
       max-width: 460px; margin: 0 auto; padding: 16px 16px 32px;
@@ -3031,6 +3092,7 @@
       <button class="tab"        data-level="B1" aria-label="Schwierigkeitsstufe B1" aria-pressed="false">B1</button>
       <button class="tab tab-b2" data-level="B2" aria-label="Schwierigkeitsstufe B2" aria-pressed="false">B2</button>
       <button class="tab tab-review" data-level="REVIEW" aria-label="Wiederholung — fällige Wörter" aria-pressed="false">★<span class="review-badge" id="review-badge" hidden>0</span></button>
+      <span class="active-pack-pip hidden" id="active-pack-pip"></span>
     </div>
     <div style="display:flex;align-items:center;gap:8px;">
       <button id="theme-btn" class="theme-btn" title="Farbschema umschalten" aria-label="Auf dunkles Design wechseln">🌙</button>
@@ -3046,12 +3108,18 @@
     </div>
   </header>
 
-  <nav class="pack-strip" id="pack-strip" aria-label="Fachvokabular-Pakete">
+  <nav class="pack-strip" id="pack-strip" aria-label="Themenpakete">
     <button class="pack-btn" data-pack="BUSINESS"    aria-pressed="false">💼 Wirtschaft</button>
     <button class="pack-btn" data-pack="MEDICAL"     aria-pressed="false">🩺 Medizin</button>
     <button class="pack-btn" data-pack="SOFTWARE"    aria-pressed="false">💻 IT</button>
     <button class="pack-btn" data-pack="ENGINEERING" aria-pressed="false">⚙️ Technik</button>
     <button class="pack-btn" data-pack="LEGAL"       aria-pressed="false">⚖️ Recht</button>
+    <span class="pack-strip-sep" aria-hidden="true"></span>
+    <button class="pack-btn" data-pack="FAMILY"      aria-pressed="false">👨‍👩‍👧 Familie</button>
+    <button class="pack-btn" data-pack="RESTAURANT"  aria-pressed="false">🍽️ Restaurant</button>
+    <button class="pack-btn" data-pack="TRAVEL"      aria-pressed="false">✈️ Reisen</button>
+    <button class="pack-btn" data-pack="NUMBERS"     aria-pressed="false">🔢 Zahlen</button>
+    <button class="pack-btn" data-pack="FIRST100"    aria-pressed="false">💯 Erste 100</button>
   </nav>
 
   <div class="mode-switcher" id="mode-switcher" role="tablist" aria-label="Spielmodus">
@@ -3082,6 +3150,10 @@
     <button class="mode-switch-btn" id="switch-schreiben" role="tab" aria-selected="false" aria-controls="schreiben-panel">
       <span class="mode-switch-icon">✏️</span>
       <span class="mode-switch-label">Schreiben</span>
+    </button>
+    <button class="mode-switch-btn" id="switch-shadowing" role="tab" aria-selected="false" aria-controls="shadowing-panel">
+      <span class="mode-switch-icon">🎤</span>
+      <span class="mode-switch-label">Nachsprechen</span>
     </button>
   </div>
 
@@ -3398,6 +3470,30 @@
     </div>
   </div>
 
+  <!-- ── Nachsprechen (Shadowing) ─────────── -->
+  <div id="shadowing-panel" class="hidden">
+    <div class="satz-top-bar">
+      <span class="satz-round-badge" style="background:rgba(219,39,119,0.12);color:#db2777;">🎤 Nachsprechen</span>
+      <div class="satz-progress-wrap">
+        <div class="satz-progress-bar"><div class="satz-progress-fill" id="shadowing-progress-fill"></div></div>
+        <span class="satz-progress-text" id="shadowing-progress-text">1 / 8</span>
+      </div>
+    </div>
+    <div class="listen-card">
+      <button class="listen-speak-btn" id="shadowing-speak-btn" aria-label="Satz anhören">🔊</button>
+      <div class="listen-hint" id="shadowing-sentence"></div>
+    </div>
+    <div class="shadowing-record-row" id="shadowing-record-row">
+      <button class="shadowing-record-btn" id="shadowing-record-btn" disabled aria-label="Aufnehmen und nachsprechen">🎙</button>
+      <div class="shadowing-record-hint" id="shadowing-record-hint">Hör zu, dann sprich nach…</div>
+    </div>
+    <div class="shadowing-self-assess hidden" id="shadowing-self-assess" role="group" aria-label="Selbsteinschätzung">
+      <button class="shadowing-assess-btn miss" id="shadowing-assess-miss">✗ Nicht geschafft</button>
+      <button class="shadowing-assess-btn good" id="shadowing-assess-good">✓ Geschafft</button>
+    </div>
+    <div id="shadowing-feedback" class="satz-feedback" aria-live="polite"></div>
+  </div>
+
   <!-- Pairs summary overlay -->
   <div class="overlay hidden" id="pairs-summary-overlay">
     <div class="overlay-card">
@@ -3430,6 +3526,18 @@
       <div style="font-size:0.78rem;color:var(--color-text-muted);margin-bottom:8px;">Ergebnisse in deinen Wiederholungsplan übernommen ✓</div>
       <button class="start-btn" id="listen-again-btn">Nochmal üben</button>
       <button class="satz-ghost-btn" id="listen-back-btn" style="margin-top:8px;">Zurück zum Rätsel</button>
+    </div>
+  </div>
+
+  <!-- Shadowing summary overlay -->
+  <div class="overlay hidden" id="shadowing-summary-overlay">
+    <div class="overlay-card">
+      <div class="overlay-title">Nachsprechen beendet!</div>
+      <div class="satz-summary-score" id="shadowing-summary-score"></div>
+      <div class="satz-summary-grid" id="shadowing-summary-grid" style="grid-template-columns:1fr;"></div>
+      <div style="font-size:0.78rem;color:var(--color-text-muted);margin-bottom:8px;">Ergebnisse in deinen Wiederholungsplan übernommen ✓</div>
+      <button class="start-btn" id="shadowing-again-btn">Nochmal üben</button>
+      <button class="satz-ghost-btn" id="shadowing-back-btn" style="margin-top:8px;">Zurück zum Rätsel</button>
     </div>
   </div>
 
@@ -6005,6 +6113,7 @@ function setMode(mode) {
     cwArea.classList.remove('hidden');
     cwActions.classList.remove('hidden');
     streakBar.classList.remove('hidden');
+    syncPackStripVisibility();
     board2p.classList.add('hidden');
     document.getElementById('clue-chips').classList.remove('hidden');
     document.getElementById('cw-progress').classList.remove('hidden');
@@ -6046,7 +6155,7 @@ function hideModePickerOverlay() {
 // Keeps the address bar in sync with the active mode so refresh/back-forward
 // and shared links land on the right screen. Hash-only (no server routing
 // needed — this is a static GitHub Pages file).
-const ROUTE_HASH = { '1P': 'crossword', 'SATZ': 'satz', 'ARTIKEL': 'artikel', 'HÖREN': 'hoeren', 'MC': 'quiz', 'PAARE': 'paare', 'SCHREIBEN': 'schreiben' };
+const ROUTE_HASH = { '1P': 'crossword', 'SATZ': 'satz', 'ARTIKEL': 'artikel', 'HÖREN': 'hoeren', 'MC': 'quiz', 'PAARE': 'paare', 'SCHREIBEN': 'schreiben', 'SHADOWING': 'shadowing' };
 const HASH_MODE  = Object.fromEntries(Object.entries(ROUTE_HASH).map(([k, v]) => [v, k]));
 
 function setRoute(hash) {
@@ -6631,6 +6740,7 @@ document.getElementById('level-tabs').addEventListener('click', e => {
   currentLevel = [...selectedLevels][0];
   // Clear pack strip visuals
   selectPack(null);
+  syncPackStripVisibility();
   // Update tab visuals
   document.querySelectorAll('#level-tabs .tab').forEach(t => {
     const on = selectedLevels.has(t.dataset.level);
@@ -6659,6 +6769,33 @@ function selectPack(pack) {
     b.classList.toggle('active', on);
     b.setAttribute('aria-pressed', on ? 'true' : 'false');
   });
+}
+
+// Domain packs are meaningless during ★ Wiederholung (it reviews due words across
+// every level/pack at once), so hide the pack-strip row entirely rather than
+// showing five dead, unselectable-feeling pills. Call this after selectedLevels
+// has its final value for the change in question.
+function syncPackStripVisibility() {
+  document.getElementById('pack-strip')?.classList.toggle('hidden', selectedLevels.has('REVIEW'));
+  syncActivePackPip();
+}
+
+// Mirrors the pack-strip's active pill as a small badge next to the level tabs,
+// since the mobile locked-crossword layout hides the full pack-strip row entirely
+// to save vertical space — this pip is the only place that state stays visible there.
+function syncActivePackPip() {
+  const pip = document.getElementById('active-pack-pip');
+  if (!pip) return;
+  const key = [...selectedLevels].find(k => PACK_LEVELS.has(k) || THEME_PACKS.has(k));
+  const path = key && PATHS.find(p => p.id === key);
+  if (path) {
+    pip.textContent = path.icon + ' ' + path.label.replace(/^Beruf:\s*/, '');
+    pip.title = path.label;
+    pip.classList.remove('hidden');
+  } else {
+    pip.textContent = '';
+    pip.classList.add('hidden');
+  }
 }
 
 document.getElementById('pack-strip').addEventListener('click', e => {
@@ -6692,6 +6829,7 @@ document.getElementById('pack-strip').addEventListener('click', e => {
       t.setAttribute('aria-pressed', 'false');
     });
   }
+  syncPackStripVisibility();
 
   if (gameMode === 'SATZ') startSatzMode();
   else if (gameMode === 'ARTIKEL') startArtikelMode();
@@ -6713,6 +6851,7 @@ document.getElementById('cw-review-empty-btn').addEventListener('click', () => {
   a1.setAttribute('aria-pressed', 'true');
   currentLevel = 'A1';
   selectedLevels = new Set(['A1']);
+  syncPackStripVisibility();
   startCrossword();
 });
 
@@ -7504,7 +7643,7 @@ document.getElementById('satz-back-btn').addEventListener('click', () => {
 
 // ── Mode switcher buttons ──
 function setModeSwitcher(active) {
-  const map = { cw: 'switch-crossword', satz: 'switch-satz', artikel: 'switch-artikel', listen: 'switch-listen', mc: 'switch-mc', pairs: 'switch-pairs', schreiben: 'switch-schreiben' };
+  const map = { cw: 'switch-crossword', satz: 'switch-satz', artikel: 'switch-artikel', listen: 'switch-listen', mc: 'switch-mc', pairs: 'switch-pairs', schreiben: 'switch-schreiben', shadowing: 'switch-shadowing' };
   for (const [key, id] of Object.entries(map)) {
     const el = document.getElementById(id);
     el.classList.toggle('active', key === active);
@@ -8154,13 +8293,14 @@ function hideSchreibenPanel() {
 // Summary/result overlays that must be dismissed when switching modes or going
 // home, so a stale one never lingers on top of the next screen.
 const SUMMARY_OVERLAY_IDS = ['cw-summary-overlay','satz-summary-overlay','artikel-summary-overlay',
-  'listen-summary-overlay','mc-summary-overlay','pairs-summary-overlay','schreiben-summary-overlay','results-overlay'];
+  'listen-summary-overlay','mc-summary-overlay','pairs-summary-overlay','schreiben-summary-overlay',
+  'shadowing-summary-overlay','results-overlay'];
 function hideSummaryOverlays() {
   SUMMARY_OVERLAY_IDS.forEach(id => document.getElementById(id)?.classList.add('hidden'));
 }
 
 function hideAllGamePanels() {
-  hideSatzPanel(); hideArtikelPanel(); hideListenPanel(); hideMcPanel(); hidePairsPanel(); hideSchreibenPanel();
+  hideSatzPanel(); hideArtikelPanel(); hideListenPanel(); hideMcPanel(); hidePairsPanel(); hideSchreibenPanel(); hideShadowingPanel();
   hideSummaryOverlays();
   ['cw-clue-bar','cw-progress','clue-chips','crossword-area','cw-actions','cw-keyboard'].forEach(id => {
     document.getElementById(id)?.classList.add('hidden');
@@ -8334,6 +8474,297 @@ document.getElementById('listen-back-btn').addEventListener('click', () => {
 document.getElementById('switch-listen').addEventListener('click', () => {
   if (gameMode === 'HÖREN') return;
   startListenMode();
+});
+
+// ─── Nachsprechen (Shadowing) ──────────────────────────
+// Listen to a full sentence, repeat it aloud, get scored via SpeechRecognition.
+// Falls back to a self-assessment control on browsers without speech recognition
+// (Firefox by default, or when the mic permission is denied) — same graceful-
+// degradation pattern as the voice-availability check for TTS above.
+const SHADOWING_ROUNDS      = 8;
+const ShadowingSR           = window.SpeechRecognition || window.webkitSpeechRecognition;
+let shadowingQueue          = [];   // entries with .sentence
+let shadowingIdx            = 0;
+let shadowingResults        = [];   // [{entry, correct, pct}]
+let shadowingRecognition    = null;
+let shadowingListening      = false;
+let shadowingMicBlocked     = false;  // set once mic permission is denied, so we stop re-prompting
+
+function showShadowingPanel() {
+  hideAllGamePanels();
+  document.body.classList.add('game-active');
+  gameMode = 'SHADOWING';
+  document.getElementById('shadowing-panel').classList.remove('hidden');
+  document.getElementById('streak-bar').classList.remove('hidden');
+  setModeSwitcher('shadowing');
+  setRoute('shadowing');
+}
+
+function hideShadowingPanel() {
+  abortShadowingRecognition();
+  document.getElementById('shadowing-panel')?.classList.add('hidden');
+}
+
+async function startShadowingMode() {
+  if (deVoiceAvailable === false) {
+    showMessage('Keine deutsche Stimme auf diesem Gerät.', 'lose');
+    setTimeout(() => showMessage('', ''), 2500);
+    return;
+  }
+  await ensureLevels(selectedLevels);
+  const seen = new Set();
+  const pool = [...selectedLevels].flatMap(lvl => words[lvl] || []).filter(e => {
+    if (!e.sentence || seen.has(e.w)) return false;
+    seen.add(e.w); return true;
+  });
+  if (pool.length < 4) {
+    showMessage('Nicht genug Sätze für diese Stufe.', 'lose');
+    setTimeout(() => showMessage('', ''), 2000);
+    return;
+  }
+
+  const due      = new Set(dueWords());
+  const shuffled = pool.slice().sort(() => Math.random() - 0.5);
+  const dueOnes  = shuffled.filter(e => due.has(e.w)).slice(0, 3);
+  const rest     = shuffled.filter(e => !dueOnes.includes(e)).slice(0, SHADOWING_ROUNDS - dueOnes.length);
+  shadowingQueue   = [...dueOnes, ...rest].sort(() => Math.random() - 0.5).slice(0, SHADOWING_ROUNDS);
+  shadowingIdx     = 0;
+  shadowingResults = [];
+
+  showShadowingPanel();
+  renderShadowingRound();
+}
+
+function renderShadowingRound() {
+  abortShadowingRecognition();
+  const entry  = shadowingQueue[shadowingIdx];
+  const total  = shadowingQueue.length;
+  const target = entry.sentence.replace('___', entry.w);
+
+  document.getElementById('shadowing-progress-fill').style.width = (shadowingIdx / total * 100) + '%';
+  document.getElementById('shadowing-progress-text').textContent = `${shadowingIdx + 1} / ${total}`;
+  document.getElementById('shadowing-sentence').textContent = target;
+  document.getElementById('shadowing-feedback').innerHTML = '';
+
+  const recordBtn = document.getElementById('shadowing-record-btn');
+  recordBtn.disabled = true;
+  recordBtn.classList.remove('recording');
+  const canRecord = ShadowingSR && !shadowingMicBlocked;
+  document.getElementById('shadowing-record-row').classList.toggle('hidden', !canRecord);
+  document.getElementById('shadowing-self-assess').classList.add('hidden');
+  document.getElementById('shadowing-record-hint').textContent = 'Hör zu, dann sprich nach…';
+
+  setTimeout(() => speakShadowingTarget(target, () => {
+    if (shadowingQueue[shadowingIdx] !== entry) return; // round already moved on
+    if (canRecord) {
+      recordBtn.disabled = false;
+      document.getElementById('shadowing-record-hint').textContent = 'Tippe 🎙 und sprich den Satz nach';
+    } else {
+      document.getElementById('shadowing-self-assess').classList.remove('hidden');
+      document.getElementById('shadowing-record-hint').textContent = 'Kein Mikrofon verfügbar — wie lief’s?';
+    }
+  }), 250);
+}
+
+// Reuses speakWord() unmodified for playback; a MutationObserver on the button's
+// 'speaking' class (which speakWord toggles via utt.onend/onerror) tells us when
+// playback truly finished, so we don't arm the mic while the sentence is still playing.
+function speakShadowingTarget(text, onDone) {
+  const btn = document.getElementById('shadowing-speak-btn');
+  if (!window.speechSynthesis || deVoiceAvailable === false || !btn) { onDone?.(); return; }
+  const observer = new MutationObserver(() => {
+    if (!btn.classList.contains('speaking')) { observer.disconnect(); onDone?.(); }
+  });
+  observer.observe(btn, { attributes: true, attributeFilter: ['class'] });
+  speakWord(text, btn);
+}
+
+function normalizeShadowText(s) {
+  return (s || '').toUpperCase().replace(/ß/g, 'SS')
+    .replace(/[.,!?;:„“”"'‚‘’…]/g, '')
+    .trim().split(/\s+/).filter(Boolean);
+}
+
+// Dependency-free scoring: bag-of-words overlap between target sentence and
+// transcript. targetWord is graded separately since that's the vocab item
+// that actually feeds the Leitner deck.
+function scoreShadowing(targetSentence, transcript, targetWord) {
+  const targetWords = normalizeShadowText(targetSentence);
+  const saidSet      = new Set(normalizeShadowText(transcript));
+  let hits = 0;
+  const wordDiff = targetWords.map(w => {
+    const hit = saidSet.has(w);
+    if (hit) hits++;
+    return { word: w, hit };
+  });
+  const pct = targetWords.length ? Math.round(hits / targetWords.length * 100) : 0;
+  const targetWordHit = targetWord ? saidSet.has(normalizeShadowText(targetWord)[0]) : pct >= 60;
+  return { pct, wordDiff, targetWordHit };
+}
+
+function startShadowingRecognition() {
+  if (!ShadowingSR || shadowingListening) return;
+  const entry  = shadowingQueue[shadowingIdx];
+  const target = entry.sentence.replace('___', entry.w);
+
+  const recordBtn = document.getElementById('shadowing-record-btn');
+  const hint      = document.getElementById('shadowing-record-hint');
+
+  shadowingRecognition = new ShadowingSR();
+  shadowingRecognition.lang            = 'de-DE';
+  shadowingRecognition.continuous      = false;
+  shadowingRecognition.interimResults  = false;
+  shadowingRecognition.maxAlternatives = 3;
+
+  shadowingListening = true;
+  recordBtn.classList.add('recording');
+  hint.textContent = 'Ich höre zu…';
+
+  shadowingRecognition.onresult = (event) => {
+    const alts = event.results[0];
+    let best      = alts[0].transcript;
+    let bestScore = scoreShadowing(target, best, entry.w);
+    for (let i = 1; i < alts.length; i++) {
+      const s = scoreShadowing(target, alts[i].transcript, entry.w);
+      if (s.pct > bestScore.pct) { best = alts[i].transcript; bestScore = s; }
+    }
+    handleShadowingResult(bestScore, best);
+  };
+  shadowingRecognition.onerror = (event) => {
+    shadowingListening = false;
+    recordBtn.classList.remove('recording');
+    if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+      shadowingMicBlocked = true;
+      showMessage('Mikrofon-Zugriff verweigert.', 'lose');
+      setTimeout(() => showMessage('', ''), 2000);
+      document.getElementById('shadowing-record-row').classList.add('hidden');
+      document.getElementById('shadowing-self-assess').classList.remove('hidden');
+    } else {
+      hint.textContent = 'Nichts gehört — nochmal versuchen';
+    }
+  };
+  shadowingRecognition.onend = () => {
+    shadowingListening = false;
+    recordBtn.classList.remove('recording');
+  };
+
+  try { shadowingRecognition.start(); }
+  catch { shadowingListening = false; recordBtn.classList.remove('recording'); }
+}
+
+function abortShadowingRecognition() {
+  if (shadowingRecognition) {
+    shadowingRecognition.onresult = null;
+    shadowingRecognition.onerror  = null;
+    shadowingRecognition.onend    = null;
+    try { shadowingRecognition.abort(); } catch {}
+    shadowingRecognition = null;
+  }
+  shadowingListening = false;
+  document.getElementById('shadowing-record-btn')?.classList.remove('recording');
+}
+
+function handleShadowingResult(score, transcript) {
+  const entry   = shadowingQueue[shadowingIdx];
+  const correct = score.targetWordHit;
+  shadowingResults.push({ entry, correct, pct: score.pct });
+  gradeReview(entry.w, correct);
+  document.getElementById('shadowing-record-btn').disabled = true;
+  renderShadowingFeedback(score, correct);
+}
+
+function shadowingSelfAssess(correct) {
+  const entry = shadowingQueue[shadowingIdx];
+  shadowingResults.push({ entry, correct, pct: correct ? 100 : 0 });
+  gradeReview(entry.w, correct);
+  document.getElementById('shadowing-self-assess').classList.add('hidden');
+  renderShadowingFeedback(null, correct);
+}
+
+function renderShadowingFeedback(score, correct) {
+  const fb = document.getElementById('shadowing-feedback');
+  let html = '';
+  if (score) {
+    const diffHtml = score.wordDiff.map(d =>
+      `<span class="${d.hit ? 'shadowing-word-hit' : 'shadowing-word-miss'}">${d.word}</span>`).join(' ');
+    html += `<div>${diffHtml}</div><div style="margin-top:4px;font-weight:700;">${score.pct}%</div>`;
+  }
+  html += `<div style="margin-top:6px;">${correct
+    ? '<span style="color:var(--color-correct)">✓ Gut gemacht!</span>'
+    : '<span style="color:var(--gender-die)">Weiter üben!</span>'}</div>
+    <button id="shadowing-retry-btn" class="satz-ghost-btn" style="margin-top:8px;">🔁 Nochmal</button>
+    <button id="shadowing-next-btn" class="satz-primary-btn" style="margin-top:8px;">Weiter →</button>`;
+  fb.innerHTML = html;
+  document.getElementById('shadowing-retry-btn').addEventListener('click', retryShadowingRound);
+  document.getElementById('shadowing-next-btn').addEventListener('click', advanceShadowingRound);
+  navigator.vibrate?.(correct ? [40, 30, 40] : [80]);
+}
+
+function retryShadowingRound() {
+  const entry = shadowingQueue[shadowingIdx];
+  const last  = shadowingResults[shadowingResults.length - 1];
+  if (last && last.entry === entry) shadowingResults.pop();
+  document.getElementById('shadowing-feedback').innerHTML = '';
+  const recordBtn = document.getElementById('shadowing-record-btn');
+  if (ShadowingSR && !shadowingMicBlocked) {
+    recordBtn.disabled = false;
+    document.getElementById('shadowing-record-hint').textContent = 'Tippe 🎙 und sprich den Satz nach';
+  } else {
+    document.getElementById('shadowing-self-assess').classList.remove('hidden');
+  }
+}
+
+function advanceShadowingRound() {
+  abortShadowingRecognition();
+  shadowingIdx++;
+  if (shadowingIdx >= shadowingQueue.length) showShadowingSummary();
+  else renderShadowingRound();
+}
+
+function showShadowingSummary() {
+  document.getElementById('shadowing-progress-fill').style.width = '100%';
+  const total   = shadowingResults.length;
+  const correct = shadowingResults.filter(r => r.correct).length;
+  const pct     = Math.round(correct / total * 100);
+
+  const gems = Math.round(pct / 10);
+  if (gems > 0) earnDiamonds(gems, 'shadowing', document.getElementById('diamond-counter'));
+
+  const scoreEl = document.getElementById('shadowing-summary-score');
+  scoreEl.textContent = `${correct} / ${total}  (${pct}%)`;
+  scoreEl.className = 'satz-summary-score ' + (pct >= 70 ? 'win' : 'lose');
+
+  const grid = document.getElementById('shadowing-summary-grid');
+  grid.innerHTML = shadowingResults.map(r => {
+    const target = r.entry.sentence.replace('___', r.entry.w);
+    return `<div class="satz-summary-item ${r.correct ? 'win' : 'lose'}" style="flex-direction:row;justify-content:flex-start;gap:8px;text-align:left;">
+      <span>${r.correct ? '✓' : '✗'}</span><span>${target}</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('shadowing-summary-overlay').classList.remove('hidden');
+}
+
+document.getElementById('shadowing-speak-btn').addEventListener('click', () => {
+  const entry = shadowingQueue[shadowingIdx];
+  if (entry) speakShadowingTarget(entry.sentence.replace('___', entry.w), () => {});
+});
+document.getElementById('shadowing-record-btn').addEventListener('click', startShadowingRecognition);
+document.getElementById('shadowing-assess-good').addEventListener('click', () => shadowingSelfAssess(true));
+document.getElementById('shadowing-assess-miss').addEventListener('click', () => shadowingSelfAssess(false));
+document.getElementById('shadowing-again-btn').addEventListener('click', () => {
+  document.getElementById('shadowing-summary-overlay').classList.add('hidden');
+  startShadowingMode();
+});
+document.getElementById('shadowing-back-btn').addEventListener('click', () => {
+  document.getElementById('shadowing-summary-overlay').classList.add('hidden');
+  hideShadowingPanel();
+  setModeSwitcher('cw');
+  showHome();
+});
+document.getElementById('switch-shadowing').addEventListener('click', () => {
+  if (gameMode === 'SHADOWING') return;
+  startShadowingMode();
 });
 
 // ─── Wortschatz dashboard (mastery overview) ──────────
@@ -8666,6 +9097,7 @@ const HOME_MODES = [
   {icon:'⚡', id:'MC',         label:'Quiz',       desc:'4 Optionen · 60 Sek',  timing:'60 Sek',    color:'#2563eb'},
   {icon:'🃏', id:'PAARE',      label:'Paare',     desc:'Wörter zuordnen',       timing:'2–3 Min',    color:'#e11d48'},
   {icon:'✏️', id:'SCHREIBEN',  label:'Schreiben', desc:'Tippe das deutsche Wort',timing:'10 Runden', color:'#0891b2'},
+  {icon:'🎤', id:'SHADOWING',  label:'Nachsprechen', desc:'Satz hören & nachsprechen', timing:'8 Runden', color:'#db2777'},
 ];
 
 function buildTodaysMix() {
@@ -8708,6 +9140,7 @@ function launchMode(modeId) {
   else if (modeId === 'MC')        { setModeSwitcher('mc');      startMcMode(); }
   else if (modeId === 'PAARE')     { setModeSwitcher('pairs');   startPairsMode(); }
   else if (modeId === 'SCHREIBEN') { setModeSwitcher('schreiben'); startSchreibenMode(); }
+  else if (modeId === 'SHADOWING') { setModeSwitcher('shadowing'); startShadowingMode(); }
 }
 
 function selectPath(pathId) {
@@ -8746,9 +9179,11 @@ function selectPath(pathId) {
   const cefrOrder = ['A1','A2','B1','B2'];
   currentLevel = cefrOrder.find(l => selectedLevels.has(l)) || [...selectedLevels][0];
 
-  // Sync pack strip visuals
-  const activePack = [...selectedLevels].find(k => PACK_LEVELS.has(k)) || null;
+  // Sync pack strip visuals (professional domain packs and curriculum theme packs
+  // share the same in-game pill row, so either kind can be the active pill)
+  const activePack = [...selectedLevels].find(k => PACK_LEVELS.has(k) || THEME_PACKS.has(k)) || null;
   selectPack(activePack);
+  syncPackStripVisibility();
 
   // Sync CEFR tab underlines
   document.querySelectorAll('#level-tabs .tab').forEach(t => {
