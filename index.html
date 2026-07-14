@@ -8942,7 +8942,7 @@ let sentenceCorpus = null;
 
 function buildSentenceCorpus() {
   const corpus = [];
-  ['A1','A2','B1','B2'].forEach(lvl => (words[lvl] || []).forEach(e => {
+  ['A1','A2','B1','B2','BUSINESS','MEDICAL','SOFTWARE','ENGINEERING','LEGAL'].forEach(lvl => (words[lvl] || []).forEach(e => {
     if (!e.sentence) return;
     corpus.push({ entry: e, level: lvl, filled: e.sentence.replace('___', titleCaseWord(e.w)) });
   }));
@@ -8950,7 +8950,7 @@ function buildSentenceCorpus() {
 }
 
 async function openSentSearchOverlay() {
-  await ensureLevels(new Set(['A1','A2','B1','B2']));
+  await ensureLevels(new Set(['A1','A2','B1','B2','BUSINESS','MEDICAL','SOFTWARE','ENGINEERING','LEGAL']));
   sentenceCorpus = sentenceCorpus || buildSentenceCorpus();
   const input = document.getElementById('sentsearch-input');
   input.value = '';
