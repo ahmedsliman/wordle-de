@@ -2666,6 +2666,32 @@
     .vocab-bar i.on { background: var(--color-correct); }
     .vocab-empty { font-size: 0.85rem; color: var(--color-text-muted); padding: 16px 0; text-align: center; }
 
+    /* ─── Sentence search overlay ────────────────────────────── */
+    .sent-search-card { max-width: 460px; }
+    .sent-meta { font-size: 0.82rem; color: var(--color-text-muted); text-align: center; min-height: 16px; }
+    .sent-list { width: 100%; display: flex; flex-direction: column; gap: 6px; max-height: 400px; overflow-y: auto; }
+    .sent-row {
+      display: flex; flex-direction: column; gap: 6px; padding: 10px 10px;
+      background: var(--color-surface); border-radius: 10px; font-size: 0.85rem;
+      cursor: default; transition: background 0.1s;
+    }
+    .sent-row:active { background: var(--hairline); }
+    .sent-text {
+      font-family: 'DM Mono', monospace; font-size: 0.82rem; line-height: 1.4;
+      word-wrap: break-word; overflow-wrap: break-word;
+    }
+    .sent-text mark { background: var(--color-present); color: inherit; font-weight: 700; padding: 0 2px; border-radius: 2px; }
+    .sent-row-meta {
+      display: flex; align-items: center; gap: 8px; font-size: 0.75rem; color: var(--color-text-muted);
+    }
+    .sent-level {
+      flex-shrink: 0; font-weight: 700; padding: 2px 6px; border-radius: 4px;
+      background: var(--color-border); color: var(--color-text-muted); font-size: 0.7rem;
+    }
+    .sent-en {
+      flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+
     /* ─── Setup/onboarding overlay ───────────────────────── */
     .setup-card {
       max-width: 360px; display: flex; flex-direction: column; align-items: center;
@@ -3169,6 +3195,7 @@
         <div class="home-streak-line" id="home-streak-line"></div>
       </div>
       <div style="display:flex;align-items:center;gap:6px;">
+        <button class="home-icon-btn" id="home-sentsearch-btn" aria-label="Satzsuche öffnen" title="Satzsuche">🔎</button>
         <button class="home-icon-btn" id="home-vocab-btn" aria-label="Wortschatz öffnen" title="Wortschatz">📚</button>
         <button class="home-icon-btn" id="home-ach-btn"   aria-label="Achievements öffnen" title="Achievements">🏆 <span class="ach-count" style="font-size:0.72rem;">0/15</span></button>
         <div class="home-diamond-badge">💎 <span id="home-diamond-val">0</span></div>
@@ -3701,6 +3728,18 @@
       </div>
       <div class="vocab-list" id="vocab-list"></div>
       <button class="start-btn" id="vocab-close-btn" style="width:100%;">Schließen</button>
+    </div>
+  </div>
+
+  <!-- Sentence Search overlay -->
+  <div class="overlay hidden" id="sentsearch-overlay">
+    <div class="overlay-card sent-search-card">
+      <div class="overlay-title">🔎 Satzsuche</div>
+      <input class="setup-input" id="sentsearch-input" type="text"
+             placeholder="Wort oder Satz suchen…" autocomplete="off" />
+      <div class="sent-meta" id="sentsearch-meta"></div>
+      <div class="sent-list" id="sentsearch-list"></div>
+      <button class="start-btn" id="sentsearch-close-btn" style="width:100%;">Schließen</button>
     </div>
   </div>
 
@@ -8895,6 +8934,75 @@ document.getElementById('ach-chip')?.addEventListener('click', openAchievementsO
 document.getElementById('ach-close-btn')?.addEventListener('click', () => {
   document.getElementById('ach-overlay').classList.add('hidden');
 });
+
+// ─── Sentence search (Satzsuche) ──────────────────────
+function escapeRegExp(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+let sentenceCorpus = null;
+
+function buildSentenceCorpus() {
+  const corpus = [];
+  ['A1','A2','B1','B2','BUSINESS','MEDICAL','SOFTWARE','ENGINEERING','LEGAL'].forEach(lvl => (words[lvl] || []).forEach(e => {
+    if (!e.sentence) return;
+    corpus.push({ entry: e, level: lvl, filled: e.sentence.replace('___', titleCaseWord(e.w)) });
+  }));
+  return corpus;
+}
+
+async function openSentSearchOverlay() {
+  await ensureLevels(new Set(['A1','A2','B1','B2','BUSINESS','MEDICAL','SOFTWARE','ENGINEERING','LEGAL']));
+  sentenceCorpus = sentenceCorpus || buildSentenceCorpus();
+  const input = document.getElementById('sentsearch-input');
+  input.value = '';
+  renderSentResults('');
+  document.getElementById('sentsearch-overlay').classList.remove('hidden');
+  requestAnimationFrame(() => input.focus());
+}
+
+function renderSentResults(query) {
+  const list = document.getElementById('sentsearch-list');
+  const meta = document.getElementById('sentsearch-meta');
+  const q = query.trim().toLowerCase();
+  if (q.length < 2) {
+    meta.textContent = '';
+    list.innerHTML = '<div class="sent-empty">Tippe mindestens 2 Zeichen, um Sätze zu durchsuchen.</div>';
+    return;
+  }
+  let matches = sentenceCorpus.filter(r =>
+    r.filled.toLowerCase().includes(q) || r.entry.w.toLowerCase().includes(q));
+  matches.sort((a, b) =>
+    (a.entry.w.toLowerCase().startsWith(q) === b.entry.w.toLowerCase().startsWith(q) ? 0
+      : a.entry.w.toLowerCase().startsWith(q) ? -1 : 1));
+  meta.textContent = matches.length ? `${matches.length} Treffer` : '';
+  if (!matches.length) {
+    list.innerHTML = '<div class="sent-empty">Keine Sätze gefunden.</div>';
+    return;
+  }
+  list.innerHTML = '';
+  matches.slice(0, 40).forEach(r => {
+    const row = document.createElement('div');
+    row.className = 'sent-row';
+    const highlighted = r.filled.replace(new RegExp(`(${escapeRegExp(r.entry.w)})`, 'i'), '<mark>$1</mark>');
+    row.innerHTML =
+      '<div class="sent-text">' + highlighted + '</div>' +
+      '<div class="sent-row-meta">' +
+        '<span class="sent-level">' + r.level + '</span>' +
+        '<span class="sent-en">' + (r.entry.en || '') + '</span>' +
+        '<button class="vocab-speak-btn" aria-label="Aussprache">🔊</button>' +
+      '</div>';
+    row.querySelector('.vocab-speak-btn').addEventListener('click', ev => {
+      ev.stopPropagation();
+      speakWord(r.filled, ev.currentTarget);
+    });
+    list.appendChild(row);
+  });
+}
+
+document.getElementById('home-sentsearch-btn')?.addEventListener('click', openSentSearchOverlay);
+document.getElementById('sentsearch-close-btn').addEventListener('click', () => {
+  document.getElementById('sentsearch-overlay').classList.add('hidden');
+});
+document.getElementById('sentsearch-input').addEventListener('input', e => renderSentResults(e.target.value));
 
 // ─── Fullscreen ──────────────────────────────────────
 (function setupFullscreen() {
