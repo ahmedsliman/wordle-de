@@ -1,0 +1,172 @@
+{
+  "version": 1,
+  "level": "B1-B2",
+  "note": "German compound nouns (Komposita) for the Wortschlange chain game. w = surface form (may contain a Fugenelement like -s-/-n-/-es-); a = first component lemma; b = second component lemma; art = article of the whole compound (matches the head/last component); en = English gloss. Chains link on lemma: prev.b must equal next.a.",
+  "words": [
+    { "w": "HAUSTÜR",        "a": "HAUS",    "b": "TÜR",     "art": "die", "en": "front door" },
+    { "w": "HAUSARBEIT",     "a": "HAUS",    "b": "ARBEIT",  "art": "die", "en": "housework" },
+    { "w": "HAUSTIER",       "a": "HAUS",    "b": "TIER",    "art": "das", "en": "pet" },
+
+    { "w": "TÜRSCHLOSS",     "a": "TÜR",     "b": "SCHLOSS", "art": "das", "en": "door lock" },
+    { "w": "TÜRKLINKE",      "a": "TÜR",     "b": "KLINKE",  "art": "die", "en": "door handle" },
+
+    { "w": "SCHLOSSGARTEN",  "a": "SCHLOSS", "b": "GARTEN",  "art": "der", "en": "castle garden" },
+    { "w": "SCHLOSSHOF",     "a": "SCHLOSS", "b": "HOF",     "art": "der", "en": "castle courtyard" },
+
+    { "w": "GARTENTÜR",      "a": "GARTEN",  "b": "TÜR",     "art": "die", "en": "garden gate" },
+    { "w": "GARTENHAUS",     "a": "GARTEN",  "b": "HAUS",    "art": "das", "en": "garden shed" },
+    { "w": "GARTENZAUN",     "a": "GARTEN",  "b": "ZAUN",    "art": "der", "en": "garden fence" },
+
+    { "w": "ARBEITSPLATZ",   "a": "ARBEIT",  "b": "PLATZ",   "art": "der", "en": "workplace" },
+    { "w": "ARBEITSZEIT",    "a": "ARBEIT",  "b": "ZEIT",    "art": "die", "en": "working hours" },
+    { "w": "ARBEITSAMT",     "a": "ARBEIT",  "b": "AMT",     "art": "das", "en": "job center" },
+
+    { "w": "AMTSGERICHT",    "a": "AMT",     "b": "GERICHT", "art": "das", "en": "district court" },
+    { "w": "GERICHTSHOF",    "a": "GERICHT", "b": "HOF",     "art": "der", "en": "court of justice" },
+
+    { "w": "ZEITPLAN",       "a": "ZEIT",    "b": "PLAN",    "art": "der", "en": "schedule" },
+    { "w": "ZEITRAUM",       "a": "ZEIT",    "b": "RAUM",    "art": "der", "en": "time period" },
+
+    { "w": "RAUMSCHIFF",     "a": "RAUM",    "b": "SCHIFF",  "art": "das", "en": "spaceship" },
+    { "w": "RAUMFAHRT",      "a": "RAUM",    "b": "FAHRT",   "art": "die", "en": "space travel" },
+
+    { "w": "SCHIFFSREISE",   "a": "SCHIFF",  "b": "REISE",   "art": "die", "en": "sea voyage" },
+    { "w": "REISEBÜRO",      "a": "REISE",   "b": "BÜRO",    "art": "das", "en": "travel agency" },
+    { "w": "BÜROARBEIT",     "a": "BÜRO",    "b": "ARBEIT",  "art": "die", "en": "office work" },
+
+    { "w": "PLATZKARTE",     "a": "PLATZ",   "b": "KARTE",   "art": "die", "en": "seat reservation" },
+    { "w": "KARTENSPIEL",    "a": "KARTE",   "b": "SPIEL",   "art": "das", "en": "card game" },
+    { "w": "KARTENHAUS",     "a": "KARTE",   "b": "HAUS",    "art": "das", "en": "house of cards" },
+
+    { "w": "SPIELPLATZ",     "a": "SPIEL",   "b": "PLATZ",   "art": "der", "en": "playground" },
+    { "w": "SPIELFELD",      "a": "SPIEL",   "b": "FELD",    "art": "das", "en": "playing field" },
+    { "w": "SPIELZEUG",      "a": "SPIEL",   "b": "ZEUG",    "art": "das", "en": "toy" },
+
+    { "w": "FELDARBEIT",     "a": "FELD",    "b": "ARBEIT",  "art": "die", "en": "field work" },
+
+    { "w": "TISCHLAMPE",     "a": "TISCH",   "b": "LAMPE",   "art": "die", "en": "table lamp" },
+    { "w": "TISCHTENNIS",    "a": "TISCH",   "b": "TENNIS",  "art": "das", "en": "table tennis" },
+    { "w": "TISCHDECKE",     "a": "TISCH",   "b": "DECKE",   "art": "die", "en": "tablecloth" },
+
+    { "w": "TENNISPLATZ",    "a": "TENNIS",  "b": "PLATZ",   "art": "der", "en": "tennis court" },
+    { "w": "TENNISBALL",     "a": "TENNIS",  "b": "BALL",    "art": "der", "en": "tennis ball" },
+
+    { "w": "BALLSPIEL",      "a": "BALL",    "b": "SPIEL",   "art": "das", "en": "ball game" },
+
+    { "w": "LAMPENSCHIRM",   "a": "LAMPE",   "b": "SCHIRM",  "art": "der", "en": "lampshade" },
+    { "w": "LAMPENLICHT",    "a": "LAMPE",   "b": "LICHT",   "art": "das", "en": "lamplight" },
+
+    { "w": "LICHTSCHALTER",  "a": "LICHT",   "b": "SCHALTER","art": "der", "en": "light switch" },
+    { "w": "LICHTJAHR",      "a": "LICHT",   "b": "JAHR",    "art": "das", "en": "light year" },
+
+    { "w": "JAHRESZEIT",     "a": "JAHR",    "b": "ZEIT",    "art": "die", "en": "season" },
+    { "w": "JAHRESTAG",      "a": "JAHR",    "b": "TAG",     "art": "der", "en": "anniversary" },
+
+    { "w": "TAGEBUCH",       "a": "TAG",     "b": "BUCH",    "art": "das", "en": "diary" },
+    { "w": "TAGESLICHT",     "a": "TAG",     "b": "LICHT",   "art": "das", "en": "daylight" },
+
+    { "w": "BUCHLADEN",      "a": "BUCH",    "b": "LADEN",   "art": "der", "en": "bookshop" },
+    { "w": "BUCHHANDLUNG",   "a": "BUCH",    "b": "HANDLUNG","art": "die", "en": "bookstore" },
+
+    { "w": "LADENTÜR",       "a": "LADEN",   "b": "TÜR",     "art": "die", "en": "shop door" },
+    { "w": "LADENSCHLUSS",   "a": "LADEN",   "b": "SCHLUSS", "art": "der", "en": "closing time" },
+
+    { "w": "SCHUHSCHACHTEL", "a": "SCHUH",   "b": "SCHACHTEL","art": "die","en": "shoebox" },
+    { "w": "SCHUHKARTON",    "a": "SCHUH",   "b": "KARTON",  "art": "der", "en": "shoebox (cardboard)" },
+    { "w": "SCHACHTELSATZ",  "a": "SCHACHTEL","b": "SATZ",   "art": "der", "en": "convoluted nested sentence" },
+
+    { "w": "HANDSCHUH",      "a": "HAND",    "b": "SCHUH",   "art": "der", "en": "glove" },
+    { "w": "HANDTASCHE",     "a": "HAND",    "b": "TASCHE",  "art": "die", "en": "handbag" },
+    { "w": "HANDTUCH",       "a": "HAND",    "b": "TUCH",    "art": "das", "en": "towel" },
+
+    { "w": "TASCHENGELD",    "a": "TASCHE",  "b": "GELD",    "art": "das", "en": "pocket money" },
+    { "w": "TASCHENLAMPE",   "a": "TASCHE",  "b": "LAMPE",   "art": "die", "en": "flashlight" },
+    { "w": "TASCHENTUCH",    "a": "TASCHE",  "b": "TUCH",    "art": "das", "en": "handkerchief" },
+
+    { "w": "GELDSCHEIN",     "a": "GELD",    "b": "SCHEIN",  "art": "der", "en": "banknote" },
+    { "w": "GELDBEUTEL",     "a": "GELD",    "b": "BEUTEL",  "art": "der", "en": "wallet" },
+    { "w": "GELDBÖRSE",      "a": "GELD",    "b": "BÖRSE",   "art": "die", "en": "purse" },
+
+    { "w": "WASSERFLASCHE",  "a": "WASSER",  "b": "FLASCHE", "art": "die", "en": "water bottle" },
+    { "w": "WASSERFALL",     "a": "WASSER",  "b": "FALL",    "art": "der", "en": "waterfall" },
+    { "w": "WASSERHAHN",     "a": "WASSER",  "b": "HAHN",    "art": "der", "en": "tap, faucet" },
+
+    { "w": "FLASCHENPOST",   "a": "FLASCHE", "b": "POST",    "art": "die", "en": "message in a bottle" },
+    { "w": "FLASCHENHALS",   "a": "FLASCHE", "b": "HALS",    "art": "der", "en": "bottleneck" },
+
+    { "w": "POSTAMT",        "a": "POST",    "b": "AMT",     "art": "das", "en": "post office" },
+    { "w": "POSTKARTE",      "a": "POST",    "b": "KARTE",   "art": "die", "en": "postcard" },
+
+    { "w": "STADTPARK",      "a": "STADT",   "b": "PARK",    "art": "der", "en": "city park" },
+    { "w": "STADTPLAN",      "a": "STADT",   "b": "PLAN",    "art": "der", "en": "city map" },
+    { "w": "STADTMITTE",     "a": "STADT",   "b": "MITTE",   "art": "die", "en": "city center" },
+    { "w": "STADTTOR",       "a": "STADT",   "b": "TOR",     "art": "das", "en": "city gate" },
+
+    { "w": "PARKPLATZ",      "a": "PARK",    "b": "PLATZ",   "art": "der", "en": "parking space" },
+    { "w": "PARKHAUS",       "a": "PARK",    "b": "HAUS",    "art": "das", "en": "parking garage" },
+
+    { "w": "KOPFKISSEN",     "a": "KOPF",    "b": "KISSEN",  "art": "das", "en": "pillow" },
+    { "w": "KOPFSCHMERZ",    "a": "KOPF",    "b": "SCHMERZ", "art": "der", "en": "headache" },
+    { "w": "KOPFHÖRER",      "a": "KOPF",    "b": "HÖRER",   "art": "der", "en": "headphones" },
+
+    { "w": "SCHULHOF",       "a": "SCHULE",  "b": "HOF",     "art": "der", "en": "schoolyard" },
+    { "w": "SCHULBUCH",      "a": "SCHULE",  "b": "BUCH",    "art": "das", "en": "textbook" },
+    { "w": "SCHULTASCHE",    "a": "SCHULE",  "b": "TASCHE",  "art": "die", "en": "school bag" },
+    { "w": "SCHULTAG",       "a": "SCHULE",  "b": "TAG",     "art": "der", "en": "school day" },
+
+    { "w": "HOFTOR",         "a": "HOF",     "b": "TOR",     "art": "das", "en": "courtyard gate" },
+
+    { "w": "KINDERGARTEN",   "a": "KIND",    "b": "GARTEN",  "art": "der", "en": "kindergarten" },
+    { "w": "KINDERZIMMER",   "a": "KIND",    "b": "ZIMMER",  "art": "das", "en": "children's room" },
+    { "w": "KINDERBUCH",     "a": "KIND",    "b": "BUCH",    "art": "das", "en": "children's book" },
+
+    { "w": "ZIMMERTÜR",      "a": "ZIMMER",  "b": "TÜR",     "art": "die", "en": "room door" },
+    { "w": "ZIMMERPFLANZE",  "a": "ZIMMER",  "b": "PFLANZE", "art": "die", "en": "houseplant" },
+
+    { "w": "SONNENBRILLE",   "a": "SONNE",   "b": "BRILLE",  "art": "die", "en": "sunglasses" },
+    { "w": "SONNENBLUME",    "a": "SONNE",   "b": "BLUME",   "art": "die", "en": "sunflower" },
+    { "w": "SONNENSCHIRM",   "a": "SONNE",   "b": "SCHIRM",  "art": "der", "en": "sun umbrella" },
+
+    { "w": "BRILLENGLAS",    "a": "BRILLE",  "b": "GLAS",    "art": "das", "en": "spectacle lens" },
+
+    { "w": "GLASTÜR",        "a": "GLAS",    "b": "TÜR",     "art": "die", "en": "glass door" },
+    { "w": "GLASFLASCHE",    "a": "GLAS",    "b": "FLASCHE", "art": "die", "en": "glass bottle" },
+
+    { "w": "BLUMENTOPF",     "a": "BLUME",   "b": "TOPF",    "art": "der", "en": "flowerpot" },
+    { "w": "BLUMENBEET",     "a": "BLUME",   "b": "BEET",    "art": "das", "en": "flower bed" },
+
+    { "w": "LANDKARTE",      "a": "LAND",    "b": "KARTE",   "art": "die", "en": "map" },
+    { "w": "LANDHAUS",       "a": "LAND",    "b": "HAUS",    "art": "das", "en": "country house" },
+    { "w": "LANDSTRASSE",    "a": "LAND",    "b": "STRASSE", "art": "die", "en": "country road" },
+
+    { "w": "STRASSENBAHN",   "a": "STRASSE", "b": "BAHN",    "art": "die", "en": "tram" },
+    { "w": "STRASSENLAMPE",  "a": "STRASSE", "b": "LAMPE",   "art": "die", "en": "street lamp" },
+    { "w": "STRASSENSCHILD", "a": "STRASSE", "b": "SCHILD",  "art": "das", "en": "street sign" },
+
+    { "w": "AUTOBAHN",       "a": "AUTO",    "b": "BAHN",    "art": "die", "en": "motorway" },
+    { "w": "AUTOTÜR",        "a": "AUTO",    "b": "TÜR",     "art": "die", "en": "car door" },
+
+    { "w": "BAHNHOF",        "a": "BAHN",    "b": "HOF",     "art": "der", "en": "train station" },
+    { "w": "BAHNSTEIG",      "a": "BAHN",    "b": "STEIG",   "art": "der", "en": "platform" },
+
+    { "w": "APFELBAUM",      "a": "APFEL",   "b": "BAUM",    "art": "der", "en": "apple tree" },
+    { "w": "APFELSAFT",      "a": "APFEL",   "b": "SAFT",    "art": "der", "en": "apple juice" },
+    { "w": "APFELKUCHEN",    "a": "APFEL",   "b": "KUCHEN",  "art": "der", "en": "apple cake" },
+
+    { "w": "BAUMHAUS",       "a": "BAUM",    "b": "HAUS",    "art": "das", "en": "treehouse" },
+    { "w": "BAUMSTAMM",      "a": "BAUM",    "b": "STAMM",   "art": "der", "en": "tree trunk" },
+
+    { "w": "FEUERWERK",      "a": "FEUER",   "b": "WERK",    "art": "das", "en": "fireworks" },
+    { "w": "FEUERWEHR",      "a": "FEUER",   "b": "WEHR",    "art": "die", "en": "fire brigade" },
+    { "w": "FEUERZEUG",      "a": "FEUER",   "b": "ZEUG",    "art": "das", "en": "lighter" },
+
+    { "w": "WERKZEUG",       "a": "WERK",    "b": "ZEUG",    "art": "das", "en": "tool" },
+    { "w": "WERKBANK",       "a": "WERK",    "b": "BANK",    "art": "die", "en": "workbench" },
+
+    { "w": "BANKKARTE",      "a": "BANK",    "b": "KARTE",   "art": "die", "en": "bank card" },
+    { "w": "BANKKONTO",      "a": "BANK",    "b": "KONTO",   "art": "das", "en": "bank account" },
+
+    { "w": "TIERGARTEN",     "a": "TIER",    "b": "GARTEN",  "art": "der", "en": "zoo" },
+    { "w": "TIERARZT",       "a": "TIER",    "b": "ARZT",    "art": "der", "en": "veterinarian" }
+  ]
+}

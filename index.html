@@ -2853,6 +2853,14 @@
        display:none) so its rect stays valid for earnDiamonds()'s toast anchor. */
     body.on-home .diamond-counter { opacity: 0; pointer-events: none; }
 
+    /* Wortschlange draws from its own compound set, so the CEFR tabs and the
+       theme/domain pack strip don't apply — hide them (mode-switcher stays). */
+    body.ws-active #level-tabs,
+    body.ws-active .pack-strip { display: none !important; }
+    /* pack-strip is display:none here but keeps its no-.hidden state, so undo the
+       sibling nudge that would otherwise leave a gap above the mode-switcher. */
+    body.ws-active .mode-switcher { top: 52px; }
+
     /* ─── Logo: clickable ───────────────────────────────── */
     .logo { cursor: pointer; }
 
@@ -3097,6 +3105,59 @@
     #schreiben-input.correct { border-color: var(--color-correct); background: rgba(29,158,117,0.06); }
     #schreiben-input.wrong   { border-color: #ef4444; animation: shake 0.35s; }
 
+    /* ─── Wortschlange (compound chain) ───────────────────── */
+    #wortschlange-panel {
+      width: 100%; max-width: 560px; margin: 0 auto;
+      display: flex; flex-direction: column; align-items: stretch; gap: 12px;
+      padding: 16px 16px 32px; flex: 1;
+    }
+    .ws-chain { display: flex; flex-direction: column; gap: 8px; }
+    .ws-link {
+      display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;
+      background: var(--color-surface); border-radius: 12px;
+      padding: 10px 14px; box-shadow: var(--shadow-sm);
+      border-left: 3px solid var(--hairline);
+    }
+    .ws-link.by-player { border-left-color: var(--color-correct); }
+    .ws-link.by-engine { border-left-color: var(--color-present); }
+    .ws-link.by-seed   { border-left-color: var(--color-text-muted); }
+    .ws-link-who {
+      font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.05em; color: var(--color-text-muted);
+      flex-shrink: 0; width: 46px;
+    }
+    .ws-link-word { font-family: 'DM Mono', monospace; font-size: 1rem; font-weight: 500; }
+    .ws-link-word b { color: var(--color-correct-text); }
+    .ws-link-en { font-size: 0.78rem; color: var(--color-text-muted); }
+    .ws-prompt {
+      text-align: center; font-size: 0.9rem; color: var(--color-text);
+      min-height: 22px;
+    }
+    .ws-prompt b {
+      font-family: 'DM Mono', monospace; color: var(--color-correct-text);
+      background: rgba(29,158,117,0.1); padding: 1px 6px; border-radius: 5px;
+    }
+    .ws-feedback { text-align: center; font-size: 0.82rem; color: #ef4444; min-height: 18px; }
+    .ws-input-row { display: flex; gap: 8px; }
+    #ws-input {
+      flex: 1; min-width: 0; padding: 12px 14px; font-family: 'DM Mono', monospace;
+      font-size: 1.05rem; border: 2px solid var(--color-border); border-radius: 12px;
+      background: var(--color-bg); color: var(--color-text); text-transform: uppercase;
+    }
+    #ws-input:focus { outline: none; border-color: var(--color-correct); }
+    #ws-input.wrong { border-color: #ef4444; animation: shake 0.35s; }
+    .ws-submit-btn {
+      padding: 12px 22px; border-radius: 12px; background: var(--color-correct);
+      color: #fff; font-weight: 700; font-size: 0.95rem; border: none; cursor: pointer;
+      flex-shrink: 0; -webkit-tap-highlight-color: transparent;
+    }
+    .ws-actions { display: flex; justify-content: center; gap: 16px; }
+    .ws-ghost-btn {
+      font-size: 0.82rem; color: var(--color-text-muted); background: none;
+      border: none; cursor: pointer; padding: 6px 8px;
+    }
+    .ws-ghost-btn:hover { color: var(--color-text); }
+
     /* ─── XP bar ──────────────────────────────────────────── */
     .home-xp-row {
       display: flex; align-items: center; gap: 7px; margin-top: 12px;
@@ -3278,6 +3339,10 @@
     <button class="mode-switch-btn" id="switch-shadowing" role="tab" aria-selected="false" aria-controls="shadowing-panel">
       <span class="mode-switch-icon">🎤</span>
       <span class="mode-switch-label">Nachsprechen</span>
+    </button>
+    <button class="mode-switch-btn" id="switch-wortschlange" role="tab" aria-selected="false" aria-controls="wortschlange-panel">
+      <span class="mode-switch-icon">🐍</span>
+      <span class="mode-switch-label">Wortkette</span>
     </button>
   </div>
 
@@ -3607,6 +3672,26 @@
     </div>
   </div>
 
+  <!-- ── Wortschlange (compound-noun chain) ─────────── -->
+  <div id="wortschlange-panel" class="hidden">
+    <div class="satz-top-bar">
+      <span class="satz-round-badge" style="background:rgba(16,185,129,0.12);color:#0f9d58;">🐍 Wortschlange</span>
+      <span style="font-size:0.78rem;color:var(--color-text-muted);" id="ws-score">Kette: 0</span>
+    </div>
+    <div id="ws-chain" class="ws-chain" aria-live="polite"></div>
+    <div id="ws-prompt" class="ws-prompt"></div>
+    <div id="ws-feedback" class="ws-feedback" role="alert"></div>
+    <div class="ws-input-row">
+      <input id="ws-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false"
+        placeholder="Kompositum eingeben…" />
+      <button id="ws-submit" class="ws-submit-btn">Spielen</button>
+    </div>
+    <div class="ws-actions">
+      <button id="ws-hint-btn" class="ws-ghost-btn">💡 Tipp</button>
+      <button id="ws-giveup-btn" class="ws-ghost-btn">Aufgeben</button>
+    </div>
+  </div>
+
   <!-- ── Nachsprechen (Shadowing) ─────────── -->
   <div id="shadowing-panel" class="hidden">
     <div class="satz-top-bar">
@@ -3699,6 +3784,19 @@
       <div style="font-size:0.78rem;color:var(--color-text-muted);margin-bottom:8px;">Ergebnisse in deinen Wiederholungsplan übernommen ✓</div>
       <button class="start-btn" id="schreiben-again-btn">Nochmal üben</button>
       <button class="satz-ghost-btn" id="schreiben-back-btn" style="margin-top:8px;">Zurück zum Rätsel</button>
+    </div>
+  </div>
+
+  <!-- Wortschlange summary -->
+  <div class="overlay hidden" id="ws-summary-overlay">
+    <div class="overlay-card">
+      <div class="overlay-title" id="ws-summary-title">Runde beendet</div>
+      <div class="satz-summary-score" id="ws-summary-score"></div>
+      <div id="ws-summary-msg" style="font-size:0.9rem;color:var(--color-text-muted);text-align:center;"></div>
+      <div id="ws-summary-chain" class="ws-chain" style="max-height:34vh;overflow-y:auto;"></div>
+      <div style="font-size:0.78rem;color:var(--color-text-muted);margin-bottom:8px;text-align:center;">Deine Wörter sind in deinem Wiederholungsplan ✓</div>
+      <button class="start-btn" id="ws-again-btn">Neue Runde</button>
+      <button class="satz-ghost-btn" id="ws-back-btn" style="margin-top:8px;">Zurück zum Rätsel</button>
     </div>
   </div>
 
@@ -6344,7 +6442,7 @@ function hideModePickerOverlay() {
 // Keeps the address bar in sync with the active mode so refresh/back-forward
 // and shared links land on the right screen. Hash-only (no server routing
 // needed — this is a static GitHub Pages file).
-const ROUTE_HASH = { '1P': 'crossword', 'SATZ': 'satz', 'ARTIKEL': 'artikel', 'HÖREN': 'hoeren', 'MC': 'quiz', 'PAARE': 'paare', 'SCHREIBEN': 'schreiben', 'SHADOWING': 'shadowing' };
+const ROUTE_HASH = { '1P': 'crossword', 'SATZ': 'satz', 'ARTIKEL': 'artikel', 'HÖREN': 'hoeren', 'MC': 'quiz', 'PAARE': 'paare', 'SCHREIBEN': 'schreiben', 'SHADOWING': 'shadowing', 'WORTSCHLANGE': 'wortschlange' };
 const HASH_MODE  = Object.fromEntries(Object.entries(ROUTE_HASH).map(([k, v]) => [v, k]));
 
 function setRoute(hash) {
@@ -6892,6 +6990,9 @@ document.getElementById('level-tabs').addEventListener('click', e => {
   if (!btn) return;
   const level = btn.dataset.level;
 
+  // Wortschlange has its own compound-noun set, not CEFR levels/packs — ignore.
+  if (gameMode === 'WORTSCHLANGE') return;
+
   if (level === 'REVIEW' && gameMode === '2P') {
     showMessage('Wiederholung nur im Solo-Modus', '');
     setTimeout(() => showMessage('', ''), 1800);
@@ -6999,6 +7100,8 @@ document.getElementById('pack-strip').addEventListener('click', e => {
   const btn = e.target.closest('[data-pack]');
   if (!btn) return;
   const pack = btn.dataset.pack;
+
+  if (gameMode === 'WORTSCHLANGE') return; // no level/pack vocab in this mode
 
   if (gameMode === '2P') {
     showMessage('Pakete nur im Solo-Modus', '');
@@ -8007,7 +8110,7 @@ document.getElementById('satz-back-btn').addEventListener('click', () => {
 
 // ── Mode switcher buttons ──
 function setModeSwitcher(active) {
-  const map = { cw: 'switch-crossword', satz: 'switch-satz', artikel: 'switch-artikel', listen: 'switch-listen', mc: 'switch-mc', pairs: 'switch-pairs', schreiben: 'switch-schreiben', shadowing: 'switch-shadowing' };
+  const map = { cw: 'switch-crossword', satz: 'switch-satz', artikel: 'switch-artikel', listen: 'switch-listen', mc: 'switch-mc', pairs: 'switch-pairs', schreiben: 'switch-schreiben', shadowing: 'switch-shadowing', wortschlange: 'switch-wortschlange' };
   for (const [key, id] of Object.entries(map)) {
     const el = document.getElementById(id);
     el.classList.toggle('active', key === active);
@@ -8023,13 +8126,9 @@ document.getElementById('switch-satz').addEventListener('click', () => {
 });
 
 document.getElementById('switch-crossword').addEventListener('click', () => {
-  if (!['SATZ','ARTIKEL','HÖREN','MC','PAARE'].includes(gameMode)) return;
+  if (gameMode === '1P') return;
   setModeSwitcher('cw');
-  hideSatzPanel();
-  hideArtikelPanel();
-  hideListenPanel();
-  hideMcPanel();
-  hidePairsPanel();
+  hideAllGamePanels();
   setMode('1P');
 });
 
@@ -8654,17 +8753,246 @@ function hideSchreibenPanel() {
   document.getElementById('schreiben-panel')?.classList.add('hidden');
 }
 
+// ─── Wortschlange (compound-noun chain vs. the engine) ────────────────────────
+// A curated, offline chain engine: player and engine alternate compound nouns
+// where the 2nd component of the previous word must be the 1st component of the
+// next (Handschuh → Schuhschachtel → Schachtelsatz). Linking is on clean
+// component lemmas stored in words/komposita.json, so Fugenelemente (-s-, -n-,
+// -es-) live only in the surface spelling and never break the match.
+let kompoData        = null;
+const kompoBySurface = new Map();  // canonical surface → entry
+const kompoByFirst   = new Map();  // first-component lemma → [entries]
+let wsChain      = [];    // [{entry, by}]
+let wsUsed       = new Set();
+let wsRequired   = null;  // lemma the next word must start with
+let wsPlayerTurn = true;
+let wsPlayerWords = 0;
+let wsOver       = false;
+
+// Fold umlauts/ß to ASCII so "TÜR", "tür", "tuer" all match one key.
+function wsCanon(s) {
+  return (s || '').trim().toUpperCase()
+    .replace(/Ä/g, 'AE').replace(/Ö/g, 'OE').replace(/Ü/g, 'UE').replace(/ß/g, 'SS');
+}
+
+async function loadKomposita() {
+  if (kompoData) return;
+  const res = await fetch('words/komposita.json');
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  kompoData = await res.json();
+  for (const e of kompoData.words) {
+    kompoBySurface.set(wsCanon(e.w), e);
+    if (!kompoByFirst.has(e.a)) kompoByFirst.set(e.a, []);
+    kompoByFirst.get(e.a).push(e);
+    // Register metadata so graded words show meaning in the Wortschatz dashboard.
+    // Additive only — not added to any words[level] pool, so no crossword/other
+    // mode picks these long compounds up.
+    const key = e.w.toUpperCase();
+    if (!wordEntryIndex[key]) {
+      wordEntryIndex[key] = { w: key, en: e.en, type: 'noun', article: e.art };
+      wordLevelIndex[key] = 'B1';
+    }
+  }
+}
+
+function wsContinuations(lemma) {
+  return (kompoByFirst.get(lemma) || []).filter(e => !wsUsed.has(e.w));
+}
+
+// Engine picks a word starting with `required`, preferring ones whose own 2nd
+// component still has an unused continuation (so it keeps handing the player a
+// live component rather than an immediate dead end).
+function wsEnginePick(required) {
+  const cands = wsContinuations(required);
+  if (!cands.length) return null;
+  const alive = cands.filter(e => wsContinuations(e.b).some(n => n.w !== e.w));
+  const pool = alive.length ? alive : cands;
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+function wsRenderChain(targetId) {
+  const el = document.getElementById(targetId || 'ws-chain');
+  el.innerHTML = wsChain.map(({ entry, by }) => {
+    const whoLabel = by === 'player' ? 'Du' : by === 'engine' ? 'Ich' : 'Start';
+    const gc = genderClass(entry.art);
+    // bold the linking (second) component
+    const cut = entry.w.length - entry.b.length;
+    const head = entry.w.slice(0, cut), tail = entry.w.slice(cut);
+    return `<div class="ws-link by-${by}">
+      <span class="ws-link-who">${whoLabel}</span>
+      <span class="ws-link-word ${gc}">${head}<b>${tail}</b></span>
+      <span class="ws-link-en">${entry.art} · ${entry.en}</span>
+    </div>`;
+  }).join('');
+  el.scrollTop = el.scrollHeight;
+}
+
+function wsSetPrompt() {
+  const p = document.getElementById('ws-prompt');
+  if (wsOver) { p.textContent = ''; return; }
+  p.innerHTML = wsPlayerTurn
+    ? `Dein Wort muss mit <b>${wsRequired}</b> beginnen.`
+    : `Ich überlege…`;
+}
+
+function wsAddLink(entry, by) {
+  wsChain.push({ entry, by });
+  wsUsed.add(entry.w);
+  wsRequired = entry.b;
+  wsRenderChain();
+  document.getElementById('ws-score').textContent = 'Kette: ' + wsChain.length;
+}
+
+async function startWortschlange() {
+  hideAllGamePanels();
+  document.body.classList.add('game-active');
+  gameMode = 'WORTSCHLANGE';
+  setModeSwitcher('wortschlange');
+  setRoute('wortschlange');
+  document.getElementById('wortschlange-panel').classList.remove('hidden');
+  document.getElementById('streak-bar').classList.remove('hidden');
+  document.body.classList.add('ws-active');
+
+  try { await loadKomposita(); }
+  catch (e) {
+    document.getElementById('ws-feedback').textContent = 'Wortdaten konnten nicht geladen werden.';
+    return;
+  }
+
+  // reset state
+  wsChain = []; wsUsed = new Set(); wsPlayerWords = 0; wsOver = false; wsPlayerTurn = true;
+  document.getElementById('ws-feedback').textContent = '';
+  const input = document.getElementById('ws-input');
+  input.value = ''; input.className = ''; input.disabled = false;
+  document.getElementById('ws-submit').disabled = false;
+
+  // Seed: an opener whose 2nd component has plenty of continuations, so the
+  // player starts with a rich choice.
+  const openers = kompoData.words.filter(e => wsContinuations(e.b).length >= 2);
+  const seed = (openers.length ? openers : kompoData.words)[Math.floor(Math.random() * (openers.length || kompoData.words.length))];
+  wsAddLink(seed, 'seed');
+  wsSetPrompt();
+  input.focus();
+}
+
+function wsEndRound(title, msg) {
+  wsOver = true;
+  document.getElementById('ws-input').disabled = true;
+  document.getElementById('ws-submit').disabled = true;
+  // Award diamonds by how many valid words the player contributed.
+  const gems = Math.min(wsPlayerWords, 12);
+  if (gems > 0) earnDiamonds(gems, 'wortschlange', document.getElementById('diamond-counter'));
+  document.getElementById('ws-summary-title').textContent = title;
+  document.getElementById('ws-summary-score').textContent =
+    `${wsPlayerWords} ${wsPlayerWords === 1 ? 'Wort' : 'Wörter'} · Kette ${wsChain.length}`;
+  document.getElementById('ws-summary-msg').textContent = msg || '';
+  wsRenderChain('ws-summary-chain');
+  document.getElementById('ws-summary-overlay').classList.remove('hidden');
+}
+
+function wsEngineTurn() {
+  const pick = wsEnginePick(wsRequired);
+  if (!pick) {
+    wsEndRound('Du gewinnst! 🏆', 'Ich wusste kein passendes Wort mehr. Stark!');
+    return;
+  }
+  wsAddLink(pick, 'engine');
+  wsPlayerTurn = true;
+  // Did the engine just hand the player a dead end?
+  if (wsContinuations(wsRequired).length === 0) {
+    wsEndRound('Unentschieden 🤝', `Auf „${wsRequired}“ gibt es kein Wort mehr in meiner Sammlung.`);
+    return;
+  }
+  wsSetPrompt();
+  document.getElementById('ws-input').focus();
+}
+
+function wsSubmit() {
+  if (wsOver || !wsPlayerTurn) return;
+  const input = document.getElementById('ws-input');
+  const feedback = document.getElementById('ws-feedback');
+  const raw = input.value;
+  const canon = wsCanon(raw);
+  if (!canon) return;
+
+  const entry = kompoBySurface.get(canon);
+  // Validation → INVALID-style messages (in simple German)
+  if (!entry) {
+    feedback.textContent = 'Das Kompositum kenne ich nicht. Versuch ein anderes zusammengesetztes Nomen.';
+    input.classList.add('wrong'); setTimeout(() => input.classList.remove('wrong'), 350);
+    return;
+  }
+  if (wsUsed.has(entry.w)) {
+    feedback.textContent = 'Dieses Wort wurde schon benutzt.';
+    input.classList.add('wrong'); setTimeout(() => input.classList.remove('wrong'), 350);
+    return;
+  }
+  if (entry.a !== wsRequired) {
+    feedback.textContent = `Das Wort muss mit „${wsRequired}“ beginnen — das ist der zweite Teil des letzten Wortes.`;
+    input.classList.add('wrong'); setTimeout(() => input.classList.remove('wrong'), 350);
+    return;
+  }
+
+  // Valid move
+  feedback.textContent = '';
+  input.value = '';
+  wsPlayerWords++;
+  gradeReview(entry.w, true);   // real vocabulary the player produced
+  wsAddLink(entry, 'player');
+  wsPlayerTurn = false;
+  wsSetPrompt();
+  setTimeout(wsEngineTurn, 550);
+}
+
+function wsHint() {
+  if (wsOver || !wsPlayerTurn) return;
+  const opts = wsContinuations(wsRequired);
+  const feedback = document.getElementById('ws-feedback');
+  if (!opts.length) { feedback.textContent = 'Sackgasse — hier geht es nicht weiter.'; return; }
+  const pick = opts[Math.floor(Math.random() * opts.length)];
+  feedback.style.color = 'var(--color-text-muted)';
+  feedback.textContent = `Tipp: „${pick.w}“ (${pick.en}) — Anfangsbuchstabe ${pick.w[0]}…`;
+  setTimeout(() => { feedback.style.color = ''; }, 3000);
+}
+
+function hideWortschlangePanel() {
+  document.getElementById('wortschlange-panel')?.classList.add('hidden');
+  document.body.classList.remove('ws-active');
+}
+
+document.getElementById('ws-submit').addEventListener('click', wsSubmit);
+document.getElementById('ws-input').addEventListener('keydown', e => { if (e.key === 'Enter') wsSubmit(); });
+document.getElementById('ws-hint-btn').addEventListener('click', wsHint);
+document.getElementById('ws-giveup-btn').addEventListener('click', () => {
+  if (wsOver) return;
+  wsEndRound('Runde beendet', 'Du hast aufgegeben — beim nächsten Mal klappt die längere Kette!');
+});
+document.getElementById('ws-again-btn').addEventListener('click', () => {
+  document.getElementById('ws-summary-overlay').classList.add('hidden');
+  startWortschlange();
+});
+document.getElementById('ws-back-btn').addEventListener('click', () => {
+  document.getElementById('ws-summary-overlay').classList.add('hidden');
+  hideWortschlangePanel();
+  setModeSwitcher('cw');
+  showHome();
+});
+document.getElementById('switch-wortschlange').addEventListener('click', () => {
+  if (gameMode === 'WORTSCHLANGE') return;
+  startWortschlange();
+});
+
 // Summary/result overlays that must be dismissed when switching modes or going
 // home, so a stale one never lingers on top of the next screen.
 const SUMMARY_OVERLAY_IDS = ['cw-summary-overlay','satz-summary-overlay','artikel-summary-overlay',
   'listen-summary-overlay','mc-summary-overlay','pairs-summary-overlay','schreiben-summary-overlay',
-  'shadowing-summary-overlay','results-overlay'];
+  'shadowing-summary-overlay','ws-summary-overlay','results-overlay'];
 function hideSummaryOverlays() {
   SUMMARY_OVERLAY_IDS.forEach(id => document.getElementById(id)?.classList.add('hidden'));
 }
 
 function hideAllGamePanels() {
-  hideSatzPanel(); hideArtikelPanel(); hideListenPanel(); hideMcPanel(); hidePairsPanel(); hideSchreibenPanel(); hideShadowingPanel();
+  hideSatzPanel(); hideArtikelPanel(); hideListenPanel(); hideMcPanel(); hidePairsPanel(); hideSchreibenPanel(); hideShadowingPanel(); hideWortschlangePanel();
   hideSummaryOverlays();
   ['cw-clue-bar','cw-progress','clue-chips','crossword-area','cw-actions','cw-keyboard'].forEach(id => {
     document.getElementById(id)?.classList.add('hidden');
@@ -9488,6 +9816,7 @@ const HOME_MODES = [
   {icon:'🃏', id:'PAARE',      label:'Paare',     desc:'Wörter zuordnen',       timing:'2–3 Min',    color:'#e11d48'},
   {icon:'✏️', id:'SCHREIBEN',  label:'Schreiben', desc:'Tippe das deutsche Wort',timing:'10 Runden', color:'#0891b2'},
   {icon:'🎤', id:'SHADOWING',  label:'Nachsprechen', desc:'Satz hören & nachsprechen', timing:'8 Runden', color:'#db2777'},
+  {icon:'🐍', id:'WORTSCHLANGE', label:'Wortkette', desc:'Komposita verketten', timing:'frei', color:'#10b981'},
 ];
 
 function buildTodaysMix() {
@@ -9531,6 +9860,7 @@ function launchMode(modeId) {
   else if (modeId === 'PAARE')     { setModeSwitcher('pairs');   startPairsMode(); }
   else if (modeId === 'SCHREIBEN') { setModeSwitcher('schreiben'); startSchreibenMode(); }
   else if (modeId === 'SHADOWING') { setModeSwitcher('shadowing'); startShadowingMode(); }
+  else if (modeId === 'WORTSCHLANGE') { setModeSwitcher('wortschlange'); startWortschlange(); }
 }
 
 function selectPath(pathId) {
