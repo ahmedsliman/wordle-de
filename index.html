@@ -2970,41 +2970,44 @@
     }
     .home-icon-btn:active { background: var(--hairline); }
 
-    /* ─── Hero CTA card ───────────────────────────────────── */
-    .home-hero {
-      width: 100%; border-radius: 18px;
-      background: linear-gradient(140deg, #1D9E75 0%, #0f7a5a 100%);
-      padding: 16px 18px; margin-bottom: 10px;
+    /* ─── Featured mode heroes: one per top-3 game ─────────────
+       Replaces the single generic "Jetzt starten" recommendation card —
+       each of the top 3 HOME_MODES gets its own hero-style CTA in its own
+       color instead of one card speaking for whichever mode happened to be
+       algorithmically recommended. */
+    .home-mode-heroes {
+      display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px;
+    }
+    .home-mode-hero {
+      width: 100%; border-radius: 18px; padding: 14px 18px;
       display: flex; flex-direction: column; gap: 2px;
-      cursor: pointer; border: none; text-align: left;
-      box-shadow: 0 4px 16px rgba(29,158,117,0.28);
+      cursor: pointer; border: none; text-align: left; color: #fff;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.16);
       transition: transform 0.15s, box-shadow 0.15s;
       -webkit-tap-highlight-color: transparent;
     }
-    .home-hero:active { transform: scale(0.98); box-shadow: 0 2px 12px rgba(29,158,117,0.2); }
-    .home-hero.done {
-      background: linear-gradient(140deg, #059669 0%, #065f46 100%);
-    }
-    .home-hero-row {
+    .home-mode-hero:active { transform: scale(0.98); }
+    .home-mode-hero-row {
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
     }
-    .home-hero-text { min-width: 0; }
-    .home-hero-eyebrow {
-      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
-      text-transform: uppercase; color: rgba(255,255,255,0.65);
+    .home-mode-hero-text { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .home-mode-hero-icon { font-size: 1.6rem; flex-shrink: 0; line-height: 1; }
+    .home-mode-hero-titlewrap { min-width: 0; }
+    .home-mode-hero-eyebrow {
+      font-size: 0.66rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: rgba(255,255,255,0.7);
     }
-    .home-hero-title {
-      font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 700;
+    .home-mode-hero-title {
+      font-family: 'Fraunces', serif; font-size: 1.05rem; font-weight: 700;
       color: #fff; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .home-hero-meta {
-      font-size: 0.8rem; color: rgba(255,255,255,0.78); margin-top: 4px; line-height: 1.4;
+    .home-mode-hero-meta {
+      font-size: 0.78rem; color: rgba(255,255,255,0.82); margin-top: 3px; line-height: 1.4;
     }
-    .home-hero-cta {
-      flex-shrink: 0;
-      background: #fff; color: #0f7a5a;
-      border-radius: 999px; padding: 9px 18px;
-      font-weight: 800; font-size: 0.85rem; letter-spacing: 0.01em;
+    .home-mode-hero-cta {
+      flex-shrink: 0; background: #fff;
+      border-radius: 999px; padding: 8px 16px;
+      font-weight: 800; font-size: 0.8rem; letter-spacing: 0.01em;
       box-shadow: 0 2px 8px rgba(0,0,0,0.13);
       display: inline-flex; align-items: center; gap: 6px;
     }
@@ -3075,29 +3078,6 @@
       transition: background 0.15s; -webkit-tap-highlight-color: transparent;
     }
     .recall-practice-btn:active { background: var(--color-correct); color: #fff; border-color: transparent; }
-
-    /* ─── Featured modes: 3 big square cards ──────────────────
-       The top 3 HOME_MODES entries get real visual weight — colored
-       gradient squares with icon + name, similar polish to .home-hero —
-       instead of sitting at the same size as the other 6. */
-    .home-featured-modes {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
-      margin-bottom: 12px;
-    }
-    .home-featured-card {
-      aspect-ratio: 1; border: none; border-radius: 16px;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 6px; padding: 10px 6px; color: #fff; cursor: pointer; text-align: center;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.14);
-      transition: transform 0.12s; -webkit-tap-highlight-color: transparent;
-      min-width: 0;
-    }
-    .home-featured-card:active { transform: scale(0.95); }
-    .home-featured-card-icon { font-size: 1.9rem; line-height: 1; }
-    .home-featured-card-label {
-      font-size: 0.76rem; font-weight: 800; line-height: 1.2;
-      min-width: 0; overflow-wrap: break-word; hyphens: auto;
-    }
 
     /* ─── Remaining modes: small icon-only shelf ───────────────
        The other 6 HOME_MODES, de-emphasized relative to the featured 3 —
@@ -3531,24 +3511,14 @@
       <span class="content-pill-caret" aria-hidden="true">▾</span>
     </button>
 
-    <!-- Hero CTA -->
-    <!-- Compact hero: eyebrow+title sit inline with the CTA instead of each
-         being their own full-width line — this used to be ~350px tall (title
-         as a 1.8rem heading, CTA on its own line below with margin-top:14px,
-         plus the XP bar crammed inside), eating most of the first mobile
-         screen before any mode/path picker was reachable. XP moved to its
-         own slim row below: it's ambient progress info, not part of "start
-         practicing now" messaging, and didn't need to live inside the CTA. -->
-    <button class="home-hero" id="home-hero">
-      <div class="home-hero-row">
-        <div class="home-hero-text">
-          <div class="home-hero-eyebrow" id="home-hero-eyebrow">Heute üben · ~5 Min</div>
-          <div class="home-hero-title" id="home-hero-title">Jetzt starten</div>
-        </div>
-        <div class="home-hero-cta" id="home-hero-cta">▶ Starten</div>
-      </div>
-      <div class="home-hero-meta" id="home-hero-meta"></div>
-    </button>
+    <!-- Featured mode heroes: one hero-style CTA card per top-3 game
+         (Kreuzwort/Wortschlange/Paare), each with its own color and
+         framing, instead of one generic "Jetzt starten" recommendation
+         card. Kreuzwort's meta line is still live (due words/mastery);
+         Wortschlange/Paare don't have per-mode stats tracked, so theirs is
+         honest descriptive copy instead of a fabricated number. -->
+    <div class="home-mode-heroes" id="home-mode-heroes"></div>
+
     <!-- Today card: XP/rank row + today's word-goal progress, one unit -->
     <div class="home-today-card">
       <div class="home-xp-row">
@@ -3563,11 +3533,9 @@
     <!-- Recall teaser from previous session -->
     <div class="home-recall-card hidden" id="home-recall-card"></div>
 
-    <!-- Featured modes: the top 3 as big, colorful square cards (icon +
-         name), the rest as a small-icon shelf below — instead of all 9 at
-         equal visual weight. -->
-    <div class="home-section-title">Alle Modi</div>
-    <div class="home-featured-modes" id="home-featured-modes"></div>
+    <!-- The other 6 modes as a small-icon shelf — the top 3 already have
+         their own hero cards above. -->
+    <div class="home-section-title">Weitere Modi</div>
     <div class="home-modes-strip" id="home-modes-strip"></div>
 
     <!-- Lernstufe & Pakete: was a second full picker here (cat-tabs + up to
@@ -10172,20 +10140,6 @@ const HOME_MODES = [
   {icon:'🎤', id:'SHADOWING',  label:'Nachsprechen', desc:'Satz hören & nachsprechen', timing:'8 Runden', color:'#db2777'},
 ];
 
-function buildTodaysMix() {
-  const recs = [];
-  const due = dueWords().length;
-  if (due >= 5) recs.push({mode:'review-cw', icon:'★', label:'Wiederholung', desc: due + ' Wörter fällig', color:'#1D9E75'});
-  if (recentMissRate() > 0.30) recs.push({mode:'MC', icon:'⚡', label:'Quiz', desc:'Schwache Wörter üben', color:'#2563eb'});
-  const usedModes = new Set(recs.map(r => r.mode));
-  const variety = ['SATZ','PAARE','HÖREN','ARTIKEL','1P'].find(m => !usedModes.has(m));
-  if (variety) {
-    const meta = HOME_MODES.find(m => m.id === variety);
-    if (meta) recs.push({mode: variety, icon: meta.icon, label: meta.label, desc: meta.timing, color: meta.color});
-  }
-  if (recs.length === 0) recs.push({mode:'1P', icon:'⊞', label:'Kreuzwort', desc:'Neues Rätsel starten', color:'#1D9E75'});
-  return recs.slice(0, 3);
-}
 
 function launchMode(modeId) {
   showGame();
@@ -10276,14 +10230,6 @@ function buildRecallTeaser() {
   return null;
 }
 
-function buildHeroMeta(mix) {
-  const due = dueWords().length;
-  const mastered = Object.values(reviewDeck?.cards || {}).filter(c => c.box >= 4).length;
-  if (due > 0) return due + ' Wörter warten auf Wiederholung';
-  if (mastered > 0) return 'Du hast bereits ' + mastered + ' Wörter gemeistert!';
-  return mix[0]?.desc || 'Dein tägliches Training wartet';
-}
-
 // Generic Stufen/Beruf/Themen tab switcher, shared by home's Lernpfad and the
 // in-game content picker. panelMap: { catId: panelElement }. Uses .onclick
 // assignment (not addEventListener) since callers re-invoke this on every
@@ -10325,23 +10271,56 @@ function buildHome() {
   // 3. Diamond count
   document.getElementById('home-diamond-val').textContent = diamonds.total;
 
-  // 4. Hero CTA
-  const mix = buildTodaysMix();
-  const primary = mix[0];
+  // 4. Featured mode heroes — one hero-style CTA per top-3 game, each with
+  // its own framing. Kreuzwort keeps a live due-words/mastery meta line
+  // (real spaced-repetition data); Wortschlange/Paare have no per-mode
+  // stats tracked, so theirs is honest descriptive copy instead.
   const goalMet = dailyProgress.newWords.length >= DAILY_NEW_GOAL;
-  const hero = document.getElementById('home-hero');
-  hero.classList.toggle('done', goalMet);
-  document.getElementById('home-hero-eyebrow').textContent =
-    goalMet ? 'Heute erledigt' : 'Empfehlung · ~5 Min';
-  document.getElementById('home-hero-title').textContent =
-    goalMet ? 'Tagesziel erreicht 🎉' : 'Jetzt starten';
-  document.getElementById('home-hero-meta').textContent =
-    goalMet
-      ? dailyProgress.newWords.length + ' neue Wörter · ' + dailyProgress.reviewCount + ' Wiederholungen — super!'
-      : buildHeroMeta(mix);
-  document.getElementById('home-hero-cta').textContent =
-    goalMet ? '▶ Weitermachen' : '▶ Starten';
-  hero.onclick = () => launchMode(primary.mode);
+  const mastered = Object.values(reviewDeck?.cards || {}).filter(c => c.box >= 4).length;
+  const HERO_CONTENT = {
+    '1P': {
+      eyebrow: (goalMet ? 'Heute erledigt' : 'Empfehlung') + ' · ' + HOME_MODES.find(m => m.id === '1P').timing,
+      meta: goalMet
+        ? dailyProgress.newWords.length + ' neue Wörter · ' + dailyProgress.reviewCount + ' Wiederholungen — super!'
+        : due > 0 ? due + ' Wörter warten auf Wiederholung'
+        : mastered > 0 ? 'Du hast bereits ' + mastered + ' Wörter gemeistert!'
+        : 'Wörter im Kreuzworträtsel üben',
+    },
+    'WORTSCHLANGE': {
+      eyebrow: 'Kreativ-Modus · ' + HOME_MODES.find(m => m.id === 'WORTSCHLANGE').timing,
+      meta: 'Baue die längste Wortkette',
+    },
+    'PAARE': {
+      eyebrow: 'Schnelles Spiel · ' + HOME_MODES.find(m => m.id === 'PAARE').timing,
+      meta: 'Wörter den Übersetzungen zuordnen',
+    },
+  };
+  const heroesEl = document.getElementById('home-mode-heroes');
+  heroesEl.innerHTML = '';
+  HOME_MODES.slice(0, 3).forEach(m => {
+    const content = HERO_CONTENT[m.id] || { eyebrow: m.timing, meta: m.desc };
+    const card = document.createElement('button');
+    card.className = 'home-mode-hero';
+    card.style.background = 'linear-gradient(140deg, ' + m.color + ' 0%, color-mix(in srgb, ' + m.color + ' 100%, black 18%) 100%)';
+    card.innerHTML =
+      '<div class="home-mode-hero-row">' +
+        '<div class="home-mode-hero-text">' +
+          '<span class="home-mode-hero-icon">' + m.icon + '</span>' +
+          '<div class="home-mode-hero-titlewrap">' +
+            '<div class="home-mode-hero-eyebrow">' + content.eyebrow + '</div>' +
+            '<div class="home-mode-hero-title">' + m.label + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="home-mode-hero-cta" style="color:' + m.color + '">▶ Starten</div>' +
+      '</div>' +
+      '<div class="home-mode-hero-meta">' + content.meta + '</div>';
+    // Kreuzwort's card advertises due words in its meta line — when there
+    // are enough to build a puzzle from (same ≥5 threshold as the ★ Review
+    // tab), actually take the tap there instead of starting a puzzle from
+    // whatever level happens to be selected.
+    card.addEventListener('click', () => launchMode(m.id === '1P' && due >= 5 ? 'review-cw' : m.id));
+    heroesEl.appendChild(card);
+  });
 
   // 5. Daily progress bar (hidden once goal met)
   const statBar = document.getElementById('home-daily-bar');
@@ -10382,24 +10361,11 @@ function buildHome() {
     recallEl.classList.add('hidden');
   }
 
-  // 7. Featured modes (top 3, big square cards) + the rest (small icon shelf)
-  const FEATURED_COUNT = 3;
-  const featured = document.getElementById('home-featured-modes');
-  featured.innerHTML = '';
-  HOME_MODES.slice(0, FEATURED_COUNT).forEach(m => {
-    const card = document.createElement('button');
-    card.className = 'home-featured-card';
-    card.style.background = 'linear-gradient(140deg, ' + m.color + ' 0%, color-mix(in srgb, ' + m.color + ' 100%, black 18%) 100%)';
-    card.innerHTML =
-      '<span class="home-featured-card-icon">' + m.icon + '</span>' +
-      '<span class="home-featured-card-label">' + m.label + '</span>';
-    card.addEventListener('click', () => launchMode(m.id));
-    featured.appendChild(card);
-  });
-
+  // 7. The other 6 modes as a small-icon shelf (top 3 have their own hero
+  // cards above, see section 4).
   const strip = document.getElementById('home-modes-strip');
   strip.innerHTML = '';
-  HOME_MODES.slice(FEATURED_COUNT).forEach(m => {
+  HOME_MODES.slice(3).forEach(m => {
     const chip = document.createElement('button');
     chip.className = 'home-mode-chip';
     chip.style.cssText = 'border-color:' + m.color + '44;';
