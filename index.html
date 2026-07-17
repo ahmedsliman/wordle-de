@@ -3013,25 +3013,19 @@
       display: inline-flex; align-items: center; gap: 6px;
     }
 
-    /* ─── Shared home "utility card" design system ─────────────
-       .home-mode-hero (18px radius) is the one deliberately-bigger,
-       colorful tier for the 3 featured games. Everything else that isn't
-       that or the small mode-chip shelf (12px) — level pill, today card,
-       recall card — shares one 16px-radius/shadow-sm/hairline-border card
-       shell, one eyebrow-label typography, and one colored icon-badge
-       treatment, so they read as one consistent family instead of three
-       different card styles that happened to end up on the same page. */
+    /* ─── Shared home card design system ────────────────────────
+       Every card below the level pill — the 3 game heroes, the today
+       card, and the recall teaser — is now the same "kind" of card:
+       16-18px radius, own color gradient, white text, no border. Only the
+       small mode-chip shelf (12px, plain surface) is deliberately
+       different, since it's meant to visually recede as the de-emphasized
+       tier. .home-card-eyebrow is the one shared small-caps label style
+       used on all of them (color overridden to white on the gradient
+       cards — see each card's own rules). */
     .home-card-eyebrow {
       font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em;
       text-transform: uppercase; color: var(--color-text-muted);
     }
-    .home-icon-badge {
-      width: 32px; height: 32px; border-radius: 9px; flex-shrink: 0;
-      display: inline-flex; align-items: center; justify-content: center;
-      font-size: 1.05rem;
-    }
-    .home-icon-badge-green { background: color-mix(in srgb, var(--color-correct) 15%, transparent); }
-    .home-icon-badge-amber { background: color-mix(in srgb, var(--color-present) 15%, transparent); }
 
     /* ─── Level/pack switcher (in-page, not the header pill) ── */
     .home-level-pill {
@@ -3051,47 +3045,48 @@
     .home-level-pill[aria-expanded="true"] .content-pill-caret { transform: rotate(180deg); }
 
     /* ─── Recall teaser ───────────────────────────────────── */
-    /* Subtle amber wash + left accent (amber = the app's existing "due /
-       memory" color, see .home-due-badge) so this — the one card on the
-       page actually personalised via spaced repetition — reads as visually
-       distinct from the generic white/gray cards around it. */
+    /* Same gradient-card treatment as .home-mode-hero/.home-today-card —
+       amber (the app's existing "due/memory" color, see .home-due-badge)
+       so the one card on the page actually personalised via spaced
+       repetition still reads as visually distinct in *hue*, while matching
+       everything else in *kind* (colorful card, white text) instead of
+       being the only tinted-wash/bordered card among gradient ones. */
     .home-recall-card {
-      width: 100%; border-radius: 16px;
-      background: color-mix(in srgb, var(--color-present) 5%, var(--color-surface));
-      border: 1.5px solid color-mix(in srgb, var(--color-present) 22%, var(--hairline));
-      border-left: 3px solid var(--color-present);
-      box-shadow: var(--shadow-sm); padding: 16px 18px;
+      width: 100%; border-radius: 16px; border: none; color: #fff;
+      background: linear-gradient(140deg, #d97706 0%, color-mix(in srgb, #d97706 100%, black 18%) 100%);
+      box-shadow: 0 4px 14px rgba(217,119,6,0.25); padding: 16px 18px;
       margin-bottom: 20px;
     }
+    .home-recall-card .home-card-eyebrow { color: rgba(255,255,255,0.7); }
     .recall-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
     .recall-en {
-      font-size: 1.25rem; font-weight: 700; color: var(--color-text);
+      font-size: 1.25rem; font-weight: 700; color: #fff;
       font-family: 'DM Mono', monospace; margin-bottom: 2px;
     }
-    .recall-ar  { font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 10px; }
+    .recall-ar  { font-size: 0.8rem; color: rgba(255,255,255,0.8); margin-bottom: 10px; }
     .recall-answer {
       font-size: 1.05rem; font-weight: 700; font-family: 'DM Mono', monospace;
-      letter-spacing: 0.04em; color: var(--color-correct-text);
+      letter-spacing: 0.04em; color: #fff;
       filter: blur(5px); transition: filter 0.35s; user-select: none;
       margin-bottom: 12px;
     }
     .recall-answer.revealed { filter: none; }
     .recall-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
     .recall-reveal-btn {
-      font-size: 0.78rem; font-weight: 600; color: var(--color-text-muted);
-      background: var(--hairline); border: none; border-radius: 999px;
-      padding: 7px 16px; cursor: pointer; transition: background 0.15s, color 0.15s;
+      font-size: 0.78rem; font-weight: 600; color: #d97706;
+      background: #fff; border: none; border-radius: 999px;
+      padding: 7px 16px; cursor: pointer; transition: opacity 0.15s;
       -webkit-tap-highlight-color: transparent;
     }
-    .recall-reveal-btn:active { background: var(--color-correct); color: #fff; }
+    .recall-reveal-btn:active { opacity: 0.85; }
     .recall-practice-btn {
-      font-size: 0.78rem; font-weight: 700; color: var(--color-correct-text);
-      background: color-mix(in srgb, var(--color-correct-text) 12%, transparent);
-      border: 1.5px solid color-mix(in srgb, var(--color-correct-text) 28%, transparent);
+      font-size: 0.78rem; font-weight: 700; color: #fff;
+      background: rgba(255,255,255,0.18);
+      border: 1.5px solid rgba(255,255,255,0.4);
       border-radius: 999px; padding: 7px 16px; cursor: pointer;
       transition: background 0.15s; -webkit-tap-highlight-color: transparent;
     }
-    .recall-practice-btn:active { background: var(--color-correct); color: #fff; border-color: transparent; }
+    .recall-practice-btn:active { background: rgba(255,255,255,0.32); }
 
     /* ─── Remaining modes: small icon-only shelf ───────────────
        The other 6 HOME_MODES, de-emphasized relative to the featured 3 —
@@ -3157,15 +3152,16 @@
     /* ─── Daily progress bar ─────────────────────────────── */
     /* Lives inside .home-today-card, below the XP row — only add the
        divider when there's actually a second row to divide (goal-met state
-       leaves this empty, and an empty bordered strip would look broken). */
-    .home-daily-bar:not(:empty) { border-top: 1px solid var(--hairline); padding-top: 10px; }
-    .daily-progress-label { font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 6px; }
-    .daily-progress-label strong { color: var(--color-text); font-weight: 700; }
+       leaves this empty, and an empty divider would look broken). White-
+       on-gradient colors, matching .home-today-card's own treatment. */
+    .home-daily-bar:not(:empty) { border-top: 1px solid rgba(255,255,255,0.25); padding-top: 10px; }
+    .daily-progress-label { font-size: 0.8rem; color: rgba(255,255,255,0.8); margin-bottom: 6px; }
+    .daily-progress-label strong { color: #fff; font-weight: 700; }
     .daily-progress-track {
-      height: 6px; border-radius: 3px; background: var(--hairline); overflow: hidden;
+      height: 6px; border-radius: 3px; background: rgba(255,255,255,0.25); overflow: hidden;
     }
     .daily-progress-fill {
-      height: 100%; border-radius: 3px; background: var(--color-correct);
+      height: 100%; border-radius: 3px; background: #fff;
       transition: width 0.4s ease;
     }
 
@@ -3235,40 +3231,39 @@
     .ws-ghost-btn:hover { color: var(--color-text); }
 
     /* ─── XP bar ──────────────────────────────────────────── */
-    /* Was styled inline for sitting inside the dark-green hero card; now its
-       own slim card on the light home background, so it needs real
-       light/dark-aware colors instead of the old inline white/translucent-
-       white values (which is also why xp-rank-label/xp-total had no CSS
-       class rules before — they were 100% inline style, stripped when this
-       moved out of the hero). */
     /* home-xp-row and home-daily-bar are stacked inside .home-today-card
-       (one bordered card, one divider) instead of being two separate thin
+       (one card, one divider) instead of being two separate thin
        progress-bar cards back-to-back — those read as repetitive chrome
-       before the user reaches any actual content. */
+       before the user reaches any actual content. Same gradient-card
+       treatment as .home-mode-hero (own color, white text) instead of a
+       plain white/bordered card, so it reads as part of the same family
+       as the 3 game banners above it rather than a different kind of UI. */
     .home-today-card {
       width: 100%; margin-bottom: 20px; padding: 14px 16px;
-      background: var(--color-surface); border: 1.5px solid var(--hairline);
-      box-shadow: var(--shadow-sm);
-      border-radius: 16px; display: flex; flex-direction: column; gap: 10px;
+      border-radius: 16px; border: none; color: #fff;
+      background: linear-gradient(140deg, #4f46e5 0%, color-mix(in srgb, #4f46e5 100%, black 18%) 100%);
+      box-shadow: 0 4px 14px rgba(79,70,229,0.25);
+      display: flex; flex-direction: column; gap: 10px;
     }
+    .home-today-card .home-card-eyebrow { color: rgba(255,255,255,0.7); }
     .home-xp-row {
       display: flex; align-items: center; gap: 10px; width: 100%;
     }
-    .xp-rank-icon { flex-shrink: 0; }
+    .xp-rank-icon, .recall-icon { flex-shrink: 0; font-size: 1.2rem; }
     .xp-rank-label {
-      font-size: 0.78rem; font-weight: 700; color: var(--color-text);
+      font-size: 0.78rem; font-weight: 700; color: #fff;
       white-space: nowrap; flex-shrink: 0;
     }
     .home-xp-bar {
       flex: 1; height: 5px; border-radius: 3px;
-      background: var(--color-border); overflow: hidden;
+      background: rgba(255,255,255,0.25); overflow: hidden;
     }
     .xp-bar-fill {
-      height: 100%; border-radius: 3px; background: var(--color-correct);
+      height: 100%; border-radius: 3px; background: #fff;
       transition: width 0.5s ease; width: 0%;
     }
     .xp-total {
-      font-size: 0.72rem; font-weight: 600; color: var(--color-text-muted);
+      font-size: 0.72rem; font-weight: 600; color: rgba(255,255,255,0.8);
       white-space: nowrap; flex-shrink: 0;
     }
 
@@ -3538,7 +3533,7 @@
     <div class="home-today-card">
       <div class="home-card-eyebrow">Dein Fortschritt</div>
       <div class="home-xp-row">
-        <span class="home-icon-badge home-icon-badge-green"><span class="xp-rank-icon">🌱</span></span>
+        <span class="xp-rank-icon">🌱</span>
         <span class="xp-rank-label">Einsteiger</span>
         <div class="home-xp-bar"><div class="xp-bar-fill"></div></div>
         <span class="xp-total">0 XP</span>
@@ -10363,7 +10358,7 @@ function buildHome() {
     const fullGerman = articleStr + entry.w;
     recallEl.innerHTML =
       '<div class="recall-header">' +
-        '<span class="home-icon-badge home-icon-badge-amber">💭</span>' +
+        '<span class="recall-icon">💭</span>' +
         '<span class="home-card-eyebrow">Weißt du das noch?</span>' +
       '</div>' +
       '<div class="recall-en">' + entry.en + '</div>' +
@@ -10376,8 +10371,7 @@ function buildHome() {
     document.getElementById('recall-reveal-btn').addEventListener('click', function() {
       document.getElementById('recall-answer-word').classList.add('revealed');
       this.textContent = '✓ ' + fullGerman;
-      this.style.color = 'var(--color-correct-text)';
-      this.style.background = 'color-mix(in srgb, var(--color-correct-text) 10%, transparent)';
+      this.style.color = '#059669'; // success green on the button's white bg
     });
     document.getElementById('recall-practice-btn').addEventListener('click', () => launchMode('SCHREIBEN'));
   } else {
