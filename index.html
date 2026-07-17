@@ -3039,6 +3039,7 @@
       text-align: left; cursor: pointer;
       transition: border-color 0.15s, background 0.15s;
       -webkit-tap-highlight-color: transparent;
+      min-width: 0; /* let the label flex-shrink inside its grid cell */
     }
     .path-chip:active { transform: scale(0.97); }
     .path-chip.active {
@@ -3052,7 +3053,13 @@
       color: var(--color-correct-text);
     }
     .path-chip-icon { font-size: 1.1rem; flex-shrink: 0; }
-    .path-chip-label { font-size: 0.78rem; font-weight: 600; color: var(--color-text); line-height: 1.2; }
+    .path-chip-label {
+      font-size: 0.78rem; font-weight: 600; color: var(--color-text); line-height: 1.2;
+      /* A single long word ("Wiederholung") can't wrap on spaces and would spill
+         past the chip background on narrow phones — allow it to shrink and
+         hyphenate (page is lang="de", so this breaks as Wieder-holung). */
+      min-width: 0; overflow-wrap: break-word; hyphens: auto;
+    }
     .path-chip.active .path-chip-label { color: var(--color-correct-text); }
     .path-chip-progress {
       position: absolute; left: 0; right: 0; bottom: 0;
