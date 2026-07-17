@@ -413,6 +413,34 @@
       .fullscreen-btn { display: inline-flex; }
     }
 
+    /* Home button — explicit "go back to home" affordance in-game. Before
+       this, the *only* way back was clicking the logo text, which has no
+       visual signal that it's clickable (no icon, no hover state most
+       users would ever see on a touch device) and isn't keyboard
+       reachable (a plain div, not a button/link) — a real discoverability
+       and accessibility gap. Same chrome as help-btn; hidden on home
+       itself, since there's nothing to navigate to from there. */
+    .home-nav-btn {
+      display: inline-flex;
+      background: none;
+      border: 1.5px solid var(--color-border);
+      border-radius: 8px;
+      font-size: 1.05rem;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--color-text-muted);
+      padding: 0;
+      line-height: 1;
+      transition: color 0.15s, border-color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .home-nav-btn:hover { color: var(--color-text); border-color: var(--color-text-muted); }
+    .home-nav-btn:focus-visible { outline: 2px solid var(--color-correct); outline-offset: 2px; }
+    body.on-home .home-nav-btn { display: none; }
+
     /* Help button — same chrome as fullscreen but always visible. */
     .help-btn {
       display: inline-flex;
@@ -1232,10 +1260,14 @@
       margin: 0; font-size: 1.2rem; font-weight: 700; color: var(--color-text);
     }
     .close-btn {
-      background: none; border: none; font-size: 1.5rem; cursor: pointer;
-      color: var(--color-text-muted); padding: 0; width: 28px; height: 28px;
+      background: none; border: none; font-size: 1.3rem; cursor: pointer;
+      color: var(--color-text-muted); padding: 0; width: 36px; height: 36px;
+      border-radius: 8px; flex-shrink: 0;
       display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s, color 0.15s;
+      -webkit-tap-highlight-color: transparent;
     }
+    .close-btn:hover { background: var(--hairline); color: var(--color-text); }
     .sentence-search-controls {
       padding: 16px 20px; gap: 10px; display: flex; flex-direction: column;
       border-bottom: 1px solid var(--color-border);
@@ -1251,17 +1283,26 @@
     }
     .filter-select {
       padding: 8px 10px; border: 1.5px solid var(--color-border); border-radius: 8px;
-      font-size: 0.85rem; background: var(--color-surface); color: var(--color-text);
-      flex: 1; min-width: 100px; cursor: pointer;
+      font-size: 0.82rem; background: var(--color-surface); color: var(--color-text);
+      flex: 1 1 0; min-width: 0; cursor: pointer;
+    }
+    .sentence-search-result-count {
+      padding: 10px 20px 0; font-size: 0.78rem; color: var(--color-text-muted);
     }
     .sentence-search-results {
-      flex: 1; overflow-y: auto; padding: 16px 20px;
+      flex: 1; overflow-y: auto; padding: 12px 20px 16px;
       display: flex; flex-direction: column; gap: 12px;
     }
+    /* Left border colored by difficulty (same 🟢/🟡/🔴 semantics as the
+       filter dropdown and badge below) instead of always amber — an
+       at-a-glance signal before reading the badge text. */
     .sentence-result-card {
       background: var(--color-surface); border-radius: 12px; padding: 14px;
-      border-left: 3px solid var(--color-present);
+      border-left: 3px solid var(--color-border);
     }
+    .sentence-result-card.diff-easy   { border-left-color: var(--color-correct); }
+    .sentence-result-card.diff-medium { border-left-color: var(--color-present); }
+    .sentence-result-card.diff-hard   { border-left-color: #ef4444; }
     .sentence-result-speaker {
       font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
       color: var(--color-text-muted); margin-bottom: 4px;
@@ -1276,11 +1317,18 @@
     }
     .sentence-result-meta {
       font-size: 0.75rem; color: var(--color-text-muted);
-      display: flex; gap: 12px; flex-wrap: wrap;
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
     }
+    .sentence-result-diff {
+      display: inline-flex; align-items: center; gap: 3px;
+      font-weight: 700; padding: 2px 8px; border-radius: 999px;
+    }
+    .sentence-result-diff.diff-easy   { background: color-mix(in srgb, var(--color-correct) 15%, transparent); color: var(--color-correct-text); }
+    .sentence-result-diff.diff-medium { background: color-mix(in srgb, var(--color-present) 15%, transparent); color: var(--color-present); }
+    .sentence-result-diff.diff-hard   { background: rgba(239,68,68,0.15); color: #ef4444; }
     .sentence-result-tag {
-      display: inline-block; background: var(--color-correct);
-      color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem;
+      display: inline-block; background: var(--hairline);
+      color: var(--color-text-muted); padding: 2px 8px; border-radius: 999px; font-size: 0.7rem;
     }
     .sentence-search-empty {
       text-align: center; color: var(--color-text-muted); padding: 40px 20px;
@@ -3319,7 +3367,7 @@
 
   <!-- Header -->
   <header>
-    <div class="logo">Wörtle<span class="logo-dot">.</span></div>
+    <div class="logo" role="button" tabindex="0" aria-label="Zur Startseite">Wörtle<span class="logo-dot">.</span></div>
     <div class="content-pill-wrap">
       <button id="content-pill-btn" class="content-pill-btn" data-content-pill-btn aria-haspopup="true" aria-expanded="false" aria-label="Lernstufe und Pakete auswählen">
         <span class="content-pill-text" id="content-pill-text">🌱 A1</span>
@@ -3327,6 +3375,7 @@
       </button>
     </div>
     <div style="display:flex;align-items:center;gap:8px;">
+      <button id="home-nav-btn" class="home-nav-btn" title="Startseite" aria-label="Zur Startseite">🏠</button>
       <button id="theme-btn" class="theme-btn" title="Farbschema umschalten" aria-label="Auf dunkles Design wechseln">🌙</button>
       <button id="help-btn" class="help-btn" title="Anleitung" aria-label="Spielanleitung öffnen">?</button>
       <button id="fullscreen-btn" class="fullscreen-btn" title="Vollbild" aria-label="Vollbild ein/aus">⛶</button>
@@ -4198,19 +4247,19 @@
                autocomplete="off" spellcheck="true" />
         <div class="sentence-search-filters">
           <select id="sentence-search-level" class="filter-select">
-            <option value="">Alle Level</option>
+            <option value="">Level</option>
             <option value="A1">A1</option>
             <option value="A2">A2</option>
             <option value="B1">B1</option>
           </select>
           <select id="sentence-search-difficulty" class="filter-select">
-            <option value="">Alle Schwierigkeiten</option>
-            <option value="easy">Leicht (0.0–0.4)</option>
-            <option value="medium">Mittel (0.4–0.6)</option>
-            <option value="hard">Schwer (0.6–1.0)</option>
+            <option value="">Schwierigkeit</option>
+            <option value="easy">🟢 Leicht</option>
+            <option value="medium">🟡 Mittel</option>
+            <option value="hard">🔴 Schwer</option>
           </select>
           <select id="sentence-search-tag" class="filter-select">
-            <option value="">Alle Tags</option>
+            <option value="">Tag</option>
             <option value="question">Fragen</option>
             <option value="main-character">Hauptfiguren</option>
             <option value="question-word">Fragewörter</option>
@@ -4218,9 +4267,12 @@
             <option value="time-expression">Zeit</option>
             <option value="location">Orte</option>
             <option value="exclamation">Ausrufe</option>
+            <option value="pause">Pausen</option>
+            <option value="audio-course">Audiokurs</option>
           </select>
         </div>
       </div>
+      <div id="sentence-search-result-count" class="sentence-search-result-count"></div>
       <div id="sentence-search-results" class="sentence-search-results"></div>
     </div>
   </div>
@@ -7616,12 +7668,21 @@ async function loadSentenceData() {
   }
 }
 
+// Same German labels as the filter <option> text — reused so result-card
+// tags read as words ("Fragen") instead of the raw data slug ("question").
+const SENTENCE_TAG_LABELS = {
+  'question': 'Fragen', 'main-character': 'Hauptfiguren', 'question-word': 'Fragewörter',
+  'politeness': 'Höflichkeit', 'time-expression': 'Zeit', 'location': 'Orte',
+  'exclamation': 'Ausrufe', 'pause': 'Pausen', 'audio-course': 'Audiokurs',
+};
+
 function setupSentenceSearch() {
   const modal = document.getElementById('sentence-search-modal');
   const input = document.getElementById('sentence-search-input');
   const levelFilter = document.getElementById('sentence-search-level');
   const diffFilter = document.getElementById('sentence-search-difficulty');
   const tagFilter = document.getElementById('sentence-search-tag');
+  const resultCountEl = document.getElementById('sentence-search-result-count');
   const resultsDiv = document.getElementById('sentence-search-results');
   const closeBtn = document.getElementById('sentence-search-close');
 
@@ -7664,6 +7725,10 @@ function setupSentenceSearch() {
       filtered = filtered.filter(s => (s.tags || []).includes(tag));
     }
 
+    resultCountEl.textContent = filtered.length === 0 ? ''
+      : filtered.length === 1 ? '1 Satz gefunden'
+      : filtered.length + ' Sätze gefunden' + (filtered.length > 50 ? ' (erste 50 angezeigt)' : '');
+
     resultsDiv.innerHTML = '';
     if (filtered.length === 0) {
       resultsDiv.innerHTML = '<div class="sentence-search-empty">Keine Sätze gefunden</div>';
@@ -7672,10 +7737,11 @@ function setupSentenceSearch() {
 
     filtered.slice(0, 50).forEach(s => {
       const card = document.createElement('div');
-      card.className = 'sentence-result-card';
-      const diffBadge = s.difficulty < 0.4 ? '🟢 Leicht' : s.difficulty < 0.6 ? '🟡 Mittel' : '🔴 Schwer';
+      const diffClass = s.difficulty < 0.4 ? 'diff-easy' : s.difficulty < 0.6 ? 'diff-medium' : 'diff-hard';
+      const diffLabel = s.difficulty < 0.4 ? '🟢 Leicht' : s.difficulty < 0.6 ? '🟡 Mittel' : '🔴 Schwer';
+      card.className = 'sentence-result-card ' + diffClass;
       const tags = (s.tags || []).slice(0, 2).map(t =>
-        `<span class="sentence-result-tag">${t}</span>`
+        `<span class="sentence-result-tag">${SENTENCE_TAG_LABELS[t] || t}</span>`
       ).join('');
       const text = query
         ? s.text.replace(new RegExp(`(${escapeRegExp(query)})`, 'gi'), '<mark>$1</mark>')
@@ -7684,7 +7750,7 @@ function setupSentenceSearch() {
         <div class="sentence-result-speaker">${s.speaker} · ${s.episode_id}</div>
         <div class="sentence-result-text">${text}</div>
         <div class="sentence-result-meta">
-          <span>${diffBadge}</span>
+          <span class="sentence-result-diff ${diffClass}">${diffLabel}</span>
           ${tags}
         </div>
       `;
@@ -10337,8 +10403,14 @@ function showGame() {
   document.body.classList.remove('on-home');
 }
 
-// Wire logo click to home
+// Wire logo click to home — role="button"/tabindex on the div makes it
+// keyboard-focusable, so Enter/Space need to be wired manually (a plain div
+// gets no native activation behavior the way a real <button> would).
 document.querySelector('.logo').addEventListener('click', showHome);
+document.querySelector('.logo').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showHome(); }
+});
+document.getElementById('home-nav-btn').addEventListener('click', showHome);
 
 init();
 </script>
