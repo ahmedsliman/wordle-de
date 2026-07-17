@@ -2886,8 +2886,12 @@
       width: 10px; height: 10px; border-radius: 2px;
     }
 
-    /* ─── Hide mode-switcher on home ───────────────────────── */
+    /* ─── Hide mode-switcher and header pill on home ───────── */
     body.on-home .mode-switcher { display: none !important; }
+    /* Home has its own in-page level pill (.home-level-pill) now — showing
+       the small header one too would be a confusing second control doing
+       the exact same thing. */
+    body.on-home .content-pill-wrap { opacity: 0; pointer-events: none; }
     /* Home's own greeting row has its own 💎 badge — hide the global header's
        copy so only one diamond counter is visible at a time. Uses opacity (not
        display:none) so its rect stays valid for earnDiamonds()'s toast anchor. */
@@ -3005,6 +3009,27 @@
       display: inline-flex; align-items: center; gap: 6px;
     }
 
+    /* ─── Level/pack switcher (in-page, not the header pill) ── */
+    .home-level-pill {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      width: 100%; margin-bottom: 12px; padding: 11px 16px;
+      border-radius: 14px; border: 1.5px solid var(--hairline);
+      background: var(--color-surface); box-shadow: var(--shadow-sm);
+      cursor: pointer; text-align: left; -webkit-tap-highlight-color: transparent;
+      transition: border-color 0.15s;
+    }
+    .home-level-pill:active { transform: scale(0.98); }
+    .home-level-pill-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .home-level-pill-label {
+      font-size: 0.66rem; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--color-text-muted);
+    }
+    .home-level-pill .content-pill-text {
+      font-size: 1rem; font-weight: 800; color: var(--color-text);
+    }
+    .home-level-pill .content-pill-caret { font-size: 0.9rem; color: var(--color-text-muted); flex-shrink: 0; }
+    .home-level-pill[aria-expanded="true"] .content-pill-caret { transform: rotate(180deg); }
+
     /* ─── Recall teaser ───────────────────────────────────── */
     /* Subtle amber wash + left accent (amber = the app's existing "due /
        memory" color, see .home-due-badge) so this — the one card on the
@@ -3051,18 +3076,33 @@
     }
     .recall-practice-btn:active { background: var(--color-correct); color: #fff; border-color: transparent; }
 
-    /* ─── Mode chips shelf ───────────────────────────────────
-       This used to be a multi-row grid (9 mode chips at 3-4/row, up to 3
-       rows) — the home screen re-rendering the same MODES data already
-       reachable via #mode-switcher, permanently expanded, stacked top to
-       bottom. Nothing here is hidden or cut — it's laid out as a single
-       horizontally scrollable shelf (app-store/Netflix-row pattern)
-       instead, featured modes first, so every option is still one tap
-       (now a swipe past the first row) away but the page itself is
-       roughly half the scroll height. Level/pack selection (formerly a
-       second grid + cat-tabs here) was the same kind of duplication of
-       #content-picker-panel and now lives only behind the header pill
-       (content-pill-wrap, visible on home again — see body.on-home rules). */
+    /* ─── Featured modes: 3 big square cards ──────────────────
+       The top 3 HOME_MODES entries get real visual weight — colored
+       gradient squares with icon + name, similar polish to .home-hero —
+       instead of sitting at the same size as the other 6. */
+    .home-featured-modes {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+      margin-bottom: 12px;
+    }
+    .home-featured-card {
+      aspect-ratio: 1; border: none; border-radius: 16px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 6px; padding: 10px 6px; color: #fff; cursor: pointer; text-align: center;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.14);
+      transition: transform 0.12s; -webkit-tap-highlight-color: transparent;
+      min-width: 0;
+    }
+    .home-featured-card:active { transform: scale(0.95); }
+    .home-featured-card-icon { font-size: 1.9rem; line-height: 1; }
+    .home-featured-card-label {
+      font-size: 0.76rem; font-weight: 800; line-height: 1.2;
+      min-width: 0; overflow-wrap: break-word; hyphens: auto;
+    }
+
+    /* ─── Remaining modes: small icon-only shelf ───────────────
+       The other 6 HOME_MODES, de-emphasized relative to the featured 3 —
+       smaller, flatter, icon-first. Still a horizontally scrollable shelf
+       (app-store/Netflix-row pattern): nothing hidden, one swipe away. */
     .home-modes-strip {
       display: flex; gap: 8px; margin-bottom: 22px;
       overflow-x: auto; overscroll-behavior-x: contain; padding-bottom: 2px;
@@ -3072,17 +3112,17 @@
     .home-modes-strip::-webkit-scrollbar { display: none; }
     .home-mode-chip {
       display: flex; flex-direction: column; align-items: center;
-      gap: 5px; padding: 12px 10px; border-radius: 14px;
+      gap: 3px; padding: 8px 6px; border-radius: 12px;
       background: var(--color-surface); border: 1.5px solid var(--hairline);
-      box-shadow: var(--shadow-sm); cursor: pointer;
+      cursor: pointer;
       transition: transform 0.12s; text-align: center;
       -webkit-tap-highlight-color: transparent;
-      flex: 0 0 84px; scroll-snap-align: start; /* fixed shelf-item width */
+      flex: 0 0 60px; scroll-snap-align: start; /* fixed shelf-item width */
     }
     .home-mode-chip:active { transform: scale(0.93); }
-    .home-mode-chip-icon  { font-size: 1.35rem; }
+    .home-mode-chip-icon  { font-size: 1.1rem; }
     .home-mode-chip-label {
-      font-size: 0.65rem; font-weight: 700; color: var(--color-text-muted); line-height: 1.2;
+      font-size: 0.58rem; font-weight: 700; color: var(--color-text-muted); line-height: 1.2;
       /* word-break:break-word splits anywhere mid-character with no hyphen
          shown ("Kreuzw"/"ort") — shrink and hyphenate at real syllable
          boundaries instead (page is lang="de"). */
@@ -3337,8 +3377,8 @@
   <header>
     <div class="logo">Wörtle<span class="logo-dot">.</span></div>
     <div class="content-pill-wrap">
-      <button id="content-pill-btn" class="content-pill-btn" aria-haspopup="true" aria-expanded="false" aria-label="Lernstufe und Pakete auswählen">
-        <span id="content-pill-text">🌱 A1</span>
+      <button id="content-pill-btn" class="content-pill-btn" data-content-pill-btn aria-haspopup="true" aria-expanded="false" aria-label="Lernstufe und Pakete auswählen">
+        <span class="content-pill-text" id="content-pill-text">🌱 A1</span>
         <span class="content-pill-caret" aria-hidden="true">▾</span>
       </button>
     </div>
@@ -3476,6 +3516,21 @@
       </div>
     </div>
 
+    <!-- Level/pack switcher: was only the small header pill (next to the
+         logo), easy to miss since it sits in with the site chrome instead
+         of the page content. This is the same control (same
+         openContentPicker(), same #content-picker-panel) rendered as a
+         full-width card in the body instead, where it's actually seen. The
+         header pill stays for in-game use; hidden here (see body.on-home). -->
+    <button class="home-level-pill" id="home-content-pill-btn" data-content-pill-btn
+            aria-haspopup="true" aria-expanded="false" aria-label="Lernstufe und Pakete auswählen">
+      <span class="home-level-pill-text">
+        <span class="home-level-pill-label">Lernstufe &amp; Themen</span>
+        <span class="content-pill-text" id="home-content-pill-text">🌱 A1</span>
+      </span>
+      <span class="content-pill-caret" aria-hidden="true">▾</span>
+    </button>
+
     <!-- Hero CTA -->
     <!-- Compact hero: eyebrow+title sit inline with the CTA instead of each
          being their own full-width line — this used to be ~350px tall (title
@@ -3508,8 +3563,11 @@
     <!-- Recall teaser from previous session -->
     <div class="home-recall-card hidden" id="home-recall-card"></div>
 
-    <!-- Compact mode chips -->
+    <!-- Featured modes: the top 3 as big, colorful square cards (icon +
+         name), the rest as a small-icon shelf below — instead of all 9 at
+         equal visual weight. -->
     <div class="home-section-title">Alle Modi</div>
+    <div class="home-featured-modes" id="home-featured-modes"></div>
     <div class="home-modes-strip" id="home-modes-strip"></div>
 
     <!-- Lernstufe & Pakete: was a second full picker here (cat-tabs + up to
@@ -7248,31 +7306,34 @@ function syncPackStripVisibility() {
   updateContentPill();
 }
 
-// Keeps the header pill's summary text in sync with selectedLevels — it's the
-// only place this state is visible now that level-tabs/pack-strip live inside
-// the on-demand picker panel instead of always-visible sticky rows.
+// Keeps both pills' summary text in sync with selectedLevels — the header
+// one (in-game) and the in-page one on home (.content-pill-text class,
+// shared by both spans) — it's the only place this state is visible now
+// that level-tabs/pack-strip live inside the on-demand picker panel instead
+// of always-visible sticky rows.
 function updateContentPill() {
-  const pillText = document.getElementById('content-pill-text');
-  if (!pillText) return;
+  const pillTexts = document.querySelectorAll('.content-pill-text');
+  if (!pillTexts.length) return;
+  let label;
   if (selectedLevels.has('REVIEW')) {
     const review = PATHS.find(p => p.id === 'REVIEW');
-    pillText.textContent = review.icon + ' ' + (review.shortLabel || review.label);
-    return;
-  }
-  const packKey = [...selectedLevels].find(k => PACK_LEVELS.has(k) || THEME_PACKS.has(k));
-  const path = packKey && PATHS.find(p => p.id === packKey);
-  const cefr = ['A1','A2','B1','B2'].filter(l => selectedLevels.has(l));
-  if (path) {
-    // shortLabel is already prefix/suffix-free (e.g. "Wirtschaft", not
-    // "Beruf: Wirtschaft") — same field the path chips use, one source of
-    // truth for "the short name of this path" instead of a second ad-hoc
-    // regex-strip living only here.
-    let label = path.icon + ' ' + (path.shortLabel || path.label);
-    if (cefr.length) label += ' +' + cefr.length; // professional packs can combine with CEFR levels
-    pillText.textContent = label;
+    label = review.icon + ' ' + (review.shortLabel || review.label);
   } else {
-    pillText.textContent = cefr.length ? cefr.join('+') : 'A1';
+    const packKey = [...selectedLevels].find(k => PACK_LEVELS.has(k) || THEME_PACKS.has(k));
+    const path = packKey && PATHS.find(p => p.id === packKey);
+    const cefr = ['A1','A2','B1','B2'].filter(l => selectedLevels.has(l));
+    if (path) {
+      // shortLabel is already prefix/suffix-free (e.g. "Wirtschaft", not
+      // "Beruf: Wirtschaft") — same field the path chips use, one source of
+      // truth for "the short name of this path" instead of a second ad-hoc
+      // regex-strip living only here.
+      label = path.icon + ' ' + (path.shortLabel || path.label);
+      if (cefr.length) label += ' +' + cefr.length; // professional packs can combine with CEFR levels
+    } else {
+      label = cefr.length ? cefr.join('+') : 'A1';
+    }
   }
+  pillTexts.forEach(el => el.textContent = label);
 }
 
 // Static tabs (unlike home's, these DOM nodes never get recreated), so wire
@@ -7289,10 +7350,14 @@ function currentPathCategory() {
   return ['BUSINESS','MEDICAL','SOFTWARE','ENGINEERING','LEGAL'].includes(key) ? 'beruf' : 'themen';
 }
 
+// Two buttons open the same panel now — the header pill (in-game) and the
+// in-page level pill on home (see .home-level-pill) — both marked
+// [data-content-pill-btn] so their aria-expanded stays in sync regardless
+// of which one was tapped.
 function openContentPicker() {
   document.getElementById('content-picker-panel').classList.remove('hidden');
   document.getElementById('content-picker-backdrop').classList.remove('hidden');
-  document.getElementById('content-pill-btn').setAttribute('aria-expanded', 'true');
+  document.querySelectorAll('[data-content-pill-btn]').forEach(b => b.setAttribute('aria-expanded', 'true'));
   if (window.pendingExpandMehrKurse) {
     // Onboarding goal "Beruf" can't pick one professional pack for the user,
     // so jump straight to the Beruf tab on the first time they open this
@@ -7306,10 +7371,12 @@ function openContentPicker() {
 function closeContentPicker() {
   document.getElementById('content-picker-panel').classList.add('hidden');
   document.getElementById('content-picker-backdrop').classList.add('hidden');
-  document.getElementById('content-pill-btn')?.setAttribute('aria-expanded', 'false');
+  document.querySelectorAll('[data-content-pill-btn]').forEach(b => b.setAttribute('aria-expanded', 'false'));
 }
-document.getElementById('content-pill-btn').addEventListener('click', () => {
-  document.getElementById('content-picker-panel').classList.contains('hidden') ? openContentPicker() : closeContentPicker();
+document.querySelectorAll('[data-content-pill-btn]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.getElementById('content-picker-panel').classList.contains('hidden') ? openContentPicker() : closeContentPicker();
+  });
 });
 document.getElementById('content-picker-backdrop').addEventListener('click', closeContentPicker);
 
@@ -10315,13 +10382,29 @@ function buildHome() {
     recallEl.classList.add('hidden');
   }
 
-  // 7. Compact mode chips
+  // 7. Featured modes (top 3, big square cards) + the rest (small icon shelf)
+  const FEATURED_COUNT = 3;
+  const featured = document.getElementById('home-featured-modes');
+  featured.innerHTML = '';
+  HOME_MODES.slice(0, FEATURED_COUNT).forEach(m => {
+    const card = document.createElement('button');
+    card.className = 'home-featured-card';
+    card.style.background = 'linear-gradient(140deg, ' + m.color + ' 0%, color-mix(in srgb, ' + m.color + ' 100%, black 18%) 100%)';
+    card.innerHTML =
+      '<span class="home-featured-card-icon">' + m.icon + '</span>' +
+      '<span class="home-featured-card-label">' + m.label + '</span>';
+    card.addEventListener('click', () => launchMode(m.id));
+    featured.appendChild(card);
+  });
+
   const strip = document.getElementById('home-modes-strip');
   strip.innerHTML = '';
-  HOME_MODES.forEach(m => {
+  HOME_MODES.slice(FEATURED_COUNT).forEach(m => {
     const chip = document.createElement('button');
     chip.className = 'home-mode-chip';
     chip.style.cssText = 'border-color:' + m.color + '44;';
+    chip.title = m.label;
+    chip.setAttribute('aria-label', m.label);
     chip.innerHTML =
       '<span class="home-mode-chip-icon" style="color:' + m.color + '">' + m.icon + '</span>' +
       '<span class="home-mode-chip-label">' + m.label + '</span>';
