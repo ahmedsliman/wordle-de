@@ -1200,6 +1200,71 @@
       color: var(--color-text);
     }
 
+    /* ─── Sentence Search Overlay ────────────────────── */
+    .sentence-search-container {
+      background: var(--color-bg); border-radius: 20px;
+      width: 100%; max-width: 500px; max-height: 85dvh;
+      display: flex; flex-direction: column;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+    }
+    .sentence-search-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 20px; border-bottom: 1px solid var(--color-border);
+    }
+    .sentence-search-header h2 {
+      margin: 0; font-size: 1.2rem; font-weight: 700; color: var(--color-text);
+    }
+    .close-btn {
+      background: none; border: none; font-size: 1.5rem; cursor: pointer;
+      color: var(--color-text-muted); padding: 0; width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .sentence-search-controls {
+      padding: 16px 20px; gap: 10px; display: flex; flex-direction: column;
+      border-bottom: 1px solid var(--color-border);
+    }
+    #sentence-search-input {
+      width: 100%; padding: 10px 12px; border: 1.5px solid var(--color-border);
+      border-radius: 10px; font-size: 1rem; background: var(--color-surface);
+      color: var(--color-text); font-family: 'Inter', sans-serif;
+    }
+    #sentence-search-input::placeholder { color: var(--color-text-muted); }
+    .sentence-search-filters {
+      display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    .filter-select {
+      padding: 8px 10px; border: 1.5px solid var(--color-border); border-radius: 8px;
+      font-size: 0.85rem; background: var(--color-surface); color: var(--color-text);
+      flex: 1; min-width: 100px; cursor: pointer;
+    }
+    .sentence-search-results {
+      flex: 1; overflow-y: auto; padding: 16px 20px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .sentence-result-card {
+      background: var(--color-surface); border-radius: 12px; padding: 14px;
+      border-left: 3px solid var(--color-present);
+    }
+    .sentence-result-speaker {
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+      color: var(--color-text-muted); margin-bottom: 4px;
+    }
+    .sentence-result-text {
+      font-size: 0.95rem; line-height: 1.4; color: var(--color-text);
+      margin-bottom: 8px; font-weight: 500;
+    }
+    .sentence-result-meta {
+      font-size: 0.75rem; color: var(--color-text-muted);
+      display: flex; gap: 12px; flex-wrap: wrap;
+    }
+    .sentence-result-tag {
+      display: inline-block; background: var(--color-correct);
+      color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem;
+    }
+    .sentence-search-empty {
+      text-align: center; color: var(--color-text-muted); padding: 40px 20px;
+    }
+
     /* ─── Gender color-coding (post-round only) ──────── */
     .g-der     { color: var(--gender-der); }
     .g-die     { color: var(--gender-die); }
@@ -2930,15 +2995,16 @@
     }
     .recall-practice-btn:active { background: var(--color-correct); color: #fff; border-color: transparent; }
 
-    /* ─── Mode chips strip ────────────────────────────────── */
+    /* ─── Mode chips grid ────────────────────────────────── */
     .home-modes-strip {
-      display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none;
-      padding-bottom: 6px; margin-bottom: 22px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+      margin-bottom: 22px;
     }
-    .home-modes-strip::-webkit-scrollbar { display: none; }
+    @media (max-width: 380px) { .home-modes-strip { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 768px) { .home-modes-strip { grid-template-columns: repeat(4, 1fr); } }
     .home-mode-chip {
-      flex-shrink: 0; display: flex; flex-direction: column; align-items: center;
-      gap: 5px; padding: 12px 14px; border-radius: 14px; min-width: 68px;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 5px; padding: 12px 10px; border-radius: 14px;
       background: var(--color-surface); border: 1.5px solid var(--hairline);
       box-shadow: var(--shadow-sm); cursor: pointer;
       transition: transform 0.12s; text-align: center;
@@ -2946,13 +3012,15 @@
     }
     .home-mode-chip:active { transform: scale(0.93); }
     .home-mode-chip-icon  { font-size: 1.35rem; }
-    .home-mode-chip-label { font-size: 0.68rem; font-weight: 700; color: var(--color-text-muted); white-space: nowrap; }
+    .home-mode-chip-label { font-size: 0.65rem; font-weight: 700; color: var(--color-text-muted); word-break: break-word; line-height: 1.2; }
     .home-level-row {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 8px;
       margin-bottom: 24px;
     }
+    @media (min-width: 500px) { .home-level-row { grid-template-columns: repeat(4, 1fr); } }
+    @media (min-width: 768px) { .home-level-row { grid-template-columns: repeat(5, 1fr); } }
     .path-chip {
       position: relative;
       display: flex; align-items: center; gap: 8px;
@@ -3897,6 +3965,45 @@
         <li><span class="howto-ic">🔥</span> <span><b>Serie</b> & <b>💎 Diamanten:</b> Belohnungen fürs regelmäßige Üben.</span></li>
       </ul>
       <button id="howto-close-btn" class="start-btn" style="width:100%;">Los geht's!</button>
+    </div>
+  </div>
+
+  <!-- Sentence Search Overlay -->
+  <div id="sentence-search-modal" class="overlay hidden" aria-label="Satzsuche">
+    <div class="sentence-search-container">
+      <div class="sentence-search-header">
+        <h2>Satzsuche</h2>
+        <button id="sentence-search-close" class="close-btn" aria-label="Schließen">✕</button>
+      </div>
+      <div class="sentence-search-controls">
+        <input type="text" id="sentence-search-input" placeholder="Satz, Sprecher, Tag..."
+               autocomplete="off" spellcheck="true" />
+        <div class="sentence-search-filters">
+          <select id="sentence-search-level" class="filter-select">
+            <option value="">Alle Level</option>
+            <option value="A1">A1</option>
+            <option value="A2">A2</option>
+            <option value="B1">B1</option>
+          </select>
+          <select id="sentence-search-difficulty" class="filter-select">
+            <option value="">Alle Schwierigkeiten</option>
+            <option value="easy">Leicht (0.0–0.4)</option>
+            <option value="medium">Mittel (0.4–0.6)</option>
+            <option value="hard">Schwer (0.6–1.0)</option>
+          </select>
+          <select id="sentence-search-tag" class="filter-select">
+            <option value="">Alle Tags</option>
+            <option value="question">Fragen</option>
+            <option value="main-character">Hauptfiguren</option>
+            <option value="question-word">Fragewörter</option>
+            <option value="politeness">Höflichkeit</option>
+            <option value="time-expression">Zeit</option>
+            <option value="location">Orte</option>
+            <option value="exclamation">Ausrufe</option>
+          </select>
+        </div>
+      </div>
+      <div id="sentence-search-results" class="sentence-search-results"></div>
     </div>
   </div>
 
@@ -7133,6 +7240,121 @@ async function ensureLevels(levelSet) {
   await Promise.all([...levelSet].map(lvl => (LEVEL_FILES[lvl] || THEME_PACKS.has(lvl)) ? loadLevel(lvl) : Promise.resolve()));
 }
 
+// ─── Sentence Search ────────────────────────────────────────────────────────
+let sentenceIndex = [];
+let sentenceData = null;
+
+async function loadSentenceData() {
+  try {
+    const resp = await fetch('nicos-sentences.json');
+    sentenceData = await resp.json();
+    sentenceIndex = (sentenceData.sentences || []).map((s, idx) => ({
+      ...s,
+      searchText: (s.text + ' ' + s.speaker + ' ' + (s.tags?.join(' ') || '')).toLowerCase()
+    }));
+    setupSentenceSearch();
+  } catch (e) {
+    console.log('Sentence data not loaded:', e.message);
+  }
+}
+
+function setupSentenceSearch() {
+  const modal = document.getElementById('sentence-search-modal');
+  const input = document.getElementById('sentence-search-input');
+  const levelFilter = document.getElementById('sentence-search-level');
+  const diffFilter = document.getElementById('sentence-search-difficulty');
+  const tagFilter = document.getElementById('sentence-search-tag');
+  const resultsDiv = document.getElementById('sentence-search-results');
+  const closeBtn = document.getElementById('sentence-search-close');
+
+  function updateResults() {
+    const query = input.value.toLowerCase().trim();
+    const level = levelFilter.value;
+    const diff = diffFilter.value;
+    const tag = tagFilter.value;
+
+    let filtered = sentenceIndex;
+
+    // Text search (fuzzy-ish)
+    if (query) {
+      filtered = filtered.filter(s => s.searchText.includes(query));
+    }
+
+    // Level filter
+    if (level) {
+      filtered = filtered.filter(s => s.level === level);
+    }
+
+    // Difficulty filter
+    if (diff === 'easy') {
+      filtered = filtered.filter(s => s.difficulty < 0.4);
+    } else if (diff === 'medium') {
+      filtered = filtered.filter(s => s.difficulty >= 0.4 && s.difficulty < 0.6);
+    } else if (diff === 'hard') {
+      filtered = filtered.filter(s => s.difficulty >= 0.6);
+    }
+
+    // Tag filter
+    if (tag) {
+      filtered = filtered.filter(s => (s.tags || []).includes(tag));
+    }
+
+    resultsDiv.innerHTML = '';
+    if (filtered.length === 0) {
+      resultsDiv.innerHTML = '<div class="sentence-search-empty">Keine Sätze gefunden</div>';
+      return;
+    }
+
+    filtered.slice(0, 50).forEach(s => {
+      const card = document.createElement('div');
+      card.className = 'sentence-result-card';
+      const diffBadge = s.difficulty < 0.4 ? '🟢 Leicht' : s.difficulty < 0.6 ? '🟡 Mittel' : '🔴 Schwer';
+      const tags = (s.tags || []).slice(0, 2).map(t =>
+        `<span class="sentence-result-tag">${t}</span>`
+      ).join('');
+      card.innerHTML = `
+        <div class="sentence-result-speaker">${s.speaker} · ${s.episode_id}</div>
+        <div class="sentence-result-text">${s.text}</div>
+        <div class="sentence-result-meta">
+          <span>${diffBadge}</span>
+          ${tags}
+        </div>
+      `;
+      resultsDiv.appendChild(card);
+    });
+  }
+
+  input.addEventListener('input', updateResults);
+  levelFilter.addEventListener('change', updateResults);
+  diffFilter.addEventListener('change', updateResults);
+  tagFilter.addEventListener('change', updateResults);
+
+  closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+
+  // Keyboard shortcut (Ctrl+K or Cmd+K)
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      e.preventDefault();
+      modal.classList.remove('hidden');
+      input.focus();
+    }
+  });
+
+  // Close on Escape
+  modal.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      modal.classList.add('hidden');
+    }
+  });
+
+  // Close on background click
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.add('hidden');
+    }
+  });
+}
+
 async function init() {
   const loading = document.getElementById('loading');
   try {
@@ -7162,6 +7384,7 @@ async function init() {
     loadXP();
     loadAchievements();
     loadGameStats();
+    loadSentenceData();
     updateXPDisplay();
     updateAchievementDisplay();
     // Load saved path selection — supports both legacy single string and new JSON array
@@ -8947,6 +9170,10 @@ function openVocabOverlay() {
 document.getElementById('vocab-chip').addEventListener('click', openVocabOverlay);
 document.getElementById('home-vocab-btn')?.addEventListener('click', openVocabOverlay);
 document.getElementById('home-ach-btn')?.addEventListener('click', openAchievementsOverlay);
+document.getElementById('home-sentsearch-btn')?.addEventListener('click', () => {
+  document.getElementById('sentence-search-modal').classList.remove('hidden');
+  document.getElementById('sentence-search-input').focus();
+});
 document.getElementById('vocab-close-btn').addEventListener('click', () => {
   document.getElementById('vocab-overlay').classList.add('hidden');
 });
@@ -9032,8 +9259,12 @@ function renderSentResults(query) {
     row.className = 'sent-row';
     let highlighted = r.filled;
     if (q.length >= 2) {
-      // Highlight all occurrences of the search query in the sentence (case-insensitive)
-      highlighted = r.filled.replace(new RegExp(`(${escapeRegExp(q)})`, 'gi'), '<mark>$1</mark>');
+      // Highlight all occurrences of the search query (case-insensitive)
+      highlighted = highlighted.replace(new RegExp(`(${escapeRegExp(q)})`, 'gi'), '<mark>$1</mark>');
+      // Also ensure the main word is highlighted if it wasn't already caught by the query
+      if (!r.entry.w.toLowerCase().includes(q)) {
+        highlighted = highlighted.replace(new RegExp(`(${escapeRegExp(r.entry.w)})`, 'i'), '<mark>$1</mark>');
+      }
     }
     row.innerHTML =
       '<div class="sent-text">' + highlighted + '</div>' +
