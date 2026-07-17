@@ -277,6 +277,15 @@
       color: var(--color-text); font-family: 'Inter', system-ui, sans-serif;
       font-size: 0.85rem; font-weight: 700; cursor: pointer;
       -webkit-tap-highlight-color: transparent; transition: border-color 0.15s;
+      max-width: 100%;
+    }
+    /* Belt-and-suspenders against the same wrap bug as the path chips: short
+       labels mean this should never need to wrap, but truncate with an
+       ellipsis instead of wrapping if some future combination ever runs long
+       (e.g. a pack plus several additive CEFR levels), rather than silently
+       reintroducing the mid-word break. */
+    #content-pill-text {
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;
     }
     .content-pill-btn:hover { border-color: var(--color-text-muted); }
     .content-pill-caret { font-size: 0.65rem; color: var(--color-text-muted); transition: transform 0.15s; }
@@ -7200,12 +7209,20 @@ function syncPackStripVisibility() {
 function updateContentPill() {
   const pillText = document.getElementById('content-pill-text');
   if (!pillText) return;
-  if (selectedLevels.has('REVIEW')) { pillText.textContent = '★ Wiederholung'; return; }
+  if (selectedLevels.has('REVIEW')) {
+    const review = PATHS.find(p => p.id === 'REVIEW');
+    pillText.textContent = review.icon + ' ' + (review.shortLabel || review.label);
+    return;
+  }
   const packKey = [...selectedLevels].find(k => PACK_LEVELS.has(k) || THEME_PACKS.has(k));
   const path = packKey && PATHS.find(p => p.id === packKey);
   const cefr = ['A1','A2','B1','B2'].filter(l => selectedLevels.has(l));
   if (path) {
-    let label = path.icon + ' ' + path.label.replace(/^Beruf:\s*/, '');
+    // shortLabel is already prefix/suffix-free (e.g. "Wirtschaft", not
+    // "Beruf: Wirtschaft") — same field the path chips use, one source of
+    // truth for "the short name of this path" instead of a second ad-hoc
+    // regex-strip living only here.
+    let label = path.icon + ' ' + (path.shortLabel || path.label);
     if (cefr.length) label += ' +' + cefr.length; // professional packs can combine with CEFR levels
     pillText.textContent = label;
   } else {
@@ -7481,11 +7498,11 @@ const PATHS = [
   { id:'B1',          label:'Mittelstufe B1',   shortLabel:'B1', desc:'Goethe B1 Vorbereitung',     icon:'🌳', cefr:['B1'],         domain:null },
   { id:'B2',          label:'Oberstufe B2',     shortLabel:'B2', desc:'Fließend kommunizieren',     icon:'🎓', cefr:['B2'],         domain:null },
   { id:'REVIEW',      label:'Wiederholung',     shortLabel:'Üben', desc:'Fällige Wörter üben',        icon:'★',  cefr:[],             domain:null },
-  { id:'BUSINESS',    label:'Beruf: Wirtschaft',desc:'Business & Büro',            icon:'💼', cefr:['A2','B1','B2'],domain:'BUSINESS' },
-  { id:'MEDICAL',     label:'Beruf: Medizin',   desc:'Arzt & Gesundheit',          icon:'🩺', cefr:['A2','B1','B2'],domain:'MEDICAL' },
-  { id:'SOFTWARE',    label:'Beruf: IT',        desc:'Tech & Software',            icon:'💻', cefr:['B1','B2'],    domain:'SOFTWARE' },
-  { id:'ENGINEERING', label:'Beruf: Technik',   desc:'Ingenieurwesen',             icon:'⚙️', cefr:['B1','B2'],    domain:'ENGINEERING' },
-  { id:'LEGAL',       label:'Beruf: Recht',     desc:'Jura & Verwaltung',          icon:'⚖️', cefr:['B1','B2'],    domain:'LEGAL' },
+  { id:'BUSINESS',    label:'Beruf: Wirtschaft',shortLabel:'Wirtschaft', desc:'Business & Büro',            icon:'💼', cefr:['A2','B1','B2'],domain:'BUSINESS' },
+  { id:'MEDICAL',     label:'Beruf: Medizin',   shortLabel:'Medizin',   desc:'Arzt & Gesundheit',          icon:'🩺', cefr:['A2','B1','B2'],domain:'MEDICAL' },
+  { id:'SOFTWARE',    label:'Beruf: IT',        shortLabel:'IT',        desc:'Tech & Software',            icon:'💻', cefr:['B1','B2'],    domain:'SOFTWARE' },
+  { id:'ENGINEERING', label:'Beruf: Technik',   shortLabel:'Technik',   desc:'Ingenieurwesen',             icon:'⚙️', cefr:['B1','B2'],    domain:'ENGINEERING' },
+  { id:'LEGAL',       label:'Beruf: Recht',     shortLabel:'Recht',     desc:'Jura & Verwaltung',          icon:'⚖️', cefr:['B1','B2'],    domain:'LEGAL' },
   { id:'FAMILY',      label:'Familie',          desc:'Verwandte & Zuhause',        icon:'👨‍👩‍👧', cefr:[], domain:'FAMILY' },
   { id:'RESTAURANT',  label:'Restaurant',       desc:'Essen & Bestellen',          icon:'🍽️', cefr:[], domain:'RESTAURANT' },
   { id:'TRAVEL',      label:'Reisen',           desc:'Unterwegs',                  icon:'✈️', cefr:[], domain:'TRAVEL' },
