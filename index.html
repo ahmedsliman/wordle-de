@@ -3017,10 +3017,40 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
-      margin-bottom: 24px;
+      margin-bottom: 16px;
     }
     @media (min-width: 500px) { .home-level-row { grid-template-columns: repeat(4, 1fr); } }
     @media (min-width: 768px) { .home-level-row { grid-template-columns: repeat(5, 1fr); } }
+
+    /* ─── Progressive disclosure (core vs more courses) ── */
+    #home-paths-container { margin-bottom: 24px; }
+    .home-level-row-more {
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+      max-height: 500px; opacity: 1; overflow: hidden;
+    }
+    .home-level-row-more.hidden {
+      max-height: 0; opacity: 0;
+    }
+    .home-section-subtitle {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--color-text-muted);
+      margin-top: 16px; margin-bottom: 10px;
+    }
+    .home-more-courses-btn {
+      width: 100%; padding: 12px 16px; border-radius: 12px;
+      border: 1.5px solid var(--color-border); background: var(--color-surface);
+      font-size: 0.9rem; font-weight: 600; color: var(--color-text);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      cursor: pointer; transition: background 0.15s, border-color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .home-more-courses-btn:active { background: var(--color-border); }
+    .more-courses-icon {
+      display: inline-block; transition: transform 0.3s ease;
+    }
+    .home-more-courses-btn.expanded .more-courses-icon {
+      transform: rotate(180deg);
+    }
     .path-chip {
       position: relative;
       display: flex; align-items: center; gap: 8px;
@@ -9747,33 +9777,59 @@ function buildHome() {
     strip.appendChild(chip);
   });
 
-  // 8. Lernpfad
-  const pathSection = document.getElementById('home-level-row');
-  pathSection.innerHTML = '';
+  // 8. Lernpfad — Progressive disclosure (core vs more)
   const doneSet = packsDoneSet();
   let newlyCompleted = null;
-  PATHS.forEach(path => {
-    const btn = document.createElement('button');
-    const isActive = (path.domain && selectedLevels.has(path.domain)) ||
-                     (!path.domain && selectedLevels.has(path.id));
-    btn.className = 'path-chip' + (isActive ? ' active' : '');
-    btn.dataset.pathId = path.id;
-    btn.innerHTML = '<span class="path-chip-icon">' + path.icon + '</span><span class="path-chip-label">' + path.label + '</span>';
-    if (THEME_PACKS.has(path.domain)) {
-      const prog = packProgress(path.domain);
-      if (prog) {
-        btn.innerHTML += '<div class="path-chip-progress"><div style="width:' + Math.round(prog.mastered / prog.total * 100) + '%"></div></div>';
-        btn.title = prog.mastered + ' / ' + prog.total + ' gemeistert';
-        if (prog.mastered === prog.total && !doneSet.has(path.domain)) {
-          markPackDone(path.domain);
-          if (!newlyCompleted) newlyCompleted = { path, prog }; // celebrate one at a time
+
+  // Categorize paths: core (CEFR + Review) vs professional vs thematic
+  const corePaths = PATHS.filter(p => !p.domain || p.id === 'REVIEW');
+  const professionalPaths = PATHS.filter(p => p.domain && ['BUSINESS','MEDICAL','SOFTWARE','ENGINEERING','LEGAL'].includes(p.id));
+  const thematicPaths = PATHS.filter(p => p.domain && ['FAMILY','RESTAURANT','TRAVEL','NUMBERS','FIRST100'].includes(p.id));
+
+  // Render paths into their respective sections
+  function renderPathsInto(selector, paths) {
+    const section = document.getElementById(selector);
+    if (!section) return;
+    section.innerHTML = '';
+    paths.forEach(path => {
+      const btn = document.createElement('button');
+      const isActive = (path.domain && selectedLevels.has(path.domain)) ||
+                       (!path.domain && selectedLevels.has(path.id));
+      btn.className = 'path-chip' + (isActive ? ' active' : '');
+      btn.dataset.pathId = path.id;
+      btn.innerHTML = '<span class="path-chip-icon">' + path.icon + '</span><span class="path-chip-label">' + path.label + '</span>';
+      if (THEME_PACKS.has(path.domain)) {
+        const prog = packProgress(path.domain);
+        if (prog) {
+          btn.innerHTML += '<div class="path-chip-progress"><div style="width:' + Math.round(prog.mastered / prog.total * 100) + '%"></div></div>';
+          btn.title = prog.mastered + ' / ' + prog.total + ' gemeistert';
+          if (prog.mastered === prog.total && !doneSet.has(path.domain)) {
+            markPackDone(path.domain);
+            if (!newlyCompleted) newlyCompleted = { path, prog };
+          }
         }
       }
-    }
-    btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-    btn.addEventListener('click', () => selectPath(path.id));
-    pathSection.appendChild(btn);
-  });
+      btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      btn.addEventListener('click', () => selectPath(path.id));
+      section.appendChild(btn);
+    });
+  }
+
+  renderPathsInto('home-level-row-core', corePaths);
+  renderPathsInto('home-level-row-professional', professionalPaths);
+  renderPathsInto('home-level-row-thematic', thematicPaths);
+
+  // Show/hide "Mehr Kurse" button
+  const moreBtn = document.getElementById('home-more-courses-btn');
+  const moreSection = document.getElementById('home-level-row-more');
+  if (moreBtn && moreSection) {
+    moreBtn.hidden = false;
+    moreBtn.addEventListener('click', () => {
+      moreSection.classList.toggle('hidden');
+      moreBtn.classList.toggle('expanded');
+    });
+  }
+
   if (newlyCompleted) showPackCompleteOverlay(newlyCompleted.path, newlyCompleted.prog);
 
   // 9. XP + Achievement display
