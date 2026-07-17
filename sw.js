@@ -1,5 +1,6 @@
-/* Wörtle service worker — cache-first for all static assets */
-const CACHE = 'wortle-v6';
+/* Wörtle service worker — network-first for HTML/JSON (so deploys always show up),
+   cache-first for static assets (icons). */
+const CACHE = 'wortle-v7';
 
 const PRECACHE = [
   './',
@@ -15,6 +16,7 @@ const PRECACHE = [
   './words/software.json',
   './words/engineering.json',
   './words/legal.json',
+  './nicos-sentences.json',
 ];
 
 self.addEventListener('install', (e) => {
@@ -33,11 +35,34 @@ self.addEventListener('activate', (e) => {
   );
 });
 
+// HTML and JSON change often (app code, word/sentence data) — always try the network
+// first so updates show up immediately; fall back to cache when offline.
+const NETWORK_FIRST = /\.(html|json)$/;
+
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
   const url = new URL(e.request.url);
   // Only cache same-origin requests; skip Firebase/CDN/fonts (handled by browser cache)
   if (url.origin !== self.location.origin) return;
+
+  const networkFirst = e.request.mode === 'navigate' ||
+    NETWORK_FIRST.test(url.pathname) ||
+    url.pathname.endsWith('/');
+
+  if (networkFirst) {
+    e.respondWith(
+      fetch(e.request)
+        .then((res) => {
+          if (res.ok) {
+            const clone = res.clone();
+            caches.open(CACHE).then((c) => c.put(e.request, clone));
+          }
+          return res;
+        })
+        .catch(() => caches.match(e.request))
+    );
+    return;
+  }
 
   e.respondWith(
     caches.match(e.request).then((cached) => {
