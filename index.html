@@ -268,55 +268,57 @@
     }
     #game-main:focus { outline: none; }
 
-    /* ─── Level Tabs (inside header, underline style) ── */
-    .level-tabs {
-      display: flex;
-      align-items: stretch;
-      justify-content: center;
-      height: 100%;
+    /* ─── Content pill (level+pack summary, opens the picker panel) ── */
+    .content-pill-wrap { display: flex; align-items: center; justify-content: center; }
+    .content-pill-btn {
+      display: flex; align-items: center; gap: 6px;
+      padding: 7px 14px; border-radius: 999px;
+      border: 1.5px solid var(--color-border); background: var(--color-surface);
+      color: var(--color-text); font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.85rem; font-weight: 700; cursor: pointer;
+      -webkit-tap-highlight-color: transparent; transition: border-color 0.15s;
     }
-    /* Compact "you're studying X pack" indicator — stays visible even where the
-       full pack-strip row is hidden to save space (locked mobile crossword view). */
-    .active-pack-pip {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      align-self: center;
-      margin-left: 6px;
-      padding: 3px 9px;
-      border-radius: 999px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      white-space: nowrap;
-      max-width: 120px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      background: rgba(29,158,117,0.12);
-      color: var(--color-correct-text);
+    .content-pill-btn:hover { border-color: var(--color-text-muted); }
+    .content-pill-caret { font-size: 0.65rem; color: var(--color-text-muted); transition: transform 0.15s; }
+    .content-pill-btn[aria-expanded="true"] .content-pill-caret { transform: rotate(180deg); }
+
+    /* ─── Content picker panel (holds level-tabs + pack-strip, opened on demand) ── */
+    .content-picker-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.25); z-index: 20;
+    }
+    .content-picker-backdrop.hidden { display: none; }
+    .content-picker-panel {
+      position: fixed; left: 12px; right: 12px;
+      top: calc(56px + env(safe-area-inset-top, 0px));
+      max-width: 460px; margin: 0 auto;
+      background: var(--color-bg); border: 1px solid var(--color-header-border);
+      border-radius: 16px; box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+      z-index: 21; padding: 12px; max-height: 70vh; overflow-y: auto;
+    }
+    .content-picker-panel.hidden { display: none; }
+
+    /* ─── Level Tabs (now inside the picker panel, not the sticky header) ── */
+    .level-tabs {
+      display: flex; align-items: stretch; justify-content: center;
+      flex-wrap: wrap; gap: 4px; padding-bottom: 10px;
+      border-bottom: 1px solid var(--color-header-border); margin-bottom: 10px;
+    }
+    /* Was stretched to the 52px header row's full height; now a compact pill
+       row like pack-btn, matching the panel's more relaxed layout. */
+    .level-tabs .tab {
+      min-height: 36px; border-radius: 20px; border: 1.5px solid var(--color-border);
+      border-bottom: 1.5px solid var(--color-border); padding: 0 14px;
+    }
+    .level-tabs .tab.active {
+      border-color: var(--color-correct-text);
+      background: color-mix(in srgb, var(--color-correct-text) 12%, transparent);
     }
 
-    /* ─── Domain Pack Strip ─────────────────────────── */
-    .pack-strip {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 16px;
-      background: var(--color-header-bg);
-      border-bottom: 1px solid var(--color-header-border);
-      overflow-x: auto;
-      scrollbar-width: none;
-      position: sticky;
-      top: calc(52px + env(safe-area-inset-top, 0px));
-      z-index: 9;
-      -webkit-overflow-scrolling: touch;
-    }
-    .pack-strip::-webkit-scrollbar { display: none; }
-    .pack-strip-sep {
-      flex-shrink: 0;
-      width: 1px;
-      align-self: stretch;
-      margin: 4px 2px;
-      background: var(--color-header-border);
+    /* ─── Domain Pack Strip (inside the picker panel) ──
+       Container itself has no layout now — its two cat-panel children
+       (beruf/themen) each get the flex-wrap chip-row treatment. */
+    .pack-strip .cat-panel {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 6px;
     }
     .pack-strip-label {
       font-size: 0.72rem;
@@ -2232,13 +2234,6 @@
       top: 52px;
       z-index: 8;
     }
-    /* Pack-strip and mode-switcher are sibling sticky bars at the same base
-       offset — when the pack-strip is also showing (every mode now, not just
-       Kreuzwort), push the mode-switcher below it instead of the two
-       overlapping at an identical `top`. */
-    #pack-strip:not(.hidden) ~ .mode-switcher {
-      top: calc(52px + env(safe-area-inset-top, 0px) + 41px);
-    }
     .mode-switch-btn {
       font-family: 'Inter', system-ui, sans-serif;
       font-size: 0.82rem;
@@ -2866,22 +2861,21 @@
       width: 10px; height: 10px; border-radius: 2px;
     }
 
-    /* ─── Hide pack-strip and mode-switcher on home ─────── */
-    body.on-home .pack-strip    { display: none !important; }
+    /* ─── Hide mode-switcher and content pill on home ─────── */
     body.on-home .mode-switcher { display: none !important; }
-    body.on-home #level-tabs    { opacity: 0; pointer-events: none; }
+    /* Home has its own separate Lernpfad tabs — the header pill/picker is
+       in-game-only chrome, would be a confusing second control otherwise. */
+    body.on-home .content-pill-wrap { opacity: 0; pointer-events: none; }
     /* Home's own greeting row has its own 💎 badge — hide the global header's
        copy so only one diamond counter is visible at a time. Uses opacity (not
        display:none) so its rect stays valid for earnDiamonds()'s toast anchor. */
     body.on-home .diamond-counter { opacity: 0; pointer-events: none; }
 
-    /* Wortschlange draws from its own compound set, so the CEFR tabs and the
-       theme/domain pack strip don't apply — hide them (mode-switcher stays). */
-    body.ws-active #level-tabs,
-    body.ws-active .pack-strip { display: none !important; }
-    /* pack-strip is display:none here but keeps its no-.hidden state, so undo the
-       sibling nudge that would otherwise leave a gap above the mode-switcher. */
-    body.ws-active .mode-switcher { top: 52px; }
+    /* Wortschlange draws from its own compound set, so level/pack selection
+       doesn't apply — hide the header pill entirely rather than leaving a
+       tappable control whose picker clicks the level-tabs/pack-strip click
+       handlers silently ignore (both already guard on usesLevels:false). */
+    body.ws-active .content-pill-wrap { opacity: 0; pointer-events: none; }
 
     /* ─── Logo: clickable ───────────────────────────────── */
     .logo { cursor: pointer; }
@@ -3031,35 +3025,28 @@
     @media (min-width: 500px) { .home-level-row { grid-template-columns: repeat(4, 1fr); } }
     @media (min-width: 768px) { .home-level-row { grid-template-columns: repeat(5, 1fr); } }
 
-    /* ─── Progressive disclosure (core vs more courses) ── */
+    /* ─── Category tabs (Stufen/Beruf/Themen) ──────────────
+       Shared pattern for both home's Lernpfad and the in-game content picker.
+       Replaces an earlier "+ Mehr Kurse" expand/collapse toggle — that hid 10
+       of 15 paths behind a vague label with no preview of what was there;
+       three named tabs make the categories exist up front and swapping
+       between them is one tap instead of expand-then-scan-then-pick. */
     #home-paths-container { margin-bottom: 24px; }
-    .home-level-row-more {
-      transition: max-height 0.3s ease, opacity 0.3s ease;
-      max-height: 500px; opacity: 1; overflow: hidden;
+    .cat-tabs {
+      display: flex; gap: 6px; margin-bottom: 12px;
     }
-    .home-level-row-more.hidden {
-      max-height: 0; opacity: 0;
-    }
-    .home-section-subtitle {
-      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em;
-      text-transform: uppercase; color: var(--color-text-muted);
-      margin-top: 16px; margin-bottom: 10px;
-    }
-    .home-more-courses-btn {
-      width: 100%; padding: 12px 16px; border-radius: 12px;
+    .cat-tab {
+      flex: 1; padding: 9px 10px; border-radius: 10px;
       border: 1.5px solid var(--color-border); background: var(--color-surface);
-      font-size: 0.9rem; font-weight: 600; color: var(--color-text);
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      cursor: pointer; transition: background 0.15s, border-color 0.15s;
+      font-size: 0.82rem; font-weight: 700; color: var(--color-text-muted);
+      cursor: pointer; transition: border-color 0.15s, background 0.15s, color 0.15s;
       -webkit-tap-highlight-color: transparent;
     }
-    .home-more-courses-btn:active { background: var(--color-border); }
-    .more-courses-icon {
-      display: inline-block; transition: transform 0.3s ease;
+    .cat-tab.active {
+      color: var(--color-correct-text); border-color: var(--color-correct-text);
+      background: color-mix(in srgb, var(--color-correct-text) 10%, transparent);
     }
-    .home-more-courses-btn.expanded .more-courses-icon {
-      transform: rotate(180deg);
-    }
+    .cat-panel.hidden { display: none; }
     .path-chip {
       position: relative;
       display: flex; align-items: center; gap: 8px;
@@ -3293,13 +3280,11 @@
   <!-- Header -->
   <header>
     <div class="logo">Wörtle<span class="logo-dot">.</span></div>
-    <div class="level-tabs" id="level-tabs">
-      <button class="tab active" data-level="A1" aria-label="Schwierigkeitsstufe A1" aria-pressed="true">A1</button>
-      <button class="tab"        data-level="A2" aria-label="Schwierigkeitsstufe A2" aria-pressed="false">A2</button>
-      <button class="tab"        data-level="B1" aria-label="Schwierigkeitsstufe B1" aria-pressed="false">B1</button>
-      <button class="tab tab-b2" data-level="B2" aria-label="Schwierigkeitsstufe B2" aria-pressed="false">B2</button>
-      <button class="tab tab-review" data-level="REVIEW" aria-label="Wiederholung — fällige Wörter" aria-pressed="false">★<span class="review-badge" id="review-badge" hidden>0</span></button>
-      <span class="active-pack-pip hidden" id="active-pack-pip"></span>
+    <div class="content-pill-wrap">
+      <button id="content-pill-btn" class="content-pill-btn" aria-haspopup="true" aria-expanded="false" aria-label="Lernstufe und Pakete auswählen">
+        <span id="content-pill-text">🌱 A1</span>
+        <span class="content-pill-caret" aria-hidden="true">▾</span>
+      </button>
     </div>
     <div style="display:flex;align-items:center;gap:8px;">
       <button id="theme-btn" class="theme-btn" title="Farbschema umschalten" aria-label="Auf dunkles Design wechseln">🌙</button>
@@ -3315,19 +3300,42 @@
     </div>
   </header>
 
-  <nav class="pack-strip" id="pack-strip" aria-label="Themenpakete">
-    <button class="pack-btn" data-pack="BUSINESS"    aria-pressed="false">💼 Wirtschaft</button>
-    <button class="pack-btn" data-pack="MEDICAL"     aria-pressed="false">🩺 Medizin</button>
-    <button class="pack-btn" data-pack="SOFTWARE"    aria-pressed="false">💻 IT</button>
-    <button class="pack-btn" data-pack="ENGINEERING" aria-pressed="false">⚙️ Technik</button>
-    <button class="pack-btn" data-pack="LEGAL"       aria-pressed="false">⚖️ Recht</button>
-    <span class="pack-strip-sep" aria-hidden="true"></span>
-    <button class="pack-btn" data-pack="FAMILY"      aria-pressed="false">👨‍👩‍👧 Familie</button>
-    <button class="pack-btn" data-pack="RESTAURANT"  aria-pressed="false">🍽️ Restaurant</button>
-    <button class="pack-btn" data-pack="TRAVEL"      aria-pressed="false">✈️ Reisen</button>
-    <button class="pack-btn" data-pack="NUMBERS"     aria-pressed="false">🔢 Zahlen</button>
-    <button class="pack-btn" data-pack="FIRST100"    aria-pressed="false">💯 Erste 100</button>
-  </nav>
+  <!-- Content picker: level + pack selection collapsed behind the header pill.
+       Was two permanently-visible sticky rows (level-tabs + pack-strip) — same
+       elements/ids/selection logic (untouched), just moved into an on-demand
+       panel behind Stufen/Beruf/Themen tabs so the in-game chrome isn't 3+
+       stacked chip strips before any actual content. -->
+  <div id="content-picker-backdrop" class="content-picker-backdrop hidden"></div>
+  <div id="content-picker-panel" class="content-picker-panel hidden" role="dialog" aria-label="Lernstufe und Pakete">
+    <div class="cat-tabs" id="ingame-cat-tabs">
+      <button class="cat-tab active" data-cat="stufen">🌱 Stufen</button>
+      <button class="cat-tab" data-cat="beruf">💼 Beruf</button>
+      <button class="cat-tab" data-cat="themen">🎓 Themen</button>
+    </div>
+    <div class="level-tabs cat-panel" id="level-tabs">
+      <button class="tab active" data-level="A1" aria-label="Schwierigkeitsstufe A1" aria-pressed="true">A1</button>
+      <button class="tab"        data-level="A2" aria-label="Schwierigkeitsstufe A2" aria-pressed="false">A2</button>
+      <button class="tab"        data-level="B1" aria-label="Schwierigkeitsstufe B1" aria-pressed="false">B1</button>
+      <button class="tab tab-b2" data-level="B2" aria-label="Schwierigkeitsstufe B2" aria-pressed="false">B2</button>
+      <button class="tab tab-review" data-level="REVIEW" aria-label="Wiederholung — fällige Wörter" aria-pressed="false">★<span class="review-badge" id="review-badge" hidden>0</span></button>
+    </div>
+    <nav class="pack-strip" id="pack-strip" aria-label="Themenpakete">
+      <div class="cat-panel hidden" id="pack-strip-beruf" data-cat-panel="beruf">
+        <button class="pack-btn" data-pack="BUSINESS"    aria-pressed="false">💼 Wirtschaft</button>
+        <button class="pack-btn" data-pack="MEDICAL"     aria-pressed="false">🩺 Medizin</button>
+        <button class="pack-btn" data-pack="SOFTWARE"    aria-pressed="false">💻 IT</button>
+        <button class="pack-btn" data-pack="ENGINEERING" aria-pressed="false">⚙️ Technik</button>
+        <button class="pack-btn" data-pack="LEGAL"       aria-pressed="false">⚖️ Recht</button>
+      </div>
+      <div class="cat-panel hidden" id="pack-strip-themen" data-cat-panel="themen">
+        <button class="pack-btn" data-pack="FAMILY"      aria-pressed="false">👨‍👩‍👧 Familie</button>
+        <button class="pack-btn" data-pack="RESTAURANT"  aria-pressed="false">🍽️ Restaurant</button>
+        <button class="pack-btn" data-pack="TRAVEL"      aria-pressed="false">✈️ Reisen</button>
+        <button class="pack-btn" data-pack="NUMBERS"     aria-pressed="false">🔢 Zahlen</button>
+        <button class="pack-btn" data-pack="FIRST100"    aria-pressed="false">💯 Erste 100</button>
+      </div>
+    </nav>
+  </div>
 
   <div class="mode-switcher" id="mode-switcher" role="tablist" aria-label="Spielmodus">
     <button class="mode-switch-btn active" id="switch-crossword" role="tab" aria-selected="true" aria-controls="crossword-area">
@@ -3414,17 +3422,14 @@
     <!-- Lernpfad picker -->
     <div class="home-section-title">Lernpfad</div>
     <div id="home-paths-container">
-      <div class="home-level-row" id="home-level-row-core"></div>
-      <button id="home-more-courses-btn" class="home-more-courses-btn" hidden>
-        <span>+ Mehr Kurse</span>
-        <span class="more-courses-icon">▼</span>
-      </button>
-      <div id="home-level-row-more" class="home-level-row-more hidden">
-        <div class="home-section-subtitle">💼 Beruf</div>
-        <div class="home-level-row" id="home-level-row-professional"></div>
-        <div class="home-section-subtitle">🎓 Thema</div>
-        <div class="home-level-row" id="home-level-row-thematic"></div>
+      <div class="cat-tabs" id="home-cat-tabs">
+        <button class="cat-tab active" data-cat="stufen">🌱 Stufen</button>
+        <button class="cat-tab" data-cat="beruf">💼 Beruf</button>
+        <button class="cat-tab" data-cat="themen">🎓 Themen</button>
       </div>
+      <div class="home-level-row cat-panel" id="home-level-row-core"></div>
+      <div class="home-level-row cat-panel hidden" id="home-level-row-professional"></div>
+      <div class="home-level-row cat-panel hidden" id="home-level-row-thematic"></div>
     </div>
 
   </div>
@@ -7070,6 +7075,7 @@ document.getElementById('level-tabs').addEventListener('click', e => {
     selectedLevels = new Set([level]);
     showMessage('Niveau ab nächster Runde: ' + level, '');
     setTimeout(() => showMessage('', ''), 1800);
+    closeContentPicker();
     return;
   }
 
@@ -7104,6 +7110,7 @@ document.getElementById('level-tabs').addEventListener('click', e => {
   // is the one mode where "restart" (regenerate the puzzle) differs from
   // "start" (just show the panel) — see MODES['1P'].restart below.
   (MODES[gameMode]?.restart || startCrossword)();
+  closeContentPicker();
 });
 
 // ─── Domain pack strip ────────────────────────────────
@@ -7115,32 +7122,64 @@ function selectPack(pack) {
   });
 }
 
-// Domain packs are meaningless during ★ Wiederholung (it reviews due words across
-// every level/pack at once), so hide the pack-strip row entirely rather than
-// showing five dead, unselectable-feeling pills. Call this after selectedLevels
-// has its final value for the change in question.
+// Packs now live behind their own Beruf/Themen tabs in the content picker
+// (see wireCatTabs) rather than a permanently-visible row, so there's no more
+// "hide the dead pack row during Wiederholung" case to handle here — tapping
+// the Beruf/Themen tab is itself the explicit request to see packs, REVIEW or
+// not. This just keeps the header pill's summary text in sync. Call after
+// selectedLevels has its final value for the change in question.
 function syncPackStripVisibility() {
-  document.getElementById('pack-strip')?.classList.toggle('hidden', selectedLevels.has('REVIEW'));
-  syncActivePackPip();
+  updateContentPill();
 }
 
-// Mirrors the pack-strip's active pill as a small badge next to the level tabs,
-// since the mobile locked-crossword layout hides the full pack-strip row entirely
-// to save vertical space — this pip is the only place that state stays visible there.
-function syncActivePackPip() {
-  const pip = document.getElementById('active-pack-pip');
-  if (!pip) return;
-  const key = [...selectedLevels].find(k => PACK_LEVELS.has(k) || THEME_PACKS.has(k));
-  const path = key && PATHS.find(p => p.id === key);
+// Keeps the header pill's summary text in sync with selectedLevels — it's the
+// only place this state is visible now that level-tabs/pack-strip live inside
+// the on-demand picker panel instead of always-visible sticky rows.
+function updateContentPill() {
+  const pillText = document.getElementById('content-pill-text');
+  if (!pillText) return;
+  if (selectedLevels.has('REVIEW')) { pillText.textContent = '★ Wiederholung'; return; }
+  const packKey = [...selectedLevels].find(k => PACK_LEVELS.has(k) || THEME_PACKS.has(k));
+  const path = packKey && PATHS.find(p => p.id === packKey);
+  const cefr = ['A1','A2','B1','B2'].filter(l => selectedLevels.has(l));
   if (path) {
-    pip.textContent = path.icon + ' ' + path.label.replace(/^Beruf:\s*/, '');
-    pip.title = path.label;
-    pip.classList.remove('hidden');
+    let label = path.icon + ' ' + path.label.replace(/^Beruf:\s*/, '');
+    if (cefr.length) label += ' +' + cefr.length; // professional packs can combine with CEFR levels
+    pillText.textContent = label;
   } else {
-    pip.textContent = '';
-    pip.classList.add('hidden');
+    pillText.textContent = cefr.length ? cefr.join('+') : 'A1';
   }
 }
+
+// Static tabs (unlike home's, these DOM nodes never get recreated), so wire
+// once here rather than on every open.
+const setIngameCat = wireCatTabs(document.getElementById('ingame-cat-tabs'), {
+  stufen: document.getElementById('level-tabs'),
+  beruf:  document.getElementById('pack-strip-beruf'),
+  themen: document.getElementById('pack-strip-themen'),
+});
+
+function currentPathCategory() {
+  const key = [...selectedLevels].find(k => PACK_LEVELS.has(k) || THEME_PACKS.has(k));
+  if (!key) return 'stufen';
+  return ['BUSINESS','MEDICAL','SOFTWARE','ENGINEERING','LEGAL'].includes(key) ? 'beruf' : 'themen';
+}
+
+function openContentPicker() {
+  document.getElementById('content-picker-panel').classList.remove('hidden');
+  document.getElementById('content-picker-backdrop').classList.remove('hidden');
+  document.getElementById('content-pill-btn').setAttribute('aria-expanded', 'true');
+  setIngameCat?.(currentPathCategory()); // jump to whichever tab matches the current selection
+}
+function closeContentPicker() {
+  document.getElementById('content-picker-panel').classList.add('hidden');
+  document.getElementById('content-picker-backdrop').classList.add('hidden');
+  document.getElementById('content-pill-btn')?.setAttribute('aria-expanded', 'false');
+}
+document.getElementById('content-pill-btn').addEventListener('click', () => {
+  document.getElementById('content-picker-panel').classList.contains('hidden') ? openContentPicker() : closeContentPicker();
+});
+document.getElementById('content-picker-backdrop').addEventListener('click', closeContentPicker);
 
 document.getElementById('pack-strip').addEventListener('click', e => {
   const btn = e.target.closest('[data-pack]');
@@ -7178,6 +7217,7 @@ document.getElementById('pack-strip').addEventListener('click', e => {
   syncPackStripVisibility();
 
   (MODES[gameMode]?.restart || startCrossword)();
+  closeContentPicker();
 });
 
 document.getElementById('cw-review-empty-btn').addEventListener('click', () => {
@@ -9076,10 +9116,8 @@ function hideAllGamePanels() {
     document.getElementById(id)?.classList.add('hidden');
   });
   document.getElementById('wordle-panel')?.classList.add('hidden');
-  // Packs are meaningful in every mode (they're just a filtered word pool), so keep
-  // the strip's visibility driven by REVIEW state rather than force-hiding it here —
-  // otherwise every non-crossword mode permanently loses pack switching.
-  syncPackStripVisibility();
+  syncPackStripVisibility(); // keeps the header pill's summary text current
+  closeContentPicker(); // never leave the level/pack picker dangling open across a mode switch
   document.body.classList.remove('cw-active','cw-typing','game-active');
   clearInterval(mcTimerInterval);
   resetCombo();
@@ -10007,6 +10045,25 @@ function buildHeroMeta(mix) {
   return mix[0]?.desc || 'Dein tägliches Training wartet';
 }
 
+// Generic Stufen/Beruf/Themen tab switcher, shared by home's Lernpfad and the
+// in-game content picker. panelMap: { catId: panelElement }. Uses .onclick
+// assignment (not addEventListener) since callers re-invoke this on every
+// re-render (buildHome() runs on every showHome()) — addEventListener would
+// stack a new listener each time, same bug class as an earlier "+ Mehr Kurse"
+// button that stopped responding after the second render.
+function wireCatTabs(tabsEl, panelMap, defaultCat) {
+  if (!tabsEl) return null;
+  const setActive = (cat) => {
+    tabsEl.querySelectorAll('.cat-tab').forEach(t => t.classList.toggle('active', t.dataset.cat === cat));
+    Object.entries(panelMap).forEach(([id, el]) => el?.classList.toggle('hidden', id !== cat));
+  };
+  tabsEl.querySelectorAll('.cat-tab').forEach(t => {
+    t.onclick = () => setActive(t.dataset.cat);
+  });
+  setActive(defaultCat || 'stufen');
+  return setActive;
+}
+
 function buildHome() {
   // 1. Greeting — personalised if name is known
   const h = new Date().getHours();
@@ -10142,23 +10199,16 @@ function buildHome() {
   renderPathsInto('home-level-row-professional', professionalPaths);
   renderPathsInto('home-level-row-thematic', thematicPaths);
 
-  // Show/hide "Mehr Kurse" button
-  const moreBtn = document.getElementById('home-more-courses-btn');
-  const moreSection = document.getElementById('home-level-row-more');
-  if (moreBtn && moreSection) {
-    moreBtn.hidden = false;
-    moreBtn.onclick = () => {
-      moreSection.classList.toggle('hidden');
-      moreBtn.classList.toggle('expanded');
-    };
-    // Onboarding goal "Beruf" can't pick one professional pack for the user,
-    // so surface the whole Beruf/Thema section open instead of leaving them
-    // to find the "+ Mehr Kurse" toggle on their own.
-    if (window.pendingExpandMehrKurse) {
-      window.pendingExpandMehrKurse = false;
-      moreSection.classList.remove('hidden');
-      moreBtn.classList.add('expanded');
-    }
+  const setHomeCat = wireCatTabs(document.getElementById('home-cat-tabs'), {
+    stufen: document.getElementById('home-level-row-core'),
+    beruf:  document.getElementById('home-level-row-professional'),
+    themen: document.getElementById('home-level-row-thematic'),
+  });
+  // Onboarding goal "Beruf" can't pick one professional pack for the user, so
+  // jump straight to the Beruf tab instead of leaving them to find it themselves.
+  if (window.pendingExpandMehrKurse) {
+    window.pendingExpandMehrKurse = false;
+    setHomeCat?.('beruf');
   }
 
   if (newlyCompleted) showPackCompleteOverlay(newlyCompleted.path, newlyCompleted.prog);
