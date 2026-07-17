@@ -2921,6 +2921,10 @@
       text-transform: uppercase; color: var(--color-text-muted);
       margin-top: 26px; margin-bottom: 10px;
     }
+    /* Right after the level pill (which already has its own margin-bottom),
+       not after a big content block like the other section titles are —
+       doesn't need the same top gap. */
+    .home-games-title { margin-top: 4px; }
 
     /* ─── Home header row ─────────────────────────────────── */
     .home-header-row {
@@ -3526,7 +3530,12 @@
          framing, instead of one generic "Jetzt starten" recommendation
          card. Kreuzwort's meta line is still live (due words/mastery);
          Wortschlange/Paare don't have per-mode stats tracked, so theirs is
-         honest descriptive copy instead of a fabricated number. -->
+         honest descriptive copy instead of a fabricated number. Named
+         section title above them (unlike the today/recall cards right
+         below, which are left unlabeled-as-a-group) so the 3 games read as
+         a distinct, named set instead of blending into the cards after
+         them — same gradient-card *style*, but a clearly separate group. -->
+    <div class="home-section-title home-games-title">🎮 Deine Spiele</div>
     <div class="home-mode-heroes" id="home-mode-heroes"></div>
 
     <!-- Today card: XP/rank row + today's word-goal progress, one unit -->
