@@ -2687,7 +2687,14 @@
       font-family: 'DM Mono', monospace; font-size: 0.82rem; line-height: 1.4;
       word-wrap: break-word; overflow-wrap: break-word;
     }
-    .sent-text mark { background: var(--color-present); color: inherit; font-weight: 700; padding: 0 2px; border-radius: 2px; }
+    .sent-text mark {
+      background: var(--color-present);
+      color: var(--color-text-inv);
+      font-weight: 700;
+      padding: 2px 4px;
+      border-radius: 3px;
+      box-shadow: 0 0 0 1px var(--color-present);
+    }
     .sent-row-meta {
       display: flex; align-items: center; gap: 8px; font-size: 0.75rem; color: var(--color-text-muted);
     }
@@ -9025,7 +9032,8 @@ function renderSentResults(query) {
     row.className = 'sent-row';
     let highlighted = r.filled;
     if (q.length >= 2) {
-      highlighted = r.filled.replace(new RegExp(`(${escapeRegExp(r.entry.w)})`, 'i'), '<mark>$1</mark>');
+      // Highlight all occurrences of the search query in the sentence (case-insensitive)
+      highlighted = r.filled.replace(new RegExp(`(${escapeRegExp(q)})`, 'gi'), '<mark>$1</mark>');
     }
     row.innerHTML =
       '<div class="sent-text">' + highlighted + '</div>' +
