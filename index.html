@@ -543,12 +543,18 @@
       min-height: 48px;
     }
 
-    /* Sticky clue bar only on desktop — mobile uses overflow:hidden flex lock */
-    /* top: 93px = header (52px) + mode-switcher (~40px) + 1px safety */
+    /* Sticky clue bar only on desktop — mobile uses overflow:hidden flex lock.
+       top is measured in JS (updateModeSwitcherHeightVar()) rather than a fixed
+       px value — the mode-switcher's height now varies with which category's
+       sub-row is showing (cat-tabs row + a sub-row of 1-4 buttons), where it
+       used to always be exactly one row. A stale hardcoded value here already
+       caused the sub-row to render correctly but sit hidden underneath this
+       bar once, undetectable from the DOM alone (getComputedStyle looked
+       fine) — only visible by actually looking at a screenshot. */
     @media (min-width: 681px) {
       .hint-bar {
         position: sticky;
-        top: 93px;
+        top: calc(52px + var(--mode-switcher-h, 96px));
         z-index: 8;
       }
     }
@@ -1498,8 +1504,8 @@
     /* ─── 1P Crossword: mobile viewport lock + three-zone layout ── */
     /* body.cw-active is set by startCrossword() on mobile */
     @media (max-width: 680px) {
-      /* Mode switcher: left-align scrollable pills on mobile */
-      .mode-switcher { justify-content: flex-start; }
+      /* Category tabs and sub-row: left-align on mobile instead of centering */
+      .mode-subrow, .cat-tabs { justify-content: flex-start; }
 
       body.cw-active {
         height: 100dvh;
@@ -2225,15 +2231,25 @@
     /* ─── Mode Switcher ──────────────────────────────── */
     .mode-switcher {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 5px;
+      flex-direction: column;
+      gap: 8px;
       padding: 8px 16px;
       background: var(--color-bg);
       position: sticky;
       top: 52px;
       z-index: 8;
     }
+    .mode-subrow {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 5px;
+    }
+    .mode-subrow.hidden { display: none; }
+    .artikel-dots { display: inline-flex; gap: 2px; }
+    .artikel-dots i {
+      width: 7px; height: 7px; border-radius: 50%; display: inline-block;
+    }
+    .artikel-dots i.g-der { background: var(--gender-der); }
+    .artikel-dots i.g-die { background: var(--gender-die); }
+    .artikel-dots i.g-das { background: var(--gender-das); }
     .mode-switch-btn {
       font-family: 'Inter', system-ui, sans-serif;
       font-size: 0.82rem;
@@ -3046,6 +3062,11 @@
       color: var(--color-correct-text); border-color: var(--color-correct-text);
       background: color-mix(in srgb, var(--color-correct-text) 10%, transparent);
     }
+    /* Mode-switcher's 5 category tabs: equal-width flex:1 (the picker's
+       default) would cram them on narrow phones — size to content and wrap
+       onto a 2nd row instead. */
+    #mode-cat-tabs { flex-wrap: wrap; margin-bottom: 8px; }
+    #mode-cat-tabs .cat-tab { flex: 0 1 auto; padding: 7px 12px; font-size: 0.78rem; }
     .cat-panel.hidden { display: none; }
     .path-chip {
       position: relative;
@@ -3337,43 +3358,68 @@
     </nav>
   </div>
 
+  <!-- Mode switcher: grouped by skill (what does this mode actually train?)
+       instead of a flat 9-icon row — a learner thinking "I want listening
+       practice" can find it without already knowing which icon means what.
+       Single-mode categories (Hören/Sprechen/Schreiben) enter directly on
+       tap; multi-mode categories reveal their specific modes below. -->
   <div class="mode-switcher" id="mode-switcher" role="tablist" aria-label="Spielmodus">
-    <button class="mode-switch-btn active" id="switch-crossword" role="tab" aria-selected="true" aria-controls="crossword-area">
-      <span class="mode-switch-icon">⊞</span>
-      <span class="mode-switch-label">Kreuzwort</span>
-    </button>
-    <button class="mode-switch-btn" id="switch-satz" role="tab" aria-selected="false" aria-controls="satz-panel">
-      <span class="mode-switch-icon">✍</span>
-      <span class="mode-switch-label">Sätze</span>
-    </button>
-    <button class="mode-switch-btn" id="switch-artikel" role="tab" aria-selected="false" aria-controls="artikel-panel">
-      <span class="mode-switch-icon">⚖</span>
-      <span class="mode-switch-label">Artikel</span>
-    </button>
-    <button class="mode-switch-btn" id="switch-listen" role="tab" aria-selected="false" aria-controls="listen-panel">
-      <span class="mode-switch-icon">👂</span>
-      <span class="mode-switch-label">Hören</span>
-    </button>
-    <button class="mode-switch-btn" id="switch-mc" role="tab" aria-selected="false" aria-controls="mc-panel">
-      <span class="mode-switch-icon">⚡</span>
-      <span class="mode-switch-label">Quiz</span>
-    </button>
-    <button class="mode-switch-btn" id="switch-pairs" role="tab" aria-selected="false" aria-controls="pairs-panel">
-      <span class="mode-switch-icon">🃏</span>
-      <span class="mode-switch-label">Paare</span>
-    </button>
-    <button class="mode-switch-btn" id="switch-schreiben" role="tab" aria-selected="false" aria-controls="schreiben-panel">
-      <span class="mode-switch-icon">✏️</span>
-      <span class="mode-switch-label">Schreiben</span>
-    </button>
-    <button class="mode-switch-btn" id="switch-shadowing" role="tab" aria-selected="false" aria-controls="shadowing-panel">
-      <span class="mode-switch-icon">🎤</span>
-      <span class="mode-switch-label">Nachsprechen</span>
-    </button>
-    <button class="mode-switch-btn" id="switch-wortschlange" role="tab" aria-selected="false" aria-controls="wortschlange-panel">
-      <span class="mode-switch-icon">🐍</span>
-      <span class="mode-switch-label">Wortkette</span>
-    </button>
+    <div class="cat-tabs" id="mode-cat-tabs">
+      <button class="cat-tab" data-mode-cat="wortschatz">📖 Wortschatz</button>
+      <button class="cat-tab" data-mode-cat="satzbau">🧩 Satzbau</button>
+      <button class="cat-tab" data-mode-cat="hoeren">👂 Hören</button>
+      <button class="cat-tab" data-mode-cat="sprechen">🗣️ Sprechen</button>
+      <button class="cat-tab" data-mode-cat="schreiben">⌨️ Schreiben</button>
+    </div>
+    <div class="mode-subrow cat-panel" data-mode-cat-group="wortschatz">
+      <button class="mode-switch-btn active" id="switch-crossword" role="tab" aria-selected="true" aria-controls="crossword-area">
+        <span class="mode-switch-icon">⊞</span>
+        <span class="mode-switch-label">Kreuzwort</span>
+      </button>
+      <button class="mode-switch-btn" id="switch-mc" role="tab" aria-selected="false" aria-controls="mc-panel">
+        <span class="mode-switch-icon">⚡</span>
+        <span class="mode-switch-label">Quiz</span>
+      </button>
+      <button class="mode-switch-btn" id="switch-pairs" role="tab" aria-selected="false" aria-controls="pairs-panel">
+        <span class="mode-switch-icon">🧠</span>
+        <span class="mode-switch-label">Paare</span>
+      </button>
+      <button class="mode-switch-btn" id="switch-wortschlange" role="tab" aria-selected="false" aria-controls="wortschlange-panel">
+        <span class="mode-switch-icon">🐍</span>
+        <span class="mode-switch-label">Wortschlange</span>
+      </button>
+    </div>
+    <div class="mode-subrow cat-panel hidden" data-mode-cat-group="satzbau">
+      <button class="mode-switch-btn" id="switch-satz" role="tab" aria-selected="false" aria-controls="satz-panel">
+        <span class="mode-switch-icon">✍</span>
+        <span class="mode-switch-label">Sätze</span>
+      </button>
+      <button class="mode-switch-btn" id="switch-artikel" role="tab" aria-selected="false" aria-controls="artikel-panel">
+        <!-- der/die/das color-coded dots instead of an unrelated ⚖ scale emoji —
+             ties directly into the same gender-color language used everywhere
+             else in the app (Wortschatz dashboard, tile colors, etc). -->
+        <span class="mode-switch-icon artikel-dots" aria-hidden="true"><i class="g-der"></i><i class="g-die"></i><i class="g-das"></i></span>
+        <span class="mode-switch-label">Artikel</span>
+      </button>
+    </div>
+    <div class="mode-subrow cat-panel hidden" data-mode-cat-group="hoeren">
+      <button class="mode-switch-btn" id="switch-listen" role="tab" aria-selected="false" aria-controls="listen-panel">
+        <span class="mode-switch-icon">👂</span>
+        <span class="mode-switch-label">Hören</span>
+      </button>
+    </div>
+    <div class="mode-subrow cat-panel hidden" data-mode-cat-group="sprechen">
+      <button class="mode-switch-btn" id="switch-shadowing" role="tab" aria-selected="false" aria-controls="shadowing-panel">
+        <span class="mode-switch-icon">🎤</span>
+        <span class="mode-switch-label">Nachsprechen</span>
+      </button>
+    </div>
+    <div class="mode-subrow cat-panel hidden" data-mode-cat-group="schreiben">
+      <button class="mode-switch-btn" id="switch-schreiben" role="tab" aria-selected="false" aria-controls="schreiben-panel">
+        <span class="mode-switch-icon">✏️</span>
+        <span class="mode-switch-label">Schreiben</span>
+      </button>
+    </div>
   </div>
 
   <main id="game-main" tabindex="-1">
@@ -6489,17 +6535,33 @@ const MODES = {
   // (regenerate content for a new level/pack selection) are different
   // functions — every other mode's startXMode() already does both, so they
   // don't need an explicit `restart` and inherit `start` for it below.
-  '1P':          { hash: 'crossword',    switchBtn: 'switch-crossword',    hidePanel: null,                 usesLevels: true,  start: () => { hideAllGamePanels(); setMode('1P'); }, restart: startCrossword },
-  SATZ:          { hash: 'satz',         switchBtn: 'switch-satz',         hidePanel: hideSatzPanel,        usesLevels: true,  start: startSatzMode },
-  ARTIKEL:       { hash: 'artikel',      switchBtn: 'switch-artikel',      hidePanel: hideArtikelPanel,     usesLevels: true,  start: startArtikelMode },
-  HÖREN:         { hash: 'hoeren',       switchBtn: 'switch-listen',       hidePanel: hideListenPanel,      usesLevels: true,  start: startListenMode },
-  MC:            { hash: 'quiz',         switchBtn: 'switch-mc',           hidePanel: hideMcPanel,          usesLevels: true,  start: startMcMode },
-  PAARE:         { hash: 'paare',        switchBtn: 'switch-pairs',        hidePanel: hidePairsPanel,       usesLevels: true,  start: startPairsMode },
-  SCHREIBEN:     { hash: 'schreiben',    switchBtn: 'switch-schreiben',    hidePanel: hideSchreibenPanel,   usesLevels: true,  start: startSchreibenMode },
-  SHADOWING:     { hash: 'shadowing',    switchBtn: 'switch-shadowing',    hidePanel: hideShadowingPanel,   usesLevels: true,  start: startShadowingMode },
-  WORTSCHLANGE:  { hash: 'wortschlange', switchBtn: 'switch-wortschlange', hidePanel: hideWortschlangePanel,usesLevels: false, start: startWortschlange },
+  // `category` groups modes by skill for the mode-switcher's category tabs
+  // (see MODE_CATEGORIES below) — not just a visual grouping: it's meant to
+  // answer "I want listening practice today" without having to already know
+  // which of 9 icons is the listening one.
+  '1P':          { hash: 'crossword',    switchBtn: 'switch-crossword',    hidePanel: null,                 usesLevels: true,  category: 'wortschatz', start: () => { hideAllGamePanels(); setMode('1P'); }, restart: startCrossword },
+  SATZ:          { hash: 'satz',         switchBtn: 'switch-satz',         hidePanel: hideSatzPanel,        usesLevels: true,  category: 'satzbau',    start: startSatzMode },
+  ARTIKEL:       { hash: 'artikel',      switchBtn: 'switch-artikel',      hidePanel: hideArtikelPanel,     usesLevels: true,  category: 'satzbau',    start: startArtikelMode },
+  HÖREN:         { hash: 'hoeren',       switchBtn: 'switch-listen',       hidePanel: hideListenPanel,      usesLevels: true,  category: 'hoeren',     start: startListenMode },
+  MC:            { hash: 'quiz',         switchBtn: 'switch-mc',           hidePanel: hideMcPanel,          usesLevels: true,  category: 'wortschatz', start: startMcMode },
+  PAARE:         { hash: 'paare',        switchBtn: 'switch-pairs',        hidePanel: hidePairsPanel,       usesLevels: true,  category: 'wortschatz', start: startPairsMode },
+  SCHREIBEN:     { hash: 'schreiben',    switchBtn: 'switch-schreiben',    hidePanel: hideSchreibenPanel,   usesLevels: true,  category: 'schreiben',  start: startSchreibenMode },
+  SHADOWING:     { hash: 'shadowing',    switchBtn: 'switch-shadowing',    hidePanel: hideShadowingPanel,   usesLevels: true,  category: 'sprechen',   start: startShadowingMode },
+  WORTSCHLANGE:  { hash: 'wortschlange', switchBtn: 'switch-wortschlange', hidePanel: hideWortschlangePanel,usesLevels: false, category: 'wortschatz', start: startWortschlange },
 };
 Object.values(MODES).forEach(m => { if (!m.restart) m.restart = m.start; });
+
+// Category metadata (icon/label) + derived id→modes lookup, used to build the
+// mode-switcher's category tabs and each category's sub-row of specific modes.
+const MODE_CATEGORIES = [
+  { id: 'wortschatz', icon: '📖', label: 'Wortschatz' },
+  { id: 'satzbau',    icon: '🧩', label: 'Satzbau' },
+  { id: 'hoeren',     icon: '👂', label: 'Hören' },
+  { id: 'sprechen',   icon: '🗣️', label: 'Sprechen' },
+  { id: 'schreiben',  icon: '⌨️', label: 'Schreiben' },
+];
+const MODES_BY_CATEGORY = Object.fromEntries(MODE_CATEGORIES.map(c =>
+  [c.id, Object.keys(MODES).filter(id => MODES[id].category === c.id)]));
 
 // ─── URL routing ───────────────────────────────────────
 // Keeps the address bar in sync with the active mode so refresh/back-forward
@@ -7414,11 +7476,11 @@ const PACK_LEVELS = new Set(['BUSINESS','MEDICAL','SOFTWARE','ENGINEERING','LEGA
 const THEME_PACKS = new Set(['FAMILY','RESTAURANT','TRAVEL','NUMBERS','FIRST100']);
 
 const PATHS = [
-  { id:'A1',          label:'Grundstufe A1',    desc:'Erste 200 Wörter',          icon:'🌱', cefr:['A1'],         domain:null },
-  { id:'A2',          label:'Aufbaustufe A2',   desc:'Alltag & Reise',             icon:'🌿', cefr:['A2'],         domain:null },
-  { id:'B1',          label:'Mittelstufe B1',   desc:'Goethe B1 Vorbereitung',     icon:'🌳', cefr:['B1'],         domain:null },
-  { id:'B2',          label:'Oberstufe B2',     desc:'Fließend kommunizieren',     icon:'🎓', cefr:['B2'],         domain:null },
-  { id:'REVIEW',      label:'Wiederholung',     desc:'Fällige Wörter üben',        icon:'★',  cefr:[],             domain:null },
+  { id:'A1',          label:'Grundstufe A1',    shortLabel:'A1', desc:'Erste 200 Wörter',          icon:'🌱', cefr:['A1'],         domain:null },
+  { id:'A2',          label:'Aufbaustufe A2',   shortLabel:'A2', desc:'Alltag & Reise',             icon:'🌿', cefr:['A2'],         domain:null },
+  { id:'B1',          label:'Mittelstufe B1',   shortLabel:'B1', desc:'Goethe B1 Vorbereitung',     icon:'🌳', cefr:['B1'],         domain:null },
+  { id:'B2',          label:'Oberstufe B2',     shortLabel:'B2', desc:'Fließend kommunizieren',     icon:'🎓', cefr:['B2'],         domain:null },
+  { id:'REVIEW',      label:'Wiederholung',     shortLabel:'Üben', desc:'Fällige Wörter üben',        icon:'★',  cefr:[],             domain:null },
   { id:'BUSINESS',    label:'Beruf: Wirtschaft',desc:'Business & Büro',            icon:'💼', cefr:['A2','B1','B2'],domain:'BUSINESS' },
   { id:'MEDICAL',     label:'Beruf: Medizin',   desc:'Arzt & Gesundheit',          icon:'🩺', cefr:['A2','B1','B2'],domain:'MEDICAL' },
   { id:'SOFTWARE',    label:'Beruf: IT',        desc:'Tech & Software',            icon:'💻', cefr:['B1','B2'],    domain:'SOFTWARE' },
@@ -8263,7 +8325,57 @@ function setModeSwitcher(active) {
     el.classList.toggle('active', key === active);
     el.setAttribute('aria-selected', key === active ? 'true' : 'false');
   }
+  syncModeCategoryUI(map[active]);
 }
+
+// Highlights the active mode's category tab and reveals that category's
+// sub-row (the specific-mode buttons), so switching mode from anywhere else
+// (URL hash, launchMode, a switch-button click) keeps the category tabs in
+// sync with whatever mode actually ended up active.
+// The mode-switcher's height now varies with which category's sub-row is
+// showing (cat-tabs row + a sub-row of 1-4 buttons, and the 5 cat-tabs
+// themselves can wrap to 2 lines on narrow screens) — anything sticky below
+// it (crossword's .hint-bar) needs that real height, not a guess. Measuring
+// beats hardcoding: a hardcoded value already went stale once this session.
+function updateModeSwitcherHeightVar() {
+  const ms = document.getElementById('mode-switcher');
+  if (!ms) return;
+  const h = ms.getBoundingClientRect().height;
+  if (h > 0) document.documentElement.style.setProperty('--mode-switcher-h', h + 'px');
+}
+window.addEventListener('resize', updateModeSwitcherHeightVar);
+
+function syncModeCategoryUI(activeBtnId) {
+  const modeId = Object.keys(MODES).find(id => MODES[id].switchBtn === activeBtnId);
+  const cat = modeId && MODES[modeId].category;
+  document.querySelectorAll('#mode-cat-tabs .cat-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.modeCat === cat);
+  });
+  document.querySelectorAll('#mode-switcher .mode-subrow').forEach(row => {
+    row.classList.toggle('hidden', row.dataset.modeCatGroup !== cat);
+  });
+  updateModeSwitcherHeightVar();
+}
+
+document.querySelectorAll('#mode-cat-tabs .cat-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const cat = tab.dataset.modeCat;
+    const modes = MODES_BY_CATEGORY[cat] || [];
+    if (modes.length === 1) {
+      // Single-mode category (Hören/Sprechen/Schreiben): one tap enters it
+      // directly, same as before this category grouping existed.
+      document.getElementById(MODES[modes[0]].switchBtn)?.click();
+    } else {
+      // Multi-mode category (Wortschatz/Satzbau): reveal its sub-row so the
+      // user picks a specific mode — don't guess which one they want.
+      document.querySelectorAll('#mode-cat-tabs .cat-tab').forEach(t => t.classList.toggle('active', t === tab));
+      document.querySelectorAll('#mode-switcher .mode-subrow').forEach(row => {
+        row.classList.toggle('hidden', row.dataset.modeCatGroup !== cat);
+      });
+      updateModeSwitcherHeightVar();
+    }
+  });
+});
 
 // Mode-switcher buttons: one generic listener per registered mode instead of
 // 9 near-identical hand-written blocks (each used to duplicate the guard,
@@ -9916,13 +10028,13 @@ if ('serviceWorker' in navigator) {
 const HOME_MODES = [
   {icon:'⊞', id:'1P',          label:'Kreuzwort', desc:'Wörter im Kreuzrätsel', timing:'3–5 Min',    color:'#1D9E75'},
   {icon:'✍', id:'SATZ',        label:'Sätze',     desc:'Lückentext & Wortfolge',timing:'10 Runden',  color:'#4f46e5'},
-  {icon:'⚖', id:'ARTIKEL',     label:'Artikel',   desc:'der, die oder das?',    timing:'1 Min',      color:'#7c3aed'},
+  {icon:'<span class="artikel-dots" aria-hidden="true"><i class="g-der"></i><i class="g-die"></i><i class="g-das"></i></span>', id:'ARTIKEL', label:'Artikel', desc:'der, die oder das?', timing:'1 Min', color:'#7c3aed'},
   {icon:'👂', id:'HÖREN',      label:'Hören',     desc:'Diktat nach Ton',       timing:'10 Runden',  color:'#d97706'},
   {icon:'⚡', id:'MC',         label:'Quiz',       desc:'4 Optionen · 60 Sek',  timing:'60 Sek',    color:'#2563eb'},
-  {icon:'🃏', id:'PAARE',      label:'Paare',     desc:'Wörter zuordnen',       timing:'2–3 Min',    color:'#e11d48'},
+  {icon:'🧠', id:'PAARE',      label:'Paare',     desc:'Wörter zuordnen',       timing:'2–3 Min',    color:'#e11d48'},
   {icon:'✏️', id:'SCHREIBEN',  label:'Schreiben', desc:'Tippe das deutsche Wort',timing:'10 Runden', color:'#0891b2'},
   {icon:'🎤', id:'SHADOWING',  label:'Nachsprechen', desc:'Satz hören & nachsprechen', timing:'8 Runden', color:'#db2777'},
-  {icon:'🐍', id:'WORTSCHLANGE', label:'Wortkette', desc:'Komposita verketten', timing:'frei', color:'#10b981'},
+  {icon:'🐍', id:'WORTSCHLANGE', label:'Wortschlange', desc:'Komposita verketten', timing:'frei', color:'#10b981'},
 ];
 
 function buildTodaysMix() {
@@ -10177,7 +10289,13 @@ function buildHome() {
                        (!path.domain && selectedLevels.has(path.id));
       btn.className = 'path-chip' + (isActive ? ' active' : '');
       btn.dataset.pathId = path.id;
-      btn.innerHTML = '<span class="path-chip-icon">' + path.icon + '</span><span class="path-chip-label">' + path.label + '</span>';
+      // Compound German labels ("Grundstufe A1") don't fit a narrow chip —
+      // they used to hyphen-wrap mid-word ("Grund-stufe"), which read as
+      // broken rather than just wrapped. shortLabel keeps the visible chip
+      // text to a single short token; the full descriptive name is still on
+      // the tooltip (and via btn.title below) for anyone who wants it.
+      btn.innerHTML = '<span class="path-chip-icon">' + path.icon + '</span><span class="path-chip-label">' + (path.shortLabel || path.label) + '</span>';
+      if (path.shortLabel) btn.title = path.label;
       if (THEME_PACKS.has(path.domain)) {
         const prog = packProgress(path.domain);
         if (prog) {
