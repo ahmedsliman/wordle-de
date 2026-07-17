@@ -6911,8 +6911,12 @@ document.getElementById('level-tabs').addEventListener('click', e => {
     selectedLevels = new Set(['REVIEW']);
   } else {
     selectedLevels.delete('REVIEW');
-    // clear any active domain pack
+    // Clear any active pack — professional domain packs (separate content) and
+    // curriculum theme packs (curated CEFR subsets) are both exclusive with a
+    // plain level pick, so picking a level drops them rather than leaving a
+    // stale pack in the selection (which would desync the pip and pack pills).
     PACK_LEVELS.forEach(p => selectedLevels.delete(p));
+    THEME_PACKS.forEach(p => selectedLevels.delete(p));
     if (selectedLevels.has(level) && selectedLevels.size > 1) {
       selectedLevels.delete(level);
     } else {
@@ -7264,6 +7268,12 @@ async function ensureLevels(levelSet) {
 // ─── Sentence Search ────────────────────────────────────────────────────────
 let sentenceIndex = [];
 let sentenceData = null;
+// Assigned by setupSentenceSearch() once the data + handlers are ready; opening
+// the modal must render the current result set (otherwise it opens blank until
+// the user types). No-op until setup runs so the open buttons never throw.
+let openSentenceSearch = () => {
+  document.getElementById('sentence-search-modal')?.classList.remove('hidden');
+};
 
 // Unicode-safe word split (JS regex \b doesn't recognize ä/ö/ü/ß as word chars,
 // so it's unreliable for German text — split on non-letters instead).
@@ -7368,12 +7378,19 @@ function setupSentenceSearch() {
 
   closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
 
+  // Opening must render results for the current query/filters — otherwise the
+  // modal shows a blank area until the first keystroke.
+  openSentenceSearch = () => {
+    updateResults();
+    modal.classList.remove('hidden');
+    input.focus();
+  };
+
   // Keyboard shortcut (Ctrl+K or Cmd+K)
   document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
       e.preventDefault();
-      modal.classList.remove('hidden');
-      input.focus();
+      openSentenceSearch();
     }
   });
 
@@ -9230,10 +9247,7 @@ function openVocabOverlay() {
 document.getElementById('vocab-chip').addEventListener('click', openVocabOverlay);
 document.getElementById('home-vocab-btn')?.addEventListener('click', openVocabOverlay);
 document.getElementById('home-ach-btn')?.addEventListener('click', openAchievementsOverlay);
-document.getElementById('home-sentsearch-btn')?.addEventListener('click', () => {
-  document.getElementById('sentence-search-modal').classList.remove('hidden');
-  document.getElementById('sentence-search-input').focus();
-});
+document.getElementById('home-sentsearch-btn')?.addEventListener('click', () => openSentenceSearch());
 document.getElementById('vocab-close-btn').addEventListener('click', () => {
   document.getElementById('vocab-overlay').classList.add('hidden');
 });
