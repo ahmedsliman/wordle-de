@@ -10138,14 +10138,18 @@ if ('serviceWorker' in navigator) {
 // ─── Home screen ──────────────────────────────────────────────────────────────
 // Order = shelf order on home. First 3 (Kreuzwort/Wortschlange/Paare) are the
 // featured set, rendered as the big hero cards; the rest are reachable by
-// swipe below, not hidden. Featured 3 need colors that read as distinct at
-// a glance when stacked as hero cards — #1D9E75/#10b981 (Kreuzwort's old
-// color / Wortschlange's) were both teal-green and blended together; ⊞ was
-// also a flat monochrome glyph next to two full-color emoji, out of place
-// once blown up to hero-card icon size.
+// swipe below, not hidden. Featured 3 (plus the today/recall cards right
+// below them, which share the same gradient-card treatment) all need colors
+// that read as distinct at a glance stacked in one column — went through two
+// rounds here: #1D9E75/#10b981 (Kreuzwort/Wortschlange) were both teal-green;
+// then Wortschlange's replacement #ea580c (orange) turned out too close to
+// the recall card's amber #d97706 once both were gradient cards on the same
+// page. Full palette now: green (Kreuzwort) / sky blue (Wortschlange) / rose
+// (Paare) / indigo (today card) / amber (recall card) — five actually
+// distinct hues spread around the wheel instead of clustered warm tones.
 const HOME_MODES = [
   {icon:'🔠', id:'1P',          label:'Kreuzwort', desc:'Wörter im Kreuzrätsel', timing:'3–5 Min',    color:'#1D9E75'},
-  {icon:'🐍', id:'WORTSCHLANGE', label:'Wortschlange', desc:'Komposita verketten', timing:'frei', color:'#ea580c'},
+  {icon:'🐍', id:'WORTSCHLANGE', label:'Wortschlange', desc:'Komposita verketten', timing:'frei', color:'#0ea5e9'},
   {icon:'🧠', id:'PAARE',      label:'Paare',     desc:'Wörter zuordnen',       timing:'2–3 Min',    color:'#e11d48'},
   {icon:'✍', id:'SATZ',        label:'Sätze',     desc:'Lückentext & Wortfolge',timing:'10 Runden',  color:'#4f46e5'},
   {icon:'<span class="artikel-dots" aria-hidden="true"><i class="g-der"></i><i class="g-die"></i><i class="g-das"></i></span>', id:'ARTIKEL', label:'Artikel', desc:'der, die oder das?', timing:'1 Min', color:'#7c3aed'},
