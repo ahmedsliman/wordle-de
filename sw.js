@@ -1,6 +1,6 @@
 /* Wörtle service worker — network-first for HTML/JSON (so deploys always show up),
    cache-first for static assets (icons). */
-const CACHE = 'wortle-v7';
+const CACHE = 'wortle-v8';
 
 const PRECACHE = [
   './',
@@ -16,6 +16,7 @@ const PRECACHE = [
   './words/software.json',
   './words/engineering.json',
   './words/legal.json',
+  './words/komposita.json',
   './nicos-sentences.json',
 ];
 
