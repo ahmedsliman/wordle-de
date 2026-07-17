@@ -6438,12 +6438,45 @@ function hideModePickerOverlay() {
   document.getElementById('mode-picker-overlay').classList.add('hidden');
 }
 
+// ─── Mode registry ──────────────────────────────────────────────────────────
+// Single source of truth for switching between solo game modes. Every entry's
+// start() hides other panels itself (directly, or via its own showXPanel()
+// helper) and calls setModeSwitcher()/setRoute() internally — nothing that
+// dispatches through this registry needs to duplicate that. Adding a new mode
+// means adding one entry here (plus its own panel/start/hide functions), not
+// hand-editing the half-dozen scattered dispatch chains this replaces —
+// launchMode(), hideAllGamePanels(), the level-tabs and pack-strip mode-restart
+// chains, the URL hash map, and the 9 near-identical switch-button handlers
+// all used to grow by one branch per mode; two of those chains already missed
+// a mode at least once (SCHREIBEN/SHADOWING were absent from the level-tabs
+// and pack-strip dispatch chains until that was caught and fixed).
+// Referencing functions declared later in the file is safe here: `function`
+// declarations (unlike const/arrow bindings) are fully hoisted, so every
+// startXMode/hideXPanel below already exists by the time this object's values
+// are read, regardless of where in the script this sits.
+const MODES = {
+  // '1P' is the one mode where "start" (show the panel) and "restart"
+  // (regenerate content for a new level/pack selection) are different
+  // functions — every other mode's startXMode() already does both, so they
+  // don't need an explicit `restart` and inherit `start` for it below.
+  '1P':          { hash: 'crossword',    switchBtn: 'switch-crossword',    hidePanel: null,                 usesLevels: true,  start: () => { hideAllGamePanels(); setMode('1P'); }, restart: startCrossword },
+  SATZ:          { hash: 'satz',         switchBtn: 'switch-satz',         hidePanel: hideSatzPanel,        usesLevels: true,  start: startSatzMode },
+  ARTIKEL:       { hash: 'artikel',      switchBtn: 'switch-artikel',      hidePanel: hideArtikelPanel,     usesLevels: true,  start: startArtikelMode },
+  HÖREN:         { hash: 'hoeren',       switchBtn: 'switch-listen',       hidePanel: hideListenPanel,      usesLevels: true,  start: startListenMode },
+  MC:            { hash: 'quiz',         switchBtn: 'switch-mc',           hidePanel: hideMcPanel,          usesLevels: true,  start: startMcMode },
+  PAARE:         { hash: 'paare',        switchBtn: 'switch-pairs',        hidePanel: hidePairsPanel,       usesLevels: true,  start: startPairsMode },
+  SCHREIBEN:     { hash: 'schreiben',    switchBtn: 'switch-schreiben',    hidePanel: hideSchreibenPanel,   usesLevels: true,  start: startSchreibenMode },
+  SHADOWING:     { hash: 'shadowing',    switchBtn: 'switch-shadowing',    hidePanel: hideShadowingPanel,   usesLevels: true,  start: startShadowingMode },
+  WORTSCHLANGE:  { hash: 'wortschlange', switchBtn: 'switch-wortschlange', hidePanel: hideWortschlangePanel,usesLevels: false, start: startWortschlange },
+};
+Object.values(MODES).forEach(m => { if (!m.restart) m.restart = m.start; });
+
 // ─── URL routing ───────────────────────────────────────
 // Keeps the address bar in sync with the active mode so refresh/back-forward
 // and shared links land on the right screen. Hash-only (no server routing
 // needed — this is a static GitHub Pages file).
-const ROUTE_HASH = { '1P': 'crossword', 'SATZ': 'satz', 'ARTIKEL': 'artikel', 'HÖREN': 'hoeren', 'MC': 'quiz', 'PAARE': 'paare', 'SCHREIBEN': 'schreiben', 'SHADOWING': 'shadowing', 'WORTSCHLANGE': 'wortschlange' };
-const HASH_MODE  = Object.fromEntries(Object.entries(ROUTE_HASH).map(([k, v]) => [v, k]));
+const ROUTE_HASH = Object.fromEntries(Object.entries(MODES).map(([id, m]) => [id, m.hash]));
+const HASH_MODE  = Object.fromEntries(Object.entries(MODES).map(([id, m]) => [m.hash, id]));
 
 function setRoute(hash) {
   if (location.hash.slice(1) === hash) return; // already there — don't spam history
@@ -6990,8 +7023,9 @@ document.getElementById('level-tabs').addEventListener('click', e => {
   if (!btn) return;
   const level = btn.dataset.level;
 
-  // Wortschlange has its own compound-noun set, not CEFR levels/packs — ignore.
-  if (gameMode === 'WORTSCHLANGE') return;
+  // Modes with usesLevels:false (currently just Wortschlange) have their own
+  // fixed vocab, not CEFR levels/packs — ignore level-tab clicks entirely.
+  if (MODES[gameMode] && !MODES[gameMode].usesLevels) return;
 
   if (level === 'REVIEW' && gameMode === '2P') {
     showMessage('Wiederholung nur im Solo-Modus', '');
@@ -7041,23 +7075,10 @@ document.getElementById('level-tabs').addEventListener('click', e => {
     t.classList.toggle('active', on);
     t.setAttribute('aria-pressed', on ? 'true' : 'false');
   });
-  if (gameMode === 'SATZ') {
-    startSatzMode(); // restart with new level selection
-  } else if (gameMode === 'ARTIKEL') {
-    startArtikelMode();
-  } else if (gameMode === 'HÖREN') {
-    startListenMode();
-  } else if (gameMode === 'MC') {
-    startMcMode();
-  } else if (gameMode === 'PAARE') {
-    startPairsMode();
-  } else if (gameMode === 'SCHREIBEN') {
-    startSchreibenMode();
-  } else if (gameMode === 'SHADOWING') {
-    startShadowingMode();
-  } else {
-    startCrossword();
-  }
+  // Regenerate the current mode's content for the new level selection. '1P'
+  // is the one mode where "restart" (regenerate the puzzle) differs from
+  // "start" (just show the panel) — see MODES['1P'].restart below.
+  (MODES[gameMode]?.restart || startCrossword)();
 });
 
 // ─── Domain pack strip ────────────────────────────────
@@ -7101,7 +7122,7 @@ document.getElementById('pack-strip').addEventListener('click', e => {
   if (!btn) return;
   const pack = btn.dataset.pack;
 
-  if (gameMode === 'WORTSCHLANGE') return; // no level/pack vocab in this mode
+  if (MODES[gameMode] && !MODES[gameMode].usesLevels) return; // e.g. Wortschlange has its own fixed vocab
 
   if (gameMode === '2P') {
     showMessage('Pakete nur im Solo-Modus', '');
@@ -7131,14 +7152,7 @@ document.getElementById('pack-strip').addEventListener('click', e => {
   }
   syncPackStripVisibility();
 
-  if (gameMode === 'SATZ') startSatzMode();
-  else if (gameMode === 'ARTIKEL') startArtikelMode();
-  else if (gameMode === 'HÖREN') startListenMode();
-  else if (gameMode === 'MC') startMcMode();
-  else if (gameMode === 'PAARE') startPairsMode();
-  else if (gameMode === 'SCHREIBEN') startSchreibenMode();
-  else if (gameMode === 'SHADOWING') startShadowingMode();
-  else startCrossword();
+  (MODES[gameMode]?.restart || startCrossword)();
 });
 
 document.getElementById('cw-review-empty-btn').addEventListener('click', () => {
@@ -8118,18 +8132,15 @@ function setModeSwitcher(active) {
   }
 }
 
-document.getElementById('switch-satz').addEventListener('click', () => {
-  if (gameMode === 'SATZ') return;
-  hideArtikelPanel();
-  setModeSwitcher('satz');
-  startSatzMode();
-});
-
-document.getElementById('switch-crossword').addEventListener('click', () => {
-  if (gameMode === '1P') return;
-  setModeSwitcher('cw');
-  hideAllGamePanels();
-  setMode('1P');
+// Mode-switcher buttons: one generic listener per registered mode instead of
+// 9 near-identical hand-written blocks (each used to duplicate the guard,
+// re-hide-the-previous-panel, and setModeSwitcher() calls that the target
+// mode's own start() already performs).
+Object.entries(MODES).forEach(([id, m]) => {
+  document.getElementById(m.switchBtn)?.addEventListener('click', () => {
+    if (gameMode === id) return;
+    m.start();
+  });
 });
 
 // ─── Artikel-Sprint (der/die/das drill) ───────────────
@@ -8271,12 +8282,6 @@ document.getElementById('artikel-back-btn').addEventListener('click', () => {
   setModeSwitcher('cw');
   showHome();
 });
-document.getElementById('switch-artikel').addEventListener('click', () => {
-  if (gameMode === 'ARTIKEL') return;
-  hideSatzPanel();
-  startArtikelMode();
-});
-
 // ─── Match Pairs ──────────────────────────────────────
 let pairsCount = 8;       // set dynamically in startPairsMode (6 on mobile, 8 on desktop)
 let pairsWords     = [];  // [{w, en}]
@@ -8431,11 +8436,6 @@ document.getElementById('pairs-back-btn').addEventListener('click', () => {
   setModeSwitcher('cw');
   showHome();
 });
-document.getElementById('switch-pairs').addEventListener('click', () => {
-  if (gameMode === 'PAARE') return;
-  startPairsMode();
-});
-
 // ─── Multiple Choice Blitz-Quiz ───────────────────────
 const MC_ROUNDS  = 10;
 const MC_SECONDS = 60;
@@ -8585,11 +8585,6 @@ document.getElementById('mc-back-btn').addEventListener('click', () => {
   setModeSwitcher('cw');
   showHome();
 });
-document.getElementById('switch-mc').addEventListener('click', () => {
-  if (gameMode === 'MC') return;
-  startMcMode();
-});
-
 // ─── Hören & Tippen (Listen & Type) ───────────────────
 const LISTEN_ROUNDS = 10;
 let listenQueue   = [];
@@ -8744,11 +8739,6 @@ document.querySelectorAll('.schreiben-umlaut').forEach(btn => {
     input.focus();
   });
 });
-document.getElementById('switch-schreiben').addEventListener('click', () => {
-  if (gameMode === 'SCHREIBEN') return;
-  startSchreibenMode();
-});
-
 function hideSchreibenPanel() {
   document.getElementById('schreiben-panel')?.classList.add('hidden');
 }
@@ -8977,11 +8967,6 @@ document.getElementById('ws-back-btn').addEventListener('click', () => {
   setModeSwitcher('cw');
   showHome();
 });
-document.getElementById('switch-wortschlange').addEventListener('click', () => {
-  if (gameMode === 'WORTSCHLANGE') return;
-  startWortschlange();
-});
-
 // Summary/result overlays that must be dismissed when switching modes or going
 // home, so a stale one never lingers on top of the next screen.
 const SUMMARY_OVERLAY_IDS = ['cw-summary-overlay','satz-summary-overlay','artikel-summary-overlay',
@@ -8992,7 +8977,7 @@ function hideSummaryOverlays() {
 }
 
 function hideAllGamePanels() {
-  hideSatzPanel(); hideArtikelPanel(); hideListenPanel(); hideMcPanel(); hidePairsPanel(); hideSchreibenPanel(); hideShadowingPanel(); hideWortschlangePanel();
+  Object.values(MODES).forEach(m => m.hidePanel?.());
   hideSummaryOverlays();
   ['cw-clue-bar','cw-progress','clue-chips','crossword-area','cw-actions','cw-keyboard'].forEach(id => {
     document.getElementById(id)?.classList.add('hidden');
@@ -9166,11 +9151,6 @@ document.getElementById('listen-back-btn').addEventListener('click', () => {
   setModeSwitcher('cw');
   showHome();
 });
-document.getElementById('switch-listen').addEventListener('click', () => {
-  if (gameMode === 'HÖREN') return;
-  startListenMode();
-});
-
 // ─── Nachsprechen (Shadowing) ──────────────────────────
 // Listen to a full sentence, repeat it aloud, get scored via SpeechRecognition.
 // Falls back to a self-assessment control on browsers without speech recognition
@@ -9457,11 +9437,6 @@ document.getElementById('shadowing-back-btn').addEventListener('click', () => {
   setModeSwitcher('cw');
   showHome();
 });
-document.getElementById('switch-shadowing').addEventListener('click', () => {
-  if (gameMode === 'SHADOWING') return;
-  startShadowingMode();
-});
-
 // ─── Wortschatz dashboard (mastery overview) ──────────
 const BOX_LABELS = ['Üben', 'Neu', 'Bekannt', 'Sicher', 'Gemeistert'];
 
@@ -9840,27 +9815,19 @@ function launchMode(modeId) {
     gameStats.modesPlayed.push(modeId);
     saveGameStats();
   }
-  if (modeId === '1P' || modeId === 'review-cw') {
-    if (modeId === 'review-cw') {
-      selectPack(null);
-      document.querySelectorAll('#level-tabs .tab').forEach(t => {
-        const on = t.dataset.level === 'REVIEW';
-        t.classList.toggle('active', on);
-        t.setAttribute('aria-pressed', on ? 'true' : 'false');
-      });
-      selectedLevels = new Set(['REVIEW']);
-      currentLevel = 'REVIEW';
-    }
-    setModeSwitcher('cw');
-    setMode('1P');
-  } else if (modeId === 'SATZ')    { setModeSwitcher('satz');    startSatzMode(); }
-  else if (modeId === 'ARTIKEL')   { setModeSwitcher('artikel'); startArtikelMode(); }
-  else if (modeId === 'HÖREN')     { setModeSwitcher('listen');  startListenMode(); }
-  else if (modeId === 'MC')        { setModeSwitcher('mc');      startMcMode(); }
-  else if (modeId === 'PAARE')     { setModeSwitcher('pairs');   startPairsMode(); }
-  else if (modeId === 'SCHREIBEN') { setModeSwitcher('schreiben'); startSchreibenMode(); }
-  else if (modeId === 'SHADOWING') { setModeSwitcher('shadowing'); startShadowingMode(); }
-  else if (modeId === 'WORTSCHLANGE') { setModeSwitcher('wortschlange'); startWortschlange(); }
+  if (modeId === 'review-cw') {
+    selectPack(null);
+    document.querySelectorAll('#level-tabs .tab').forEach(t => {
+      const on = t.dataset.level === 'REVIEW';
+      t.classList.toggle('active', on);
+      t.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    selectedLevels = new Set(['REVIEW']);
+    currentLevel = 'REVIEW';
+    MODES['1P'].start();
+    return;
+  }
+  MODES[modeId]?.start();
 }
 
 function selectPath(pathId) {
@@ -10111,14 +10078,13 @@ function buildHome() {
 function showHome() {
   document.getElementById('home-screen').classList.remove('hidden');
   document.body.classList.add('on-home');
-  ['crossword-area','cw-clue-bar','cw-actions','satz-panel','artikel-panel',
-   'listen-panel','mc-panel','pairs-panel','schreiben-panel','streak-bar','wordle-panel'].forEach(id => {
-    document.getElementById(id)?.classList.add('hidden');
-  });
-  hideSummaryOverlays();
-  document.body.classList.remove('cw-active','cw-typing','game-active');
-  clearInterval(mcTimerInterval);
-  resetCombo();
+  // hideAllGamePanels() already covers every registered mode's panel plus the
+  // crossword-specific ids and summary overlays — this used to be its own
+  // hand-maintained id list here, which had drifted out of sync with the mode
+  // registry (it never hid shadowing-panel or wortschlange-panel, so those
+  // could stay visible underneath the home screen after navigating home).
+  hideAllGamePanels();
+  document.getElementById('streak-bar')?.classList.add('hidden');
   setRoute('');
   buildHome();
 }
