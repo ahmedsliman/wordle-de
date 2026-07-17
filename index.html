@@ -3013,21 +3013,37 @@
       display: inline-flex; align-items: center; gap: 6px;
     }
 
+    /* ─── Shared home "utility card" design system ─────────────
+       .home-mode-hero (18px radius) is the one deliberately-bigger,
+       colorful tier for the 3 featured games. Everything else that isn't
+       that or the small mode-chip shelf (12px) — level pill, today card,
+       recall card — shares one 16px-radius/shadow-sm/hairline-border card
+       shell, one eyebrow-label typography, and one colored icon-badge
+       treatment, so they read as one consistent family instead of three
+       different card styles that happened to end up on the same page. */
+    .home-card-eyebrow {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--color-text-muted);
+    }
+    .home-icon-badge {
+      width: 32px; height: 32px; border-radius: 9px; flex-shrink: 0;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 1.05rem;
+    }
+    .home-icon-badge-green { background: color-mix(in srgb, var(--color-correct) 15%, transparent); }
+    .home-icon-badge-amber { background: color-mix(in srgb, var(--color-present) 15%, transparent); }
+
     /* ─── Level/pack switcher (in-page, not the header pill) ── */
     .home-level-pill {
       display: flex; align-items: center; justify-content: space-between; gap: 10px;
       width: 100%; margin-bottom: 12px; padding: 11px 16px;
-      border-radius: 14px; border: 1.5px solid var(--hairline);
+      border-radius: 16px; border: 1.5px solid var(--hairline);
       background: var(--color-surface); box-shadow: var(--shadow-sm);
       cursor: pointer; text-align: left; -webkit-tap-highlight-color: transparent;
       transition: border-color 0.15s;
     }
     .home-level-pill:active { transform: scale(0.98); }
     .home-level-pill-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-    .home-level-pill-label {
-      font-size: 0.66rem; font-weight: 700; letter-spacing: 0.06em;
-      text-transform: uppercase; color: var(--color-text-muted);
-    }
     .home-level-pill .content-pill-text {
       font-size: 1rem; font-weight: 800; color: var(--color-text);
     }
@@ -3047,10 +3063,7 @@
       box-shadow: var(--shadow-sm); padding: 16px 18px;
       margin-bottom: 20px;
     }
-    .recall-eyebrow {
-      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em;
-      text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 8px;
-    }
+    .recall-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
     .recall-en {
       font-size: 1.25rem; font-weight: 700; color: var(--color-text);
       font-family: 'DM Mono', monospace; margin-bottom: 2px;
@@ -3233,14 +3246,15 @@
        progress-bar cards back-to-back — those read as repetitive chrome
        before the user reaches any actual content. */
     .home-today-card {
-      width: 100%; margin-bottom: 20px; padding: 12px 14px;
+      width: 100%; margin-bottom: 20px; padding: 14px 16px;
       background: var(--color-surface); border: 1.5px solid var(--hairline);
-      border-radius: 12px; display: flex; flex-direction: column; gap: 10px;
+      box-shadow: var(--shadow-sm);
+      border-radius: 16px; display: flex; flex-direction: column; gap: 10px;
     }
     .home-xp-row {
-      display: flex; align-items: center; gap: 8px; width: 100%;
+      display: flex; align-items: center; gap: 10px; width: 100%;
     }
-    .xp-rank-icon { font-size: 1rem; flex-shrink: 0; }
+    .xp-rank-icon { flex-shrink: 0; }
     .xp-rank-label {
       font-size: 0.78rem; font-weight: 700; color: var(--color-text);
       white-space: nowrap; flex-shrink: 0;
@@ -3506,7 +3520,7 @@
     <button class="home-level-pill" id="home-content-pill-btn" data-content-pill-btn
             aria-haspopup="true" aria-expanded="false" aria-label="Lernstufe und Pakete auswählen">
       <span class="home-level-pill-text">
-        <span class="home-level-pill-label">Lernstufe &amp; Themen</span>
+        <span class="home-card-eyebrow">Lernstufe &amp; Themen</span>
         <span class="content-pill-text" id="home-content-pill-text">🌱 A1</span>
       </span>
       <span class="content-pill-caret" aria-hidden="true">▾</span>
@@ -3522,8 +3536,9 @@
 
     <!-- Today card: XP/rank row + today's word-goal progress, one unit -->
     <div class="home-today-card">
+      <div class="home-card-eyebrow">Dein Fortschritt</div>
       <div class="home-xp-row">
-        <span class="xp-rank-icon">🌱</span>
+        <span class="home-icon-badge home-icon-badge-green"><span class="xp-rank-icon">🌱</span></span>
         <span class="xp-rank-label">Einsteiger</span>
         <div class="home-xp-bar"><div class="xp-bar-fill"></div></div>
         <span class="xp-total">0 XP</span>
@@ -10347,7 +10362,10 @@ function buildHome() {
     const articleStr = entry.article ? entry.article + ' ' : '';
     const fullGerman = articleStr + entry.w;
     recallEl.innerHTML =
-      '<div class="recall-eyebrow">💭 Weißt du das noch?</div>' +
+      '<div class="recall-header">' +
+        '<span class="home-icon-badge home-icon-badge-amber">💭</span>' +
+        '<span class="home-card-eyebrow">Weißt du das noch?</span>' +
+      '</div>' +
       '<div class="recall-en">' + entry.en + '</div>' +
       (entry.ar ? '<div class="recall-ar">' + entry.ar + '</div>' : '') +
       '<div class="recall-answer" id="recall-answer-word">' + fullGerman + '</div>' +
