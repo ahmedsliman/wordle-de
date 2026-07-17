@@ -2668,6 +2668,13 @@
 
     /* ─── Sentence search overlay ────────────────────────────── */
     .sent-search-card { max-width: 460px; }
+    .sent-filter-tab {
+      min-height: auto; padding: 6px 12px; border-bottom: none;
+      border-radius: 6px; background: var(--color-surface);
+      font-size: 0.75rem; font-weight: 600; color: var(--color-text-muted);
+    }
+    .sent-filter-tab:hover { color: var(--color-text); }
+    .sent-filter-tab.active { background: var(--color-correct); color: var(--color-text-inv); }
     .sent-meta { font-size: 0.82rem; color: var(--color-text-muted); text-align: center; min-height: 16px; }
     .sent-list { width: 100%; display: flex; flex-direction: column; gap: 6px; max-height: 400px; overflow-y: auto; }
     .sent-row {
@@ -2680,7 +2687,14 @@
       font-family: 'DM Mono', monospace; font-size: 0.82rem; line-height: 1.4;
       word-wrap: break-word; overflow-wrap: break-word;
     }
-    .sent-text mark { background: var(--color-present); color: inherit; font-weight: 700; padding: 0 2px; border-radius: 2px; }
+    .sent-text mark {
+      background: var(--color-present);
+      color: var(--color-text-inv);
+      font-weight: 700;
+      padding: 2px 4px;
+      border-radius: 3px;
+      box-shadow: 0 0 0 1px var(--color-present);
+    }
     .sent-row-meta {
       display: flex; align-items: center; gap: 8px; font-size: 0.75rem; color: var(--color-text-muted);
     }
@@ -3737,6 +3751,13 @@
       <div class="overlay-title">🔎 Satzsuche</div>
       <input class="setup-input" id="sentsearch-input" type="text"
              placeholder="Wort oder Satz suchen…" autocomplete="off" />
+      <div class="sent-filter-tabs" id="sentsearch-filters" style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:0;">
+        <button class="tab sent-filter-tab active" data-level="all">Alle</button>
+        <button class="tab sent-filter-tab" data-level="A1">A1</button>
+        <button class="tab sent-filter-tab" data-level="A2">A2</button>
+        <button class="tab sent-filter-tab" data-level="B1">B1</button>
+        <button class="tab sent-filter-tab" data-level="B2">B2</button>
+      </div>
       <div class="sent-meta" id="sentsearch-meta"></div>
       <div class="sent-list" id="sentsearch-list"></div>
       <button class="start-btn" id="sentsearch-close-btn" style="width:100%;">Schließen</button>
@@ -8939,21 +8960,43 @@ document.getElementById('ach-close-btn')?.addEventListener('click', () => {
 function escapeRegExp(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 
 let sentenceCorpus = null;
+let sentSearchFilterLevel = 'all';
 
-function buildSentenceCorpus() {
+async function buildSentenceCorpus() {
   const corpus = [];
+
+  // Add sentences from word entries
   ['A1','A2','B1','B2','BUSINESS','MEDICAL','SOFTWARE','ENGINEERING','LEGAL'].forEach(lvl => (words[lvl] || []).forEach(e => {
     if (!e.sentence) return;
     corpus.push({ entry: e, level: lvl, filled: e.sentence.replace('___', titleCaseWord(e.w)) });
   }));
+
+  // Load and add Nicos Weg sentences
+  try {
+    const response = await fetch('nicos-sentences.json');
+    if (response.ok) {
+      const data = await response.json();
+      if (data.sentences) {
+        data.sentences.forEach(s => {
+          corpus.push(s);
+        });
+      }
+    }
+  } catch (e) {
+    // Nicos Weg sentences are optional; continue if fetch fails
+  }
+
   return corpus;
 }
 
 async function openSentSearchOverlay() {
   await ensureLevels(new Set(['A1','A2','B1','B2','BUSINESS','MEDICAL','SOFTWARE','ENGINEERING','LEGAL']));
-  sentenceCorpus = sentenceCorpus || buildSentenceCorpus();
+  sentenceCorpus = sentenceCorpus || await buildSentenceCorpus();
   const input = document.getElementById('sentsearch-input');
   input.value = '';
+  sentSearchFilterLevel = 'all';
+  document.querySelectorAll('.sent-filter-tab').forEach(btn => btn.classList.remove('active'));
+  document.querySelector('.sent-filter-tab[data-level="all"]').classList.add('active');
   renderSentResults('');
   document.getElementById('sentsearch-overlay').classList.remove('hidden');
   requestAnimationFrame(() => input.focus());
@@ -8963,17 +9006,22 @@ function renderSentResults(query) {
   const list = document.getElementById('sentsearch-list');
   const meta = document.getElementById('sentsearch-meta');
   const q = query.trim().toLowerCase();
-  if (q.length < 2) {
-    meta.textContent = '';
-    list.innerHTML = '<div class="sent-empty">Tippe mindestens 2 Zeichen, um Sätze zu durchsuchen.</div>';
-    return;
+
+  let matches = sentenceCorpus;
+  if (sentSearchFilterLevel !== 'all') {
+    matches = matches.filter(r => r.level === sentSearchFilterLevel);
   }
-  let matches = sentenceCorpus.filter(r =>
-    r.filled.toLowerCase().includes(q) || r.entry.w.toLowerCase().includes(q));
-  matches.sort((a, b) =>
-    (a.entry.w.toLowerCase().startsWith(q) === b.entry.w.toLowerCase().startsWith(q) ? 0
-      : a.entry.w.toLowerCase().startsWith(q) ? -1 : 1));
-  meta.textContent = matches.length ? `${matches.length} Treffer` : '';
+
+  if (q.length >= 2) {
+    matches = matches.filter(r =>
+      r.filled.toLowerCase().includes(q) || r.entry.w.toLowerCase().includes(q));
+    matches.sort((a, b) =>
+      (a.entry.w.toLowerCase().startsWith(q) === b.entry.w.toLowerCase().startsWith(q) ? 0
+        : a.entry.w.toLowerCase().startsWith(q) ? -1 : 1));
+  }
+
+  const totalInLevel = sentSearchFilterLevel === 'all' ? sentenceCorpus.length : sentenceCorpus.filter(r => r.level === sentSearchFilterLevel).length;
+  meta.textContent = matches.length ? `${matches.length}/${totalInLevel} Sätze` : '';
   if (!matches.length) {
     list.innerHTML = '<div class="sent-empty">Keine Sätze gefunden.</div>';
     return;
@@ -8982,7 +9030,11 @@ function renderSentResults(query) {
   matches.slice(0, 40).forEach(r => {
     const row = document.createElement('div');
     row.className = 'sent-row';
-    const highlighted = r.filled.replace(new RegExp(`(${escapeRegExp(r.entry.w)})`, 'i'), '<mark>$1</mark>');
+    let highlighted = r.filled;
+    if (q.length >= 2) {
+      // Highlight all occurrences of the search query in the sentence (case-insensitive)
+      highlighted = r.filled.replace(new RegExp(`(${escapeRegExp(q)})`, 'gi'), '<mark>$1</mark>');
+    }
     row.innerHTML =
       '<div class="sent-text">' + highlighted + '</div>' +
       '<div class="sent-row-meta">' +
@@ -9003,6 +9055,14 @@ document.getElementById('sentsearch-close-btn').addEventListener('click', () => 
   document.getElementById('sentsearch-overlay').classList.add('hidden');
 });
 document.getElementById('sentsearch-input').addEventListener('input', e => renderSentResults(e.target.value));
+document.querySelectorAll('.sent-filter-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.sent-filter-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    sentSearchFilterLevel = btn.dataset.level;
+    renderSentResults(document.getElementById('sentsearch-input').value);
+  });
+});
 
 // ─── Fullscreen ──────────────────────────────────────
 (function setupFullscreen() {
