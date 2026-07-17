@@ -2469,6 +2469,28 @@
       .satz-feedback.correct, .satz-feedback.wrong { animation: none; }
     }
 
+    .satz-grammar-tip {
+      display: flex; flex-direction: column; gap: 4px;
+      background: var(--color-surface); border-left: 3px solid var(--color-present);
+      border-radius: 0 10px 10px 0; padding: 10px 14px; margin: 4px 0 0;
+      font-size: 0.8rem; line-height: 1.4; animation: satz-tip-in 0.25s ease;
+    }
+    .satz-grammar-tip.hidden { display: none; }
+    .satz-tip-label {
+      font-weight: 700; font-size: 0.72rem; text-transform: uppercase;
+      letter-spacing: 0.03em; color: var(--color-present);
+    }
+    .satz-tip-example { font-family: 'DM Mono', monospace; color: var(--color-text); }
+    .satz-tip-example b { color: var(--color-present); font-weight: 700; }
+    .satz-tip-rule { color: var(--color-text-muted); }
+    @keyframes satz-tip-in {
+      0% { opacity: 0; transform: translateY(-4px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .satz-grammar-tip { animation: none; }
+    }
+
     /* Summary overlay */
     .satz-summary-score {
       font-size: 2.2rem; font-weight: 800;
@@ -3555,6 +3577,9 @@
     </div>
     <!-- Feedback message -->
     <div class="satz-feedback" id="satz-feedback" aria-live="polite"></div>
+    <!-- Grammatik-Tipp: shown after a correct round when the sentence matches a
+         detected construct (Konjunktiv II, Passiv, dass-clause, etc.) -->
+    <div class="satz-grammar-tip hidden" id="satz-grammar-tip" aria-live="polite"></div>
   </div>
 
   <!-- ── Artikel-Sprint (der/die/das drill) ─────── -->
@@ -7752,6 +7777,69 @@ function fireConfetti() {
   })(start);
 }
 
+// ─── Grammatik-Tipp (noticing-hypothesis micro-card) ──────────────────────────
+// nicos-weg-grammar-audit.md turned out to be a QA report flagging ~46 miscalibrated
+// sentences out of ~847, not a per-sentence construct tag — so there's no existing
+// "this sentence uses Konjunktiv II" data to read. Detecting the construct from the
+// sentence text at runtime instead covers all ~847 sentences (and any future one)
+// with no authoring pass. Patterns were tuned against the real corpus: each is
+// checked for false positives before being included here (see e.g. the
+// relative-clause pattern's negative lookahead, added specifically because the
+// naive version matched demonstrative "das/die" starting a new independent clause
+// — "Ich bin satt, das Essen war lecker" — as if it were a relative clause).
+// Order matters: checked top-to-bottom, first match wins. Konjunktiv II markers
+// are checked first since they can co-occur with an infinitive-like sentence end;
+// modal+infinitive is checked last since it's the most generic/common pattern
+// (~13% of the corpus) and shouldn't shadow a more specific construct in the same
+// sentence.
+const GRAMMAR_CONSTRUCTS = [
+  { id: 'konjunktiv2',       label: 'Konjunktiv II',        re: /\b(würde[nst]?|hätte[nst]?|wäre[nst]?|könnte[nst]?|müsste[nst]?|sollte[nst]?)\b/i,
+    rule: 'Konjunktiv II (würde/hätte/wäre/könnte + Infinitiv) drückt etwas Unwirkliches, Höfliches oder einen Wunsch aus — keine echte Tatsache.' },
+  { id: 'passiv',            label: 'Passiv',               re: /\b(wird|werden|wurde[n]?)\b.*\bge\w+(t|en)\b/i,
+    rule: 'Passiv (wird/werden/wurde + Partizip II) rückt die Handlung in den Mittelpunkt — wer sie macht, ist unwichtig oder unbekannt.' },
+  { id: 'dass_clause',       label: 'Dass-Satz',            re: /,\s*dass\b/i,
+    rule: 'Nach „dass" ist der Satz ein Nebensatz — das konjugierte Verb wandert ganz ans Ende.' },
+  { id: 'ob_clause',         label: 'Ob-Satz',              re: /,\s*ob\b/i,
+    rule: 'Eine indirekte Frage mit „ob": auch hier steht das konjugierte Verb am Satzende, wie bei „dass".' },
+  { id: 'relative_clause',   label: 'Relativsatz',          re: /,\s*(der|die|das|den|dem|deren|dessen)\s+(?![A-ZÄÖÜ])/,
+    rule: '„der/die/das" verweist hier zurück auf das Nomen davor und leitet einen Relativsatz ein — das Verb steht am Ende.' },
+  // JS's \w is ASCII-only (unlike Python's), so plain \w+ silently truncates
+  // a match right after an umlaut (e.g. "jünger" → only "nger" captured,
+  // since ü isn't \w). Only matters here: this pattern's whole match IS the
+  // highlighted trigger text, with no surrounding .* to absorb the gap the
+  // way modal_infinitive's does — so it needs the explicit German letter class.
+  { id: 'comparative_als',   label: 'Komparativ mit „als"', re: /\b[a-zA-ZäöüÄÖÜß]+er\s+als\b/i,
+    rule: 'Adjektiv + „-er" + „als" vergleicht zwei Dinge — wie „bigger than" im Englischen.' },
+  { id: 'modal_infinitive',  label: 'Modalverb + Infinitiv',re: /\b(kann|muss|will|soll|möchte|darf|können|müssen|wollen|sollen|möchten|dürfen)\b.*\b\w+en[.?!]?$/i,
+    rule: 'Das Modalverb wird konjugiert, der zweite Verb bleibt im Infinitiv und steht ganz am Ende.' },
+];
+
+function detectGrammarConstruct(sentence) {
+  for (const c of GRAMMAR_CONSTRUCTS) {
+    const m = sentence.match(c.re);
+    if (m) return { ...c, trigger: m[0] };
+  }
+  return null;
+}
+
+// Shows a small dismissible-by-nature (auto-advances with the round) tip card
+// using the exact sentence the learner just solved correctly, per the noticing
+// hypothesis (Schmidt) — explanation lands best immediately after successful
+// production, not before. Returns true if a tip was shown, so the caller can
+// extend the auto-advance delay enough to actually read it.
+function showGrammatikTipp(fullSentence) {
+  const c = detectGrammarConstruct(fullSentence);
+  const tipEl = document.getElementById('satz-grammar-tip');
+  if (!c) { tipEl.classList.add('hidden'); return false; }
+  const highlighted = fullSentence.replace(c.trigger, '<b>' + c.trigger + '</b>');
+  tipEl.innerHTML =
+    '<span class="satz-tip-label">💡 ' + c.label + '</span>' +
+    '<span class="satz-tip-example">' + highlighted + '</span>' +
+    '<span class="satz-tip-rule">' + c.rule + '</span>';
+  tipEl.classList.remove('hidden');
+  return true;
+}
+
 // ─── Satz-Modus (sentence exercises) ─────────────────
 const SATZ_ROUNDS = 10; // 5 words × 2 sub-modes (fill-in + word-order)
 let satzQueue     = [];  // [{entry, mode:'fill'|'order'}]
@@ -7848,6 +7936,7 @@ function renderSatzRound() {
   const fb = document.getElementById('satz-feedback');
   fb.textContent = '';
   fb.className = 'satz-feedback';
+  document.getElementById('satz-grammar-tip').classList.add('hidden');
 
   if (mode === 'fill') renderFillMode(entry);
   else                  renderOrderMode(entry);
@@ -7921,12 +8010,14 @@ function checkSatzFill() {
   });
 
   const fb = document.getElementById('satz-feedback');
+  let tipShown = false;
   if (correct) {
     fb.textContent = '✓ Richtig!';
     fb.className = 'satz-feedback correct';
     satzScore++;
     navigator.vibrate?.([40, 30, 40]);
     earnDiamonds(2, 'satz_fill_correct', document.getElementById('diamond-counter'));
+    tipShown = showGrammatikTipp(entry.sentence.replace('___', entry.w));
   } else {
     fb.textContent = '✗ ' + entry.w + (entry.en ? ' — ' + entry.en : '');
     fb.className = 'satz-feedback wrong';
@@ -7940,7 +8031,7 @@ function checkSatzFill() {
   satzResults.push({ entry, mode: 'fill', correct });
   document.getElementById('satz-fill-check').disabled = true;
 
-  setTimeout(advanceSatzRound, correct ? 1000 : 1800);
+  setTimeout(advanceSatzRound, tipShown ? 2800 : (correct ? 1000 : 1800));
 }
 
 // ── Mode B: Word order ──
@@ -8038,12 +8129,14 @@ function checkSatzOrder() {
   answerRow.classList.add(correct ? 'correct' : 'wrong');
 
   const fb = document.getElementById('satz-feedback');
+  let tipShown = false;
   if (correct) {
     fb.textContent = '✓ Richtig!';
     fb.className = 'satz-feedback correct';
     satzScore++;
     navigator.vibrate?.([40, 30, 40]);
     earnDiamonds(3, 'satz_order_correct', document.getElementById('diamond-counter'));
+    tipShown = showGrammatikTipp(full);
   } else {
     fb.textContent = '✗ Richtige Reihenfolge: ' + correctWords.join(' ');
     fb.className = 'satz-feedback wrong';
@@ -8055,7 +8148,7 @@ function checkSatzOrder() {
   document.getElementById('satz-order-check').disabled = true;
   document.getElementById('satz-chip-pool').querySelectorAll('.satz-chip').forEach(c => c.disabled = true);
 
-  setTimeout(advanceSatzRound, correct ? 1000 : 2200);
+  setTimeout(advanceSatzRound, tipShown ? 2800 : (correct ? 1000 : 2200));
 }
 
 function advanceSatzRound() {
