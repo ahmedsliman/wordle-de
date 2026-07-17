@@ -1253,6 +1253,10 @@
       font-size: 0.95rem; line-height: 1.4; color: var(--color-text);
       margin-bottom: 8px; font-weight: 500;
     }
+    .sentence-result-text mark {
+      background: var(--color-present); color: var(--color-text-inv);
+      font-weight: 700; padding: 1px 3px; border-radius: 3px;
+    }
     .sentence-result-meta {
       font-size: 0.75rem; color: var(--color-text-muted);
       display: flex; gap: 12px; flex-wrap: wrap;
@@ -2731,46 +2735,6 @@
     .vocab-bar i.on { background: var(--color-correct); }
     .vocab-empty { font-size: 0.85rem; color: var(--color-text-muted); padding: 16px 0; text-align: center; }
 
-    /* ─── Sentence search overlay ────────────────────────────── */
-    .sent-search-card { max-width: 460px; }
-    .sent-filter-tab {
-      min-height: auto; padding: 6px 12px; border-bottom: none;
-      border-radius: 6px; background: var(--color-surface);
-      font-size: 0.75rem; font-weight: 600; color: var(--color-text-muted);
-    }
-    .sent-filter-tab:hover { color: var(--color-text); }
-    .sent-filter-tab.active { background: var(--color-correct); color: var(--color-text-inv); }
-    .sent-meta { font-size: 0.82rem; color: var(--color-text-muted); text-align: center; min-height: 16px; }
-    .sent-list { width: 100%; display: flex; flex-direction: column; gap: 6px; max-height: 400px; overflow-y: auto; }
-    .sent-row {
-      display: flex; flex-direction: column; gap: 6px; padding: 10px 10px;
-      background: var(--color-surface); border-radius: 10px; font-size: 0.85rem;
-      cursor: default; transition: background 0.1s;
-    }
-    .sent-row:active { background: var(--hairline); }
-    .sent-text {
-      font-family: 'DM Mono', monospace; font-size: 0.82rem; line-height: 1.4;
-      word-wrap: break-word; overflow-wrap: break-word;
-    }
-    .sent-text mark {
-      background: var(--color-present);
-      color: var(--color-text-inv);
-      font-weight: 700;
-      padding: 2px 4px;
-      border-radius: 3px;
-      box-shadow: 0 0 0 1px var(--color-present);
-    }
-    .sent-row-meta {
-      display: flex; align-items: center; gap: 8px; font-size: 0.75rem; color: var(--color-text-muted);
-    }
-    .sent-level {
-      flex-shrink: 0; font-weight: 700; padding: 2px 6px; border-radius: 4px;
-      background: var(--color-border); color: var(--color-text-muted); font-size: 0.7rem;
-    }
-    .sent-en {
-      flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    }
-
     /* ─── Setup/onboarding overlay ───────────────────────── */
     .setup-card {
       max-width: 360px; display: flex; flex-direction: column; align-items: center;
@@ -3852,25 +3816,6 @@
       </div>
       <div class="vocab-list" id="vocab-list"></div>
       <button class="start-btn" id="vocab-close-btn" style="width:100%;">Schließen</button>
-    </div>
-  </div>
-
-  <!-- Sentence Search overlay -->
-  <div class="overlay hidden" id="sentsearch-overlay">
-    <div class="overlay-card sent-search-card">
-      <div class="overlay-title">🔎 Satzsuche</div>
-      <input class="setup-input" id="sentsearch-input" type="text"
-             placeholder="Wort oder Satz suchen…" autocomplete="off" />
-      <div class="sent-filter-tabs" id="sentsearch-filters" style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:0;">
-        <button class="tab sent-filter-tab active" data-level="all">Alle</button>
-        <button class="tab sent-filter-tab" data-level="A1">A1</button>
-        <button class="tab sent-filter-tab" data-level="A2">A2</button>
-        <button class="tab sent-filter-tab" data-level="B1">B1</button>
-        <button class="tab sent-filter-tab" data-level="B2">B2</button>
-      </div>
-      <div class="sent-meta" id="sentsearch-meta"></div>
-      <div class="sent-list" id="sentsearch-list"></div>
-      <button class="start-btn" id="sentsearch-close-btn" style="width:100%;">Schließen</button>
     </div>
   </div>
 
@@ -7286,13 +7231,19 @@ async function ensureLevels(levelSet) {
 let sentenceIndex = [];
 let sentenceData = null;
 
+// Unicode-safe word split (JS regex \b doesn't recognize ä/ö/ü/ß as word chars,
+// so it's unreliable for German text — split on non-letters instead).
+function wordsOf(text) {
+  return text.toLowerCase().split(/[^a-zäöüßA-ZÄÖÜ]+/).filter(Boolean);
+}
+
 async function loadSentenceData() {
   try {
     const resp = await fetch('nicos-sentences.json');
     sentenceData = await resp.json();
-    sentenceIndex = (sentenceData.sentences || []).map((s, idx) => ({
+    sentenceIndex = (sentenceData.sentences || []).map((s) => ({
       ...s,
-      searchText: (s.text + ' ' + s.speaker + ' ' + (s.tags?.join(' ') || '')).toLowerCase()
+      words: wordsOf(s.text)
     }));
     setupSentenceSearch();
   } catch (e) {
@@ -7317,9 +7268,16 @@ function setupSentenceSearch() {
 
     let filtered = sentenceIndex;
 
-    // Text search (fuzzy-ish)
+    // Text search: whole-word or word-prefix match on sentence text (avoids
+    // false positives like query "weg" matching inside "bewegt"); substring
+    // match on speaker/tags since those are short identifiers, not prose.
     if (query) {
-      filtered = filtered.filter(s => s.searchText.includes(query));
+      filtered = filtered.filter(s => {
+        const wordMatch = s.words.some(w => w === query || w.startsWith(query));
+        const metaMatch = (s.speaker || '').toLowerCase().includes(query) ||
+          (s.tags || []).some(t => t.toLowerCase().includes(query));
+        return wordMatch || metaMatch;
+      });
     }
 
     // Level filter
@@ -7354,9 +7312,12 @@ function setupSentenceSearch() {
       const tags = (s.tags || []).slice(0, 2).map(t =>
         `<span class="sentence-result-tag">${t}</span>`
       ).join('');
+      const text = query
+        ? s.text.replace(new RegExp(`(${escapeRegExp(query)})`, 'gi'), '<mark>$1</mark>')
+        : s.text;
       card.innerHTML = `
         <div class="sentence-result-speaker">${s.speaker} · ${s.episode_id}</div>
-        <div class="sentence-result-text">${s.text}</div>
+        <div class="sentence-result-text">${text}</div>
         <div class="sentence-result-meta">
           <span>${diffBadge}</span>
           ${tags}
@@ -9225,133 +9186,7 @@ document.getElementById('ach-close-btn')?.addEventListener('click', () => {
   document.getElementById('ach-overlay').classList.add('hidden');
 });
 
-// ─── Sentence search (Satzsuche) ──────────────────────
 function escapeRegExp(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
-
-let sentenceCorpus = null;
-let sentSearchFilterLevel = 'all';
-
-async function buildSentenceCorpus() {
-  const corpus = [];
-
-  // Add sentences from word entries
-  ['A1','A2','B1','B2','BUSINESS','MEDICAL','SOFTWARE','ENGINEERING','LEGAL'].forEach(lvl => (words[lvl] || []).forEach(e => {
-    if (!e.sentence) return;
-    corpus.push({ entry: e, level: lvl, filled: e.sentence.replace('___', titleCaseWord(e.w)) });
-  }));
-
-  // Load and add Nicos Weg sentences
-  try {
-    const response = await fetch('nicos-sentences.json');
-    if (response.ok) {
-      const data = await response.json();
-      if (data.sentences) {
-        data.sentences.forEach(s => {
-          corpus.push(s);
-        });
-      }
-    }
-  } catch (e) {
-    // Nicos Weg sentences are optional; continue if fetch fails
-  }
-
-  return corpus;
-}
-
-async function openSentSearchOverlay() {
-  await ensureLevels(new Set(['A1','A2','B1','B2','BUSINESS','MEDICAL','SOFTWARE','ENGINEERING','LEGAL']));
-  sentenceCorpus = sentenceCorpus || await buildSentenceCorpus();
-  const input = document.getElementById('sentsearch-input');
-  input.value = '';
-  sentSearchFilterLevel = 'all';
-  document.querySelectorAll('.sent-filter-tab').forEach(btn => btn.classList.remove('active'));
-  document.querySelector('.sent-filter-tab[data-level="all"]').classList.add('active');
-  renderSentResults('');
-  document.getElementById('sentsearch-overlay').classList.remove('hidden');
-  requestAnimationFrame(() => input.focus());
-}
-
-function renderSentResults(query) {
-  const list = document.getElementById('sentsearch-list');
-  const meta = document.getElementById('sentsearch-meta');
-  const q = query.trim().toLowerCase();
-
-  let matches = sentenceCorpus;
-  if (sentSearchFilterLevel !== 'all') {
-    matches = matches.filter(r => r.level === sentSearchFilterLevel);
-  }
-
-  if (q.length >= 2) {
-    // Match whole words or exact word entries, not substrings
-    const wordBoundaryRegex = new RegExp(`\\b${escapeRegExp(q)}\\b`, 'i');
-    matches = matches.filter(r => {
-      const wordLower = r.entry.w.toLowerCase();
-      // Exact word match takes priority
-      if (wordLower === q) return true;
-      // Word starts with query
-      if (wordLower.startsWith(q)) return true;
-      // Whole word match in sentence (not substring)
-      if (wordBoundaryRegex.test(r.filled)) return true;
-      return false;
-    });
-    matches.sort((a, b) => {
-      const aWord = a.entry.w.toLowerCase();
-      const bWord = b.entry.w.toLowerCase();
-      // Exact word match: highest priority
-      if ((aWord === q) !== (bWord === q)) return aWord === q ? -1 : 1;
-      // Word starts with query: medium priority
-      if (aWord.startsWith(q) !== bWord.startsWith(q)) return aWord.startsWith(q) ? -1 : 1;
-      return 0;
-    });
-  }
-
-  const totalInLevel = sentSearchFilterLevel === 'all' ? sentenceCorpus.length : sentenceCorpus.filter(r => r.level === sentSearchFilterLevel).length;
-  meta.textContent = matches.length ? `${matches.length}/${totalInLevel} Sätze` : '';
-  if (!matches.length) {
-    list.innerHTML = '<div class="sent-empty">Keine Sätze gefunden.</div>';
-    return;
-  }
-  list.innerHTML = '';
-  matches.slice(0, 40).forEach(r => {
-    const row = document.createElement('div');
-    row.className = 'sent-row';
-    let highlighted = r.filled;
-    if (q.length >= 2) {
-      // Highlight all occurrences of the search query (case-insensitive)
-      highlighted = highlighted.replace(new RegExp(`(${escapeRegExp(q)})`, 'gi'), '<mark>$1</mark>');
-      // Also ensure the main word is highlighted if it wasn't already caught by the query
-      if (!r.entry.w.toLowerCase().includes(q)) {
-        highlighted = highlighted.replace(new RegExp(`(${escapeRegExp(r.entry.w)})`, 'i'), '<mark>$1</mark>');
-      }
-    }
-    row.innerHTML =
-      '<div class="sent-text">' + highlighted + '</div>' +
-      '<div class="sent-row-meta">' +
-        '<span class="sent-level">' + r.level + '</span>' +
-        '<span class="sent-en">' + (r.entry.en || '') + '</span>' +
-        '<button class="vocab-speak-btn" aria-label="Aussprache">🔊</button>' +
-      '</div>';
-    row.querySelector('.vocab-speak-btn').addEventListener('click', ev => {
-      ev.stopPropagation();
-      speakWord(r.filled, ev.currentTarget);
-    });
-    list.appendChild(row);
-  });
-}
-
-document.getElementById('home-sentsearch-btn')?.addEventListener('click', openSentSearchOverlay);
-document.getElementById('sentsearch-close-btn').addEventListener('click', () => {
-  document.getElementById('sentsearch-overlay').classList.add('hidden');
-});
-document.getElementById('sentsearch-input').addEventListener('input', e => renderSentResults(e.target.value));
-document.querySelectorAll('.sent-filter-tab').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.sent-filter-tab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    sentSearchFilterLevel = btn.dataset.level;
-    renderSentResults(document.getElementById('sentsearch-input').value);
-  });
-});
 
 // ─── Fullscreen ──────────────────────────────────────
 (function setupFullscreen() {
@@ -9824,10 +9659,10 @@ function buildHome() {
   const moreSection = document.getElementById('home-level-row-more');
   if (moreBtn && moreSection) {
     moreBtn.hidden = false;
-    moreBtn.addEventListener('click', () => {
+    moreBtn.onclick = () => {
       moreSection.classList.toggle('hidden');
       moreBtn.classList.toggle('expanded');
-    });
+    };
   }
 
   if (newlyCompleted) showPackCompleteOverlay(newlyCompleted.path, newlyCompleted.prog);
