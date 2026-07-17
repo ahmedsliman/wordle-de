@@ -3310,7 +3310,19 @@
 
     <!-- Lernpfad picker -->
     <div class="home-section-title">Lernpfad</div>
-    <div class="home-level-row" id="home-level-row"></div>
+    <div id="home-paths-container">
+      <div class="home-level-row" id="home-level-row-core"></div>
+      <button id="home-more-courses-btn" class="home-more-courses-btn" hidden>
+        <span>+ Mehr Kurse</span>
+        <span class="more-courses-icon">▼</span>
+      </button>
+      <div id="home-level-row-more" class="home-level-row-more hidden">
+        <div class="home-section-subtitle">💼 Beruf</div>
+        <div class="home-level-row" id="home-level-row-professional"></div>
+        <div class="home-section-subtitle">🎓 Thema</div>
+        <div class="home-level-row" id="home-level-row-thematic"></div>
+      </div>
+    </div>
 
   </div>
 
@@ -9240,11 +9252,27 @@ function renderSentResults(query) {
   }
 
   if (q.length >= 2) {
-    matches = matches.filter(r =>
-      r.filled.toLowerCase().includes(q) || r.entry.w.toLowerCase().includes(q));
-    matches.sort((a, b) =>
-      (a.entry.w.toLowerCase().startsWith(q) === b.entry.w.toLowerCase().startsWith(q) ? 0
-        : a.entry.w.toLowerCase().startsWith(q) ? -1 : 1));
+    // Match whole words or exact word entries, not substrings
+    const wordBoundaryRegex = new RegExp(`\\b${escapeRegExp(q)}\\b`, 'i');
+    matches = matches.filter(r => {
+      const wordLower = r.entry.w.toLowerCase();
+      // Exact word match takes priority
+      if (wordLower === q) return true;
+      // Word starts with query
+      if (wordLower.startsWith(q)) return true;
+      // Whole word match in sentence (not substring)
+      if (wordBoundaryRegex.test(r.filled)) return true;
+      return false;
+    });
+    matches.sort((a, b) => {
+      const aWord = a.entry.w.toLowerCase();
+      const bWord = b.entry.w.toLowerCase();
+      // Exact word match: highest priority
+      if ((aWord === q) !== (bWord === q)) return aWord === q ? -1 : 1;
+      // Word starts with query: medium priority
+      if (aWord.startsWith(q) !== bWord.startsWith(q)) return aWord.startsWith(q) ? -1 : 1;
+      return 0;
+    });
   }
 
   const totalInLevel = sentSearchFilterLevel === 'all' ? sentenceCorpus.length : sentenceCorpus.filter(r => r.level === sentSearchFilterLevel).length;
