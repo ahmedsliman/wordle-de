@@ -2664,7 +2664,7 @@
       background: var(--color-surface); border: 2px solid var(--hairline);
       border-radius: 12px; cursor: pointer;
       display: flex; align-items: center; justify-content: center; text-align: center;
-      line-height: 1.3; word-break: break-word;
+      line-height: 1.3; min-width: 0; overflow-wrap: break-word; hyphens: auto;
       transition: transform 0.12s, border-color 0.15s, background 0.15s;
       -webkit-tap-highlight-color: transparent;
     }
@@ -2924,7 +2924,15 @@
     /* ─── Home header row ─────────────────────────────────── */
     .home-header-row {
       display: flex; align-items: flex-start; justify-content: space-between;
+      flex-wrap: wrap; gap: 8px 0;
       padding: 18px 0 14px;
+    }
+    /* On narrow phones the greeting + 4-icon cluster no longer fit one row —
+       the icon cluster wraps to its own full-width row (right-aligned)
+       instead of squeezing the greeting text into an awkward 2-line wrap. */
+    .home-header-icons {
+      display: flex; align-items: center; gap: 6px;
+      flex-wrap: wrap; justify-content: flex-end;
     }
     .home-streak-line {
       font-size: 0.88rem; font-weight: 600; color: var(--color-text-muted);
@@ -2950,12 +2958,12 @@
 
     /* ─── Hero CTA card ───────────────────────────────────── */
     .home-hero {
-      width: 100%; border-radius: 22px;
+      width: 100%; border-radius: 18px;
       background: linear-gradient(140deg, #1D9E75 0%, #0f7a5a 100%);
-      padding: 22px 22px 18px; margin-bottom: 14px;
-      display: flex; flex-direction: column; gap: 4px;
+      padding: 16px 18px; margin-bottom: 10px;
+      display: flex; flex-direction: column; gap: 2px;
       cursor: pointer; border: none; text-align: left;
-      box-shadow: 0 6px 24px rgba(29,158,117,0.30);
+      box-shadow: 0 4px 16px rgba(29,158,117,0.28);
       transition: transform 0.15s, box-shadow 0.15s;
       -webkit-tap-highlight-color: transparent;
     }
@@ -2963,22 +2971,26 @@
     .home-hero.done {
       background: linear-gradient(140deg, #059669 0%, #065f46 100%);
     }
+    .home-hero-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .home-hero-text { min-width: 0; }
     .home-hero-eyebrow {
-      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
-      text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 2px;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: rgba(255,255,255,0.65);
     }
     .home-hero-title {
-      font-family: 'Fraunces', serif; font-size: 1.8rem; font-weight: 700;
-      color: #fff; line-height: 1.1;
+      font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 700;
+      color: #fff; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .home-hero-meta {
-      font-size: 0.83rem; color: rgba(255,255,255,0.78); margin-top: 2px; line-height: 1.4;
+      font-size: 0.8rem; color: rgba(255,255,255,0.78); margin-top: 4px; line-height: 1.4;
     }
     .home-hero-cta {
-      margin-top: 14px; align-self: flex-start;
+      flex-shrink: 0;
       background: #fff; color: #0f7a5a;
-      border-radius: 999px; padding: 10px 24px;
-      font-weight: 800; font-size: 0.9rem; letter-spacing: 0.01em;
+      border-radius: 999px; padding: 9px 18px;
+      font-weight: 800; font-size: 0.85rem; letter-spacing: 0.01em;
       box-shadow: 0 2px 8px rgba(0,0,0,0.13);
       display: inline-flex; align-items: center; gap: 6px;
     }
@@ -3037,10 +3049,17 @@
       box-shadow: var(--shadow-sm); cursor: pointer;
       transition: transform 0.12s; text-align: center;
       -webkit-tap-highlight-color: transparent;
+      min-width: 0; /* same grid-shrink fix as .path-chip — lets the label actually wrap/shrink */
     }
     .home-mode-chip:active { transform: scale(0.93); }
     .home-mode-chip-icon  { font-size: 1.35rem; }
-    .home-mode-chip-label { font-size: 0.65rem; font-weight: 700; color: var(--color-text-muted); word-break: break-word; line-height: 1.2; }
+    .home-mode-chip-label {
+      font-size: 0.65rem; font-weight: 700; color: var(--color-text-muted); line-height: 1.2;
+      /* word-break:break-word splits anywhere mid-character with no hyphen
+         shown ("Kreuzw"/"ort") — same standard as .path-chip-label: shrink
+         and hyphenate at real syllable boundaries instead. */
+      min-width: 0; overflow-wrap: break-word; hyphens: auto;
+    }
     .home-level-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -3198,17 +3217,34 @@
     .ws-ghost-btn:hover { color: var(--color-text); }
 
     /* ─── XP bar ──────────────────────────────────────────── */
+    /* Was styled inline for sitting inside the dark-green hero card; now its
+       own slim card on the light home background, so it needs real
+       light/dark-aware colors instead of the old inline white/translucent-
+       white values (which is also why xp-rank-label/xp-total had no CSS
+       class rules before — they were 100% inline style, stripped when this
+       moved out of the hero). */
     .home-xp-row {
-      display: flex; align-items: center; gap: 7px; margin-top: 12px;
-      width: 100%;
+      display: flex; align-items: center; gap: 8px;
+      width: 100%; margin-bottom: 14px; padding: 10px 14px;
+      background: var(--color-surface); border: 1.5px solid var(--hairline);
+      border-radius: 12px;
+    }
+    .xp-rank-icon { font-size: 1rem; flex-shrink: 0; }
+    .xp-rank-label {
+      font-size: 0.78rem; font-weight: 700; color: var(--color-text);
+      white-space: nowrap; flex-shrink: 0;
     }
     .home-xp-bar {
       flex: 1; height: 5px; border-radius: 3px;
-      background: rgba(255,255,255,0.2); overflow: hidden;
+      background: var(--color-border); overflow: hidden;
     }
     .xp-bar-fill {
-      height: 100%; border-radius: 3px; background: #fff;
+      height: 100%; border-radius: 3px; background: var(--color-correct);
       transition: width 0.5s ease; width: 0%;
+    }
+    .xp-total {
+      font-size: 0.72rem; font-weight: 600; color: var(--color-text-muted);
+      white-space: nowrap; flex-shrink: 0;
     }
 
     /* ─── Combo toast ─────────────────────────────────────── */
@@ -3442,7 +3478,7 @@
         <div class="home-greeting" id="home-greeting">Guten Morgen!</div>
         <div class="home-streak-line" id="home-streak-line"></div>
       </div>
-      <div style="display:flex;align-items:center;gap:6px;">
+      <div class="home-header-icons">
         <button class="home-icon-btn" id="home-sentsearch-btn" aria-label="Satzsuche öffnen" title="Satzsuche">🔎</button>
         <button class="home-icon-btn" id="home-vocab-btn" aria-label="Wortschatz öffnen" title="Wortschatz">📚</button>
         <button class="home-icon-btn" id="home-ach-btn"   aria-label="Achievements öffnen" title="Achievements">🏆 <span class="ach-count" style="font-size:0.72rem;">0/15</span></button>
@@ -3451,18 +3487,29 @@
     </div>
 
     <!-- Hero CTA -->
+    <!-- Compact hero: eyebrow+title sit inline with the CTA instead of each
+         being their own full-width line — this used to be ~350px tall (title
+         as a 1.8rem heading, CTA on its own line below with margin-top:14px,
+         plus the XP bar crammed inside), eating most of the first mobile
+         screen before any mode/path picker was reachable. XP moved to its
+         own slim row below: it's ambient progress info, not part of "start
+         practicing now" messaging, and didn't need to live inside the CTA. -->
     <button class="home-hero" id="home-hero">
-      <div class="home-hero-eyebrow" id="home-hero-eyebrow">Heute üben · ~5 Min</div>
-      <div class="home-hero-title" id="home-hero-title">Jetzt starten</div>
-      <div class="home-hero-meta" id="home-hero-meta"></div>
-      <div class="home-hero-cta" id="home-hero-cta">▶ Starten</div>
-      <div class="home-xp-row">
-        <span class="xp-rank-icon">🌱</span>
-        <span class="xp-rank-label" style="font-size:0.78rem;color:rgba(255,255,255,0.8);font-weight:700;">Einsteiger</span>
-        <div class="home-xp-bar"><div class="xp-bar-fill"></div></div>
-        <span class="xp-total" style="font-size:0.7rem;color:rgba(255,255,255,0.6);">0 XP</span>
+      <div class="home-hero-row">
+        <div class="home-hero-text">
+          <div class="home-hero-eyebrow" id="home-hero-eyebrow">Heute üben · ~5 Min</div>
+          <div class="home-hero-title" id="home-hero-title">Jetzt starten</div>
+        </div>
+        <div class="home-hero-cta" id="home-hero-cta">▶ Starten</div>
       </div>
+      <div class="home-hero-meta" id="home-hero-meta"></div>
     </button>
+    <div class="home-xp-row">
+      <span class="xp-rank-icon">🌱</span>
+      <span class="xp-rank-label">Einsteiger</span>
+      <div class="home-xp-bar"><div class="xp-bar-fill"></div></div>
+      <span class="xp-total">0 XP</span>
+    </div>
 
     <!-- Daily progress bar -->
     <div id="home-daily-bar" class="home-daily-bar"></div>
