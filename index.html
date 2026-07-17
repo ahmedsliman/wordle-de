@@ -9259,8 +9259,12 @@ function renderSentResults(query) {
     row.className = 'sent-row';
     let highlighted = r.filled;
     if (q.length >= 2) {
-      // Highlight all occurrences of the search query in the sentence (case-insensitive)
-      highlighted = r.filled.replace(new RegExp(`(${escapeRegExp(q)})`, 'gi'), '<mark>$1</mark>');
+      // Highlight all occurrences of the search query (case-insensitive)
+      highlighted = highlighted.replace(new RegExp(`(${escapeRegExp(q)})`, 'gi'), '<mark>$1</mark>');
+      // Also ensure the main word is highlighted if it wasn't already caught by the query
+      if (!r.entry.w.toLowerCase().includes(q)) {
+        highlighted = highlighted.replace(new RegExp(`(${escapeRegExp(r.entry.w)})`, 'i'), '<mark>$1</mark>');
+      }
     }
     row.innerHTML =
       '<div class="sent-text">' + highlighted + '</div>' +
