@@ -2918,7 +2918,7 @@
     .home-section-title {
       font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em;
       text-transform: uppercase; color: var(--color-text-muted);
-      margin-bottom: 10px;
+      margin-top: 26px; margin-bottom: 10px;
     }
 
     /* ─── Home header row ─────────────────────────────────── */
@@ -2938,8 +2938,21 @@
       font-size: 0.88rem; font-weight: 600; color: var(--color-text-muted);
       margin-top: 3px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
     }
-    .home-streak-val { font-size: 1rem; font-weight: 800; color: var(--color-text); }
-    .home-due-badge  { font-weight: 700; color: var(--color-present); }
+    /* Streak/due badges as filled pills instead of plain text — the streak
+       is the app's core emotional hook and was getting lost as inline text
+       the same weight as everything else under the greeting. */
+    .home-streak-val {
+      font-size: 0.85rem; font-weight: 800; color: var(--color-present);
+      background: color-mix(in srgb, var(--color-present) 12%, transparent);
+      border: 1px solid color-mix(in srgb, var(--color-present) 30%, transparent);
+      padding: 3px 10px; border-radius: 999px; display: inline-flex; align-items: center;
+    }
+    .home-due-badge {
+      font-weight: 700; font-size: 0.85rem; color: var(--color-correct-text);
+      background: color-mix(in srgb, var(--color-correct-text) 10%, transparent);
+      border: 1px solid color-mix(in srgb, var(--color-correct-text) 26%, transparent);
+      padding: 3px 10px; border-radius: 999px; display: inline-flex; align-items: center;
+    }
     .home-diamond-badge {
       font-size: 0.8rem; font-weight: 700; color: var(--color-text-muted);
       background: var(--color-surface); border: 1px solid var(--hairline);
@@ -2996,9 +3009,15 @@
     }
 
     /* ─── Recall teaser ───────────────────────────────────── */
+    /* Subtle amber wash + left accent (amber = the app's existing "due /
+       memory" color, see .home-due-badge) so this — the one card on the
+       page actually personalised via spaced repetition — reads as visually
+       distinct from the generic white/gray cards around it. */
     .home-recall-card {
       width: 100%; border-radius: 16px;
-      background: var(--color-surface); border: 1.5px solid var(--hairline);
+      background: color-mix(in srgb, var(--color-present) 5%, var(--color-surface));
+      border: 1.5px solid color-mix(in srgb, var(--color-present) 22%, var(--hairline));
+      border-left: 3px solid var(--color-present);
       box-shadow: var(--shadow-sm); padding: 16px 18px;
       margin-bottom: 20px;
     }
@@ -3035,13 +3054,23 @@
     }
     .recall-practice-btn:active { background: var(--color-correct); color: #fff; border-color: transparent; }
 
-    /* ─── Mode chips grid ────────────────────────────────── */
+    /* ─── Mode chips shelf ───────────────────────────────────
+       Both this and .home-level-row below used to be multi-row grids —
+       9 mode chips at 3-4/row = up to 3 rows, 5 pack chips at 3/row = 2 rows.
+       That's the home screen re-rendering the *entire* in-game content
+       picker (same PATHS/MODES data as #content-picker-panel and
+       #mode-switcher) permanently expanded, stacked top to bottom. Nothing
+       here is being hidden or cut — it's laid out as a single horizontally
+       scrollable shelf (app-store/Netflix-row pattern) instead, so every
+       option is still one tap (now a swipe) away but the page itself is
+       roughly half the scroll height. */
     .home-modes-strip {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
-      margin-bottom: 22px;
+      display: flex; gap: 8px; margin-bottom: 22px;
+      overflow-x: auto; overscroll-behavior-x: contain; padding-bottom: 2px;
+      scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
     }
-    @media (max-width: 380px) { .home-modes-strip { grid-template-columns: repeat(3, 1fr); } }
-    @media (min-width: 768px) { .home-modes-strip { grid-template-columns: repeat(4, 1fr); } }
+    .home-modes-strip::-webkit-scrollbar { display: none; }
     .home-mode-chip {
       display: flex; flex-direction: column; align-items: center;
       gap: 5px; padding: 12px 10px; border-radius: 14px;
@@ -3049,7 +3078,7 @@
       box-shadow: var(--shadow-sm); cursor: pointer;
       transition: transform 0.12s; text-align: center;
       -webkit-tap-highlight-color: transparent;
-      min-width: 0; /* same grid-shrink fix as .path-chip — lets the label actually wrap/shrink */
+      flex: 0 0 84px; scroll-snap-align: start; /* fixed shelf-item width */
     }
     .home-mode-chip:active { transform: scale(0.93); }
     .home-mode-chip-icon  { font-size: 1.35rem; }
@@ -3061,13 +3090,12 @@
       min-width: 0; overflow-wrap: break-word; hyphens: auto;
     }
     .home-level-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-bottom: 16px;
+      display: flex; gap: 8px; margin-bottom: 16px;
+      overflow-x: auto; overscroll-behavior-x: contain; padding-bottom: 2px;
+      scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
     }
-    @media (min-width: 500px) { .home-level-row { grid-template-columns: repeat(4, 1fr); } }
-    @media (min-width: 768px) { .home-level-row { grid-template-columns: repeat(5, 1fr); } }
+    .home-level-row::-webkit-scrollbar { display: none; }
 
     /* ─── Category tabs (Stufen/Beruf/Themen) ──────────────
        Shared pattern for both home's Lernpfad and the in-game content picker.
@@ -3105,7 +3133,8 @@
       text-align: left; cursor: pointer;
       transition: border-color 0.15s, background 0.15s;
       -webkit-tap-highlight-color: transparent;
-      min-width: 0; /* let the label flex-shrink inside its grid cell */
+      min-width: 0; /* let the label flex-shrink inside the chip */
+      flex: 0 0 138px; scroll-snap-align: start; /* fixed shelf-item width, see .home-level-row */
     }
     .path-chip:active { transform: scale(0.97); }
     .path-chip.active {
@@ -3140,7 +3169,10 @@
     .kb-hl { outline: 2px solid var(--color-correct) !important; outline-offset: 2px; }
 
     /* ─── Daily progress bar ─────────────────────────────── */
-    .home-daily-bar { margin-bottom: 20px; }
+    /* Lives inside .home-today-card, below the XP row — only add the
+       divider when there's actually a second row to divide (goal-met state
+       leaves this empty, and an empty bordered strip would look broken). */
+    .home-daily-bar:not(:empty) { border-top: 1px solid var(--hairline); padding-top: 10px; }
     .daily-progress-label { font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 6px; }
     .daily-progress-label strong { color: var(--color-text); font-weight: 700; }
     .daily-progress-track {
@@ -3223,11 +3255,17 @@
        white values (which is also why xp-rank-label/xp-total had no CSS
        class rules before — they were 100% inline style, stripped when this
        moved out of the hero). */
-    .home-xp-row {
-      display: flex; align-items: center; gap: 8px;
-      width: 100%; margin-bottom: 14px; padding: 10px 14px;
+    /* home-xp-row and home-daily-bar are stacked inside .home-today-card
+       (one bordered card, one divider) instead of being two separate thin
+       progress-bar cards back-to-back — those read as repetitive chrome
+       before the user reaches any actual content. */
+    .home-today-card {
+      width: 100%; margin-bottom: 20px; padding: 12px 14px;
       background: var(--color-surface); border: 1.5px solid var(--hairline);
-      border-radius: 12px;
+      border-radius: 12px; display: flex; flex-direction: column; gap: 10px;
+    }
+    .home-xp-row {
+      display: flex; align-items: center; gap: 8px; width: 100%;
     }
     .xp-rank-icon { font-size: 1rem; flex-shrink: 0; }
     .xp-rank-label {
@@ -3504,15 +3542,16 @@
       </div>
       <div class="home-hero-meta" id="home-hero-meta"></div>
     </button>
-    <div class="home-xp-row">
-      <span class="xp-rank-icon">🌱</span>
-      <span class="xp-rank-label">Einsteiger</span>
-      <div class="home-xp-bar"><div class="xp-bar-fill"></div></div>
-      <span class="xp-total">0 XP</span>
+    <!-- Today card: XP/rank row + today's word-goal progress, one unit -->
+    <div class="home-today-card">
+      <div class="home-xp-row">
+        <span class="xp-rank-icon">🌱</span>
+        <span class="xp-rank-label">Einsteiger</span>
+        <div class="home-xp-bar"><div class="xp-bar-fill"></div></div>
+        <span class="xp-total">0 XP</span>
+      </div>
+      <div id="home-daily-bar" class="home-daily-bar"></div>
     </div>
-
-    <!-- Daily progress bar -->
-    <div id="home-daily-bar" class="home-daily-bar"></div>
 
     <!-- Recall teaser from previous session -->
     <div class="home-recall-card hidden" id="home-recall-card"></div>
