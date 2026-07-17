@@ -2886,11 +2886,8 @@
       width: 10px; height: 10px; border-radius: 2px;
     }
 
-    /* ─── Hide mode-switcher and content pill on home ─────── */
+    /* ─── Hide mode-switcher on home ───────────────────────── */
     body.on-home .mode-switcher { display: none !important; }
-    /* Home has its own separate Lernpfad tabs — the header pill/picker is
-       in-game-only chrome, would be a confusing second control otherwise. */
-    body.on-home .content-pill-wrap { opacity: 0; pointer-events: none; }
     /* Home's own greeting row has its own 💎 badge — hide the global header's
        copy so only one diamond counter is visible at a time. Uses opacity (not
        display:none) so its rect stays valid for earnDiamonds()'s toast anchor. */
@@ -3055,15 +3052,17 @@
     .recall-practice-btn:active { background: var(--color-correct); color: #fff; border-color: transparent; }
 
     /* ─── Mode chips shelf ───────────────────────────────────
-       Both this and .home-level-row below used to be multi-row grids —
-       9 mode chips at 3-4/row = up to 3 rows, 5 pack chips at 3/row = 2 rows.
-       That's the home screen re-rendering the *entire* in-game content
-       picker (same PATHS/MODES data as #content-picker-panel and
-       #mode-switcher) permanently expanded, stacked top to bottom. Nothing
-       here is being hidden or cut — it's laid out as a single horizontally
-       scrollable shelf (app-store/Netflix-row pattern) instead, so every
-       option is still one tap (now a swipe) away but the page itself is
-       roughly half the scroll height. */
+       This used to be a multi-row grid (9 mode chips at 3-4/row, up to 3
+       rows) — the home screen re-rendering the same MODES data already
+       reachable via #mode-switcher, permanently expanded, stacked top to
+       bottom. Nothing here is hidden or cut — it's laid out as a single
+       horizontally scrollable shelf (app-store/Netflix-row pattern)
+       instead, featured modes first, so every option is still one tap
+       (now a swipe past the first row) away but the page itself is
+       roughly half the scroll height. Level/pack selection (formerly a
+       second grid + cat-tabs here) was the same kind of duplication of
+       #content-picker-panel and now lives only behind the header pill
+       (content-pill-wrap, visible on home again — see body.on-home rules). */
     .home-modes-strip {
       display: flex; gap: 8px; margin-bottom: 22px;
       overflow-x: auto; overscroll-behavior-x: contain; padding-bottom: 2px;
@@ -3085,25 +3084,18 @@
     .home-mode-chip-label {
       font-size: 0.65rem; font-weight: 700; color: var(--color-text-muted); line-height: 1.2;
       /* word-break:break-word splits anywhere mid-character with no hyphen
-         shown ("Kreuzw"/"ort") — same standard as .path-chip-label: shrink
-         and hyphenate at real syllable boundaries instead. */
+         shown ("Kreuzw"/"ort") — shrink and hyphenate at real syllable
+         boundaries instead (page is lang="de"). */
       min-width: 0; overflow-wrap: break-word; hyphens: auto;
     }
-    .home-level-row {
-      display: flex; gap: 8px; margin-bottom: 16px;
-      overflow-x: auto; overscroll-behavior-x: contain; padding-bottom: 2px;
-      scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .home-level-row::-webkit-scrollbar { display: none; }
 
     /* ─── Category tabs (Stufen/Beruf/Themen) ──────────────
-       Shared pattern for both home's Lernpfad and the in-game content picker.
-       Replaces an earlier "+ Mehr Kurse" expand/collapse toggle — that hid 10
-       of 15 paths behind a vague label with no preview of what was there;
-       three named tabs make the categories exist up front and swapping
-       between them is one tap instead of expand-then-scan-then-pick. */
-    #home-paths-container { margin-bottom: 24px; }
+       Shared by the in-game content picker's #ingame-cat-tabs and the
+       mode-switcher's #mode-cat-tabs. Replaces an earlier "+ Mehr Kurse"
+       expand/collapse toggle — that hid 10 of 15 paths behind a vague label
+       with no preview of what was there; three named tabs make the
+       categories exist up front and swapping between them is one tap
+       instead of expand-then-scan-then-pick. */
     .cat-tabs {
       display: flex; gap: 6px; margin-bottom: 12px;
     }
@@ -3124,46 +3116,6 @@
     #mode-cat-tabs { flex-wrap: wrap; margin-bottom: 8px; }
     #mode-cat-tabs .cat-tab { flex: 0 1 auto; padding: 7px 12px; font-size: 0.78rem; }
     .cat-panel.hidden { display: none; }
-    .path-chip {
-      position: relative;
-      display: flex; align-items: center; gap: 8px;
-      padding: 10px 12px; border-radius: 12px;
-      border: 1.5px solid var(--hairline);
-      background: var(--color-surface); box-shadow: var(--shadow-sm);
-      text-align: left; cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
-      -webkit-tap-highlight-color: transparent;
-      min-width: 0; /* let the label flex-shrink inside the chip */
-      flex: 0 0 138px; scroll-snap-align: start; /* fixed shelf-item width, see .home-level-row */
-    }
-    .path-chip:active { transform: scale(0.97); }
-    .path-chip.active {
-      border-color: var(--color-correct-text);
-      background: color-mix(in srgb, var(--color-correct-text) 10%, transparent);
-    }
-    .path-chip.active::after {
-      content: '✓';
-      position: absolute; top: 5px; right: 7px;
-      font-size: 0.62rem; font-weight: 800;
-      color: var(--color-correct-text);
-    }
-    .path-chip-icon { font-size: 1.1rem; flex-shrink: 0; }
-    .path-chip-label {
-      font-size: 0.78rem; font-weight: 600; color: var(--color-text); line-height: 1.2;
-      /* A single long word ("Wiederholung") can't wrap on spaces and would spill
-         past the chip background on narrow phones — allow it to shrink and
-         hyphenate (page is lang="de", so this breaks as Wieder-holung). */
-      min-width: 0; overflow-wrap: break-word; hyphens: auto;
-    }
-    .path-chip.active .path-chip-label { color: var(--color-correct-text); }
-    .path-chip-progress {
-      position: absolute; left: 0; right: 0; bottom: 0;
-      height: 3px; background: var(--hairline);
-      border-radius: 0 0 12px 12px; overflow: hidden;
-    }
-    .path-chip-progress div {
-      height: 100%; background: var(--color-correct-text);
-    }
 
     /* ─── Keyboard highlight ─────────────────────────────── */
     .kb-hl { outline: 2px solid var(--color-correct) !important; outline-offset: 2px; }
@@ -3560,18 +3512,10 @@
     <div class="home-section-title">Alle Modi</div>
     <div class="home-modes-strip" id="home-modes-strip"></div>
 
-    <!-- Lernpfad picker -->
-    <div class="home-section-title">Lernpfad</div>
-    <div id="home-paths-container">
-      <div class="cat-tabs" id="home-cat-tabs">
-        <button class="cat-tab active" data-cat="stufen">🌱 Stufen</button>
-        <button class="cat-tab" data-cat="beruf">💼 Beruf</button>
-        <button class="cat-tab" data-cat="themen">🎓 Themen</button>
-      </div>
-      <div class="home-level-row cat-panel" id="home-level-row-core"></div>
-      <div class="home-level-row cat-panel hidden" id="home-level-row-professional"></div>
-      <div class="home-level-row cat-panel hidden" id="home-level-row-thematic"></div>
-    </div>
+    <!-- Lernstufe & Pakete: was a second full picker here (cat-tabs + up to
+         5 chips), duplicating #content-picker-panel behind the header pill.
+         That pill is visible on home now (see body.on-home CSS) — one
+         control for level/pack selection instead of two. -->
 
   </div>
 
@@ -4771,6 +4715,21 @@ function showPackCompleteOverlay(path, prog) {
   const dismiss = () => ov.classList.add('hidden');
   ov.addEventListener('click', dismiss, { once: true });
   setTimeout(dismiss, 4000);
+}
+// Was a side effect of rendering the (now-removed) home Lernpfad chips —
+// extracted so newly-mastered theme packs still get their completion
+// celebration even though nothing on home renders their progress bar anymore.
+function checkThematicPackCompletion() {
+  const doneSet = packsDoneSet();
+  const thematicPaths = PATHS.filter(p => p.domain && ['FAMILY','RESTAURANT','TRAVEL','NUMBERS','FIRST100'].includes(p.id));
+  for (const path of thematicPaths) {
+    const prog = packProgress(path.domain);
+    if (prog && prog.mastered === prog.total && !doneSet.has(path.domain)) {
+      markPackDone(path.domain);
+      showPackCompleteOverlay(path, prog);
+      return;
+    }
+  }
 }
 
 // ─── Combo system ─────────────────────────────────────
@@ -7334,7 +7293,15 @@ function openContentPicker() {
   document.getElementById('content-picker-panel').classList.remove('hidden');
   document.getElementById('content-picker-backdrop').classList.remove('hidden');
   document.getElementById('content-pill-btn').setAttribute('aria-expanded', 'true');
-  setIngameCat?.(currentPathCategory()); // jump to whichever tab matches the current selection
+  if (window.pendingExpandMehrKurse) {
+    // Onboarding goal "Beruf" can't pick one professional pack for the user,
+    // so jump straight to the Beruf tab on the first time they open this
+    // instead of leaving them to find it themselves.
+    window.pendingExpandMehrKurse = false;
+    setIngameCat?.('beruf');
+  } else {
+    setIngameCat?.(currentPathCategory()); // jump to whichever tab matches the current selection
+  }
 }
 function closeContentPicker() {
   document.getElementById('content-picker-panel').classList.add('hidden');
@@ -7822,12 +7789,6 @@ async function init() {
     // Sync UI without overwriting the Set (call selectPath only to update visuals)
     const _activePack = [...selectedLevels].find(k => PACK_LEVELS.has(k)) || null;
     selectPack(_activePack);
-    document.querySelectorAll('[data-path-id]').forEach(el => {
-      const p = PATHS.find(x => x.id === el.dataset.pathId);
-      const active = p && selectedLevels.has(p.domain || p.id);
-      el.classList.toggle('active', !!active);
-      el.setAttribute('aria-pressed', active ? 'true' : 'false');
-    });
     applyRouteFromHash();
     updateThemeBtn();
     checkAchievements();
@@ -10031,8 +9992,9 @@ function saveUserProfile() {
 
   // Goal → concrete personalization. Reisen/Studium/Neugier map to one clear
   // path each; Beruf can't pick a single field for the user, so it just
-  // auto-expands the "Mehr Kurse" section (read by buildHome()) instead of
-  // guessing which professional pack they want.
+  // flags the content picker (see openContentPicker) to jump to the Beruf
+  // tab next time it's opened, instead of guessing which professional pack
+  // they want.
   const GOAL_PATH_MAP = { travel: 'TRAVEL', study: 'B1', curious: 'FIRST100' };
 
   function applyGoalPersonalization(goal) {
@@ -10128,16 +10090,19 @@ if ('serviceWorker' in navigator) {
 }
 
 // ─── Home screen ──────────────────────────────────────────────────────────────
+// Order = shelf order on home. First 3 (Kreuzwort/Wortschlange/Paare) are the
+// featured set, visible without swiping at the shelf's fixed 84px chip width;
+// the rest are reachable by swipe, not hidden.
 const HOME_MODES = [
   {icon:'⊞', id:'1P',          label:'Kreuzwort', desc:'Wörter im Kreuzrätsel', timing:'3–5 Min',    color:'#1D9E75'},
+  {icon:'🐍', id:'WORTSCHLANGE', label:'Wortschlange', desc:'Komposita verketten', timing:'frei', color:'#10b981'},
+  {icon:'🧠', id:'PAARE',      label:'Paare',     desc:'Wörter zuordnen',       timing:'2–3 Min',    color:'#e11d48'},
   {icon:'✍', id:'SATZ',        label:'Sätze',     desc:'Lückentext & Wortfolge',timing:'10 Runden',  color:'#4f46e5'},
   {icon:'<span class="artikel-dots" aria-hidden="true"><i class="g-der"></i><i class="g-die"></i><i class="g-das"></i></span>', id:'ARTIKEL', label:'Artikel', desc:'der, die oder das?', timing:'1 Min', color:'#7c3aed'},
   {icon:'👂', id:'HÖREN',      label:'Hören',     desc:'Diktat nach Ton',       timing:'10 Runden',  color:'#d97706'},
   {icon:'⚡', id:'MC',         label:'Quiz',       desc:'4 Optionen · 60 Sek',  timing:'60 Sek',    color:'#2563eb'},
-  {icon:'🧠', id:'PAARE',      label:'Paare',     desc:'Wörter zuordnen',       timing:'2–3 Min',    color:'#e11d48'},
   {icon:'✏️', id:'SCHREIBEN',  label:'Schreiben', desc:'Tippe das deutsche Wort',timing:'10 Runden', color:'#0891b2'},
   {icon:'🎤', id:'SHADOWING',  label:'Nachsprechen', desc:'Satz hören & nachsprechen', timing:'8 Runden', color:'#db2777'},
-  {icon:'🐍', id:'WORTSCHLANGE', label:'Wortschlange', desc:'Komposita verketten', timing:'frei', color:'#10b981'},
 ];
 
 function buildTodaysMix() {
@@ -10228,14 +10193,6 @@ function selectPath(pathId) {
 
   // Persist as JSON array so multi-select survives reload
   try { localStorage.setItem('wortle-path', JSON.stringify([...selectedLevels])); } catch(e){}
-
-  // Update home screen path chips
-  document.querySelectorAll('[data-path-id]').forEach(el => {
-    const p = PATHS.find(x => x.id === el.dataset.pathId);
-    const active = p && (selectedLevels.has(p.domain || p.id));
-    el.classList.toggle('active', !!active);
-    el.setAttribute('aria-pressed', active ? 'true' : 'false');
-  });
 }
 
 function buildRecallTeaser() {
@@ -10372,67 +10329,10 @@ function buildHome() {
     strip.appendChild(chip);
   });
 
-  // 8. Lernpfad — Progressive disclosure (core vs more)
-  const doneSet = packsDoneSet();
-  let newlyCompleted = null;
-
-  // Categorize paths: core (CEFR + Review) vs professional vs thematic
-  const corePaths = PATHS.filter(p => !p.domain || p.id === 'REVIEW');
-  const professionalPaths = PATHS.filter(p => p.domain && ['BUSINESS','MEDICAL','SOFTWARE','ENGINEERING','LEGAL'].includes(p.id));
-  const thematicPaths = PATHS.filter(p => p.domain && ['FAMILY','RESTAURANT','TRAVEL','NUMBERS','FIRST100'].includes(p.id));
-
-  // Render paths into their respective sections
-  function renderPathsInto(selector, paths) {
-    const section = document.getElementById(selector);
-    if (!section) return;
-    section.innerHTML = '';
-    paths.forEach(path => {
-      const btn = document.createElement('button');
-      const isActive = (path.domain && selectedLevels.has(path.domain)) ||
-                       (!path.domain && selectedLevels.has(path.id));
-      btn.className = 'path-chip' + (isActive ? ' active' : '');
-      btn.dataset.pathId = path.id;
-      // Compound German labels ("Grundstufe A1") don't fit a narrow chip —
-      // they used to hyphen-wrap mid-word ("Grund-stufe"), which read as
-      // broken rather than just wrapped. shortLabel keeps the visible chip
-      // text to a single short token; the full descriptive name is still on
-      // the tooltip (and via btn.title below) for anyone who wants it.
-      btn.innerHTML = '<span class="path-chip-icon">' + path.icon + '</span><span class="path-chip-label">' + (path.shortLabel || path.label) + '</span>';
-      if (path.shortLabel) btn.title = path.label;
-      if (THEME_PACKS.has(path.domain)) {
-        const prog = packProgress(path.domain);
-        if (prog) {
-          btn.innerHTML += '<div class="path-chip-progress"><div style="width:' + Math.round(prog.mastered / prog.total * 100) + '%"></div></div>';
-          btn.title = prog.mastered + ' / ' + prog.total + ' gemeistert';
-          if (prog.mastered === prog.total && !doneSet.has(path.domain)) {
-            markPackDone(path.domain);
-            if (!newlyCompleted) newlyCompleted = { path, prog };
-          }
-        }
-      }
-      btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-      btn.addEventListener('click', () => selectPath(path.id));
-      section.appendChild(btn);
-    });
-  }
-
-  renderPathsInto('home-level-row-core', corePaths);
-  renderPathsInto('home-level-row-professional', professionalPaths);
-  renderPathsInto('home-level-row-thematic', thematicPaths);
-
-  const setHomeCat = wireCatTabs(document.getElementById('home-cat-tabs'), {
-    stufen: document.getElementById('home-level-row-core'),
-    beruf:  document.getElementById('home-level-row-professional'),
-    themen: document.getElementById('home-level-row-thematic'),
-  });
-  // Onboarding goal "Beruf" can't pick one professional pack for the user, so
-  // jump straight to the Beruf tab instead of leaving them to find it themselves.
-  if (window.pendingExpandMehrKurse) {
-    window.pendingExpandMehrKurse = false;
-    setHomeCat?.('beruf');
-  }
-
-  if (newlyCompleted) showPackCompleteOverlay(newlyCompleted.path, newlyCompleted.prog);
+  // 8. Level/pack selection lives only behind the header pill now (see
+  // #content-picker-panel) — still check for newly-mastered theme packs so
+  // the completion celebration keeps firing without home rendering it.
+  checkThematicPackCompletion();
 
   // 9. XP + Achievement display
   updateXPDisplay();
