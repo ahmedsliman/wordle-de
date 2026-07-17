@@ -2996,6 +2996,7 @@
     .home-mode-hero-eyebrow {
       font-size: 0.66rem; font-weight: 700; letter-spacing: 0.08em;
       text-transform: uppercase; color: rgba(255,255,255,0.7);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .home-mode-hero-title {
       font-family: 'Fraunces', serif; font-size: 1.05rem; font-weight: 700;
@@ -10126,11 +10127,15 @@ if ('serviceWorker' in navigator) {
 
 // ─── Home screen ──────────────────────────────────────────────────────────────
 // Order = shelf order on home. First 3 (Kreuzwort/Wortschlange/Paare) are the
-// featured set, visible without swiping at the shelf's fixed 84px chip width;
-// the rest are reachable by swipe, not hidden.
+// featured set, rendered as the big hero cards; the rest are reachable by
+// swipe below, not hidden. Featured 3 need colors that read as distinct at
+// a glance when stacked as hero cards — #1D9E75/#10b981 (Kreuzwort's old
+// color / Wortschlange's) were both teal-green and blended together; ⊞ was
+// also a flat monochrome glyph next to two full-color emoji, out of place
+// once blown up to hero-card icon size.
 const HOME_MODES = [
-  {icon:'⊞', id:'1P',          label:'Kreuzwort', desc:'Wörter im Kreuzrätsel', timing:'3–5 Min',    color:'#1D9E75'},
-  {icon:'🐍', id:'WORTSCHLANGE', label:'Wortschlange', desc:'Komposita verketten', timing:'frei', color:'#10b981'},
+  {icon:'🔠', id:'1P',          label:'Kreuzwort', desc:'Wörter im Kreuzrätsel', timing:'3–5 Min',    color:'#1D9E75'},
+  {icon:'🐍', id:'WORTSCHLANGE', label:'Wortschlange', desc:'Komposita verketten', timing:'frei', color:'#ea580c'},
   {icon:'🧠', id:'PAARE',      label:'Paare',     desc:'Wörter zuordnen',       timing:'2–3 Min',    color:'#e11d48'},
   {icon:'✍', id:'SATZ',        label:'Sätze',     desc:'Lückentext & Wortfolge',timing:'10 Runden',  color:'#4f46e5'},
   {icon:'<span class="artikel-dots" aria-hidden="true"><i class="g-der"></i><i class="g-die"></i><i class="g-das"></i></span>', id:'ARTIKEL', label:'Artikel', desc:'der, die oder das?', timing:'1 Min', color:'#7c3aed'},
@@ -10291,7 +10296,7 @@ function buildHome() {
       meta: 'Baue die längste Wortkette',
     },
     'PAARE': {
-      eyebrow: 'Schnelles Spiel · ' + HOME_MODES.find(m => m.id === 'PAARE').timing,
+      eyebrow: 'Schnell · ' + HOME_MODES.find(m => m.id === 'PAARE').timing,
       meta: 'Wörter den Übersetzungen zuordnen',
     },
   };
