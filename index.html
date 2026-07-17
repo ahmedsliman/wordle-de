@@ -2223,17 +2223,22 @@
     /* ─── Mode Switcher ──────────────────────────────── */
     .mode-switcher {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
       gap: 5px;
-      padding: 8px 16px 0;
+      padding: 8px 16px;
       background: var(--color-bg);
       position: sticky;
       top: 52px;
-      z-index: 9;
-      overflow-x: auto;
-      scrollbar-width: none;
+      z-index: 8;
     }
-    .mode-switcher::-webkit-scrollbar { display: none; }
+    /* Pack-strip and mode-switcher are sibling sticky bars at the same base
+       offset — when the pack-strip is also showing (every mode now, not just
+       Kreuzwort), push the mode-switcher below it instead of the two
+       overlapping at an identical `top`. */
+    #pack-strip:not(.hidden) ~ .mode-switcher {
+      top: calc(52px + env(safe-area-inset-top, 0px) + 41px);
+    }
     .mode-switch-btn {
       font-family: 'Inter', system-ui, sans-serif;
       font-size: 0.82rem;
@@ -2781,6 +2786,12 @@
     }
     .setup-time-val  { font-size: 1.1rem; font-weight: 800; color: var(--color-text); font-family: 'DM Mono', monospace; }
     .setup-time-unit { font-size: 0.68rem; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; }
+    .setup-quicktips {
+      list-style: none; width: 100%; text-align: left; display: flex;
+      flex-direction: column; gap: 8px; padding: 12px; margin: 0;
+      background: var(--color-surface); border-radius: 12px;
+      font-size: 0.78rem; line-height: 1.4; color: var(--color-text-muted);
+    }
     .setup-dots { display: flex; gap: 6px; margin-top: 8px; }
     .setup-dot {
       width: 6px; height: 6px; border-radius: 50%;
@@ -2837,6 +2848,10 @@
     body.on-home .pack-strip    { display: none !important; }
     body.on-home .mode-switcher { display: none !important; }
     body.on-home #level-tabs    { opacity: 0; pointer-events: none; }
+    /* Home's own greeting row has its own 💎 badge — hide the global header's
+       copy so only one diamond counter is visible at a time. Uses opacity (not
+       display:none) so its rect stays valid for earnDiamonds()'s toast anchor. */
+    body.on-home .diamond-counter { opacity: 0; pointer-events: none; }
 
     /* ─── Logo: clickable ───────────────────────────────── */
     .logo { cursor: pointer; }
@@ -3418,13 +3433,13 @@
 
   <!-- Streak bar (1P) -->
   <div class="streak-bar" id="streak-bar">
-    <div class="streak-pill">🔥 Serie <span id="streak-current">0</span></div>
-    <div class="streak-pill">🏆 Beste <span id="streak-best">0</span></div>
-    <div class="streak-pill" id="streak-freeze-pill" title="Streak-Schutz-Token (1 pro Woche, max. 2)" aria-label="Schutz-Token"><span id="streak-freeze"></span></div>
-    <div class="streak-pill" id="streak-bar-diamonds" style="display:none;color:var(--color-correct-text)">💎 <span id="streak-diamond-count">0</span></div>
-    <button class="streak-pill vocab-chip" id="vocab-chip" aria-label="Mein Wortschatz öffnen" title="Mein Wortschatz">📚 <span id="streak-vocab-count">0</span></button>
-    <div class="streak-pill hidden" id="combo-pill" style="background:rgba(239,159,39,0.15);color:var(--color-present);font-weight:800;font-family:'DM Mono',monospace;border-color:rgba(239,159,39,0.3);">3×</div>
-    <button class="streak-pill vocab-chip" id="ach-chip" aria-label="Achievements öffnen" title="Achievements">🏆 <span class="ach-count">0/15</span></button>
+    <div class="streak-pill" title="Aktuelle Serie: Tage in Folge geübt">🔥 Serie <span id="streak-current">0</span></div>
+    <div class="streak-pill" title="Deine längste Serie bisher">🏆 Beste <span id="streak-best">0</span></div>
+    <div class="streak-pill" id="streak-freeze-pill" title="Streak-Schutz-Token (1 pro Woche, max. 2) — bewahrt deine Serie, wenn du mal einen Tag verpasst" aria-label="Schutz-Token"><span id="streak-freeze"></span></div>
+    <div class="streak-pill" id="streak-bar-diamonds" style="display:none;color:var(--color-correct-text)" title="Diamanten — verdient durch Übung">💎 <span id="streak-diamond-count">0</span></div>
+    <button class="streak-pill vocab-chip" id="vocab-chip" aria-label="Mein Wortschatz öffnen" title="Mein Wortschatz — gelernte Wörter ansehen">📚 <span id="streak-vocab-count">0</span></button>
+    <div class="streak-pill hidden" id="combo-pill" style="background:rgba(239,159,39,0.15);color:var(--color-present);font-weight:800;font-family:'DM Mono',monospace;border-color:rgba(239,159,39,0.3);" title="Kombo — Serie richtiger Antworten">3×</div>
+    <button class="streak-pill vocab-chip" id="ach-chip" aria-label="Achievements öffnen" title="Achievements — freigeschaltete Erfolge ansehen">🏆 <span class="ach-count">0/15</span></button>
   </div>
 
   <!-- ── Satz-Modus (sentence exercises) ─────────── -->
@@ -3926,6 +3941,11 @@
             <span class="setup-time-val">20</span><span class="setup-time-unit">Min</span>
           </button>
         </div>
+        <ul class="setup-quicktips">
+          <li>🎮 <b>8 Übungsmodi</b> — Kreuzwort, Sätze, Artikel, Hören u.v.m. Alle über die Kacheln auf der Startseite.</li>
+          <li>★ <b>Wiederholung</b> merkt sich fällige Wörter für dich (Spaced Repetition).</li>
+          <li>🔥 <b>Serie</b> & 💎 <b>Diamanten</b> belohnen regelmäßiges Üben.</li>
+        </ul>
         <div class="setup-dots">
           <div class="setup-dot"></div><div class="setup-dot"></div><div class="setup-dot active"></div>
         </div>
@@ -3942,8 +3962,8 @@
     <div class="overlay-card howto-card">
       <div class="overlay-title">So spielst du Wörtle</div>
       <ul class="howto-list">
-        <li><span class="howto-ic">🎯</span> <span><b>Ziel:</b> deutsche Wörter (A1–B2) durch Rätsel lernen.</span></li>
-        <li><span class="howto-ic">⌨️</span> <span>Wähle oben eine Stufe, tippe eine Zelle an und schreibe das Wort.</span></li>
+        <li><span class="howto-ic">🎯</span> <span><b>Ziel:</b> deutsche Wörter (A1–B2) lernen — in 8 Übungsmodi (Kreuzwort, Sätze, Artikel, Hören u.v.m.), erreichbar über die Kacheln auf der Startseite.</span></li>
+        <li><span class="howto-ic">⌨️</span> <span>Im Kreuzwort: Wähle oben eine Stufe, tippe eine Zelle an und schreibe das Wort.</span></li>
         <li><span class="howto-ic">🟩</span> <span>Kachel-Farben: <b>✓</b> grün = richtig · <b>◐</b> orange = im Wort, falsche Stelle · <b>✕</b> grau = nicht im Wort.</span></li>
         <li><span class="howto-ic">🎨</span> <span>Artikel-Farben: <b style="color:var(--gender-der)">der</b> · <b style="color:var(--gender-die)">die</b> · <b style="color:var(--gender-das)">das</b>.</span></li>
         <li><span class="howto-ic">💡</span> <span>Steckst du fest? <b>Hinweis</b> zeigt Schritt für Schritt mehr Hilfe.</span></li>
@@ -4008,6 +4028,13 @@ const wortleDB = (() => {
 
   const ready = new Promise((resolve) => {
     if (typeof indexedDB === 'undefined') { resolve(null); return; }
+    // Belt-and-suspenders against a hung open() — a blocked version-change
+    // (another tab holding a connection) or a wedged browser IDB implementation
+    // would otherwise leave this promise (and every get/set that awaits it)
+    // pending forever, since neither onblocked nor a plain hang ever resolves it.
+    let settled = false;
+    const finish = (result) => { if (!settled) { settled = true; resolve(result); } };
+    const timer = setTimeout(() => finish(null), 4000);
     const req = indexedDB.open(DB, 1);
     req.onupgradeneeded = (e) => {
       const d = e.target.result;
@@ -4015,8 +4042,9 @@ const wortleDB = (() => {
         d.createObjectStore(STORE, { keyPath: 'k' });
       }
     };
-    req.onsuccess = (e) => { db = e.target.result; resolve(db); };
-    req.onerror   = ()  => resolve(null);
+    req.onsuccess = (e) => { clearTimeout(timer); db = e.target.result; finish(db); };
+    req.onerror   = ()  => { clearTimeout(timer); finish(null); };
+    req.onblocked = ()  => { clearTimeout(timer); finish(null); };
   });
 
   async function get(key) {
@@ -6911,6 +6939,10 @@ document.getElementById('level-tabs').addEventListener('click', e => {
     startMcMode();
   } else if (gameMode === 'PAARE') {
     startPairsMode();
+  } else if (gameMode === 'SCHREIBEN') {
+    startSchreibenMode();
+  } else if (gameMode === 'SHADOWING') {
+    startShadowingMode();
   } else {
     startCrossword();
   }
@@ -6990,6 +7022,8 @@ document.getElementById('pack-strip').addEventListener('click', e => {
   else if (gameMode === 'HÖREN') startListenMode();
   else if (gameMode === 'MC') startMcMode();
   else if (gameMode === 'PAARE') startPairsMode();
+  else if (gameMode === 'SCHREIBEN') startSchreibenMode();
+  else if (gameMode === 'SHADOWING') startShadowingMode();
   else startCrossword();
 });
 
@@ -7360,6 +7394,18 @@ function setupSentenceSearch() {
 
 async function init() {
   const loading = document.getElementById('loading');
+  // Safety net: if init() hasn't finished in 8s (stalled fetch, wedged browser
+  // API, anything not already covered by a narrower timeout), stop showing an
+  // infinite spinner and give the user a way out instead of a dead screen.
+  const watchdog = setTimeout(() => {
+    loading.innerHTML =
+      '<div style="text-align:center;padding:0 24px;max-width:320px;">' +
+      '<div style="font-size:2rem;margin-bottom:12px;">⚠️</div>' +
+      '<div style="margin-bottom:16px;color:var(--color-text);">Das Laden dauert ungewöhnlich lange.</div>' +
+      '<button id="loading-reload-btn" class="start-btn" style="width:100%;">Neu laden</button>' +
+      '</div>';
+    document.getElementById('loading-reload-btn')?.addEventListener('click', () => location.reload());
+  }, 8000);
   try {
     // Hydrate localStorage from IndexedDB (IDB is the durable source of truth;
     // localStorage is the synchronous cache that the rest of the app reads from).
@@ -7414,9 +7460,17 @@ async function init() {
     applyRouteFromHash();
     updateThemeBtn();
     checkAchievements();
+    clearTimeout(watchdog);
     loading.classList.add('hidden');
   } catch (err) {
-    loading.textContent = 'Failed to load words — ' + err.message;
+    clearTimeout(watchdog);
+    loading.innerHTML =
+      '<div style="text-align:center;padding:0 24px;max-width:320px;">' +
+      '<div style="font-size:2rem;margin-bottom:12px;">⚠️</div>' +
+      '<div style="margin-bottom:16px;color:var(--color-text);">Fehler beim Laden: ' + err.message + '</div>' +
+      '<button id="loading-reload-btn" class="start-btn" style="width:100%;">Neu laden</button>' +
+      '</div>';
+    document.getElementById('loading-reload-btn')?.addEventListener('click', () => location.reload());
     console.error(err);
   }
 }
@@ -8592,7 +8646,10 @@ function hideAllGamePanels() {
     document.getElementById(id)?.classList.add('hidden');
   });
   document.getElementById('wordle-panel')?.classList.add('hidden');
-  document.getElementById('pack-strip')?.classList.add('hidden');
+  // Packs are meaningful in every mode (they're just a filtered word pool), so keep
+  // the strip's visibility driven by REVIEW state rather than force-hiding it here —
+  // otherwise every non-crossword mode permanently loses pack switching.
+  syncPackStripVisibility();
   document.body.classList.remove('cw-active','cw-typing','game-active');
   clearInterval(mcTimerInterval);
   resetCombo();
@@ -9302,6 +9359,19 @@ function saveUserProfile() {
     currentStep = n;
   }
 
+  // Goal → concrete personalization. Reisen/Studium/Neugier map to one clear
+  // path each; Beruf can't pick a single field for the user, so it just
+  // auto-expands the "Mehr Kurse" section (read by buildHome()) instead of
+  // guessing which professional pack they want.
+  const GOAL_PATH_MAP = { travel: 'TRAVEL', study: 'B1', curious: 'FIRST100' };
+
+  function applyGoalPersonalization(goal) {
+    if (!goal) return;
+    if (goal === 'work') { window.pendingExpandMehrKurse = true; return; }
+    const pathId = GOAL_PATH_MAP[goal];
+    if (pathId) selectPath(pathId);
+  }
+
   function finish() {
     userProfile.name      = (document.getElementById('setup-name-input')?.value.trim()) || '';
     userProfile.goal      = chosenGoal;
@@ -9309,7 +9379,11 @@ function saveUserProfile() {
     DAILY_NEW_GOAL        = chosenMin;
     saveUserProfile();
     try { localStorage.setItem(SETUP_KEY, '1'); } catch {}
+    // First-run how-to is folded into this wizard now (see step 3 copy) — skip
+    // the separate blocking modal, but leave it reachable via the ? button.
+    try { localStorage.setItem('wortle-onboarded', '1'); } catch {}
     document.getElementById('personalise-overlay').classList.add('hidden');
+    applyGoalPersonalization(chosenGoal);
     // Update home greeting with name
     buildHome();
   }
@@ -9359,11 +9433,14 @@ function saveUserProfile() {
   const close = () => overlay.classList.add('hidden');
   closeBtn?.addEventListener('click', close);
   helpBtn?.addEventListener('click', open);
+  // The personalize wizard's finish() now folds the key how-to points into its
+  // own last step and marks KEY as seen itself — so this only still auto-opens
+  // for users who completed setup before that change but never saw how-to.
   let seen = false;
   try { seen = localStorage.getItem(KEY) === '1'; } catch {}
   if (!seen) {
-    // Delay howto until after setup is done (setup shown on top)
     const tryOpen = () => {
+      try { if (localStorage.getItem(KEY) === '1') return; } catch {}
       const setupDone = localStorage.getItem('wortle-setup-done') === '1';
       if (setupDone) { open(); try { localStorage.setItem(KEY, '1'); } catch {} }
       else setTimeout(tryOpen, 500);
@@ -9663,6 +9740,14 @@ function buildHome() {
       moreSection.classList.toggle('hidden');
       moreBtn.classList.toggle('expanded');
     };
+    // Onboarding goal "Beruf" can't pick one professional pack for the user,
+    // so surface the whole Beruf/Thema section open instead of leaving them
+    // to find the "+ Mehr Kurse" toggle on their own.
+    if (window.pendingExpandMehrKurse) {
+      window.pendingExpandMehrKurse = false;
+      moreSection.classList.remove('hidden');
+      moreBtn.classList.add('expanded');
+    }
   }
 
   if (newlyCompleted) showPackCompleteOverlay(newlyCompleted.path, newlyCompleted.prog);
