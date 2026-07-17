@@ -3018,14 +3018,14 @@
     }
 
     /* ─── Shared home card design system ────────────────────────
-       Every card below the level pill — the 3 game heroes, the today
-       card, and the recall teaser — is now the same "kind" of card:
-       16-18px radius, own color gradient, white text, no border. Only the
-       small mode-chip shelf (12px, plain surface) is deliberately
-       different, since it's meant to visually recede as the de-emphasized
-       tier. .home-card-eyebrow is the one shared small-caps label style
-       used on all of them (color overridden to white on the gradient
-       cards — see each card's own rules). */
+       .home-card-eyebrow is the one shared small-caps label style used
+       across home: the level pill's "LERNSTUFE & THEMEN", the "🎮 Deine
+       Spiele"/"Weitere Modi" section titles' sibling, and the today card's
+       "Dein Fortschritt". The 3 game heroes are deliberately the one
+       colorful/gradient tier (18px radius, white text, own color) — the
+       page's actionable content; the today card is deliberately plain
+       (no background at all) — ambient stats, not another thing competing
+       for attention next to the games. */
     .home-card-eyebrow {
       font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em;
       text-transform: uppercase; color: var(--color-text-muted);
@@ -3047,50 +3047,6 @@
     }
     .home-level-pill .content-pill-caret { font-size: 0.9rem; color: var(--color-text-muted); flex-shrink: 0; }
     .home-level-pill[aria-expanded="true"] .content-pill-caret { transform: rotate(180deg); }
-
-    /* ─── Recall teaser ───────────────────────────────────── */
-    /* Same gradient-card treatment as .home-mode-hero/.home-today-card —
-       amber (the app's existing "due/memory" color, see .home-due-badge)
-       so the one card on the page actually personalised via spaced
-       repetition still reads as visually distinct in *hue*, while matching
-       everything else in *kind* (colorful card, white text) instead of
-       being the only tinted-wash/bordered card among gradient ones. */
-    .home-recall-card {
-      width: 100%; border-radius: 16px; border: none; color: #fff;
-      background: linear-gradient(140deg, #d97706 0%, color-mix(in srgb, #d97706 100%, black 18%) 100%);
-      box-shadow: 0 4px 14px rgba(217,119,6,0.25); padding: 16px 18px;
-      margin-bottom: 20px;
-    }
-    .home-recall-card .home-card-eyebrow { color: rgba(255,255,255,0.7); }
-    .recall-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
-    .recall-en {
-      font-size: 1.25rem; font-weight: 700; color: #fff;
-      font-family: 'DM Mono', monospace; margin-bottom: 2px;
-    }
-    .recall-ar  { font-size: 0.8rem; color: rgba(255,255,255,0.8); margin-bottom: 10px; }
-    .recall-answer {
-      font-size: 1.05rem; font-weight: 700; font-family: 'DM Mono', monospace;
-      letter-spacing: 0.04em; color: #fff;
-      filter: blur(5px); transition: filter 0.35s; user-select: none;
-      margin-bottom: 12px;
-    }
-    .recall-answer.revealed { filter: none; }
-    .recall-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-    .recall-reveal-btn {
-      font-size: 0.78rem; font-weight: 600; color: #d97706;
-      background: #fff; border: none; border-radius: 999px;
-      padding: 7px 16px; cursor: pointer; transition: opacity 0.15s;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .recall-reveal-btn:active { opacity: 0.85; }
-    .recall-practice-btn {
-      font-size: 0.78rem; font-weight: 700; color: #fff;
-      background: rgba(255,255,255,0.18);
-      border: 1.5px solid rgba(255,255,255,0.4);
-      border-radius: 999px; padding: 7px 16px; cursor: pointer;
-      transition: background 0.15s; -webkit-tap-highlight-color: transparent;
-    }
-    .recall-practice-btn:active { background: rgba(255,255,255,0.32); }
 
     /* ─── Remaining modes: small icon-only shelf ───────────────
        The other 6 HOME_MODES, de-emphasized relative to the featured 3 —
@@ -3156,16 +3112,15 @@
     /* ─── Daily progress bar ─────────────────────────────── */
     /* Lives inside .home-today-card, below the XP row — only add the
        divider when there's actually a second row to divide (goal-met state
-       leaves this empty, and an empty divider would look broken). White-
-       on-gradient colors, matching .home-today-card's own treatment. */
-    .home-daily-bar:not(:empty) { border-top: 1px solid rgba(255,255,255,0.25); padding-top: 10px; }
-    .daily-progress-label { font-size: 0.8rem; color: rgba(255,255,255,0.8); margin-bottom: 6px; }
-    .daily-progress-label strong { color: #fff; font-weight: 700; }
+       leaves this empty, and an empty divider would look broken). */
+    .home-daily-bar:not(:empty) { border-top: 1px solid var(--hairline); padding-top: 10px; }
+    .daily-progress-label { font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 6px; }
+    .daily-progress-label strong { color: var(--color-text); font-weight: 700; }
     .daily-progress-track {
-      height: 6px; border-radius: 3px; background: rgba(255,255,255,0.25); overflow: hidden;
+      height: 6px; border-radius: 3px; background: var(--hairline); overflow: hidden;
     }
     .daily-progress-fill {
-      height: 100%; border-radius: 3px; background: #fff;
+      height: 100%; border-radius: 3px; background: var(--color-correct);
       transition: width 0.4s ease;
     }
 
@@ -3236,38 +3191,33 @@
 
     /* ─── XP bar ──────────────────────────────────────────── */
     /* home-xp-row and home-daily-bar are stacked inside .home-today-card
-       (one card, one divider) instead of being two separate thin
-       progress-bar cards back-to-back — those read as repetitive chrome
-       before the user reaches any actual content. Same gradient-card
-       treatment as .home-mode-hero (own color, white text) instead of a
-       plain white/bordered card, so it reads as part of the same family
-       as the 3 game banners above it rather than a different kind of UI. */
+       (no divider background, just a hairline) instead of being two
+       separate thin progress-bar cards back-to-back. Deliberately plain —
+       no background/border/shadow — so it reads as ambient page content
+       (stats, not an action) instead of competing for attention with the
+       3 colorful "🎮 Deine Spiele" cards above it. */
     .home-today-card {
-      width: 100%; margin-bottom: 20px; padding: 14px 16px;
-      border-radius: 16px; border: none; color: #fff;
-      background: linear-gradient(140deg, #4f46e5 0%, color-mix(in srgb, #4f46e5 100%, black 18%) 100%);
-      box-shadow: 0 4px 14px rgba(79,70,229,0.25);
+      width: 100%; margin-bottom: 20px; padding: 0;
       display: flex; flex-direction: column; gap: 10px;
     }
-    .home-today-card .home-card-eyebrow { color: rgba(255,255,255,0.7); }
     .home-xp-row {
       display: flex; align-items: center; gap: 10px; width: 100%;
     }
-    .xp-rank-icon, .recall-icon { flex-shrink: 0; font-size: 1.2rem; }
+    .xp-rank-icon { flex-shrink: 0; font-size: 1.2rem; }
     .xp-rank-label {
-      font-size: 0.78rem; font-weight: 700; color: #fff;
+      font-size: 0.78rem; font-weight: 700; color: var(--color-text);
       white-space: nowrap; flex-shrink: 0;
     }
     .home-xp-bar {
       flex: 1; height: 5px; border-radius: 3px;
-      background: rgba(255,255,255,0.25); overflow: hidden;
+      background: var(--color-border); overflow: hidden;
     }
     .xp-bar-fill {
-      height: 100%; border-radius: 3px; background: #fff;
+      height: 100%; border-radius: 3px; background: var(--color-correct);
       transition: width 0.5s ease; width: 0%;
     }
     .xp-total {
-      font-size: 0.72rem; font-weight: 600; color: rgba(255,255,255,0.8);
+      font-size: 0.72rem; font-weight: 600; color: var(--color-text-muted);
       white-space: nowrap; flex-shrink: 0;
     }
 
@@ -3531,10 +3481,8 @@
          card. Kreuzwort's meta line is still live (due words/mastery);
          Wortschlange/Paare don't have per-mode stats tracked, so theirs is
          honest descriptive copy instead of a fabricated number. Named
-         section title above them (unlike the today/recall cards right
-         below, which are left unlabeled-as-a-group) so the 3 games read as
-         a distinct, named set instead of blending into the cards after
-         them — same gradient-card *style*, but a clearly separate group. -->
+         section title above them so the 3 games read as a distinct,
+         curated set — the one colorful/actionable tier on the page. -->
     <div class="home-section-title home-games-title">🎮 Deine Spiele</div>
     <div class="home-mode-heroes" id="home-mode-heroes"></div>
 
@@ -3549,9 +3497,6 @@
       </div>
       <div id="home-daily-bar" class="home-daily-bar"></div>
     </div>
-
-    <!-- Recall teaser from previous session -->
-    <div class="home-recall-card hidden" id="home-recall-card"></div>
 
     <!-- The other 6 modes as a small-icon shelf — the top 3 already have
          their own hero cards above. -->
@@ -10146,16 +10091,14 @@ if ('serviceWorker' in navigator) {
 
 // ─── Home screen ──────────────────────────────────────────────────────────────
 // Order = shelf order on home. First 3 (Kreuzwort/Wortschlange/Paare) are the
-// featured set, rendered as the big hero cards; the rest are reachable by
-// swipe below, not hidden. Featured 3 (plus the today/recall cards right
-// below them, which share the same gradient-card treatment) all need colors
-// that read as distinct at a glance stacked in one column — went through two
-// rounds here: #1D9E75/#10b981 (Kreuzwort/Wortschlange) were both teal-green;
-// then Wortschlange's replacement #ea580c (orange) turned out too close to
-// the recall card's amber #d97706 once both were gradient cards on the same
-// page. Full palette now: green (Kreuzwort) / sky blue (Wortschlange) / rose
-// (Paare) / indigo (today card) / amber (recall card) — five actually
-// distinct hues spread around the wheel instead of clustered warm tones.
+// featured set, rendered as the big gradient hero cards under "🎮 Deine
+// Spiele"; the rest are reachable by swipe below, not hidden. The 3 need
+// colors distinct at a glance stacked in one column — went through two
+// rounds: #1D9E75/#10b981 (Kreuzwort/Wortschlange) were both teal-green,
+// then Wortschlange's replacement #ea580c (orange) was too close to a
+// since-removed card that also used amber. Current palette — green
+// (Kreuzwort) / sky blue (Wortschlange) / rose (Paare) — is spread around
+// the hue wheel rather than clustered in warm tones.
 const HOME_MODES = [
   {icon:'🔠', id:'1P',          label:'Kreuzwort', desc:'Wörter im Kreuzrätsel', timing:'3–5 Min',    color:'#1D9E75'},
   {icon:'🐍', id:'WORTSCHLANGE', label:'Wortschlange', desc:'Komposita verketten', timing:'frei', color:'#0ea5e9'},
@@ -10242,20 +10185,6 @@ function selectPath(pathId) {
 
   // Persist as JSON array so multi-select survives reload
   try { localStorage.setItem('wortle-path', JSON.stringify([...selectedLevels])); } catch(e){}
-}
-
-function buildRecallTeaser() {
-  if (!reviewDeck || !reviewDeck.cards) return null;
-  const entries = Object.entries(reviewDeck.cards).filter(([, c]) => c.seen >= 1);
-  if (entries.length === 0) return null;
-  // Shuffle and find one with a matching loaded word entry
-  entries.sort(() => Math.random() - 0.5);
-  const allWords = Object.values(words).flat();
-  for (const [word] of entries) {
-    const e = allWords.find(w => w.w === word);
-    if (e && e.en) return e;
-  }
-  return null;
 }
 
 // Generic Stufen/Beruf/Themen tab switcher, shared by home's Lernpfad and the
@@ -10360,35 +10289,6 @@ function buildHome() {
       '<div class="daily-progress-track"><div class="daily-progress-fill" style="width:' + pct + '%"></div></div>';
   } else if (statBar) {
     statBar.innerHTML = '';
-  }
-
-  // 6. "Weißt du das noch?" recall teaser
-  const recallEl = document.getElementById('home-recall-card');
-  const entry = buildRecallTeaser();
-  if (entry) {
-    recallEl.classList.remove('hidden');
-    const articleStr = entry.article ? entry.article + ' ' : '';
-    const fullGerman = articleStr + entry.w;
-    recallEl.innerHTML =
-      '<div class="recall-header">' +
-        '<span class="recall-icon">💭</span>' +
-        '<span class="home-card-eyebrow">Weißt du das noch?</span>' +
-      '</div>' +
-      '<div class="recall-en">' + entry.en + '</div>' +
-      (entry.ar ? '<div class="recall-ar">' + entry.ar + '</div>' : '') +
-      '<div class="recall-answer" id="recall-answer-word">' + fullGerman + '</div>' +
-      '<div class="recall-actions">' +
-        '<button class="recall-reveal-btn" id="recall-reveal-btn">Aufdecken</button>' +
-        '<button class="recall-practice-btn" id="recall-practice-btn">Üben →</button>' +
-      '</div>';
-    document.getElementById('recall-reveal-btn').addEventListener('click', function() {
-      document.getElementById('recall-answer-word').classList.add('revealed');
-      this.textContent = '✓ ' + fullGerman;
-      this.style.color = '#059669'; // success green on the button's white bg
-    });
-    document.getElementById('recall-practice-btn').addEventListener('click', () => launchMode('SCHREIBEN'));
-  } else {
-    recallEl.classList.add('hidden');
   }
 
   // 7. The other 6 modes as a small-icon shelf (top 3 have their own hero
