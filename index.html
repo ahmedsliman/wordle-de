@@ -1768,12 +1768,21 @@
       font-size: 0.82rem; padding: 5px 8px;
       border-radius: 6px; cursor: pointer;
       display: flex; gap: 6px; line-height: 1.4;
+      transition: background 0.12s, color 0.12s;
     }
 
     .clue-item:hover, .clue-item:focus-visible { background: var(--color-surface); outline: none; }
-    .clue-item.active { background: var(--color-tab-active-bg); color: var(--color-tab-active-text); }
+    /* Was a near-black bg (--color-tab-active-bg, #1C1917) — a jarring,
+       off-brand highlight next to every other "active" state in the app
+       (cat-tab.active, path-chip.active, etc.), which all use this same
+       teal-tint pattern instead. */
+    .clue-item.active {
+      background: color-mix(in srgb, var(--color-correct-text) 12%, transparent);
+      color: var(--color-correct-text);
+    }
+    .clue-item.active .clue-num { color: var(--color-correct-text); }
     .clue-item.solved { color: var(--color-text-muted); text-decoration: line-through; }
-    .clue-num { font-weight: 600; min-width: 22px; }
+    .clue-num { font-weight: 600; min-width: 22px; color: var(--color-text-muted); }
     .clue-text { flex: 1; }
 
     /* CW action buttons */
