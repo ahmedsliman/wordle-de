@@ -3127,9 +3127,11 @@
       padding: 5px 10px; border-radius: 999px; border: 1px solid var(--hairline);
       background: var(--color-surface); color: var(--color-text-muted);
       font-size: 0.82rem; font-weight: 600; cursor: pointer; white-space: nowrap;
-      transition: background 0.12s; -webkit-tap-highlight-color: transparent;
+      transition: background 0.12s, border-color 0.12s, color 0.12s, transform 0.1s;
+      -webkit-tap-highlight-color: transparent;
     }
-    .home-icon-btn:active { background: var(--hairline); }
+    .home-icon-btn:hover { border-color: var(--color-text-muted); color: var(--color-text); }
+    .home-icon-btn:active { background: var(--hairline); transform: scale(0.94); }
 
     /* ─── Featured mode heroes: one per top-3 game ─────────────
        Replaces the single generic "Jetzt starten" recommendation card —
@@ -3141,14 +3143,29 @@
     }
     /* Flat: solid color, no gradient, no drop-shadow — the color+icon+copy
        carry it, no glossy/depth effects. */
+    /* Gentle staggered fade-up entrance (same vocabulary as the Paare
+       cards) — the heroes are rebuilt on every buildHome(), so this
+       replays as a soft "arriving" each time home is opened. */
+    @keyframes home-hero-enter {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
     .home-mode-hero {
       width: 100%; border-radius: 18px; padding: 14px 18px;
       display: flex; flex-direction: column; gap: 2px;
       cursor: pointer; border: none; text-align: left; color: #fff;
-      transition: transform 0.15s;
+      transition: transform 0.15s, filter 0.15s;
       -webkit-tap-highlight-color: transparent;
+      animation: home-hero-enter 0.32s var(--ease-out) backwards;
     }
-    .home-mode-hero:active { transform: scale(0.98); }
+    .home-mode-hero:nth-child(1) { animation-delay: 0.03s; }
+    .home-mode-hero:nth-child(2) { animation-delay: 0.09s; }
+    .home-mode-hero:nth-child(3) { animation-delay: 0.15s; }
+    @media (prefers-reduced-motion: reduce) { .home-mode-hero { animation: none; } }
+    /* Subtle desktop hover lift + brightness — flat cards otherwise give no
+       cursor feedback at all. Touch devices skip straight to :active. */
+    .home-mode-hero:hover { filter: brightness(1.06); transform: translateY(-1px); }
+    .home-mode-hero:active { transform: scale(0.98); filter: brightness(1); }
     .home-mode-hero-row {
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
     }
@@ -3195,8 +3212,9 @@
       border-radius: 16px; border: 1.5px solid var(--hairline);
       background: var(--color-surface); box-shadow: var(--shadow-sm);
       cursor: pointer; text-align: left; -webkit-tap-highlight-color: transparent;
-      transition: border-color 0.15s;
+      transition: border-color 0.15s, transform 0.1s;
     }
+    .home-level-pill:hover { border-color: var(--color-text-muted); }
     .home-level-pill:active { transform: scale(0.98); }
     .home-level-pill-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
     .home-level-pill .content-pill-text {
@@ -3220,10 +3238,11 @@
       gap: 3px; padding: 8px 6px; border-radius: 12px;
       background: var(--color-surface); border: 1.5px solid var(--hairline);
       cursor: pointer;
-      transition: transform 0.12s; text-align: center;
+      transition: transform 0.12s, border-color 0.12s; text-align: center;
       -webkit-tap-highlight-color: transparent;
       flex: 0 0 60px;
     }
+    .home-mode-chip:hover { border-color: var(--color-text-muted); }
     .home-mode-chip:active { transform: scale(0.93); }
     .home-mode-chip-icon  { font-size: 1.1rem; }
     .home-mode-chip-label {
