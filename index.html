@@ -2323,18 +2323,21 @@
     }
 
     /* ─── Mode Switcher ──────────────────────────────── */
+    /* Compact: this is secondary in-game navigation (switch modes without
+       going home), not the main content of any screen — shouldn't compete
+       for space with whatever the user is actually doing. */
     .mode-switcher {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      padding: 8px 16px;
+      gap: 6px;
+      padding: 6px 16px;
       background: var(--color-bg);
       position: sticky;
       top: 52px;
       z-index: 8;
     }
     .mode-subrow {
-      display: flex; flex-wrap: wrap; justify-content: center; gap: 5px;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 4px;
     }
     .mode-subrow.hidden { display: none; }
     .artikel-dots { display: inline-flex; gap: 2px; }
@@ -2346,9 +2349,9 @@
     .artikel-dots i.g-das { background: var(--gender-das); }
     .mode-switch-btn {
       font-family: 'Inter', system-ui, sans-serif;
-      font-size: 0.82rem;
+      font-size: 0.76rem;
       font-weight: 600;
-      padding: 7px 16px;
+      padding: 5px 13px;
       border: 1.5px solid var(--color-border);
       border-radius: 999px;
       background: transparent;
@@ -2356,7 +2359,7 @@
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       flex-shrink: 0;
       transition: background 0.15s, color 0.15s, border-color 0.15s;
       -webkit-tap-highlight-color: transparent;
@@ -2368,10 +2371,10 @@
       color: #fff;
       border-color: var(--color-correct);
     }
-    .mode-switch-icon { font-size: 1rem; line-height: 1; }
+    .mode-switch-icon { font-size: 0.9rem; line-height: 1; }
     @media (max-width: 480px) {
-      .mode-switch-btn { padding: 6px 11px; font-size: 0.74rem; }
-      .mode-switch-icon { font-size: 1rem; }
+      .mode-switch-btn { padding: 4px 10px; font-size: 0.7rem; }
+      .mode-switch-icon { font-size: 0.9rem; }
     }
 
     /* ─── Satz-Modus ──────────────────────────────────── */
@@ -2998,7 +3001,7 @@
     }
     .home-greeting {
       font-family: 'Fraunces', serif;
-      font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px;
+      font-size: 1.15rem; font-weight: 700; letter-spacing: -0.3px;
       color: var(--color-text); line-height: 1.2; margin-bottom: 2px;
     }
     .home-section-title {
@@ -3133,17 +3136,16 @@
     .home-level-pill .content-pill-caret { font-size: 0.9rem; color: var(--color-text-muted); flex-shrink: 0; }
     .home-level-pill[aria-expanded="true"] .content-pill-caret { transform: rotate(180deg); }
 
-    /* ─── Remaining modes: small icon-only shelf ───────────────
+    /* ─── Remaining modes: small icon-only grid ───────────────
        The other 6 HOME_MODES, de-emphasized relative to the featured 3 —
-       smaller, flatter, icon-first. Still a horizontally scrollable shelf
-       (app-store/Netflix-row pattern): nothing hidden, one swipe away. */
+       smaller, flatter, icon-first. Was a horizontally scrollable shelf;
+       now wraps and centers instead — every icon visible up front with no
+       swipe needed, naturally more per row on wider screens (responsive
+       via wrapping, not a media-query breakpoint). */
     .home-modes-strip {
-      display: flex; gap: 8px; margin-bottom: 22px;
-      overflow-x: auto; overscroll-behavior-x: contain; padding-bottom: 2px;
-      scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 8px; margin-bottom: 22px;
     }
-    .home-modes-strip::-webkit-scrollbar { display: none; }
     .home-mode-chip {
       display: flex; flex-direction: column; align-items: center;
       gap: 3px; padding: 8px 6px; border-radius: 12px;
@@ -3151,7 +3153,7 @@
       cursor: pointer;
       transition: transform 0.12s; text-align: center;
       -webkit-tap-highlight-color: transparent;
-      flex: 0 0 60px; scroll-snap-align: start; /* fixed shelf-item width */
+      flex: 0 0 60px;
     }
     .home-mode-chip:active { transform: scale(0.93); }
     .home-mode-chip-icon  { font-size: 1.1rem; }
@@ -3187,8 +3189,8 @@
     /* Mode-switcher's 5 category tabs: equal-width flex:1 (the picker's
        default) would cram them on narrow phones — size to content and wrap
        onto a 2nd row instead. */
-    #mode-cat-tabs { flex-wrap: wrap; margin-bottom: 8px; }
-    #mode-cat-tabs .cat-tab { flex: 0 1 auto; padding: 7px 12px; font-size: 0.78rem; }
+    #mode-cat-tabs { flex-wrap: wrap; margin-bottom: 6px; }
+    #mode-cat-tabs .cat-tab { flex: 0 1 auto; padding: 5px 10px; font-size: 0.72rem; }
     .cat-panel.hidden { display: none; }
 
     /* ─── Keyboard highlight ─────────────────────────────── */
@@ -3572,7 +3574,15 @@
     <div class="home-section-title home-games-title">🎮 Deine Spiele</div>
     <div class="home-mode-heroes" id="home-mode-heroes"></div>
 
-    <!-- Today card: XP/rank row + today's word-goal progress, one unit -->
+    <!-- The other 6 modes as a small-icon shelf — the top 3 already have
+         their own hero cards above. -->
+    <div class="home-section-title">Weitere Modi</div>
+    <div class="home-modes-strip" id="home-modes-strip"></div>
+
+    <!-- Today card: XP/rank row + today's word-goal progress. Moved below
+         the games/modes — it's ambient progress info, not something the
+         user came to home to act on, so it shouldn't sit in the middle of
+         the main content between the two actionable sections above. -->
     <div class="home-today-card">
       <div class="home-card-eyebrow">Dein Fortschritt</div>
       <div class="home-xp-row">
@@ -3583,11 +3593,6 @@
       </div>
       <div id="home-daily-bar" class="home-daily-bar"></div>
     </div>
-
-    <!-- The other 6 modes as a small-icon shelf — the top 3 already have
-         their own hero cards above. -->
-    <div class="home-section-title">Weitere Modi</div>
-    <div class="home-modes-strip" id="home-modes-strip"></div>
 
     <!-- Lernstufe & Pakete: was a second full picker here (cat-tabs + up to
          5 chips), duplicating #content-picker-panel behind the header pill.
@@ -10346,10 +10351,22 @@ function wireCatTabs(tabsEl, panelMap, defaultCat) {
   return setActive;
 }
 
+// A few phrases per time-of-day instead of always the same fixed "Guten
+// Morgen/Tag/Abend" — picked by day-of-year so it's stable across a
+// session (doesn't change every time home is revisited) but varies day to
+// day. Each one reads naturally with ", {name}!" appended.
+const GREETING_PHRASES = {
+  morning: ['Guten Morgen', 'Schönen guten Morgen', 'Einen schönen Morgen'],
+  day:     ['Guten Tag', 'Schön, dass du da bist', 'Willkommen zurück'],
+  evening: ['Guten Abend', 'Schön, dich zu sehen', 'Willkommen zurück'],
+};
+
 function buildHome() {
   // 1. Greeting — personalised if name is known
   const h = new Date().getHours();
-  const timeGreet = h < 12 ? 'Guten Morgen' : h < 18 ? 'Guten Tag' : 'Guten Abend';
+  const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+  const phrases = GREETING_PHRASES[h < 12 ? 'morning' : h < 18 ? 'day' : 'evening'];
+  const timeGreet = phrases[dayOfYear % phrases.length];
   document.getElementById('home-greeting').textContent =
     userProfile.name ? timeGreet + ', ' + userProfile.name + '!' : timeGreet + '!';
 
