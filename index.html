@@ -3270,9 +3270,13 @@
       cursor: pointer; transition: border-color 0.15s, background 0.15s, color 0.15s;
       -webkit-tap-highlight-color: transparent;
     }
+    /* Neutral "current section" look, NOT the green selected-chip look —
+       these are navigation tabs (which panel is showing), not a choice the
+       user made, so sharing the green "you selected this" treatment with
+       the level/pack chips read as a phantom selection. */
     .cat-tab.active {
-      color: var(--color-correct-text); border-color: var(--color-correct-text);
-      background: color-mix(in srgb, var(--color-correct-text) 10%, transparent);
+      color: var(--color-text); border-color: var(--color-text-muted);
+      background: var(--color-bg);
     }
     /* Mode-switcher's 5 category tabs: equal-width flex:1 (the picker's
        default) would cram them on narrow phones — size to content and wrap
@@ -4628,6 +4632,12 @@ let words        = {};
 const loadedLevels = new Set();   // tracks which level files are cached
 let currentLevel  = 'A1';          // kept for 2P compat (single level)
 let selectedLevels = new Set(['A1']); // 1P multi-select
+// A1 is the functional default (a game always needs at least one level's
+// words), but until the user *explicitly* picks a level/pack we don't
+// highlight it in the picker — a green "selected" A1 the user never tapped
+// read as a phantom selection. Set true by persistPath() on any real pick,
+// and derived from a saved path at startup (see init()).
+let levelPicked = false;
 let gameOver     = false;
 let streak       = { current: 0, best: 0, lastDate: null, freezes: 0, lastFreezeWeek: null, playDates: [] };
 let animating    = false;
@@ -7433,13 +7443,18 @@ document.getElementById('level-tabs').addEventListener('click', e => {
     btn.setAttribute('aria-pressed', 'true');
     currentLevel = level;
     selectedLevels = new Set([level]);
+    levelPicked = true;
     showMessage('Niveau ab nächster Runde: ' + level, '');
     setTimeout(() => showMessage('', ''), 1800);
     closeContentPicker();
     return;
   }
 
-  // 1P / SATZ: multi-select
+  // 1P / SATZ: multi-select. The very first explicit pick starts from a
+  // clean slate rather than adding to the invisible A1 default — otherwise
+  // tapping "B1" as your first choice would surprise you with "A1+B1"
+  // (the default the picker never showed as selected silently joining in).
+  if (!levelPicked && level !== 'REVIEW') selectedLevels = new Set();
   if (level === 'REVIEW') {
     selectedLevels = new Set(['REVIEW']);
   } else {
@@ -7460,12 +7475,10 @@ document.getElementById('level-tabs').addEventListener('click', e => {
   // Clear pack strip visuals
   selectPack(null);
   syncPackStripVisibility();
-  // Update tab visuals
-  document.querySelectorAll('#level-tabs .tab').forEach(t => {
-    const on = selectedLevels.has(t.dataset.level);
-    t.classList.toggle('active', on);
-    t.setAttribute('aria-pressed', on ? 'true' : 'false');
-  });
+  // Mark as a real user pick (persists + enables highlighting) and update
+  // the tab visuals through the shared, flag-aware sync.
+  persistPath();
+  syncLevelTabsUI();
   // Regenerate the current mode's content for the new level selection. '1P'
   // is the one mode where "restart" (regenerate the puzzle) differs from
   // "start" (just show the panel) — see MODES['1P'].restart below.
@@ -7482,6 +7495,16 @@ function selectPack(pack) {
   });
 }
 
+// Marks the current selection as a deliberate user choice and persists it,
+// so it (a) survives reload and (b) starts highlighting in the picker.
+// Previously only selectPath() wrote wortle-path — the level-tabs and
+// pack-strip click handlers changed selectedLevels but never persisted it,
+// so a level chosen via the picker was silently forgotten on reload.
+function persistPath() {
+  levelPicked = true;
+  try { localStorage.setItem('wortle-path', JSON.stringify([...selectedLevels])); } catch(e){}
+}
+
 // Syncs #level-tabs' active/aria-pressed state to the current
 // selectedLevels — extracted out of selectPath() so init()'s rehydration
 // from localStorage can call it too. That path previously only called
@@ -7490,10 +7513,12 @@ function selectPack(pack) {
 // selectedLevels directly) while the picker's level-tabs still showed
 // whatever the static HTML had (only A1 marked active) — the pill and the
 // picker silently disagreed until the user tapped a tab themselves.
+// Highlights nothing until levelPicked (see its declaration) so the A1
+// default doesn't read as a selection the user never made.
 function syncLevelTabsUI() {
   document.querySelectorAll('#level-tabs .tab').forEach(t => {
     const lvl = t.dataset.level;
-    const on = lvl ? selectedLevels.has(lvl) : false;
+    const on = levelPicked && lvl ? selectedLevels.has(lvl) : false;
     t.classList.toggle('active', on);
     t.setAttribute('aria-pressed', on ? 'true' : 'false');
   });
@@ -7601,21 +7626,16 @@ document.getElementById('pack-strip').addEventListener('click', e => {
     selectPack(null);
     selectedLevels = new Set(['A1']);
     currentLevel = 'A1';
-    document.querySelectorAll('#level-tabs .tab').forEach(t => {
-      const on = t.dataset.level === 'A1';
-      t.classList.toggle('active', on);
-      t.setAttribute('aria-pressed', on ? 'true' : 'false');
-    });
   } else {
     selectPack(pack);
     selectedLevels = new Set([pack]);
     currentLevel = pack;
-    // Deactivate all CEFR tabs
-    document.querySelectorAll('#level-tabs .tab').forEach(t => {
-      t.classList.remove('active');
-      t.setAttribute('aria-pressed', 'false');
-    });
   }
+  // Picking OR deselecting a pack is an explicit choice — persist it and
+  // sync the level tabs through the shared flag-aware helper (which
+  // correctly shows A1 active after a deselect, and nothing after a pack pick).
+  persistPath();
+  syncLevelTabsUI();
   syncPackStripVisibility();
 
   (MODES[gameMode]?.restart || startCrossword)();
@@ -7625,15 +7645,12 @@ document.getElementById('pack-strip').addEventListener('click', e => {
 document.getElementById('cw-review-empty-btn').addEventListener('click', () => {
   document.getElementById('cw-review-empty').classList.add('hidden');
   selectPack(null);
-  document.querySelectorAll('#level-tabs .tab').forEach(t => {
-    t.classList.remove('active');
-    t.setAttribute('aria-pressed', 'false');
-  });
-  const a1 = document.querySelector('#level-tabs [data-level="A1"]');
-  a1.classList.add('active');
-  a1.setAttribute('aria-pressed', 'true');
   currentLevel = 'A1';
   selectedLevels = new Set(['A1']);
+  // Falling back to A1 here is an explicit "ok, give me A1 instead" — mark
+  // it picked so the tab highlights (via the shared flag-aware helper).
+  persistPath();
+  syncLevelTabsUI();
   syncPackStripVisibility();
   startCrossword();
 });
@@ -8106,6 +8123,10 @@ async function init() {
     updateAchievementDisplay();
     // Load saved path selection — supports both legacy single string and new JSON array
     const savedPath = localStorage.getItem('wortle-path');
+    // A saved path means the user has explicitly chosen before → highlight
+    // their choice. No saved path = fresh install → A1 is the functional
+    // default but stays un-highlighted until they actually pick something.
+    levelPicked = savedPath !== null;
     try {
       const arr = JSON.parse(savedPath);
       if (Array.isArray(arr) && arr.length) {
@@ -10511,11 +10532,10 @@ function selectPath(pathId) {
   selectPack(activePack);
   syncPackStripVisibility();
 
-  // Sync CEFR tab underlines
+  // Mark as an explicit user pick (sets levelPicked + persists) then sync
+  // the CEFR tab highlighting through the shared flag-aware helper.
+  persistPath();
   syncLevelTabsUI();
-
-  // Persist as JSON array so multi-select survives reload
-  try { localStorage.setItem('wortle-path', JSON.stringify([...selectedLevels])); } catch(e){}
 }
 
 // Generic Stufen/Beruf/Themen tab switcher, shared by home's Lernpfad and the
