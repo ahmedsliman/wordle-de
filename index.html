@@ -4488,12 +4488,34 @@ document.getElementById('theme-btn')?.addEventListener('click', toggleTheme);
 let deVoice          = null;   // preferred German voice, if any
 let deVoiceAvailable = null;   // null = unknown, true/false once resolved
 
+// The Web Speech API exposes whatever voices are installed with no quality
+// metadata, in an arbitrary browser-decided order — picking the first
+// "de-DE" match could just as easily land on an old robotic system voice
+// as a much better one sitting right next to it (Android/Chrome usually
+// ship both a "Google Deutsch" neural-ish voice and a generic one; iOS/
+// macOS ship both "Enhanced"/"Premium" and legacy "Compact" voices for the
+// same language). Score by name pattern instead of taking the first match.
+// Deliberately NOT scoring by localService (local vs. network voice) even
+// though network/cloud voices often sound better — this is a PWA meant to
+// keep working offline, and biasing toward a voice that needs a live
+// connection would silently break pronunciation for offline users.
+function voiceQualityScore(v) {
+  const n = v.name.toLowerCase();
+  if (/compact|espeak/.test(n)) return -1;               // known low-quality
+  if (/neural|enhanced|premium|natural/.test(n)) return 2; // best available
+  if (/google/.test(n)) return 1;                          // generally solid
+  return 0;
+}
+
 function refreshVoices() {
   if (!window.speechSynthesis) { deVoiceAvailable = false; applyVoiceAvailability(); return; }
   const voices = window.speechSynthesis.getVoices();
   if (!voices.length) return;   // not ready yet; voiceschanged will re-fire
-  deVoice = voices.find(v => /^de[-_]de/i.test(v.lang))
-         || voices.find(v => /^de([-_]|$)/i.test(v.lang)) || null;
+  const deVoices = voices.filter(v => /^de[-_]de/i.test(v.lang));
+  const candidates = deVoices.length ? deVoices : voices.filter(v => /^de([-_]|$)/i.test(v.lang));
+  deVoice = candidates.length
+    ? candidates.slice().sort((a, b) => voiceQualityScore(b) - voiceQualityScore(a))[0]
+    : null;
   deVoiceAvailable = !!deVoice;
   applyVoiceAvailability();
 }
