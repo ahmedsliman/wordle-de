@@ -2725,9 +2725,15 @@
       -webkit-tap-highlight-color: transparent; line-height: 1.3;
     }
     .mc-choice:hover:not(:disabled) { border-color: var(--color-text-muted); transform: translateY(-2px); }
-    .mc-choice.correct { border-color: var(--color-correct); background: rgba(29,158,117,0.1); color: var(--color-correct-text); }
-    .mc-choice.wrong   { border-color: var(--gender-die); background: rgba(239,68,68,0.08); color: var(--gender-die); }
+    /* Same pop/shake vocabulary as .pairs-card.matched/.wrong and the
+       crossword's cell-pop — correct/wrong feedback bounces or shakes
+       instead of just swapping color. */
+    .mc-choice.correct { border-color: var(--color-correct); background: rgba(29,158,117,0.1); color: var(--color-correct-text); animation: pairs-card-match 0.4s var(--ease-spring); }
+    .mc-choice.wrong   { border-color: var(--gender-die); background: rgba(239,68,68,0.08); color: var(--gender-die); animation: shake 0.35s; }
     .mc-choice:disabled { cursor: default; }
+    @media (prefers-reduced-motion: reduce) {
+      .mc-choice.correct, .mc-choice.wrong { animation: none; }
+    }
 
     /* ── Match Pairs ── */
     #pairs-panel {
@@ -2830,6 +2836,7 @@
     .artikel-btn.right {
       opacity: 1; color: #fff;
       border-color: transparent;
+      animation: pairs-card-match 0.4s var(--ease-spring);
     }
     .artikel-btn.right.g-der { background: var(--gender-der); }
     .artikel-btn.right.g-die { background: var(--gender-die); }
@@ -2837,6 +2844,9 @@
     .artikel-btn.wrong {
       opacity: 1; border-color: var(--gender-die); color: var(--gender-die);
       animation: shake 0.35s;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .artikel-btn.right { animation: none; }
     }
     .artikel-reveal {
       min-height: 72px; text-align: center; font-size: 0.92rem;
@@ -8940,6 +8950,9 @@ function endPairsMode() {
   const timeStr = secs < 60 ? `${secs}s` : `${Math.floor(secs/60)}m ${secs%60}s`;
   const gems    = Math.max(0, 10 - pairsMistakes);
   if (gems > 0) earnDiamonds(gems, 'pairs', document.getElementById('diamond-counter'));
+  // Same celebration as a clean crossword solve — a round finish deserves
+  // more than the summary card just silently appearing.
+  fireConfetti();
 
   const sc = document.getElementById('pairs-summary-score');
   sc.className = 'satz-summary-score win';
