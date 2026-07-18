@@ -7875,6 +7875,23 @@ const SENTENCE_TAG_LABELS = {
   'exclamation': 'Ausrufe', 'pause': 'Pausen', 'audio-course': 'Audiokurs',
 };
 
+// Source data has two punctuation quirks that read badly both on screen
+// and especially aloud (odd pauses/inflection at the TTS engine's
+// discretion): a leftover "Frau : "/"Mann : " dialogue-speaker tag on 11
+// AUDIOKURS entries (the nested-speaker extraction that was meant to pull
+// this into its own field during data enrichment never actually ran), and
+// a space before punctuation ("Danke , gut !") on ~630 entries, likely a
+// transcription artifact. Only strips the literal "Frau"/"Mann" tag — NOT
+// a generic leading "Word:" pattern, since ~12 sentences legitimately
+// start that way as actual dialogue ("Also: Hallo, wie heißt du?").
+function cleanSentenceText(text) {
+  return text
+    .replace(/^(Frau|Mann)\s*:\s*/, '')
+    .replace(/\s+([,.!?;:])/g, '$1')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
+
 // Reads/writes a .filter-pills group's selected value from its .active
 // button's data-value, wiring clicks to swap which one is active and
 // re-run a callback — the flat-segmented-control equivalent of a <select>.
@@ -7958,9 +7975,10 @@ function setupSentenceSearch() {
       const tags = (s.tags || []).slice(0, 2).map(t =>
         `<span class="sentence-result-tag">${SENTENCE_TAG_LABELS[t] || t}</span>`
       ).join('');
+      const cleanText = cleanSentenceText(s.text);
       const text = query
-        ? s.text.replace(new RegExp(`(${escapeRegExp(query)})`, 'gi'), '<mark>$1</mark>')
-        : s.text;
+        ? cleanText.replace(new RegExp(`(${escapeRegExp(query)})`, 'gi'), '<mark>$1</mark>')
+        : cleanText;
       card.innerHTML = `
         <div class="sentence-result-speaker">${s.speaker} · ${s.episode_id}</div>
         <div class="sentence-result-text-row">
@@ -7973,11 +7991,12 @@ function setupSentenceSearch() {
         </div>
       `;
       // Reuses the same TTS as everywhere else in the app (speakWord —
-      // de-DE, 0.85x rate) — the raw sentence text (s.text), not the
-      // <mark>-highlighted HTML, so it doesn't try to read markup.
+      // de-DE, 0.85x rate) — the cleaned sentence text (no leftover speaker
+      // tag or space-before-punctuation), not the <mark>-highlighted HTML,
+      // so it doesn't try to read markup.
       card.querySelector('.sentence-audio-btn').addEventListener('click', (e) => {
         e.stopPropagation();
-        speakWord(s.text, e.currentTarget);
+        speakWord(cleanText, e.currentTarget);
       });
       resultsDiv.appendChild(card);
     });
