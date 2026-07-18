@@ -1324,9 +1324,16 @@
       font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
       color: var(--color-text-muted); margin-bottom: 4px;
     }
+    .sentence-result-text-row {
+      display: flex; align-items: flex-start; gap: 2px; margin-bottom: 8px;
+    }
+    .sentence-result-text-row .audio-btn {
+      min-width: 32px; min-height: 32px; margin-top: -3px; flex-shrink: 0;
+      font-size: 0.9rem; color: var(--color-text-muted);
+    }
     .sentence-result-text {
       font-size: 0.95rem; line-height: 1.4; color: var(--color-text);
-      margin-bottom: 8px; font-weight: 500;
+      font-weight: 500; padding-top: 2px;
     }
     .sentence-result-text mark {
       background: var(--color-present); color: var(--color-text-inv);
@@ -7934,12 +7941,22 @@ function setupSentenceSearch() {
         : s.text;
       card.innerHTML = `
         <div class="sentence-result-speaker">${s.speaker} · ${s.episode_id}</div>
-        <div class="sentence-result-text">${text}</div>
+        <div class="sentence-result-text-row">
+          <button class="audio-btn sentence-audio-btn" aria-label="Satz vorlesen" title="Satz vorlesen">🔊</button>
+          <div class="sentence-result-text">${text}</div>
+        </div>
         <div class="sentence-result-meta">
           <span class="sentence-result-diff ${diffClass}">${diffLabel}</span>
           ${tags}
         </div>
       `;
+      // Reuses the same TTS as everywhere else in the app (speakWord —
+      // de-DE, 0.85x rate) — the raw sentence text (s.text), not the
+      // <mark>-highlighted HTML, so it doesn't try to read markup.
+      card.querySelector('.sentence-audio-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        speakWord(s.text, e.currentTarget);
+      });
       resultsDiv.appendChild(card);
     });
   }
