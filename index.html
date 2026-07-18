@@ -1559,8 +1559,14 @@
     #wordle-panel.mode-1p #keyboard { display: none; }
 
     /* ─── 1P Crossword: mobile viewport lock + three-zone layout ── */
-    /* body.cw-active is set by startCrossword() on mobile */
-    @media (max-width: 680px) {
+    /* body.cw-active is set by startCrossword() on touch devices (see
+       isCwTouchLayout() — matches (pointer: coarse), not just narrow width,
+       so a landscape phone or tablet still gets the custom keyboard instead
+       of neither the OS one (suppressed via inputmode=none) nor this one).
+       The (pointer: coarse) OR-condition here has to mirror that JS check —
+       otherwise cw-active gets set on a wide touch device but every rule
+       gated behind max-width:680px silently doesn't apply, same bug either way. */
+    @media (max-width: 680px), (pointer: coarse) {
       /* Category tabs and sub-row: left-align on mobile instead of centering */
       .mode-subrow, .cat-tabs { justify-content: flex-start; }
 
@@ -1928,7 +1934,12 @@
       text-decoration: line-through;
     }
 
-    @media (max-width: 680px) {
+    /* Same (pointer: coarse) OR-condition as the crossword viewport-lock
+       block above — a touch device wider than 680px (landscape phone,
+       tablet) needs the tap-friendly chip strip, not the desktop side
+       panel, or it'd end up with the touch-locked layout shell (from
+       body.cw-active) around desktop-style clue content. */
+    @media (max-width: 680px), (pointer: coarse) {
       /* Show chip strip, hide the side clue panel */
       #clue-chips { display: flex; }
       #clues-panel { display: none; }
@@ -1936,7 +1947,7 @@
       #crossword-area { overflow-x: auto; }
     }
 
-    @media (min-width: 681px) {
+    @media (min-width: 681px) and (not (pointer: coarse)) {
       /* Desktop: side panel visible, chip strip hidden */
       #clue-chips { display: none; }
       #crossword-area { flex-direction: row; }
@@ -5490,9 +5501,23 @@ function showMessage(text, type) {
 }
 
 // ─── Crossword UI ─────────────────────────────────────
+// #cw-native-input has inputmode="none" (unconditionally, in the static
+// HTML) to suppress the OS on-screen keyboard, since the custom
+// #cw-keyboard is meant to be the only keyboard on touch devices. That
+// custom keyboard used to only get built when window.innerWidth <= 680 —
+// so any touch device reporting wider than that at puzzle-start time
+// (landscape phone, tablet, foldable) got *no* keyboard at all: OS
+// keyboard suppressed, custom one never built. Checking touch capability
+// (pointer: coarse) alongside width fixes that without changing behavior
+// for real desktop browsers (mouse + physical keyboard), which still
+// correctly fall through to the native-input path at any width.
+function isCwTouchLayout() {
+  return window.innerWidth <= 680 || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+}
+
 function computeCwCellSize(cols, rows) {
   const vw = Math.min(window.innerWidth, 600);
-  const isMobile = window.innerWidth <= 680;
+  const isMobile = isCwTouchLayout();
   const pad = 32;
   const availW = (vw - pad) * (isMobile ? 1 : 0.62);
   const gap = 2; // gap between cells in CSS
@@ -6321,8 +6346,9 @@ async function startCrossword() {
   puzzleStartTime = Date.now();
   buildKeyboard();
 
-  // On mobile: activate custom crossword keyboard + lock layout to viewport
-  if (window.innerWidth <= 680) {
+  // On touch devices: activate custom crossword keyboard + lock layout to
+  // viewport (see isCwTouchLayout() for why this isn't just a width check).
+  if (isCwTouchLayout()) {
     buildCwKeyboard();
     document.body.classList.add('cw-active');
   }
