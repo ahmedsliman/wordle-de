@@ -2785,22 +2785,35 @@
     @keyframes pairs-card-tap {
       0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); }
     }
-    .pairs-card.selected { border-color: #7c3aed; background: rgba(124,58,237,0.08); animation: pairs-card-tap 0.25s var(--ease-spring); }
-    /* Matched: bouncy pop-and-settle celebration (same keyframe shape as
-       the crossword's word-solved cell-pop) instead of the state just
-       instantly appearing. */
+    .pairs-card.selected { border-color: #7c3aed; background: rgba(124,58,237,0.15); animation: pairs-card-tap 0.25s var(--ease-spring); }
+    /* Matched/wrong: bouncy pop-and-settle (same keyframe shape as the
+       crossword's word-solved cell-pop) plus a colored glow ripple, and a
+       full solid color fill instead of a faint 10% tint — a match/mismatch
+       is the moment this game is actually giving feedback, so it should be
+       the most colorful thing on screen, not the most muted. */
     @keyframes pairs-card-match {
       0%   { transform: scale(1); }
       40%  { transform: scale(1.15); }
       70%  { transform: scale(0.95); }
       100% { transform: scale(1); }
     }
-    .pairs-card.matched  {
-      border-color: var(--color-correct); background: rgba(29,158,117,0.1); color: var(--color-correct-text);
-      cursor: default; opacity: 0.7;
-      animation: pairs-card-match 0.4s var(--ease-spring);
+    @keyframes pairs-card-glow-correct {
+      0%   { box-shadow: 0 0 0 0 rgba(29,158,117,0.5); }
+      100% { box-shadow: 0 0 0 14px rgba(29,158,117,0); }
     }
-    .pairs-card.wrong    { border-color: var(--gender-die); animation: shake 0.35s; }
+    @keyframes pairs-card-glow-wrong {
+      0%   { box-shadow: 0 0 0 0 rgba(239,68,68,0.5); }
+      100% { box-shadow: 0 0 0 14px rgba(239,68,68,0); }
+    }
+    .pairs-card.matched  {
+      border-color: var(--color-correct); background: var(--color-correct); color: #fff;
+      cursor: default;
+      animation: pairs-card-match 0.4s var(--ease-spring), pairs-card-glow-correct 0.5s ease-out;
+    }
+    .pairs-card.wrong    {
+      border-color: var(--gender-die); background: var(--gender-die); color: #fff;
+      animation: shake 0.35s, pairs-card-glow-wrong 0.5s ease-out;
+    }
     .pairs-card:disabled { cursor: default; }
     @media (prefers-reduced-motion: reduce) {
       .pairs-card { animation: none; }
@@ -7421,6 +7434,23 @@ function selectPack(pack) {
   });
 }
 
+// Syncs #level-tabs' active/aria-pressed state to the current
+// selectedLevels — extracted out of selectPath() so init()'s rehydration
+// from localStorage can call it too. That path previously only called
+// selectPack() (pack-strip visuals) and never touched the CEFR tabs, so on
+// reload the header pill would correctly show e.g. "A1+A2" (it reads
+// selectedLevels directly) while the picker's level-tabs still showed
+// whatever the static HTML had (only A1 marked active) — the pill and the
+// picker silently disagreed until the user tapped a tab themselves.
+function syncLevelTabsUI() {
+  document.querySelectorAll('#level-tabs .tab').forEach(t => {
+    const lvl = t.dataset.level;
+    const on = lvl ? selectedLevels.has(lvl) : false;
+    t.classList.toggle('active', on);
+    t.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+}
+
 // Packs now live behind their own Beruf/Themen tabs in the content picker
 // (see wireCatTabs) rather than a permanently-visible row, so there's no more
 // "hide the dead pack row during Wiederholung" case to handle here — tapping
@@ -8009,9 +8039,13 @@ async function init() {
     }
     const _cefrOrder = ['A1','A2','B1','B2'];
     currentLevel = _cefrOrder.find(l => selectedLevels.has(l)) || [...selectedLevels][0];
-    // Sync UI without overwriting the Set (call selectPath only to update visuals)
+    // Sync UI without overwriting the Set (call selectPack/syncLevelTabsUI
+    // only to update visuals) — both pack-strip AND level-tabs need this,
+    // not just the pack-strip (see syncLevelTabsUI's comment for the bug
+    // this fixes).
     const _activePack = [...selectedLevels].find(k => PACK_LEVELS.has(k)) || null;
     selectPack(_activePack);
+    syncLevelTabsUI();
     applyRouteFromHash();
     updateThemeBtn();
     checkAchievements();
@@ -10401,12 +10435,7 @@ function selectPath(pathId) {
   syncPackStripVisibility();
 
   // Sync CEFR tab underlines
-  document.querySelectorAll('#level-tabs .tab').forEach(t => {
-    const lvl = t.dataset.level;
-    const on = lvl ? selectedLevels.has(lvl) : false;
-    t.classList.toggle('active', on);
-    t.setAttribute('aria-pressed', on ? 'true' : 'false');
-  });
+  syncLevelTabsUI();
 
   // Persist as JSON array so multi-select survives reload
   try { localStorage.setItem('wortle-path', JSON.stringify([...selectedLevels])); } catch(e){}
