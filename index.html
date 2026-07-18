@@ -10458,12 +10458,20 @@ function buildHome() {
   // stats tracked, so theirs is honest descriptive copy instead.
   const goalMet = dailyProgress.newWords.length >= DAILY_NEW_GOAL;
   const mastered = Object.values(reviewDeck?.cards || {}).filter(c => c.box >= 4).length;
+  // Due words are global (all levels), not scoped to whatever pack the user
+  // has deliberately picked (e.g. Medizin) — showing/acting on them while a
+  // specific pack is active was misleading (the card said "words due" for
+  // unrelated levels) and, worse, tapping Starten silently switched
+  // selectedLevels to REVIEW, discarding the pack they'd just chosen. Only
+  // treat due words as Kreuzwort's headline when the user is on a plain
+  // CEFR selection, not a professional/thematic pack.
+  const hasSpecificPack = [...selectedLevels].some(k => PACK_LEVELS.has(k) || THEME_PACKS.has(k));
   const HERO_CONTENT = {
     '1P': {
       eyebrow: (goalMet ? 'Heute erledigt' : 'Empfehlung') + ' · ' + HOME_MODES.find(m => m.id === '1P').timing,
       meta: goalMet
         ? dailyProgress.newWords.length + ' neue Wörter · ' + dailyProgress.reviewCount + ' Wiederholungen — super!'
-        : due > 0 ? due + ' Wörter warten auf Wiederholung'
+        : (due > 0 && !hasSpecificPack) ? due + ' Wörter warten auf Wiederholung'
         : mastered > 0 ? 'Du hast bereits ' + mastered + ' Wörter gemeistert!'
         : 'Wörter im Kreuzworträtsel üben',
     },
@@ -10495,11 +10503,13 @@ function buildHome() {
         '<div class="home-mode-hero-cta" style="color:' + m.color + '">▶ Starten</div>' +
       '</div>' +
       '<div class="home-mode-hero-meta">' + content.meta + '</div>';
-    // Kreuzwort's card advertises due words in its meta line — when there
-    // are enough to build a puzzle from (same ≥5 threshold as the ★ Review
+    // Kreuzwort's card advertises due words in its meta line (only when no
+    // specific pack is active, see hasSpecificPack above) — when there are
+    // enough to build a puzzle from (same ≥5 threshold as the ★ Review
     // tab), actually take the tap there instead of starting a puzzle from
-    // whatever level happens to be selected.
-    card.addEventListener('click', () => launchMode(m.id === '1P' && due >= 5 ? 'review-cw' : m.id));
+    // whatever level happens to be selected. Never overrides a deliberately
+    // chosen pack.
+    card.addEventListener('click', () => launchMode(m.id === '1P' && due >= 5 && !hasSpecificPack ? 'review-cw' : m.id));
     heroesEl.appendChild(card);
   });
 
