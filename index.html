@@ -5542,6 +5542,20 @@ function isCwTouchLayout() {
   return window.innerWidth <= 680 || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
 }
 
+// Belt-and-suspenders: forces #cw-keyboard's visibility via inline style
+// AND explicitly manages its .hidden class (display:none !important —
+// which is what actually caused it to never appear at all, see the
+// comment where this is called from setModeSwitcher('1P')), instead of
+// relying solely on the body.cw-active class + its @media-gated CSS rule.
+function setCwKeyboardVisible(show) {
+  const kb = document.getElementById('cw-keyboard');
+  if (!kb) return;
+  kb.classList.toggle('hidden', !show);
+  kb.style.cssText = show
+    ? 'display:flex; flex-direction:column; gap:5px; align-items:center; flex-shrink:0; width:100%; background:var(--color-bg); border-top:1px solid var(--color-border); padding:5px 4px calc(5px + env(safe-area-inset-bottom, 0px));'
+    : '';
+}
+
 function computeCwCellSize(cols, rows) {
   const vw = Math.min(window.innerWidth, 600);
   const isMobile = isCwTouchLayout();
@@ -6215,6 +6229,7 @@ function endCrossword(won) {
   gameOver = true;
   // Restore scrollable layout when puzzle ends
   document.body.classList.remove('cw-active', 'cw-typing');
+  setCwKeyboardVisible(false);
   if (won) {
     srAnnounce('Ausgezeichnet! Alle Wörter richtig gelöst!');
 
@@ -6378,6 +6393,9 @@ async function startCrossword() {
   if (isCwTouchLayout()) {
     buildCwKeyboard();
     document.body.classList.add('cw-active');
+    setCwKeyboardVisible(true);
+  } else {
+    setCwKeyboardVisible(false);
   }
 
   document.getElementById('cw-summary-overlay').classList.add('hidden');
@@ -6639,6 +6657,15 @@ function setMode(mode) {
     board2p.classList.add('hidden');
     document.getElementById('clue-chips').classList.remove('hidden');
     document.getElementById('cw-progress').classList.remove('hidden');
+    // #cw-keyboard was missing from this unhide list — hideAllGamePanels()
+    // (called by showHome()/launchMode() before this runs) adds .hidden to
+    // it along with every other crossword element, but only THIS function
+    // removes .hidden again when entering 1P mode. Since .hidden is
+    // `display: none !important`, it silently wins over both the
+    // body.cw-active CSS rule and the setCwKeyboardVisible() inline-style
+    // fallback below — this, not any viewport/touch-detection issue, was
+    // the actual reason the custom keyboard never appeared on any device.
+    document.getElementById('cw-keyboard').classList.remove('hidden');
     panelHdr.classList.add('hidden');
     panelHint.classList.add('hidden');
     // Hide the Wordle grid — only keyboard is needed
@@ -6648,6 +6675,7 @@ function setMode(mode) {
   } else {
     // Clear 1P viewport lock when switching to 2P
     document.body.classList.remove('cw-active', 'cw-typing');
+    setCwKeyboardVisible(false);
     panel.classList.add('inline-mode', 'mode-2p');
     panel.classList.remove('mode-1p');
     cwClueBar.classList.add('hidden');
@@ -6657,6 +6685,7 @@ function setMode(mode) {
     board2p.classList.remove('hidden');
     document.getElementById('clue-chips').classList.add('hidden');
     document.getElementById('cw-progress').classList.add('hidden');
+    document.getElementById('cw-keyboard').classList.add('hidden');
     panelHdr.classList.remove('hidden');
     panelHint.classList.remove('hidden');
     document.getElementById('panel-close-btn').classList.remove('hidden');
@@ -9440,6 +9469,7 @@ function hideAllGamePanels() {
   syncPackStripVisibility(); // keeps the header pill's summary text current
   closeContentPicker(); // never leave the level/pack picker dangling open across a mode switch
   document.body.classList.remove('cw-active','cw-typing','game-active');
+  setCwKeyboardVisible(false);
   clearInterval(mcTimerInterval);
   resetCombo();
 }
