@@ -1279,13 +1279,30 @@
     }
     #sentence-search-input::placeholder { color: var(--color-text-muted); }
     .sentence-search-filters {
-      display: flex; gap: 8px; flex-wrap: wrap;
+      display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
     }
+    /* Flat, borderless select — the pill groups next to it have no border
+       either, so a bordered/boxed select would be the odd one out. */
     .filter-select {
-      padding: 8px 10px; border: 1.5px solid var(--color-border); border-radius: 8px;
+      padding: 8px 10px; border: none; border-radius: 8px;
       font-size: 0.82rem; background: var(--color-surface); color: var(--color-text);
       flex: 1 1 0; min-width: 0; cursor: pointer;
     }
+    /* Flat segmented control (Level/Schwierigkeit) — replaces a native
+       <select> for the filters with few enough options that every choice
+       can just be a button, no dropdown chrome needed. */
+    .filter-pills {
+      display: flex; gap: 2px; background: var(--color-surface);
+      border-radius: 8px; padding: 2px; flex-shrink: 0;
+    }
+    .filter-pill {
+      border: none; background: none; cursor: pointer;
+      padding: 6px 10px; border-radius: 6px;
+      font-size: 0.78rem; font-weight: 600; color: var(--color-text-muted);
+      transition: background 0.12s, color 0.12s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .filter-pill.active { background: var(--color-bg); color: var(--color-text); }
     .sentence-search-result-count {
       padding: 10px 20px 0; font-size: 0.78rem; color: var(--color-text-muted);
     }
@@ -3050,12 +3067,13 @@
     .home-mode-heroes {
       display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px;
     }
+    /* Flat: solid color, no gradient, no drop-shadow — the color+icon+copy
+       carry it, no glossy/depth effects. */
     .home-mode-hero {
       width: 100%; border-radius: 18px; padding: 14px 18px;
       display: flex; flex-direction: column; gap: 2px;
       cursor: pointer; border: none; text-align: left; color: #fff;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.16);
-      transition: transform 0.15s, box-shadow 0.15s;
+      transition: transform 0.15s;
       -webkit-tap-highlight-color: transparent;
     }
     .home-mode-hero:active { transform: scale(0.98); }
@@ -3081,7 +3099,6 @@
       flex-shrink: 0; background: #fff;
       border-radius: 999px; padding: 8px 16px;
       font-weight: 800; font-size: 0.8rem; letter-spacing: 0.01em;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.13);
       display: inline-flex; align-items: center; gap: 6px;
     }
 
@@ -4266,18 +4283,23 @@
         <input type="text" id="sentence-search-input" placeholder="Satz, Sprecher, Tag..."
                autocomplete="off" spellcheck="true" />
         <div class="sentence-search-filters">
-          <select id="sentence-search-level" class="filter-select">
-            <option value="">Level</option>
-            <option value="A1">A1</option>
-            <option value="A2">A2</option>
-            <option value="B1">B1</option>
-          </select>
-          <select id="sentence-search-difficulty" class="filter-select">
-            <option value="">Schwierigkeit</option>
-            <option value="easy">🟢 Leicht</option>
-            <option value="medium">🟡 Mittel</option>
-            <option value="hard">🔴 Schwer</option>
-          </select>
+          <!-- Level/Schwierigkeit have few enough options to be a flat
+               segmented control instead of a native <select> — no browser
+               dropdown chrome, every option visible without a tap+scan.
+               Tag has 10 options, too many for that, so it stays a select
+               (restyled flatter/borderless below) rather than 10 buttons. -->
+          <div class="filter-pills" id="sentence-search-level" role="group" aria-label="Level">
+            <button class="filter-pill active" data-value="">Alle</button>
+            <button class="filter-pill" data-value="A1">A1</button>
+            <button class="filter-pill" data-value="A2">A2</button>
+            <button class="filter-pill" data-value="B1">B1</button>
+          </div>
+          <div class="filter-pills" id="sentence-search-difficulty" role="group" aria-label="Schwierigkeit">
+            <button class="filter-pill active" data-value="" aria-label="Alle Schwierigkeiten">Alle</button>
+            <button class="filter-pill" data-value="easy" aria-label="Leicht">🟢</button>
+            <button class="filter-pill" data-value="medium" aria-label="Mittel">🟡</button>
+            <button class="filter-pill" data-value="hard" aria-label="Schwer">🔴</button>
+          </div>
           <select id="sentence-search-tag" class="filter-select">
             <option value="">Tag</option>
             <option value="question">Fragen</option>
@@ -7711,6 +7733,19 @@ const SENTENCE_TAG_LABELS = {
   'exclamation': 'Ausrufe', 'pause': 'Pausen', 'audio-course': 'Audiokurs',
 };
 
+// Reads/writes a .filter-pills group's selected value from its .active
+// button's data-value, wiring clicks to swap which one is active and
+// re-run a callback — the flat-segmented-control equivalent of a <select>.
+function wireFilterPills(container, onChange) {
+  container.querySelectorAll('.filter-pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      container.querySelectorAll('.filter-pill').forEach(b => b.classList.toggle('active', b === btn));
+      onChange();
+    });
+  });
+  return () => container.querySelector('.filter-pill.active')?.dataset.value || '';
+}
+
 function setupSentenceSearch() {
   const modal = document.getElementById('sentence-search-modal');
   const input = document.getElementById('sentence-search-input');
@@ -7721,10 +7756,13 @@ function setupSentenceSearch() {
   const resultsDiv = document.getElementById('sentence-search-results');
   const closeBtn = document.getElementById('sentence-search-close');
 
+  const getLevel = wireFilterPills(levelFilter, () => updateResults());
+  const getDiff  = wireFilterPills(diffFilter, () => updateResults());
+
   function updateResults() {
     const query = input.value.toLowerCase().trim();
-    const level = levelFilter.value;
-    const diff = diffFilter.value;
+    const level = getLevel();
+    const diff = getDiff();
     const tag = tagFilter.value;
 
     let filtered = sentenceIndex;
@@ -7794,8 +7832,9 @@ function setupSentenceSearch() {
   }
 
   input.addEventListener('input', updateResults);
-  levelFilter.addEventListener('change', updateResults);
-  diffFilter.addEventListener('change', updateResults);
+  // levelFilter/diffFilter are wired via wireFilterPills() above; only the
+  // tag select (still a native <select>, see wireFilterPills' comment)
+  // needs its own change listener.
   tagFilter.addEventListener('change', updateResults);
 
   closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
@@ -10359,7 +10398,7 @@ function buildHome() {
     const content = HERO_CONTENT[m.id] || { eyebrow: m.timing, meta: m.desc };
     const card = document.createElement('button');
     card.className = 'home-mode-hero';
-    card.style.background = 'linear-gradient(140deg, ' + m.color + ' 0%, color-mix(in srgb, ' + m.color + ' 100%, black 18%) 100%)';
+    card.style.background = m.color; // flat solid color, no gradient
     card.innerHTML =
       '<div class="home-mode-hero-row">' +
         '<div class="home-mode-hero-text">' +
