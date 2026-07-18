@@ -3109,12 +3109,18 @@
       border: 1px solid color-mix(in srgb, var(--color-present) 30%, transparent);
       padding: 3px 10px; border-radius: 999px; display: inline-flex; align-items: center;
     }
+    /* A real <button> now (taps into Review) — reset button chrome so it
+       looks identical to the old span pill, plus hover/press feedback. */
     .home-due-badge {
+      font-family: inherit; cursor: pointer;
       font-weight: 700; font-size: 0.85rem; color: var(--color-correct-text);
       background: color-mix(in srgb, var(--color-correct-text) 10%, transparent);
       border: 1px solid color-mix(in srgb, var(--color-correct-text) 26%, transparent);
       padding: 3px 10px; border-radius: 999px; display: inline-flex; align-items: center;
+      transition: background 0.12s, transform 0.1s; -webkit-tap-highlight-color: transparent;
     }
+    .home-due-badge:hover { background: color-mix(in srgb, var(--color-correct-text) 18%, transparent); }
+    .home-due-badge:active { transform: scale(0.95); }
     .home-diamond-badge {
       font-size: 0.8rem; font-weight: 700; color: var(--color-text-muted);
       background: var(--color-surface); border: 1px solid var(--hairline);
@@ -10583,34 +10589,32 @@ function buildHome() {
   if (streak.current > 0)
     parts.push('<span class="home-streak-val">🔥 ' + streak.current + ' ' + (streak.current === 1 ? 'Tag' : 'Tage') + '</span>');
   if (due > 0)
-    parts.push('<span class="home-due-badge">★ ' + due + ' fällig</span>');
+    parts.push('<button class="home-due-badge" id="home-due-badge-btn" title="Fällige Wörter üben">★ ' + due + ' fällig</button>');
   if (streak.current === 0 && due === 0)
     parts.push('Fang heute an!');
   streakEl.innerHTML = parts.join(' · ');
+  // The "★ N fällig" badge is an explicit, labeled entry into Review — the
+  // intentional replacement for the old surprise auto-switch on the
+  // Kreuzwort card. Fresh node each buildHome(), so no listener stacking.
+  document.getElementById('home-due-badge-btn')?.addEventListener('click', () => launchMode('review-cw'));
 
   // 3. Diamond count
   document.getElementById('home-diamond-val').textContent = diamonds.total;
 
-  // 4. Featured mode heroes — one hero-style CTA per top-3 game, each with
-  // its own framing. Kreuzwort keeps a live due-words/mastery meta line
-  // (real spaced-repetition data); Wortschlange/Paare have no per-mode
-  // stats tracked, so theirs is honest descriptive copy instead.
+  // 4. Featured mode heroes — one hero-style CTA per top-3 game. Each card
+  // now simply launches its own mode at the user's current level. It used
+  // to auto-switch Kreuzwort to Review ("★ Üben") when >=5 words were due,
+  // which surprised users: tapping "Kreuzwort" and landing in Review with
+  // "Üben" showing in the header pill read as a mode/level they never
+  // chose. Review is still one tap away via the "★ N fällig" badge above
+  // (now clickable) and the ★ tab in the level picker.
   const goalMet = dailyProgress.newWords.length >= DAILY_NEW_GOAL;
   const mastered = Object.values(reviewDeck?.cards || {}).filter(c => c.box >= 4).length;
-  // Due words are global (all levels), not scoped to whatever pack the user
-  // has deliberately picked (e.g. Medizin) — showing/acting on them while a
-  // specific pack is active was misleading (the card said "words due" for
-  // unrelated levels) and, worse, tapping Starten silently switched
-  // selectedLevels to REVIEW, discarding the pack they'd just chosen. Only
-  // treat due words as Kreuzwort's headline when the user is on a plain
-  // CEFR selection, not a professional/thematic pack.
-  const hasSpecificPack = [...selectedLevels].some(k => PACK_LEVELS.has(k) || THEME_PACKS.has(k));
   const HERO_CONTENT = {
     '1P': {
       eyebrow: (goalMet ? 'Heute erledigt' : 'Empfehlung') + ' · ' + HOME_MODES.find(m => m.id === '1P').timing,
       meta: goalMet
         ? dailyProgress.newWords.length + ' neue Wörter · ' + dailyProgress.reviewCount + ' Wiederholungen — super!'
-        : (due > 0 && !hasSpecificPack) ? due + ' Wörter warten auf Wiederholung'
         : mastered > 0 ? 'Du hast bereits ' + mastered + ' Wörter gemeistert!'
         : 'Wörter im Kreuzworträtsel üben',
     },
@@ -10642,13 +10646,9 @@ function buildHome() {
         '<div class="home-mode-hero-cta" style="color:' + m.color + '">▶ Starten</div>' +
       '</div>' +
       '<div class="home-mode-hero-meta">' + content.meta + '</div>';
-    // Kreuzwort's card advertises due words in its meta line (only when no
-    // specific pack is active, see hasSpecificPack above) — when there are
-    // enough to build a puzzle from (same ≥5 threshold as the ★ Review
-    // tab), actually take the tap there instead of starting a puzzle from
-    // whatever level happens to be selected. Never overrides a deliberately
-    // chosen pack.
-    card.addEventListener('click', () => launchMode(m.id === '1P' && due >= 5 && !hasSpecificPack ? 'review-cw' : m.id));
+    // Each card just launches its own mode at the current level — no more
+    // silent switch to Review (see the section-4 comment above).
+    card.addEventListener('click', () => launchMode(m.id));
     heroesEl.appendChild(card);
   });
 
